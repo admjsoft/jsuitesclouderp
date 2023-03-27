@@ -1,0 +1,8 @@
+application/logs/*
+application/config/config.php
+application/config/database.php
+crm/application/config/config.php
+crm/application/config/database.php
+userfiles/attach/*
+userfiles/documents/*
+vendor/*

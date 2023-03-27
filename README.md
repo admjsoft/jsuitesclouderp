@@ -79,13 +79,13 @@ composer install
 cp config/database.php.example config/database.php
 ```
 
-> Copy config/config.php.example to config/config.php
+> Copy application/config/config.php.example to application/config/config.php
 
 ```bash
-cp config/config.php.example config/config.php
+cp application/config/config.php.example application/config/config.php
 ```
 
-> Update config/database.php and config/config.php attributes as your database Installation and configuration
+> Update application/config/database.php and application/config/config.php attributes as your database Installation and configuration
 
 ```
 // config/database.php
