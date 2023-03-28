@@ -934,3 +934,4 @@ $lang['POS_Settings'] = "POS Settings";
 $lang['AllowAssignEmployee'] = "Allow to Assign Employee";
 $lang['SelfCustomerRegistration'] = "Customer Self Registration";
 $lang['Register Customer'] = "Register Customer";
+$lang['IT Developer'] = "IT Developer";

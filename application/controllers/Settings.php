@@ -761,4 +761,25 @@ FROM gtg_invoices AS i LEFT JOIN gtg_customers AS c ON i.csd=c.id GROUP BY  i.cs
             $this->load->view('fixed/footer');
         }
     }
+
+    public function payroll_settings()
+    {
+        $this->load->model('general_settings_model', 'general_settings');
+        $this->li_a = 'payment';
+        if ($this->input->post()) {
+            $data = $this->input->post('data');
+            $data['standard_working_hours'] = (int)$data['standard_working_hours'];
+            $data['report_show_zero'] = (bool)$data['report_show_zero'];
+            $this->general_settings->update_settings('general-payroll', $data);
+        } else {
+            $head['usernm'] = $this->aauth->get_user()->username;
+            $head['title'] = 'General Payroll Settings';
+            $data['data'] = $this->general_settings->get_settings('general-payroll')[0];
+            $data['data']['data'] = json_decode($data['data']['data_json'], true);
+
+            $this->load->view('fixed/header', $head);
+            $this->load->view('settings/payroll', $data);
+            $this->load->view('fixed/footer');
+        }
+    }
 }

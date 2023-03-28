@@ -56,6 +56,7 @@
 
                     <div class="col-sm-5">
                         <select name="roleid" class="form-control margin-bottom">
+                            <option value="4"><?= $this->lang->line('IT Developer') ?></option>
                             <option value="4"><?= $this->lang->line('Business Manager') ?></option>
                             <option value="3"><?= $this->lang->line('Sales Manager') ?></option>
                             <option value="5"><?= $this->lang->line('Business Owner') ?></option>

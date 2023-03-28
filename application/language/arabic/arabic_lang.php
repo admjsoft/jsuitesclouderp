@@ -923,3 +923,4 @@ $lang['POS_Settings'] = "إعدادات نقطة البيع";
 $lang['AllowAssignEmployee'] = "السماح بتعيين الموظف";
 $lang['SelfCustomerRegistration'] = "التسجيل الذاتي للعملاء";
 $lang['Register Customer'] = "تسجيل العميل";
+$lang['IT Developer'] = "مطور تكنولوجيا المعلومات";
