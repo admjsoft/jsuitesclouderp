@@ -2,7 +2,7 @@
     <div class="card card-body">
         <div class="">
             <h4><?php echo $product['title'] . ' ';
-                echo $this->lang->line('Statements') ?></h4>
+            echo $this->lang->line('Statements') ?></h4>
             <div class="card ">
 
 

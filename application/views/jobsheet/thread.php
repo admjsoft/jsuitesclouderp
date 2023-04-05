@@ -6,7 +6,7 @@
 
             <div class="message">' . $responsetext . '</div>
         </div>';
-        } else if ($response == 0) {
+        } elseif ($response == 0) {
             echo '<div id="notify" class="alert alert-danger">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
 
@@ -25,31 +25,36 @@
             <p class="card card-block">
                 <?php echo '<strong>Created on</strong> ' .
                 dateformat_time($thread_info['created_at']);
-                echo '<br><strong>Customer</strong> ' . $thread_info['cName'];
-                echo '<br><strong>Status</strong> <span id="pstatus">';
-                $temp="";
-                if($thread_info['status']==1){
-                    $temp="Completed";
-                }elseif($thread_info['status']==2){
-                    $temp="Pending";
-                }
-                elseif($thread_info['status']==3){
-                    $temp="unassigned";
-                }
-                echo $temp;
-                ?></span></p>
+        echo '<br><strong>Customer</strong> ' . $thread_info['cName'];
+        echo '<br><strong>Status</strong> <span id="pstatus">';
+        $temp="";
+        if ($thread_info['status']==1) {
+            $temp="Completed";
+        } elseif ($thread_info['status']==2) {
+            $temp="Pending";
+        } elseif ($thread_info['status']==3) {
+            $temp="unassigned";
+        }
+        echo $temp;
+        ?></span></p>
             <hr>
             <?php foreach ($thread_list as $row) { ?>
                 <div class="form-group row">
                     <div class="col">
                         <div class="card-bordered shadow p-1">
                             <?php
-                            if ($row['admin']) echo 'Job manager <strong>' . $row['admin'] . '</strong> Replied<br><br>';
-                           // if ($row['custo']) echo 'Customer <strong>' . $row['custo'] . '</strong> Replied<br><br>';
-                            if ($row['emp']) echo 'Employee <strong>' . $row['emp'] . '</strong> Replied<br><br>';
-                            echo $row['message'] . '';
-                            if ($row['attach']) echo '<br><br><strong>Attachment: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '">' . $row['attach'] . '</a><br><br>';
-                            ?>
+                    if ($row['admin']) {
+                        echo 'Job manager <strong>' . $row['admin'] . '</strong> Replied<br><br>';
+                    }
+                   // if ($row['custo']) echo 'Customer <strong>' . $row['custo'] . '</strong> Replied<br><br>';
+                    if ($row['emp']) {
+                        echo 'Employee <strong>' . $row['emp'] . '</strong> Replied<br><br>';
+                    }
+                    echo $row['message'] . '';
+                if ($row['attach']) {
+                    echo '<br><br><strong>Attachment: </strong><a href="' . base_url('userfiles/support/' . $row['attach']) . '">' . $row['attach'] . '</a><br><br>';
+                }
+                ?>
                             </div>
                     </div>
                 </div>

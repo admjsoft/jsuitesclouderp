@@ -39,17 +39,19 @@ use Twilio\Version;
  * @property string workspaceSid
  * @property string url
  */
-class TaskQueueCumulativeStatisticsInstance extends InstanceResource {
+class TaskQueueCumulativeStatisticsInstance extends InstanceResource
+{
     /**
      * Initialize the TaskQueueCumulativeStatisticsInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $workspaceSid The workspace_sid
      * @param string $taskQueueSid The task_queue_sid
-     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueCumulativeStatisticsInstance 
+     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueCumulativeStatisticsInstance
      */
-    public function __construct(Version $version, array $payload, $workspaceSid, $taskQueueSid) {
+    public function __construct(Version $version, array $payload, $workspaceSid, $taskQueueSid)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -83,11 +85,12 @@ class TaskQueueCumulativeStatisticsInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueCumulativeStatisticsContext Context for this
      *                                                                                             TaskQueueCumulativeStatisticsInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new TaskQueueCumulativeStatisticsContext(
                 $this->version,
@@ -101,24 +104,26 @@ class TaskQueueCumulativeStatisticsInstance extends InstanceResource {
 
     /**
      * Fetch a TaskQueueCumulativeStatisticsInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return TaskQueueCumulativeStatisticsInstance Fetched
      *                                               TaskQueueCumulativeStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array()) {
+    public function fetch($options = array())
+    {
         return $this->proxy()->fetch($options);
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -133,10 +138,11 @@ class TaskQueueCumulativeStatisticsInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -8,13 +8,10 @@
                     <div class="message"></div>
                 </div>
                 <?php if ($comment) {
-
                     echo '<div class="alert alert-success" >
             <a href="#" class="close" data-dismiss="alert">&times;</a>
 
             <div class="message">Comment Added!</div>  </div>';
-
-
                 } ?>
                 <div class="grid_3 grid_4">
                     <div class="header-block">
@@ -185,11 +182,9 @@
 
                                         <ul class="timeline">
                                             <?php $flag = true;
-                                            $total = count($thread_list);
-                                            foreach ($thread_list as $row) {
-
-
-                                                ?>
+                $total = count($thread_list);
+                foreach ($thread_list as $row) {
+                    ?>
                                                 <li class="<?php if (!$flag) {
                                                     echo 'timeline-inverted';
                                                 } ?>">
@@ -209,8 +204,8 @@
                                                     </div>
                                                 </li>
                                                 <?php $flag = !$flag;
-                                                $total--;
-                                            } ?>
+                    $total--;
+                } ?>
 
 
                                         </ul>
@@ -225,11 +220,9 @@
 
                                         <ul class="timeline">
                                             <?php $flag = true;
-                                            $total = count($milestones);
-                                            foreach ($milestones as $row) {
-
-
-                                                ?>
+                $total = count($milestones);
+                foreach ($milestones as $row) {
+                    ?>
                                                 <li data-block="sec" class="<?php if (!$flag) {
                                                     echo 'timeline-inverted';
                                                 } ?>">
@@ -245,14 +238,16 @@
                                                         </div>
                                                         <div class="timeline-body">
                                                             <p><?php echo $row['exp'];
-                                                                if ($row['task']) echo '</p><p><strong>[Task]</strong> ' . $row['task']; ?></p>
+                    if ($row['task']) {
+                        echo '</p><p><strong>[Task]</strong> ' . $row['task'];
+                    } ?></p>
 
                                                         </div>
                                                     </div>
                                                 </li>
                                                 <?php $flag = !$flag;
-                                                $total--;
-                                            } ?>
+                    $total--;
+                } ?>
 
 
                                         </ul>
@@ -276,10 +271,10 @@
                                                         <div class="card card-block"><?php
 
 
-                                                            echo '<a href="' . base_url('../userfiles/project/' . $row['value']) . '">' . $row['value'] . '</a>';
+                                echo '<a href="' . base_url('../userfiles/project/' . $row['value']) . '">' . $row['value'] . '</a>';
 
-                                                            echo '<br><br>';
-                                                            ?></div>
+                                                echo '<br><br>';
+                                                ?></div>
                                                     </div>
                                                 </section>
                                             <?php } ?>
@@ -350,19 +345,21 @@
                                             <input type="hidden" value="<?php echo $project['id']; ?>" name="nid">
                                             </form> <?php }
                                         echo '<ul class="timeline">';
-                                        $flag = true;
-                                        $total = count($comments_list);
-                                        foreach ($comments_list as $row) {
-
-
-                                            ?>
+                $flag = true;
+                $total = count($comments_list);
+                foreach ($comments_list as $row) {
+                    ?>
                                             <li class="<?php if (!$flag) {
                                                 echo 'timeline-inverted';
                                             } ?>">
                                                 <div class="timeline-badge info"><?php echo $total ?></div>
                                                 <div class="timeline-panel">
                                                     <div class="timeline-heading">
-                                                        <h4 class="timeline-title"><?php if ($row['key3']) echo $row['customer'] . ' Reply <small>(Customer)</small>'; else echo $row['employee'] . ' Reply <small>(Employee)</small>'; ?></h4>
+                                                        <h4 class="timeline-title"><?php if ($row['key3']) {
+                                                            echo $row['customer'] . ' Reply <small>(Customer)</small>';
+                                                        } else {
+                                                            echo $row['employee'] . ' Reply <small>(Employee)</small>';
+                                                        } ?></h4>
 
                                                     </div>
                                                     <div class="timeline-body">
@@ -371,8 +368,8 @@
                                                 </div>
                                             </li>
                                             <?php $flag = !$flag;
-                                            $total--;
-                                        } ?>
+                    $total--;
+                } ?>
 
 
                                         </ul>

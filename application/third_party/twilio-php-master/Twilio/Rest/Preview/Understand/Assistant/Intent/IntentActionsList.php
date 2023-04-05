@@ -15,16 +15,18 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class IntentActionsList extends ListResource {
+class IntentActionsList extends ListResource
+{
     /**
      * Construct the IntentActionsList
-     * 
+     *
      * @param Version $version Version that contains the resource
      * @param string $assistantSid The unique ID of the parent Assistant.
      * @param string $intentSid The unique ID of the Intent.
-     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentActionsList 
+     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentActionsList
      */
-    public function __construct(Version $version, $assistantSid, $intentSid) {
+    public function __construct(Version $version, $assistantSid, $intentSid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -33,10 +35,11 @@ class IntentActionsList extends ListResource {
 
     /**
      * Constructs a IntentActionsContext
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentActionsContext 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentActionsContext
      */
-    public function getContext() {
+    public function getContext()
+    {
         return new IntentActionsContext(
             $this->version,
             $this->solution['assistantSid'],
@@ -46,10 +49,11 @@ class IntentActionsList extends ListResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         return '[Twilio.Preview.Understand.IntentActionsList]';
     }
 }

@@ -14,7 +14,6 @@ use PayPal\Core\PayPalCredentialManager;
  */
 class ApiContext
 {
-
     /**
      * Unique request id to be used for this call
      * The user can either generate one as per application

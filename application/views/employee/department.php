@@ -41,18 +41,18 @@
                     <tbody>
                     <?php $i = 1;
 
-                    foreach ($department_list as $row) {
-                        $aid = $row['id'];
+                foreach ($department_list as $row) {
+                    $aid = $row['id'];
 
-                        echo "<tr>
+                    echo "<tr>
 <td>" . $i . "</td>
                     <td>" . $row['name'] . "</td>
                        <td>" . $row['salary'] . "</td>
                  
                     <td><a href='" . base_url("employee/attendances?id=$aid") . "' class='btn btn-success btn-xs'><i class='fa fa-chain'></i> " . $this->lang->line('Attendance') . "</a>  <a href='" . base_url("employee/payroll_emp?id=$aid") . "' class='btn btn-blue btn-xs'><i class='fa fa-money'></i> " . $this->lang->line('Payroll') . "</a> <a href='" . base_url("employee/view?id=$aid") . "' class='btn btn-info btn-xs'><i class='icon-eye'></i> " . $this->lang->line('View') . "</a> <a href='" . base_url("employee/history?id=$aid") . "' class='btn btn-purple btn-xs'><i class='fa fa-clock-o'></i> " . $this->lang->line('History') . "</a></td></tr>";
-                        $i++;
-                    }
-                    ?>
+                    $i++;
+                }
+                ?>
                     </tbody>
                     <tfoot>
                     <tr>

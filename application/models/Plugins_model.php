@@ -1,13 +1,11 @@
 <?php
 
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 
 class Plugins_model extends CI_Model
 {
-
-
     public function recaptcha($captcha, $public_key, $private_key)
     {
         $data = array(
@@ -26,7 +24,6 @@ class Plugins_model extends CI_Model
             echo json_encode(array('status' => 'Error', 'message' =>
                 $this->lang->line('ERROR')));
         }
-
     }
 
     public function config_general()
@@ -67,26 +64,36 @@ class Plugins_model extends CI_Model
             echo json_encode(array('status' => 'Error', 'message' =>
                 $this->lang->line('ERROR')));
         }
-
     }
 
-    public function m_update_api($id, $key1, $key2 = 0, $url = '', $method = 0, $other = '', $enable = 0,$m=true)
+    public function m_update_api($id, $key1, $key2 = 0, $url = '', $method = 0, $other = '', $enable = 0, $m=true)
     {
         $data = array();
 
-        if(isset($key1)) $data['key1']=$key1;
-        if(isset($key2)) $data['key2']=$key2;
-        if(isset($url)) $data['url']=$url;
-        if(isset($method)) $data['method']=$method;
-        if(isset($other)) $data['other']=$other;
-         if(isset($enable)) $data['active']=$enable;
+        if (isset($key1)) {
+            $data['key1']=$key1;
+        }
+        if (isset($key2)) {
+            $data['key2']=$key2;
+        }
+        if (isset($url)) {
+            $data['url']=$url;
+        }
+        if (isset($method)) {
+            $data['method']=$method;
+        }
+        if (isset($other)) {
+            $data['other']=$other;
+        }
+        if (isset($enable)) {
+            $data['active']=$enable;
+        }
 
         $this->db->set($data);
         $this->db->where('id', $id);
 
         if ($this->db->update('univarsal_api', $data)) {
             if ($m) {
-
                 echo json_encode(array('status' => 'Success', 'message' =>
                     $this->lang->line('UPDATED')));
             }
@@ -95,9 +102,6 @@ class Plugins_model extends CI_Model
                 echo json_encode(array('status' => 'Error', 'message' =>
                     $this->lang->line('ERROR')));
             }
-
         }
     }
-
-
 }

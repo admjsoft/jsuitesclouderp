@@ -18,60 +18,61 @@ use chillerlan\QRCode\QRCode;
 /**
  * Creates URI QR Codes for use with mmobile authenticators
  */
-trait QRAuthenticator{
+trait QRAuthenticator
+{
+    /**
+     * @var \chillerlan\QRCode\QROptions
+     */
+    protected $qrOptions;
 
-	/**
-	 * @var \chillerlan\QRCode\QROptions
-	 */
-	protected $qrOptions;
+    /**
+     * @var string
+     */
+    protected $authenticatorSecret;
 
-	/**
-	 * @var string
-	 */
-	protected $authenticatorSecret;
+    /**
+     * @var int
+     */
+    protected $authenticatorDigits = Authenticator::DEFAULT_DIGITS;
 
-	/**
-	 * @var int
-	 */
-	protected $authenticatorDigits = Authenticator::DEFAULT_DIGITS;
+    /**
+     * @var int
+     */
+    protected $authenticatorPeriod = Authenticator::DEFAULT_PERIOD;
 
-	/**
-	 * @var int
-	 */
-	protected $authenticatorPeriod = Authenticator::DEFAULT_PERIOD;
+    /**
+     * @var string
+     */
+    protected $authenticatorMode   = Authenticator::DEFAULT_AUTH_MODE;
 
-	/**
-	 * @var string
-	 */
-	protected $authenticatorMode   = Authenticator::DEFAULT_AUTH_MODE;
+    /**
+     * @var string
+     */
+    protected $authenticatorAlgo   = Authenticator::DEFAULT_HASH_ALGO;
 
-	/**
-	 * @var string
-	 */
-	protected $authenticatorAlgo   = Authenticator::DEFAULT_HASH_ALGO;
+    /**
+     * @param string $label
+     * @param string $issuer
+     *
+     * @return mixed
+     */
+    protected function getURIQRCode(string $label, string $issuer)
+    {
+        $uri = $this->getAuthenticator()->setSecret($this->authenticatorSecret)->getUri($label, $issuer);
 
-	/**
-	 * @param string $label
-	 * @param string $issuer
-	 *
-	 * @return mixed
-	 */
-	protected function getURIQRCode(string $label, string $issuer) {
-		$uri = $this->getAuthenticator()->setSecret($this->authenticatorSecret)->getUri($label, $issuer);
+        return (new QRCode($this->qrOptions))->render($uri);
+    }
 
-		return (new QRCode($this->qrOptions))->render($uri);
-	}
-
-	/**
-	 * @return \chillerlan\Authenticator\Authenticator
-	 */
-	protected function getAuthenticator():Authenticator {
-		return (new Authenticator)
-			->setPeriod($this->authenticatorPeriod)
-			->setDigits($this->authenticatorDigits)
-			->setMode($this->authenticatorMode)
-			->setAlgorithm($this->authenticatorAlgo)
-		;
-	}
-
+    /**
+     * @return \chillerlan\Authenticator\Authenticator
+     */
+    protected function getAuthenticator(): Authenticator
+    {
+        return (new Authenticator())
+            ->setPeriod($this->authenticatorPeriod)
+            ->setDigits($this->authenticatorDigits)
+            ->setMode($this->authenticatorMode)
+            ->setAlgorithm($this->authenticatorAlgo)
+        ;
+    }
 }

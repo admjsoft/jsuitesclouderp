@@ -38,7 +38,9 @@
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="<?= assets_url() ?>assets/css/style.css<?= APPVER ?>">
-    <?php if (LTR == 'rtl') echo '<link rel="stylesheet" type="text/css" href="' . assets_url() . 'assets/css/style-rtl.css' . APPVER . '">'; ?>
+    <?php if (LTR == 'rtl') {
+        echo '<link rel="stylesheet" type="text/css" href="' . assets_url() . 'assets/css/style-rtl.css' . APPVER . '">';
+    } ?>
     <link rel="stylesheet" href="<?php echo assets_url('assets/custom/datepicker.min.css') . APPVER ?>">
     <!-- END Custom CSS-->
     <script src="<?= assets_url() ?>app-assets/vendors/js/vendors.min.js"></script>
@@ -58,7 +60,9 @@
       <script src="<?php echo assets_url(); ?>assets/portjs/printThis.js" type="text/javascript"></script>
     <?php accounting() ?>
 </head>
-<body class="horizontal-layout horizontal-menu content-left-sidebar <?php if ($s_mode) echo 'chat-application'; ?>  menu-expanded"
+<body class="horizontal-layout horizontal-menu content-left-sidebar <?php if ($s_mode) {
+    echo 'chat-application';
+} ?>  menu-expanded"
       data-open="hover"
       data-menu="horizontal-menu"
       data-col="2-columns">
@@ -144,9 +148,8 @@
                             <li class="scrollable-container media-list">
                                 <?php $list_pm = $this->aauth->list_pms(6, 0, $this->aauth->get_user()->id, false);
 
-                                foreach ($list_pm as $row) {
-
-                                    echo '<a href="' . base_url('messages/view?id=' . $row->pid) . '">
+    foreach ($list_pm as $row) {
+        echo '<a href="' . base_url('messages/view?id=' . $row->pid) . '">
                       <div class="media">
                         <div class="media-left"><span class="avatar avatar-sm  rounded-circle"><img src="' . base_url('userfiles/employee/' . $row->picture) . '" alt="avatar"><i></i></span></div>
                         <div class="media-body">
@@ -155,7 +158,7 @@
                             <time class="media-meta text-muted" datetime="' . $row->{'date_sent'} . '">' . $row->{'date_sent'} . '</time></small>
                         </div>
                       </div></a>';
-                                } ?>    </li>
+    } ?>    </li>
                             <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center"
                                                                 href="<?php echo base_url('messages') ?>"><?php echo $this->lang->line('Read all messages') ?></a>
                             </li>
@@ -166,24 +169,22 @@
 
 
                             <?php if ($this->aauth->clock()) {
-
                                 echo ' <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon spinner icon-clock"></i><span class="badge badge-pill badge-default badge-success badge-default badge-up">' . $this->lang->line('On') . '</span></a>';
-
                             } else {
                                 echo ' <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon icon-clock"></i><span class="badge badge-pill badge-default badge-warning badge-default badge-up">' . $this->lang->line('Off') . '</span></a>';
                             }
-                            ?>
+                        ?>
 
                             <ul class="dropdown-menu dropdown-menu-right border-primary border-lighten-3 text-xs-center">
                                 <br><br>
                                 <?php echo '<span class="p-1 text-bold-300">' . $this->lang->line('Attendance') . ':</span>';
-                                if (!$this->aauth->clock()) {
-                                    echo '<a href="' . base_url() . '/dashboard/clock_in" class="btn btn-outline-success  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-on" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('In') . ' <i
+                        if (!$this->aauth->clock()) {
+                            echo '<a href="' . base_url() . '/dashboard/clock_in" class="btn btn-outline-success  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-on" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('In') . ' <i
                                     class="ficon icon-clock spinner"></i></a>';
-                                } else {
-                                    echo '<a href="' . base_url() . '/dashboard/clock_out" class="btn btn-outline-danger  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-off" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('Out') . ' </a>';
-                                }
-                                ?>
+                        } else {
+                            echo '<a href="' . base_url() . '/dashboard/clock_out" class="btn btn-outline-danger  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-off" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('Out') . ' </a>';
+                        }
+                        ?>
 
                                 <br><br>
                             </ul>

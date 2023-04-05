@@ -16,7 +16,7 @@ class Cipher
     /**
      * Fixed IV Size
      */
-    const IV_SIZE = 16;
+    public const IV_SIZE = 16;
 
     public function __construct($secretKey)
     {

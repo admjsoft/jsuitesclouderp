@@ -23,19 +23,19 @@
             </thead>
             <tbody>
             <?php $i = 1;
-            foreach ($emails as $row) {
-                $cid = $row['id'];
-                $title = $row['name'];
+        foreach ($emails as $row) {
+            $cid = $row['id'];
+            $title = $row['name'];
 
-                echo "<tr>
+            echo "<tr>
                     <td>$i</td>
                     <td>$title</td>
                     
                   
                     <td><a href='" . base_url("templates/sms_update?id=$cid") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i>" . $this->lang->line('Edit') . "</a></td></tr>";
-                $i++;
-            }
-            ?>
+            $i++;
+        }
+        ?>
             </tbody>
             <tfoot>
             <tr>

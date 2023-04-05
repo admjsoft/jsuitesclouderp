@@ -5,8 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller
 {
-
-
     public function __construct()
     {
         parent::__construct();
@@ -18,8 +16,6 @@ class Dashboard extends CI_Controller
 
         $this->load->model('dashboard_model');
         $this->load->model('tools_model');
-
-
     }
 
 
@@ -49,7 +45,7 @@ class Dashboard extends CI_Controller
             $this->load->view('fixed/header', $head);
             $this->load->view('dashboard', $data);
             $this->load->view('fixed/footer');
-        } else if ($this->aauth->premission(4)) {
+        } elseif ($this->aauth->premission(4)) {
             $this->load->model('projects_model', 'projects');
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'Project List';
@@ -58,7 +54,7 @@ class Dashboard extends CI_Controller
             $this->load->view('fixed/header', $head);
             $this->load->view('projects/index', $data);
             $this->load->view('fixed/footer');
-        } else if ($this->aauth->get_user()->roleid == 1) {
+        } elseif ($this->aauth->get_user()->roleid == 1) {
             $head['title'] = "Products";
             $head['usernm'] = $this->aauth->get_user()->username;
             $this->load->view('fixed/header', $head);

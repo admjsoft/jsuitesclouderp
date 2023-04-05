@@ -13,17 +13,19 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class AuthRegistrationsCredentialListMappingContext extends InstanceContext {
+class AuthRegistrationsCredentialListMappingContext extends InstanceContext
+{
     /**
      * Initialize the AuthRegistrationsCredentialListMappingContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $accountSid The account_sid
      * @param string $domainSid The domain_sid
      * @param string $sid Fetch by unique credential list Sid
-     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypes\AuthTypeRegistrations\AuthRegistrationsCredentialListMappingContext 
+     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypes\AuthTypeRegistrations\AuthRegistrationsCredentialListMappingContext
      */
-    public function __construct(Version $version, $accountSid, $domainSid, $sid) {
+    public function __construct(Version $version, $accountSid, $domainSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -34,12 +36,13 @@ class AuthRegistrationsCredentialListMappingContext extends InstanceContext {
 
     /**
      * Fetch a AuthRegistrationsCredentialListMappingInstance
-     * 
+     *
      * @return AuthRegistrationsCredentialListMappingInstance Fetched
      *                                                        AuthRegistrationsCredentialListMappingInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -59,20 +62,22 @@ class AuthRegistrationsCredentialListMappingContext extends InstanceContext {
 
     /**
      * Deletes the AuthRegistrationsCredentialListMappingInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

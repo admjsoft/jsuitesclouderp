@@ -1,4 +1,5 @@
 <?php
+
 $lang['Date'] = "Ngày";
 $lang['Edit'] = "Biên tập";
 $lang['employee_login_panel'] = "Bảng đăng nhập nhân viên";

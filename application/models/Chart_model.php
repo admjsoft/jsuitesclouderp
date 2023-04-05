@@ -5,7 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Chart_model extends CI_Model
 {
-
     public function productcat($type, $c1 = '', $c2 = '')
     {
         switch ($type) {
@@ -48,7 +47,9 @@ class Chart_model extends CI_Model
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('gtg_invoices.loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('gtg_invoices.loc', 0);
+            if (BDATA) {
+                $this->db->or_where('gtg_invoices.loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('gtg_invoices.loc', 0);
@@ -97,7 +98,9 @@ class Chart_model extends CI_Model
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('gtg_invoices.loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('gtg_invoices.loc', 0);
+            if (BDATA) {
+                $this->db->or_where('gtg_invoices.loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('gtg_invoices.loc', 0);
@@ -187,7 +190,9 @@ class Chart_model extends CI_Model
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('gtg_invoices.loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('gtg_invoices.loc', 0);
+            if (BDATA) {
+                $this->db->or_where('gtg_invoices.loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('gtg_invoices.loc', 0);
@@ -238,7 +243,9 @@ class Chart_model extends CI_Model
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('loc', 0);
@@ -286,7 +293,9 @@ class Chart_model extends CI_Model
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('loc', 0);
@@ -334,7 +343,9 @@ class Chart_model extends CI_Model
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('loc', 0);

@@ -1,4 +1,5 @@
 <?php
+
 $lang['ProductGroups'] = "Product Groups";
 $lang['ProductGroup'] = "Product Group";
 $lang['MasterProductPrice'] = "Master Product Price";

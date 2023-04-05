@@ -8,7 +8,6 @@ function CheckPermission($moduleName = "", $method = "")
     $moduleName = strtolower(str_replace(' ', '_', $moduleName));
     $permission = isset($CI->session->get_userdata()['user_details'][0]->user_type) ? $CI->session->get_userdata()['user_details'][0]->user_type : '';
     if (isset($permission) && $permission != "") {
-
         if ($permission == 'admin' || $permission == 'Admin') {
             return true;
         } else {
@@ -17,17 +16,14 @@ function CheckPermission($moduleName = "", $method = "")
 
 
             if (isset($getPermission->$moduleName)) {
-
                 if (isset($moduleName) && isset($method) && $moduleName != "" && $method != "") {
-
                     $method_arr = explode(',', $method);
                     foreach ($method_arr as $method_item) {
                         if (isset($getPermission->$moduleName->$method_item)) {
                             return $getPermission->$moduleName->$method_item;
                         }
-
                     }
-                    //return 0;
+                //return 0;
                 } else {
                     return 0;
                 }
@@ -60,7 +56,6 @@ function setting_all($keys = '')
         $setting = $CI->setting_model->get_setting();
         return $setting;
     }
-
 }
 
 
@@ -97,7 +92,6 @@ function getRowByTableColomId($tableName = '', $id = '', $colom = 'id', $whichCo
     } else {
         return false;
     }
-
 }
 
 
@@ -114,7 +108,6 @@ function getOptionValue($keys = '')
     } else {
         return false;
     }
-
 }
 
 function getNameByColomeId($tableName = '', $id = '', $colom = 'id')
@@ -128,7 +121,6 @@ function getNameByColomeId($tableName = '', $id = '', $colom = 'id')
     $CI->db->where($tableName . '_id', $id);
     $query = $CI->db->get();
     return $result = $query->row();
-
 }
 
 function selectBoxDynamic($field_name = '', $tableName = 'setting', $colom = 'value', $selected = '', $attr = '')
@@ -204,15 +196,17 @@ function CallAPI($method, $url, $data = false)
     switch ($method) {
         case "POST":
             curl_setopt($curl, CURLOPT_POST, 1);
-            if ($data)
+            if ($data) {
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            }
             break;
         case "PUT":
             curl_setopt($curl, CURLOPT_PUT, 1);
             break;
         default:
-            if ($data)
+            if ($data) {
                 $url = sprintf("%s?%s", $url, http_build_query($data));
+            }
     }
     curl_setopt($curl, CURLOPT_HTTPHEADER, array());
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
@@ -250,7 +244,6 @@ function getAllDataByTable($tableName = '', $columnValue = '*', $colume = '')
 
 function ajx_dataTable($table = '', $columns = array(), $Join_condition = '', $where = '')
 {
-
     $table = $table;
     $primaryKey = $table . '_id';
     $CI = get_instance();
@@ -307,25 +300,24 @@ function getTemplatesByModule($module)
 }
 
 /*	  function geneeratePdf($module, $mid, $tid) {
-	  	$CI = get_instance();
-	  	$template_row = getDataByid('templates',$tid,'id');
-	  	$module_row = getDataByid($module,$mid,'id');
-	  	$CI->load->library('Mypdf');
-	  	$html = $template_row->html;
-	  	//print_r($module_row);
-	  	foreach ($module_row as $key => $value) {
-	  		$html = str_replace('{var_'.$key.'}', $value, $html);		
-	  	}
+          $CI = get_instance();
+          $template_row = getDataByid('templates',$tid,'id');
+          $module_row = getDataByid($module,$mid,'id');
+          $CI->load->library('Mypdf');
+          $html = $template_row->html;
+          //print_r($module_row);
+          foreach ($module_row as $key => $value) {
+              $html = str_replace('{var_'.$key.'}', $value, $html);
+          }
 
-		  $CI->dompdf->load_html($html);
-		  $CI->dompdf->set_paper("A4", "portrait");
-		  $CI->dompdf->render();
-		  $filename = "mkaTestd.pdf";
-		  $path = realpath(dirname(dirname(dirname(dirname(dirname(__FILE__)))))).'/crm-assets/images/pdf/';
-		  if(file_exists($path.$filename)) {
-			  unlink($path.$filename);
-		  }
-		  file_put_contents($path.$filename, $CI->dompdf->output());
-		  return  $path.$filename;
-	  }*/
-?>
+          $CI->dompdf->load_html($html);
+          $CI->dompdf->set_paper("A4", "portrait");
+          $CI->dompdf->render();
+          $filename = "mkaTestd.pdf";
+          $path = realpath(dirname(dirname(dirname(dirname(dirname(__FILE__)))))).'/crm-assets/images/pdf/';
+          if(file_exists($path.$filename)) {
+              unlink($path.$filename);
+          }
+          file_put_contents($path.$filename, $CI->dompdf->output());
+          return  $path.$filename;
+      }*/

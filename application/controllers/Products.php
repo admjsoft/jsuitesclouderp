@@ -14,7 +14,6 @@ class Products extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if (!$this->aauth->premission(2)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->load->model('products_model', 'products');
@@ -224,7 +223,9 @@ class Products extends CI_Controller
         $barcode = $this->input->post('barcode');
         $code_type = $this->input->post('code_type');
         $sub_cat = $this->input->post('sub_cat');
-        if (!$sub_cat) $sub_cat = 0;
+        if (!$sub_cat) {
+            $sub_cat = 0;
+        }
         $brand = $this->input->post('brand');
         $vari = array();
         $vari['v_type'] = $this->input->post('v_type');
@@ -290,7 +291,9 @@ class Products extends CI_Controller
         $string = $this->input->post('product');
 
 
-        if (isset($string['term'])) $this->db->like('title', $string['term']);
+        if (isset($string['term'])) {
+            $this->db->like('title', $string['term']);
+        }
         $this->db->from('gtg_product_cat');
         $this->db->where('rel_id', $wid);
         $this->db->where('c_type', 1);
@@ -394,7 +397,9 @@ class Products extends CI_Controller
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('gtg_warehouse.loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('gtg_warehouse.loc', 0);
+            if (BDATA) {
+                $this->db->or_where('gtg_warehouse.loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('gtg_warehouse.loc', 0);
@@ -409,7 +414,9 @@ class Products extends CI_Controller
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('gtg_warehouse.loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('gtg_warehouse.loc', 0);
+            if (BDATA) {
+                $this->db->or_where('gtg_warehouse.loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('gtg_warehouse.loc', 0);
@@ -425,7 +432,9 @@ class Products extends CI_Controller
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('gtg_warehouse.loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('gtg_warehouse.loc', 0);
+            if (BDATA) {
+                $this->db->or_where('gtg_warehouse.loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('gtg_warehouse.loc', 0);
@@ -492,8 +501,6 @@ class Products extends CI_Controller
         $e_date = datefordatabase($this->input->post('e_date'));
 
         if ($pid && $r_type) {
-
-
             switch ($r_type) {
                 case 1:
                     $query = $this->db->query("SELECT gtg_invoices.tid,gtg_invoice_items.qty,gtg_invoice_items.price,gtg_invoices.invoicedate FROM gtg_invoice_items LEFT JOIN gtg_invoices ON gtg_invoices.id=gtg_invoice_items.tid WHERE gtg_invoice_items.pid='$pid' AND gtg_invoices.status!='canceled' AND (DATE(gtg_invoices.invoicedate) BETWEEN DATE('$s_date') AND DATE('$e_date'))");
@@ -565,7 +572,9 @@ class Products extends CI_Controller
             $total_rows = $this->input->post('total_rows');
             $items_per_rows = $this->input->post('items_per_row');
             $products = array();
-            if (!$this->input->post('products_l')) exit('No Product Selected!');
+            if (!$this->input->post('products_l')) {
+                exit('No Product Selected!');
+            }
             foreach ($this->input->post('products_l') as $row) {
                 $this->db->select('gtg_products.product_name,gtg_products.product_price,gtg_products.product_code,gtg_products.barcode,gtg_products.expiry,gtg_products.code_type,gtg_warehouse.title,gtg_warehouse.loc');
                 $this->db->from('gtg_products');
@@ -575,7 +584,9 @@ class Products extends CI_Controller
                     $this->db->group_start();
                     $this->db->where('gtg_warehouse.loc', $this->aauth->get_user()->loc);
 
-                    if (BDATA) $this->db->or_where('gtg_warehouse.loc', 0);
+                    if (BDATA) {
+                        $this->db->or_where('gtg_warehouse.loc', 0);
+                    }
                     $this->db->group_end();
                 } elseif (!BDATA) {
                     $this->db->where('gtg_warehouse.loc', 0);
@@ -644,7 +655,9 @@ class Products extends CI_Controller
                     $this->db->group_start();
                     $this->db->where('gtg_warehouse.loc', $this->aauth->get_user()->loc);
 
-                    if (BDATA) $this->db->or_where('gtg_warehouse.loc', 0);
+                    if (BDATA) {
+                        $this->db->or_where('gtg_warehouse.loc', 0);
+                    }
                     $this->db->group_end();
                 } elseif (!BDATA) {
                     $this->db->where('gtg_warehouse.loc', 0);
@@ -709,7 +722,9 @@ class Products extends CI_Controller
                     $this->db->group_start();
                     $this->db->where('gtg_warehouse.loc', $this->aauth->get_user()->loc);
 
-                    if (BDATA) $this->db->or_where('gtg_warehouse.loc', 0);
+                    if (BDATA) {
+                        $this->db->or_where('gtg_warehouse.loc', 0);
+                    }
                     $this->db->group_end();
                 } elseif (!BDATA) {
                     $this->db->where('gtg_warehouse.loc', 0);

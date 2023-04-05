@@ -44,8 +44,6 @@ namespace Stripe;
  */
 class Subscription extends ApiResource
 {
-    const OBJECT_NAME = 'subscription';
-
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Delete {
@@ -53,19 +51,20 @@ class Subscription extends ApiResource
     }
     use ApiOperations\Retrieve;
     use ApiOperations\Update;
+    public const OBJECT_NAME = 'subscription';
 
     /**
      * These constants are possible representations of the status field.
      *
      * @link https://stripe.com/docs/api#subscription_object-status
      */
-    const STATUS_ACTIVE             = 'active';
-    const STATUS_CANCELED           = 'canceled';
-    const STATUS_PAST_DUE           = 'past_due';
-    const STATUS_TRIALING           = 'trialing';
-    const STATUS_UNPAID             = 'unpaid';
-    const STATUS_INCOMPLETE         = 'incomplete';
-    const STATUS_INCOMPLETE_EXPIRED = 'incomplete_expired';
+    public const STATUS_ACTIVE             = 'active';
+    public const STATUS_CANCELED           = 'canceled';
+    public const STATUS_PAST_DUE           = 'past_due';
+    public const STATUS_TRIALING           = 'trialing';
+    public const STATUS_UNPAID             = 'unpaid';
+    public const STATUS_INCOMPLETE         = 'incomplete';
+    public const STATUS_INCOMPLETE_EXPIRED = 'incomplete_expired';
 
     public static function getSavedNestedResources()
     {

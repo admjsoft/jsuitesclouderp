@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Export extends CI_Controller
 {
-    var $date;
+    public $date;
 
     public function __construct()
     {
@@ -18,7 +18,6 @@ class Export extends CI_Controller
         }
 
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('Not Allowed!');
         }
         $this->date = 'backup_' . date('Y_m_d_H_i_s');
@@ -26,10 +25,8 @@ class Export extends CI_Controller
     }
 
 
-    function dbexport()
+    public function dbexport()
     {
-
-
         $head['title'] = "Backup Database";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
@@ -38,9 +35,8 @@ class Export extends CI_Controller
     }
 
 
-    function dbexport_c()
+    public function dbexport_c()
     {
-
         $this->load->dbutil();
         $backup = &$this->dbutil->backup();
         $this->load->helper('file');
@@ -50,10 +46,8 @@ class Export extends CI_Controller
     }
 
 
-    function crm()
+    public function crm()
     {
-
-
         $head['title'] = "Export CRM Data";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
@@ -62,10 +56,8 @@ class Export extends CI_Controller
     }
 
 
-    function crm_now()
+    public function crm_now()
     {
-
-
         $type = $this->input->post('type');
 
         switch ($type) {
@@ -81,7 +73,6 @@ class Export extends CI_Controller
 
     private function customers()
     {
-
         $this->load->dbutil();
         $this->load->helper('file');
         $this->load->helper('download');
@@ -101,7 +92,6 @@ class Export extends CI_Controller
         echo "\xEF\xBB\xBF"; // Byte Order Mark
         echo $this->dbutil->csv_from_result($query);
         //  force_download('customers_' . $this->date . '.csv', );
-
     }
 
     private function suppliers()
@@ -124,7 +114,7 @@ class Export extends CI_Controller
         echo $this->dbutil->csv_from_result($query);
     }
 
-    function transactions()
+    public function transactions()
     {
         $this->load->model('transactions_model');
         $data['accounts'] = $this->transactions_model->acc_list();
@@ -135,7 +125,7 @@ class Export extends CI_Controller
         $this->load->view('fixed/footer');
     }
 
-    function transactions_o()
+    public function transactions_o()
     {
         $whr = '';
         if ($this->aauth->get_user()->loc) {
@@ -175,7 +165,7 @@ class Export extends CI_Controller
     }
 
 
-    function products()
+    public function products()
     {
         $head['title'] = "Export Products";
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -184,7 +174,7 @@ class Export extends CI_Controller
         $this->load->view('fixed/footer');
     }
 
-    function products_o()
+    public function products_o()
     {
         $whr = '';
         if ($this->aauth->get_user()->loc) {
@@ -219,10 +209,8 @@ class Export extends CI_Controller
     }
 
 
-    function account()
+    public function account()
     {
-
-
         $this->load->model('transactions_model');
         $this->load->model('employee_model');
         $data['cat'] = $this->transactions_model->categories();
@@ -235,7 +223,7 @@ class Export extends CI_Controller
         $this->load->view('fixed/footer');
     }
 
-    function accounts_o()
+    public function accounts_o()
     {
         $this->load->model('reports_model');
         $this->load->model('accounts_model');
@@ -256,7 +244,9 @@ class Export extends CI_Controller
 
         $loc = location($this->aauth->get_user()->loc);
         $company = '<strong>' . $loc['cname'] . '</strong><br>' . $loc['address'] . '<br>' . $loc['city'] . ', ' . $loc['region'] . '<br>' . $loc['country'] . ' -  ' . $loc['postbox'] . '<br>' . $this->lang->line('Phone') . ': ' . $loc['phone'] . '<br> ' . $this->lang->line('Email') . ': ' . $loc['email'];
-        if ($loc['taxid']) $company .= '<br>' . $this->lang->line('Tax') . ' ID: ' . $loc['taxid'];
+        if ($loc['taxid']) {
+            $company .= '<br>' . $this->lang->line('Tax') . ' ID: ' . $loc['taxid'];
+        }
         $data['lang']['company'] = $company;
 
 
@@ -277,7 +267,7 @@ class Export extends CI_Controller
         $pdf->Output('Statement' . $pay_acc . '.pdf', 'D');
     }
 
-    function employee()
+    public function employee()
     {
         $this->load->model('reports_model');
         $this->load->model('accounts_model');
@@ -298,7 +288,9 @@ class Export extends CI_Controller
         $data['lang']['var2'] = $data['employee']['email'];
         $loc = location($this->aauth->get_user()->loc);
         $company = '<strong>' . $loc['cname'] . '</strong><br>' . $loc['address'] . '<br>' . $loc['city'] . ', ' . $loc['region'] . '<br>' . $loc['country'] . ' -  ' . $loc['postbox'] . '<br>' . $this->lang->line('Phone') . ': ' . $loc['phone'] . '<br> ' . $this->lang->line('Email') . ': ' . $loc['email'];
-        if ($loc['taxid']) $company .= '<br>' . $this->lang->line('Tax') . ' ID: ' . $loc['taxid'];
+        if ($loc['taxid']) {
+            $company .= '<br>' . $this->lang->line('Tax') . ' ID: ' . $loc['taxid'];
+        }
         $data['lang']['company'] = $company;
 
 
@@ -319,7 +311,7 @@ class Export extends CI_Controller
         $pdf->Output('Statement' . $pay_acc . '.pdf', 'D');
     }
 
-    function trans_cat()
+    public function trans_cat()
     {
         $this->load->model('reports_model');
         $this->load->model('transactions_model');
@@ -339,7 +331,9 @@ class Export extends CI_Controller
         $data['lang']['var2'] = '';
         $loc = location($this->aauth->get_user()->loc);
         $company = '<strong>' . $loc['cname'] . '</strong><br>' . $loc['address'] . '<br>' . $loc['city'] . ', ' . $loc['region'] . '<br>' . $loc['country'] . ' -  ' . $loc['postbox'] . '<br>' . $this->lang->line('Phone') . ': ' . $loc['phone'] . '<br> ' . $this->lang->line('Email') . ': ' . $loc['email'];
-        if ($loc['taxid']) $company .= '<br>' . $this->lang->line('Tax') . ' ID: ' . $loc['taxid'];
+        if ($loc['taxid']) {
+            $company .= '<br>' . $this->lang->line('Tax') . ' ID: ' . $loc['taxid'];
+        }
         $data['lang']['company'] = $company;
         $html = $this->load->view('accounts/statementpdf-' . LTR, $data, true);
 
@@ -358,7 +352,7 @@ class Export extends CI_Controller
         $pdf->Output('Statement' . $data['lang']['var1'] . '.pdf', 'D');
     }
 
-    function customer()
+    public function customer()
     {
         $this->load->model('reports_model');
         $this->load->model('customers_model');
@@ -374,7 +368,9 @@ class Export extends CI_Controller
 
         $loc = location($this->aauth->get_user()->loc);
         $company = '<strong>' . $loc['cname'] . '</strong><br>' . $loc['address'] . '<br>' . $loc['city'] . ', ' . $loc['region'] . '<br>' . $loc['country'] . ' -  ' . $loc['postbox'] . '<br>' . $this->lang->line('Phone') . ': ' . $loc['phone'] . '<br> ' . $this->lang->line('Email') . ': ' . $loc['email'];
-        if ($loc['taxid']) $company .= '<br>' . $this->lang->line('Tax') . ' ID: ' . $loc['taxid'];
+        if ($loc['taxid']) {
+            $company .= '<br>' . $this->lang->line('Tax') . ' ID: ' . $loc['taxid'];
+        }
         $data['lang']['company'] = $company;
 
 
@@ -395,7 +391,7 @@ class Export extends CI_Controller
         $pdf->Output('Statement' . $customer . '.pdf', 'D');
     }
 
-    function supplier()
+    public function supplier()
     {
         $this->load->model('reports_model');
         $this->load->model('supplier_model');
@@ -410,7 +406,9 @@ class Export extends CI_Controller
 
         $loc = location($this->aauth->get_user()->loc);
         $company = '<strong>' . $loc['cname'] . '</strong><br>' . $loc['address'] . '<br>' . $loc['city'] . ', ' . $loc['region'] . '<br>' . $loc['country'] . ' -  ' . $loc['postbox'] . '<br>' . $this->lang->line('Phone') . ': ' . $loc['phone'] . '<br> ' . $this->lang->line('Email') . ': ' . $loc['email'];
-        if ($loc['taxid']) $company .= '<br>' . $this->lang->line('Tax') . ' ID: ' . $loc['taxid'];
+        if ($loc['taxid']) {
+            $company .= '<br>' . $this->lang->line('Tax') . ' ID: ' . $loc['taxid'];
+        }
         $data['lang']['company'] = $company;
 
         $html = $this->load->view('supplier/statementpdf', $data, true);
@@ -425,10 +423,8 @@ class Export extends CI_Controller
         $pdf->Output('Statement' . $customer . '.pdf', 'D');
     }
 
-    function taxstatement()
+    public function taxstatement()
     {
-
-
         $head['title'] = "Export TAX Report";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
@@ -436,7 +432,7 @@ class Export extends CI_Controller
         $this->load->view('fixed/footer');
     }
 
-    function taxstatement_o()
+    public function taxstatement_o()
     {
         $whr = '';
         $whr2 = '';
@@ -465,7 +461,7 @@ class Export extends CI_Controller
             $dom = xml_dom();
             $MoneyData = xml_add_child($dom, 'MoneyData');
             xml_add_attribute($MoneyData, 'ExpDate', date('Y-m-d'));
-            xml_add_attribute($MoneyData, 'ExpTime',  date('H:i:s'));
+            xml_add_attribute($MoneyData, 'ExpTime', date('H:i:s'));
             xml_add_attribute($MoneyData, 'ExpZkratka', '_FV');
             xml_add_attribute($MoneyData, 'HospRokDo', date('Y') . '-12-31');
             xml_add_attribute($MoneyData, 'HospRokOd', date('Y') . '-01-01');
@@ -483,8 +479,6 @@ class Export extends CI_Controller
             $xml_result = $query->result_array();
 
             foreach ($xml_result as $xml_row) {
-
-
                 //loop
                 $FaktVyd = xml_add_child($SeznamFaktVyd, 'FaktVyd');
                 xml_add_child($FaktVyd, 'Doklad', $xml_row['tid']);
@@ -595,7 +589,6 @@ class Export extends CI_Controller
                 $product_xml_result = $product_query->result_array();
 
                 foreach ($product_xml_result as $product_xml_row) {
-
                     //products loop
                     $Polozka = xml_add_child($SeznamPolozek, 'Polozka');
 
@@ -646,7 +639,6 @@ class Export extends CI_Controller
 
 
         if ($general_flag) {
-
             $this->load->dbutil();
 
             if ($trans_type == 'Sales') {
@@ -655,7 +647,6 @@ class Export extends CI_Controller
 
                 $csv_result = $this->dbutil->csv_from_result($query);
             } else {
-
                 $where = " WHERE (DATE(gtg_purchase.invoicedate) BETWEEN '$sdate' AND '$edate') $whr";
                 $query = $this->db->query("SELECT concat('$prefix',gtg_purchase.tid) AS receipt_number,concat('$curr',gtg_purchase.total) AS amount,gtg_purchase.tax AS tax,gtg_supplier.name AS supplier_name,gtg_supplier.company AS Company_Name,gtg_purchase.invoicedate AS date FROM gtg_purchase LEFT JOIN gtg_supplier ON gtg_purchase.csd=gtg_supplier.id" . $where);
 
@@ -676,10 +667,8 @@ class Export extends CI_Controller
         }
     }
 
-    function people_products()
+    public function people_products()
     {
-
-
         $this->load->model('transactions_model');
         $data['accounts'] = $this->transactions_model->acc_list();
         $head['title'] = "Export Product Transactions";
@@ -690,7 +679,7 @@ class Export extends CI_Controller
     }
 
 
-    function cust_products_o()
+    public function cust_products_o()
     {
         $this->load->model('reports_model');
         $this->load->model('customers_model');
@@ -722,7 +711,7 @@ class Export extends CI_Controller
         $pdf->Output('Statement' . $customer . '.pdf', 'D');
     }
 
-    function sup_products_o()
+    public function sup_products_o()
     {
         $this->load->model('reports_model');
         $this->load->model('supplier_model');

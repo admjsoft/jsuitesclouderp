@@ -33,22 +33,22 @@
             </thead>
             <tbody>
             <?php $i = 1;
-            foreach ($currency_list as $row) {
-                $cid = $row['id'];
-                $title = $row['code'];
-                $enable = $row['symbol'];
-                $dev_mode = $row['rate'];
+        foreach ($currency_list as $row) {
+            $cid = $row['id'];
+            $title = $row['code'];
+            $enable = $row['symbol'];
+            $dev_mode = $row['rate'];
 
-                echo "<tr>
+            echo "<tr>
                     <td>$i</td>
                     <td>$title</td>
                     <td>$enable</td>
                     <td>$dev_mode</td>
                   
                     <td><a href='" . base_url("paymentgateways/edit_currency?id=$cid") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i> " . $this->lang->line('Edit') . "</a> <a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='fa fa-trash'></i></a></td></tr>";
-                $i++;
-            }
-            ?>
+            $i++;
+        }
+        ?>
             </tbody>
             <tfoot>
             <tr>

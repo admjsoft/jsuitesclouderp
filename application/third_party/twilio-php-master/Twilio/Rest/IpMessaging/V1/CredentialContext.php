@@ -15,15 +15,17 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class CredentialContext extends InstanceContext {
+class CredentialContext extends InstanceContext
+{
     /**
      * Initialize the CredentialContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $sid The sid
-     * @return \Twilio\Rest\IpMessaging\V1\CredentialContext 
+     * @return \Twilio\Rest\IpMessaging\V1\CredentialContext
      */
-    public function __construct(Version $version, $sid) {
+    public function __construct(Version $version, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -34,11 +36,12 @@ class CredentialContext extends InstanceContext {
 
     /**
      * Fetch a CredentialInstance
-     * 
+     *
      * @return CredentialInstance Fetched CredentialInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -52,12 +55,13 @@ class CredentialContext extends InstanceContext {
 
     /**
      * Update the CredentialInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return CredentialInstance Updated CredentialInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -81,20 +85,22 @@ class CredentialContext extends InstanceContext {
 
     /**
      * Deletes the CredentialInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

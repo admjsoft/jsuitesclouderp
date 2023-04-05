@@ -18,7 +18,7 @@ class PotentialPayerInfo extends PayPalModel
      * Email address representing the potential payer.
      * @deprecated Not publicly available
      * @param string $email
-     * 
+     *
      * @return $this
      */
     public function setEmail($email)
@@ -41,7 +41,7 @@ class PotentialPayerInfo extends PayPalModel
      * ExternalRememberMe id representing the potential payer
      * @deprecated Not publicly available
      * @param string $external_remember_me_id
-     * 
+     *
      * @return $this
      */
     public function setExternalRememberMeId($external_remember_me_id)
@@ -64,7 +64,7 @@ class PotentialPayerInfo extends PayPalModel
      * Account Number representing the potential payer
      * @deprecated Not publicly available
      * @param string $account_number
-     * 
+     *
      * @return $this
      */
     public function setAccountNumber($account_number)
@@ -87,7 +87,7 @@ class PotentialPayerInfo extends PayPalModel
      * Billing address of the potential payer.
      * @deprecated Not publicly available
      * @param \PayPal\Api\Address $billing_address
-     * 
+     *
      * @return $this
      */
     public function setBillingAddress($billing_address)
@@ -105,5 +105,4 @@ class PotentialPayerInfo extends PayPalModel
     {
         return $this->billing_address;
     }
-
 }

@@ -150,8 +150,8 @@ color:#fff !important;
                                 <div class="card-body " style="max-width:400px;margin-right: auto;margin-left: auto;">
                                     <?php
                                     $attributes = array('class' => 'form-horizontal form-simple mt-5 mb-2', 'id' => 'login_form');
-                                    echo form_open('user/checklogin', $attributes);
-                                    ?>
+echo form_open('user/checklogin', $attributes);
+?>
                                     <fieldset class="form-group position-relative has-icon-left">
                                     <small class="tcolor"><strong><?php echo $this->lang->line('Email') ?></strong></small>
                                         <input type="text" class="form-control" id="user-name" name="username"

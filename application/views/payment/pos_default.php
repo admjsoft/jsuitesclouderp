@@ -21,18 +21,18 @@
                         <select class="form-control" name="gateway"><?php
                             echo "<option value='" . $current['key1'] . "'>--" . $this->lang->line('Do not change') . "--</option>";
 
-                            foreach ($gateway as $row) {
-                                $cid = $row['id'];
-                                $title = $row['name'];
-                                if ($row['surcharge'] > 0) {
-                                    $surcharge_t = true;
-                                    $fee = '+( ' . amountFormat_s($row['surcharge']) . ' %)';
-                                } else {
-                                    $fee = '';
-                                }
-                                echo "<option value='$cid'>$title $fee</option>";
-                            }
-                            ?>
+                foreach ($gateway as $row) {
+                    $cid = $row['id'];
+                    $title = $row['name'];
+                    if ($row['surcharge'] > 0) {
+                        $surcharge_t = true;
+                        $fee = '+( ' . amountFormat_s($row['surcharge']) . ' %)';
+                    } else {
+                        $fee = '';
+                    }
+                    echo "<option value='$cid'>$title $fee</option>";
+                }
+                ?>
                         </select>
                     </div>
                 </div>

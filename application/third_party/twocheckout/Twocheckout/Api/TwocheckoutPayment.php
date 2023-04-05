@@ -2,7 +2,6 @@
 
 class Twocheckout_Payment extends Twocheckout
 {
-
     public static function retrieve()
     {
         $request = new Twocheckout_Api_Requester();
@@ -20,5 +19,4 @@ class Twocheckout_Payment extends Twocheckout
         $response = Twocheckout_Util::returnResponse($result);
         return $response;
     }
-
 }

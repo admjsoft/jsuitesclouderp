@@ -33,22 +33,21 @@ namespace Stripe;
  */
 class Customer extends ApiResource
 {
-    const OBJECT_NAME = 'customer';
-
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Delete;
     use ApiOperations\NestedResource;
     use ApiOperations\Retrieve;
     use ApiOperations\Update;
+    public const OBJECT_NAME = 'customer';
 
     /**
      * Possible string representations of the customer's type of tax exemption.
      * @link https://stripe.com/docs/api/customers/object#customer_object-tax_exempt
      */
-    const TAX_EXEMPT_NONE    = 'none';
-    const TAX_EXEMPT_EXEMPT  = 'exempt';
-    const TAX_EXEMPT_REVERSE = 'reverse';
+    public const TAX_EXEMPT_NONE    = 'none';
+    public const TAX_EXEMPT_EXEMPT  = 'exempt';
+    public const TAX_EXEMPT_REVERSE = 'reverse';
 
     public static function getSavedNestedResources()
     {
@@ -61,9 +60,9 @@ class Customer extends ApiResource
         return $savedNestedResources;
     }
 
-    const PATH_BALANCE_TRANSACTIONS = '/balance_transactions';
-    const PATH_SOURCES = '/sources';
-    const PATH_TAX_IDS = '/tax_ids';
+    public const PATH_BALANCE_TRANSACTIONS = '/balance_transactions';
+    public const PATH_SOURCES = '/sources';
+    public const PATH_TAX_IDS = '/tax_ids';
 
     /**
      * @param array|null $params

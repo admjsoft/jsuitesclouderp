@@ -2,7 +2,9 @@
 
 
 
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 
 class Registerlog
@@ -37,7 +39,9 @@ class Registerlog
         if ($this->RI->aauth->get_user()->loc) {
             $this->RI->db->group_start();
             $this->RI->db->where('gtg_users.loc', $this->RI->aauth->get_user()->loc);
-            if (BDATA) $this->RI->db->or_where('gtg_users.loc', 0);
+            if (BDATA) {
+                $this->RI->db->or_where('gtg_users.loc', 0);
+            }
             $this->RI->db->group_end();
         } elseif (!BDATA) {
             $this->RI->db->where('gtg_users.loc', 0);
@@ -66,14 +70,13 @@ class Registerlog
         return $this->RI->db->insert('gtg_register', $data);
     }
 
-    public function update($id, $cash = 0,  $card = 0, $bank = 0, $cheque = 0, $change = 0)
+    public function update($id, $cash = 0, $card = 0, $bank = 0, $cheque = 0, $change = 0)
     {
-
-        $this->RI->db->set('cash', "cash+$cash", FALSE);
-        $this->RI->db->set('card', "card+$card", FALSE);
-        $this->RI->db->set('bank', "bank+$bank", FALSE);
-        $this->RI->db->set('cheque', "cheque+$cheque", FALSE);
-        $this->RI->db->set('r_change', "r_change+$change", FALSE);
+        $this->RI->db->set('cash', "cash+$cash", false);
+        $this->RI->db->set('card', "card+$card", false);
+        $this->RI->db->set('bank', "bank+$bank", false);
+        $this->RI->db->set('cheque', "cheque+$cheque", false);
+        $this->RI->db->set('r_change', "r_change+$change", false);
         $this->RI->db->where('uid', $id);
         $this->RI->db->where('active', 1);
         $this->RI->db->update('gtg_register');
@@ -83,7 +86,7 @@ class Registerlog
     public function close($id)
     {
         $this->RI->db->set('active', 0);
-        $this->RI->db->set('c_date',  date('Y-m-d H:i:s'));
+        $this->RI->db->set('c_date', date('Y-m-d H:i:s'));
         $this->RI->db->where('uid', $id);
         $this->RI->db->where('active', 1);
         $this->RI->db->update('gtg_register');
@@ -94,7 +97,9 @@ class Registerlog
         $this->RI->db->select('gtg_register.*,gtg_users.username,gtg_users.loc');
         $this->RI->db->from('gtg_register');
         $this->RI->db->join('gtg_users', 'gtg_register.uid=gtg_users.id', 'left');
-        if ($loc)    $this->RI->db->where('gtg_users.loc', $loc);
+        if ($loc) {
+            $this->RI->db->where('gtg_users.loc', $loc);
+        }
         $query = $this->RI->db->get();
         $result = $query->result_array();
 

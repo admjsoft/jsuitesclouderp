@@ -1,6 +1,5 @@
 <div class="card card-block">
     <?php if ($message) {
-
         echo '<div id = "notify" class="alert alert-success"  >
             <a href = "#" class="close" data - dismiss = "alert" >&times;</a >
 
@@ -29,21 +28,21 @@
             <tbody>
             <?php $i = 1;
 
-            foreach ($keys as $row) {
-                $id = $row['id'];
-                $key = $row['key'];
-                $datec = $row['date_created'];
+    foreach ($keys as $row) {
+        $id = $row['id'];
+        $key = $row['key'];
+        $datec = $row['date_created'];
 
-                echo "<tr>
+        echo "<tr>
                     <td>$i</td>
                     <td>$key</td>
                     <td>$datec</td>
                  
                     
                     <td><a href='#' data-object-id='" . $id . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='fa fa-trash'></i></a></td></tr>";
-                $i++;
-            }
-            ?>
+        $i++;
+    }
+    ?>
             </tbody>
             <tfoot>
             <tr>

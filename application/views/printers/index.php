@@ -29,18 +29,18 @@
                 </thead>
                 <tbody>
                 <?php $i = 1;
-                foreach ($printers as $row) {
-                    $loc = location($row['val4']);
-                    echo "<tr>
+                        foreach ($printers as $row) {
+                            $loc = location($row['val4']);
+                            echo "<tr>
                     <td>$i</td>
                     <td>" . $row['val1'] . "</td>
                     <td>" . $loc['cname'] . "</td>
                     <td>" . $row['val2'] . "</td>
                    
                     <td><a href='" . base_url('printer/view?id=' . $row['id']) . "' class='btn btn-success btn-xs'><i class='icon-file-text'></i> " . $this->lang->line('View') . "</a>&nbsp;<a href='" . base_url('printer/edit?id=' . $row['id']) . "' class='btn btn-warning btn-xs'><i class='icon-pencil'></i> " . $this->lang->line('Edit') . "</a>&nbsp;<a href='#' data-object-id='" . $row['id'] . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='fa fa-trash'></i></a></td></tr>";
-                    $i++;
-                }
-                ?>
+                            $i++;
+                        }
+                        ?>
                 </tbody>
                 <tfoot>
                 <tr>

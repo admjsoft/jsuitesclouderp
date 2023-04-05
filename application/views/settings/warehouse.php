@@ -23,11 +23,11 @@
 
                             <?php
                             echo '<option value="' . $ware['key1'] . '">*' . $this->lang->line('Do not change') . '</option>';
-                            echo '<option value="0">*' . $this->lang->line('All') . '</option>';
-                            foreach ($warehouses as $row) {
-                                echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                            }
-                            ?>
+                echo '<option value="0">*' . $this->lang->line('All') . '</option>';
+                foreach ($warehouses as $row) {
+                    echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                }
+                ?>
 
                         </select>
                     </div>

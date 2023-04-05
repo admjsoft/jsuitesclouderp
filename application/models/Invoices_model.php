@@ -6,10 +6,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Invoices_model extends CI_Model
 {
-    var $table = 'gtg_invoices';
-    var $column_order = array(null, 'gtg_invoices.tid', 'gtg_customers.name', 'gtg_invoices.invoicedate', 'gtg_invoices.total', 'gtg_invoices.status', null);
-    var $column_search = array('gtg_invoices.tid', 'gtg_customers.name', 'gtg_invoices.invoicedate', 'gtg_invoices.total', 'gtg_invoices.status');
-    var $order = array('gtg_invoices.tid' => 'desc');
+    public $table = 'gtg_invoices';
+    public $column_order = array(null, 'gtg_invoices.tid', 'gtg_customers.name', 'gtg_invoices.invoicedate', 'gtg_invoices.total', 'gtg_invoices.status', null);
+    public $column_search = array('gtg_invoices.tid', 'gtg_customers.name', 'gtg_invoices.invoicedate', 'gtg_invoices.total', 'gtg_invoices.status');
+    public $order = array('gtg_invoices.tid' => 'desc');
 
     public function __construct()
     {
@@ -55,7 +55,6 @@ class Invoices_model extends CI_Model
 
     public function invoice_products($id)
     {
-
         $this->db->select('*');
         $this->db->from('gtg_invoice_items');
         $this->db->where('tid', $id);
@@ -65,7 +64,6 @@ class Invoices_model extends CI_Model
 
     public function items_with_product($id)
     {
-
         $this->db->select('gtg_invoice_items.*,gtg_products.qty AS alert');
         $this->db->from('gtg_invoice_items');
         $this->db->where('tid', $id);
@@ -76,7 +74,6 @@ class Invoices_model extends CI_Model
 
     public function currencies()
     {
-
         $this->db->select('*');
         $this->db->from('gtg_currencies');
         $query = $this->db->get();
@@ -103,7 +100,9 @@ class Invoices_model extends CI_Model
         $this->db->from('gtg_warehouse');
         if ($this->aauth->get_user()->loc) {
             $this->db->where('loc', $this->aauth->get_user()->loc);
-            if (BDATA)  $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
         } elseif (!BDATA) {
             $this->db->where('loc', 0);
         }
@@ -115,7 +114,6 @@ class Invoices_model extends CI_Model
 
     public function invoice_transactions($id)
     {
-
         $this->db->select('*');
         $this->db->from('gtg_transactions');
         $this->db->where('tid', $id);
@@ -134,7 +132,6 @@ class Invoices_model extends CI_Model
         $result = $query->row_array();
         if ($this->aauth->get_user()->loc) {
             if ($eid) {
-
                 $res = $this->db->delete('gtg_invoices', array('id' => $id, 'eid' => $eid, 'loc' => $this->aauth->get_user()->loc));
             } else {
                 $res = $this->db->delete('gtg_invoices', array('id' => $id, 'loc' => $this->aauth->get_user()->loc));
@@ -142,16 +139,12 @@ class Invoices_model extends CI_Model
         } else {
             if (BDATA) {
                 if ($eid) {
-
                     $res = $this->db->delete('gtg_invoices', array('id' => $id, 'eid' => $eid));
                 } else {
                     $res = $this->db->delete('gtg_invoices', array('id' => $id));
                 }
             } else {
-
-
                 if ($eid) {
-
                     $res = $this->db->delete('gtg_invoices', array('id' => $id, 'eid' => $eid, 'loc' => 0));
                 } else {
                     $res = $this->db->delete('gtg_invoices', array('id' => $id, 'loc' => 0));
@@ -171,14 +164,16 @@ class Invoices_model extends CI_Model
 
                 foreach ($prevresult as $prd) {
                     $amt = $prd['qty'];
-                    $this->db->set('qty', "qty+$amt", FALSE);
+                    $this->db->set('qty', "qty+$amt", false);
                     $this->db->where('pid', $prd['pid']);
                     $this->db->update('gtg_products');
                 }
             }
 
 
-            if ($affect) $this->db->delete('gtg_invoice_items', array('tid' => $id));
+            if ($affect) {
+                $this->db->delete('gtg_invoice_items', array('tid' => $id));
+            }
 
             $data = array('type' => 9, 'rid' => $id);
             $this->db->delete('gtg_metadata', $data);
@@ -213,8 +208,7 @@ class Invoices_model extends CI_Model
         } elseif (!BDATA) {
             $this->db->where('gtg_invoices.loc', 0);
         }
-        if ($this->input->post('start_date') && $this->input->post('end_date')) // if datatable send POST for search
-        {
+        if ($this->input->post('start_date') && $this->input->post('end_date')) { // if datatable send POST for search
             $this->db->where('DATE(gtg_invoices.invoicedate) >=', datefordatabase($this->input->post('start_date')));
             $this->db->where('DATE(gtg_invoices.invoicedate) <=', datefordatabase($this->input->post('end_date')));
         }
@@ -222,39 +216,37 @@ class Invoices_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->column_search as $item) // loop column
-        {
-            if ($this->input->post('search')['value']) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
+        foreach ($this->column_search as $item) { // loop column
+            if ($this->input->post('search')['value']) { // if datatable send POST for search
+                
+                if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $this->input->post('search')['value']);
                 } else {
                     $this->db->or_like($item, $this->input->post('search')['value']);
                 }
 
-                if (count($this->column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
 
-        if (isset($_POST['order'])) // here order processing
-        {
+        if (isset($_POST['order'])) { // here order processing
             $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function get_datatables($opt = '')
+    public function get_datatables($opt = '')
     {
         $this->_get_datatables_query($opt);
-        if ($_POST['length'] != -1)
+        if ($_POST['length'] != -1) {
             $this->db->limit($_POST['length'], $_POST['start']);
+        }
         $query = $this->db->get();
         $this->db->where('gtg_invoices.i_class', 0);
         if ($this->aauth->get_user()->loc) {
@@ -266,7 +258,7 @@ class Invoices_model extends CI_Model
         return $query->result();
     }
 
-    function count_filtered($opt = '')
+    public function count_filtered($opt = '')
     {
         $this->_get_datatables_query($opt);
         if ($opt) {

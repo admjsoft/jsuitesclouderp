@@ -14,7 +14,6 @@ class Reports extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if (!$this->aauth->premission(10)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->li_a = 'data';
@@ -39,7 +38,6 @@ class Reports extends CI_Controller
     //accounts section
 
     public function accountstatement()
-
     {
         $this->load->model('transactions_model');
         $data['accounts'] = $this->transactions_model->acc_list();
@@ -51,7 +49,6 @@ class Reports extends CI_Controller
     }
 
     public function customerstatement()
-
     {
         $this->load->model('transactions_model');
         $data['accounts'] = $this->transactions_model->acc_list();
@@ -63,7 +60,6 @@ class Reports extends CI_Controller
     }
 
     public function supplierstatement()
-
     {
         $this->load->model('transactions_model');
         $data['accounts'] = $this->transactions_model->acc_list();
@@ -75,7 +71,6 @@ class Reports extends CI_Controller
     }
 
     public function viewstatement()
-
     {
         $this->load->model('accounts_model', 'accounts');
         $pay_acc = $this->input->post('pay_acc');
@@ -93,7 +88,6 @@ class Reports extends CI_Controller
     }
 
     public function customerviewstatement()
-
     {
         $this->load->model('customers_model', 'customer');
         $cid = $this->input->post('customer');
@@ -113,7 +107,6 @@ class Reports extends CI_Controller
     }
 
     public function supplierviewstatement()
-
     {
         $this->load->model('supplier_model', 'supplier');
         $cid = $this->input->post('supplier');
@@ -137,7 +130,6 @@ class Reports extends CI_Controller
 
     public function statements()
     {
-
         $pay_acc = $this->input->post('ac');
         $trans_type = $this->input->post('ty');
         $sdate = datefordatabase($this->input->post('sd'));
@@ -153,8 +145,6 @@ class Reports extends CI_Controller
 
     public function customerstatements()
     {
-
-
         $pay_acc = $this->input->post('ac');
         $trans_type = $this->input->post('ty');
         $sdate = datefordatabase($this->input->post('sd'));
@@ -172,8 +162,6 @@ class Reports extends CI_Controller
 
     public function supplierstatements()
     {
-
-
         $pay_acc = $this->input->post('ac');
         $trans_type = $this->input->post('ty');
         $sdate = datefordatabase($this->input->post('sd'));
@@ -194,7 +182,6 @@ class Reports extends CI_Controller
 
 
     public function incomestatement()
-
     {
         $head['title'] = "Income Statement";
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -214,7 +201,6 @@ class Reports extends CI_Controller
 
     public function customincome()
     {
-
         if ($this->input->post('check')) {
             $acid = $this->input->post('pay_acc');
             $sdate = datefordatabase($this->input->post('sdate'));
@@ -238,7 +224,6 @@ class Reports extends CI_Controller
 
 
     public function expensestatement()
-
     {
         $head['title'] = "Expense Statement";
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -258,7 +243,6 @@ class Reports extends CI_Controller
 
     public function customexpense()
     {
-
         if ($this->input->post('check')) {
             $acid = $this->input->post('pay_acc');
             $sdate = datefordatabase($this->input->post('sdate'));
@@ -280,10 +264,7 @@ class Reports extends CI_Controller
 
 
     public function refresh_data()
-
     {
-
-
         $head['title'] = "Refreshing Reports";
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
@@ -292,18 +273,14 @@ class Reports extends CI_Controller
     }
 
     public function refresh_process()
-
     {
-
         $this->load->model('cronjob_model');
         if ($this->cronjob_model->reports()) {
-
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Calculated')));
         }
     }
 
     public function taxstatement()
-
     {
         $this->load->model('transactions_model');
         $data['accounts'] = $this->transactions_model->acc_list();
@@ -317,10 +294,7 @@ class Reports extends CI_Controller
     }
 
     public function taxviewstatement()
-
     {
-
-
         $trans_type = $this->input->post('ty');
         $sdate = datefordatabase($this->input->post('sdate'));
         $edate = datefordatabase($this->input->post('edate'));
@@ -338,8 +312,6 @@ class Reports extends CI_Controller
 
     public function taxviewstatements_load()
     {
-
-
         $trans_type = $this->input->post('ty');
         $sdate = datefordatabase($this->input->post('sd'));
         $edate = datefordatabase($this->input->post('ed'));
@@ -347,12 +319,15 @@ class Reports extends CI_Controller
 
         if ($trans_type == 'Sales') {
             $where = " WHERE (DATE(gtg_invoices.invoicedate) BETWEEN '$sdate' AND '$edate' )";
-            if ($lid > 0) $where .= " AND (gtg_invoices.loc=$lid)";
+            if ($lid > 0) {
+                $where .= " AND (gtg_invoices.loc=$lid)";
+            }
             $query = $this->db->query("SELECT gtg_customers.taxid AS VAT_Number,gtg_invoices.tid AS invoice_number,gtg_invoices.total AS amount,gtg_invoices.tax AS tax,gtg_customers.name AS customer_name,gtg_customers.company AS Company_Name,gtg_invoices.invoicedate AS date FROM gtg_invoices LEFT JOIN gtg_customers ON gtg_invoices.csd=gtg_customers.id" . $where);
         } else {
-
             $where = " WHERE (DATE(gtg_purchase.invoicedate) BETWEEN '$sdate' AND '$edate') ";
-            if ($lid > 0) $where .= " AND (gtg_invoices.loc=$lid)";
+            if ($lid > 0) {
+                $where .= " AND (gtg_invoices.loc=$lid)";
+            }
             $query = $this->db->query("SELECT gtg_supplier.taxid AS VAT_Number,gtg_purchase.tid AS invoice_number,gtg_purchase.total AS amount,gtg_purchase.tax AS tax,gtg_supplier.name AS customer_name,gtg_supplier.company AS Company_Name,gtg_purchase.invoicedate AS date FROM gtg_purchase LEFT JOIN gtg_supplier ON gtg_purchase.csd=gtg_supplier.id" . $where);
         }
 
@@ -372,7 +347,6 @@ class Reports extends CI_Controller
 
 
     public function profitstatement()
-
     {
         $head['title'] = "Profit Statement";
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -392,7 +366,6 @@ class Reports extends CI_Controller
 
     public function customprofit()
     {
-
         if ($this->input->post('check')) {
             $lid = $this->input->post('pay_acc');
             $sdate = datefordatabase($this->input->post('sdate'));
@@ -420,7 +393,6 @@ class Reports extends CI_Controller
 
 
     public function sales()
-
     {
         $head['title'] = "Sales Statement";
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -440,7 +412,6 @@ class Reports extends CI_Controller
 
     public function customsales()
     {
-
         if ($this->input->post('check')) {
             $lid = $this->input->post('pay_acc');
             $sdate = datefordatabase($this->input->post('sdate'));
@@ -466,7 +437,6 @@ class Reports extends CI_Controller
 
     // products section
     public function products()
-
     {
         $head['title'] = "Products Statement";
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -526,14 +496,12 @@ class Reports extends CI_Controller
     public function fetch_data()
     {
         if ($this->input->get('p')) {
-
             $data = $this->reports->fetchdata($this->input->get('p'));
             echo json_encode(array('status' => 'Success', 'message' => 'Calculated', 'p1' => $data['p1'], 'p2' => $data['p2'], 'p3' => $data['p3'], 'p4' => $data['p4']));
         }
     }
 
     public function commission()
-
     {
         if ($this->input->post('check')) {
             $lid = $this->input->post('pay_acc');

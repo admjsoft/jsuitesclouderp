@@ -1,5 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class System_model extends CI_Model
 {
@@ -42,7 +43,5 @@ class System_model extends CI_Model
                 $this->config->set_item('dformat2', "yy-mm-dd");
                 break;
         }
-
-
     }
 }

@@ -627,28 +627,28 @@ class PHPMailer
     /**
      * Error severity: message only, continue processing.
      */
-    const STOP_MESSAGE = 0;
+    public const STOP_MESSAGE = 0;
 
     /**
      * Error severity: message, likely ok to continue processing.
      */
-    const STOP_CONTINUE = 1;
+    public const STOP_CONTINUE = 1;
 
     /**
      * Error severity: message, plus full stop, critical error reached.
      */
-    const STOP_CRITICAL = 2;
+    public const STOP_CRITICAL = 2;
 
     /**
      * SMTP RFC standard line ending.
      */
-    const CRLF = "\r\n";
+    public const CRLF = "\r\n";
 
     /**
      * The maximum line length allowed by RFC 2822 section 2.1.1
      * @var integer
      */
-    const MAX_LINE_LENGTH = 998;
+    public const MAX_LINE_LENGTH = 998;
 
     /**
      * Constructor.
@@ -657,7 +657,7 @@ class PHPMailer
     public function __construct($exceptions = null)
     {
         if ($exceptions !== null) {
-            $this->exceptions = (boolean)$exceptions;
+            $this->exceptions = (bool)$exceptions;
         }
     }
 
@@ -727,10 +727,10 @@ class PHPMailer
             case 'html':
                 //Cleans up output a bit for a better looking, HTML-safe output
                 echo htmlentities(
-                        preg_replace('/[\r\n]+/', '', $str),
-                        ENT_QUOTES,
-                        'UTF-8'
-                    )
+                    preg_replace('/[\r\n]+/', '', $str),
+                    ENT_QUOTES,
+                    'UTF-8'
+                )
                     . "<br>\n";
                 break;
             case 'echo':
@@ -738,10 +738,10 @@ class PHPMailer
                 //Normalize line breaks
                 $str = preg_replace('/\r\n?/ms', "\n", $str);
                 echo gmdate('Y-m-d H:i:s') . "\t" . str_replace(
-                        "\n",
-                        "\n                   \t                  ",
-                        trim($str)
-                    ) . "\n";
+                    "\n",
+                    "\n                   \t                  ",
+                    trim($str)
+                ) . "\n";
         }
     }
 
@@ -1108,7 +1108,7 @@ class PHPMailer
                  * @copyright 2009-2010 Michael Rushton
                  * Feel free to use and redistribute this code. But please keep this copyright notice.
                  */
-                return (boolean)preg_match(
+                return (bool)preg_match(
                     '/^(?!(?>(?1)"?(?>\\\[ -~]|[^"])"?(?1)){255,})(?!(?>(?1)"?(?>\\\[ -~]|[^"])"?(?1)){65,}@)' .
                     '((?>(?>(?>((?>(?>(?>\x0D\x0A)?[\t ])+|(?>[\t ]*\x0D\x0A)?[\t ]+)?)(\((?>(?2)' .
                     '(?>[\x01-\x08\x0B\x0C\x0E-\'*-\[\]-\x7F]|\\\[\x00-\x7F]|(?3)))*(?2)\)))+(?2))|(?2))?)' .
@@ -1122,7 +1122,7 @@ class PHPMailer
                 );
             case 'pcre':
                 //An older regex that doesn't need a recent PCRE
-                return (boolean)preg_match(
+                return (bool)preg_match(
                     '/^(?!(?>"?(?>\\\[ -~]|[^"])"?){255,})(?!(?>"?(?>\\\[ -~]|[^"])"?){65,}@)(?>' .
                     '[!#-\'*+\/-9=?^-~-]+|"(?>(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\xFF]))*")' .
                     '(?>\.(?>[!#-\'*+\/-9=?^-~-]+|"(?>(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\xFF]))*"))*' .
@@ -1140,7 +1140,7 @@ class PHPMailer
                  * This is the pattern used in the HTML5 spec for validation of 'email' type form input elements.
                  * @link http://www.whatwg.org/specs/web-apps/current-work/#e-mail-state-(type=email)
                  */
-                return (boolean)preg_match(
+                return (bool)preg_match(
                     '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}' .
                     '[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/sD',
                     $address
@@ -1153,7 +1153,7 @@ class PHPMailer
                     and strpos($address, '@') != strlen($address) - 1);
             case 'php':
             default:
-                return (boolean)filter_var($address, FILTER_VALIDATE_EMAIL);
+                return (bool)filter_var($address, FILTER_VALIDATE_EMAIL);
         }
     }
 
@@ -1296,7 +1296,8 @@ class PHPMailer
             // Sign with DKIM if enabled
             if (!empty($this->DKIM_domain)
                 && !empty($this->DKIM_selector)
-                && (!empty($this->DKIM_private_string)
+                && (
+                    !empty($this->DKIM_private_string)
                     || (!empty($this->DKIM_private) && file_exists($this->DKIM_private))
                 )
             ) {
@@ -1518,7 +1519,7 @@ class PHPMailer
     public function getSMTPInstance()
     {
         if (!is_object($this->smtp)) {
-            $this->smtp = new SMTP;
+            $this->smtp = new SMTP();
         }
         return $this->smtp;
     }
@@ -1654,7 +1655,7 @@ class PHPMailer
             }
             $host = $hostinfo[3];
             $port = $this->Port;
-            $tport = (integer)$hostinfo[4];
+            $tport = (int)$hostinfo[4];
             if ($tport > 0 and $tport < 65536) {
                 $port = $tport;
             }
@@ -1793,7 +1794,7 @@ class PHPMailer
             }
         }
         $this->language = $PHPMAILER_LANG;
-        return (boolean)$foundlang; // Returns false if language not found
+        return (bool)$foundlang; // Returns false if language not found
     }
 
     /**
@@ -1837,8 +1838,8 @@ class PHPMailer
             return $this->secureHeader($addr[0]);
         } else {
             return $this->encodeHeader($this->secureHeader($addr[1]), 'phrase') . ' <' . $this->secureHeader(
-                    $addr[0]
-                ) . '>';
+                $addr[0]
+            ) . '>';
         }
     }
 
@@ -2056,9 +2057,9 @@ class PHPMailer
 
         // sendmail and mail() extract Bcc from the header before sending
         if ((
-                $this->Mailer == 'sendmail' or $this->Mailer == 'qmail' or $this->Mailer == 'mail'
-            )
-            and count($this->bcc) > 0
+            $this->Mailer == 'sendmail' or $this->Mailer == 'qmail' or $this->Mailer == 'mail'
+        )
+        and count($this->bcc) > 0
         ) {
             $result .= $this->addrAppend('Bcc', $this->bcc);
         }
@@ -2153,7 +2154,7 @@ class PHPMailer
                 if ($this->Encoding == '8bit') {
                     $result .= $this->headerLine('Content-Transfer-Encoding', '8bit');
                 }
-                // The only remaining alternatives are quoted-printable and base64, which are both 7bit compatible
+            // The only remaining alternatives are quoted-printable and base64, which are both 7bit compatible
             } else {
                 $result .= $this->headerLine('Content-Transfer-Encoding', $this->Encoding);
             }
@@ -2531,7 +2532,6 @@ class PHPMailer
                 6 => $disposition,
                 7 => 0
             );
-
         } catch (phpmailerException $exc) {
             $this->setError($exc->getMessage());
             $this->edebug($exc->getMessage());
@@ -2778,10 +2778,11 @@ class PHPMailer
                 }
                 $matchcount = preg_match_all('/[^\040\041\043-\133\135-\176]/', $str, $matches);
                 break;
-            /** @noinspection PhpMissingBreakStatementInspection */
+                /** @noinspection PhpMissingBreakStatementInspection */
             case 'comment':
                 $matchcount = preg_match_all('/[()"]/', $str, $matches);
-            // Intentional fall-through
+                // Intentional fall-through
+                // no break
             case 'text':
             default:
                 $matchcount += preg_match_all('/[\000-\010\013\014\016-\037\177-\377]/', $str, $matches);
@@ -2842,7 +2843,7 @@ class PHPMailer
      */
     public function has8bitChars($text)
     {
-        return (boolean)preg_match('/[\x80-\xFF]/', $text);
+        return (bool)preg_match('/[\x80-\xFF]/', $text);
     }
 
     /**
@@ -2927,8 +2928,7 @@ class PHPMailer
         $line_max = 76,
         /** @noinspection PhpUnusedParameterInspection */
         $space_conv = false
-    )
-    {
+    ) {
         return $this->encodeQP($string, $line_max);
     }
 
@@ -2950,12 +2950,13 @@ class PHPMailer
                 // RFC 2047 section 5.3
                 $pattern = '^A-Za-z0-9!*+\/ -';
                 break;
-            /** @noinspection PhpMissingBreakStatementInspection */
+                /** @noinspection PhpMissingBreakStatementInspection */
             case 'comment':
                 // RFC 2047 section 5.2
                 $pattern = '\(\)"';
-            // intentional fall-through
-            // for this reason we build the $pattern without including delimiters and []
+                // intentional fall-through
+                // for this reason we build the $pattern without including delimiters and []
+                // no break
             case 'text':
             default:
                 // RFC 2047 section 5.1
@@ -2997,8 +2998,7 @@ class PHPMailer
         $encoding = 'base64',
         $type = '',
         $disposition = 'attachment'
-    )
-    {
+    ) {
         // If a MIME type is not specified, try to work it out from the file name
         if ($type == '') {
             $type = self::filenameToType($filename);
@@ -3085,8 +3085,7 @@ class PHPMailer
         $encoding = 'base64',
         $type = '',
         $disposition = 'inline'
-    )
-    {
+    ) {
         // If a MIME type is not specified, try to work it out from the name
         if ($type == '' and !empty($name)) {
             $type = self::filenameToType($name);
@@ -3950,7 +3949,7 @@ class PHPMailer
     public static function hasLineLongerThanMax($str)
     {
         //+2 to include CRLF line break for a 1000 total
-        return (boolean)preg_match('/^(.{' . (self::MAX_LINE_LENGTH + 2) . ',})/m', $str);
+        return (bool)preg_match('/^(.{' . (self::MAX_LINE_LENGTH + 2) . ',})/m', $str);
     }
 
     /**

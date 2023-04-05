@@ -174,7 +174,9 @@
     </style>
 </head>
 
-<body <?php if (LTR == 'rtl') echo 'dir="rtl"'; ?>>
+<body <?php if (LTR == 'rtl') {
+    echo 'dir="rtl"';
+} ?>>
 
 <div class="invoice-box">
     <table>
@@ -230,16 +232,22 @@
             <td><strong><?php echo $this->config->item('ctitle'); ?></strong><br>
                 <?php echo
                     $this->config->item('address') . '<br>' . $this->config->item('city') . ',' . $this->config->item('country') . '<br>' . $this->lang->line('Phone') . ': ' . $this->config->item('phone') . '<br> ' . $this->lang->line('Email') . ': ' . $this->config->item('email');
-                if ($this->config->item('taxno')) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $this->config->item('taxno');
-                ?>
+    if ($this->config->item('taxno')) {
+        echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $this->config->item('taxno');
+    }
+    ?>
             </td>
 
             <td>
                 <?php echo '<strong>' . $invoice['name'] . '</strong><br>';
-                if ($invoice['company']) echo $invoice['company'] . '<br>';
-                echo $invoice['address'] . '<br>' . $invoice['city'] . '<br>' . $this->lang->line('Phone') . ': ' . $invoice['phone'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
-                if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
-                ?>
+    if ($invoice['company']) {
+        echo $invoice['company'] . '<br>';
+    }
+    echo $invoice['address'] . '<br>' . $invoice['city'] . '<br>' . $this->lang->line('Phone') . ': ' . $invoice['phone'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
+    if ($invoice['taxid']) {
+        echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
+    }
+    ?>
             </td>
         </tr><?php if ($invoice['name_s']) { ?>
 
@@ -247,11 +255,11 @@
 
                 <td>
                     <?php echo '<strong>' . $this->lang->line('Shipping Address') . '</strong>:<br>';
-                    echo $invoice['name_s'] . '<br>';
+            echo $invoice['name_s'] . '<br>';
 
-                    echo $invoice['address_s'] . '<br>' . $invoice['city_s'] . '<br> ' . $this->lang->line('Phone') . ': ' . $invoice['phone_s'] . '<br> ' . $this->lang->line('Email') . ': ' . $invoice['email_s'];
+            echo $invoice['address_s'] . '<br>' . $invoice['city_s'] . '<br> ' . $this->lang->line('Phone') . ': ' . $invoice['phone_s'] . '<br> ' . $this->lang->line('Email') . ': ' . $invoice['email_s'];
 
-                    ?>
+            ?>
                 </td>
             </tr>
         <?php } ?>
@@ -273,9 +281,13 @@
                 <?php echo $this->lang->line('Qty') ?>
             </td>
 
-            <?php if ($invoice['tax'] > 0) echo '<td>' . $this->lang->line('Tax') . '</td>';
+            <?php if ($invoice['tax'] > 0) {
+                echo '<td>' . $this->lang->line('Tax') . '</td>';
+            }
 
-            if ($invoice['discount'] > 0) echo '<td>' . $this->lang->line('Discount') . '</td>'; ?>
+            if ($invoice['discount'] > 0) {
+                echo '<td>' . $this->lang->line('Discount') . '</td>';
+            } ?>
             <td class="t_center">
                 <?php echo $this->lang->line('SubTotal') ?>
             </td>
@@ -283,49 +295,47 @@
 
         <?php
         $fill = true;
-        $sub_t = 0;
-        foreach ($products as $row) {
+    $sub_t = 0;
+    foreach ($products as $row) {
+        $cols = 3;
 
-            $cols = 3;
-
-            if ($fill == true) {
-                $flag = ' mfill';
-            } else {
-                $flag = '';
-            }
-            $sub_t += $row['price'] * $row['qty'];
+        if ($fill == true) {
+            $flag = ' mfill';
+        } else {
+            $flag = '';
+        }
+        $sub_t += $row['price'] * $row['qty'];
 
 
-            echo '<tr class="item' . $flag . '"> 
+        echo '<tr class="item' . $flag . '"> 
                             <td>' . $row['product'] . '</td>
 							<td style="width:12%;">' . amountExchange($row['price'], $invoice['multi']) . '</td>
                             <td style="width:6%;" >' . amountFormat_general($row['qty']) . '</td>   ';
-            if ($invoice['tax'] > 0) {
-                $cols++;
-                echo '<td style="width:16%;">' . amountExchange($row['totaltax'], $invoice['multi']) . ' <span class="tax">(' . amountFormat_s($row['tax']) . '%)</span></td>';
-            }
-            if ($invoice['discount'] > 0) {
-                $cols++;
-                echo ' <td style="width:16%;">' . amountExchange($row['totaldiscount'], $invoice['multi']) . '</td>';
-            }
-            echo '<td class="t_center">' . amountExchange($row['subtotal'], $invoice['multi']) . '</td>
+        if ($invoice['tax'] > 0) {
+            $cols++;
+            echo '<td style="width:16%;">' . amountExchange($row['totaltax'], $invoice['multi']) . ' <span class="tax">(' . amountFormat_s($row['tax']) . '%)</span></td>';
+        }
+        if ($invoice['discount'] > 0) {
+            $cols++;
+            echo ' <td style="width:16%;">' . amountExchange($row['totaldiscount'], $invoice['multi']) . '</td>';
+        }
+        echo '<td class="t_center">' . amountExchange($row['subtotal'], $invoice['multi']) . '</td>
                         </tr>';
-            if ($row['product_des']) {
-                $cc = $cols + 1;
-                echo '<tr class="item' . $flag . ' descr"> 
+        if ($row['product_des']) {
+            $cc = $cols + 1;
+            echo '<tr class="item' . $flag . ' descr"> 
                             <td colspan="' . $cc . '">' . $row['product_des'] . '<br>&nbsp;</td>
 							
                         </tr>';
-            }
-            $fill = !$fill;
-
         }
+        $fill = !$fill;
+    }
 
-        if ($invoice['shipping'] > 0) {
-            $cols++;
-        }
+    if ($invoice['shipping'] > 0) {
+        $cols++;
+    }
 
-        ?>
+    ?>
 
 
     </table>
@@ -357,27 +367,25 @@
             <td>' . amountExchange($invoice['tax'], $invoice['multi']) . '</td>
         </tr>';
         }
-        if ($invoice['discount'] > 0) {
-            echo '<tr>
+    if ($invoice['discount'] > 0) {
+        echo '<tr>
 
 
             <td>' . $this->lang->line('Total Discount') . ':</td>
 
             <td>' . amountExchange($invoice['discount'], $invoice['multi']) . '</td>
         </tr>';
-
-        }
-        if ($invoice['shipping'] > 0) {
-            echo '<tr>
+    }
+    if ($invoice['shipping'] > 0) {
+        echo '<tr>
 
 
             <td>' . $this->lang->line('Shipping') . ':</td>
 
             <td>' . amountExchange($invoice['shipping'], $invoice['multi']) . '</td>
         </tr>';
-
-        }
-        ?>
+    }
+    ?>
         <tr>
 
 
@@ -387,7 +395,6 @@
     $rming = $invoice['total'] - $invoice['pamnt'];
     if ($rming < 0) {
         $rming = 0;
-
     }
     echo amountExchange($rming, $invoice['multi']);
     echo '</strong></td>

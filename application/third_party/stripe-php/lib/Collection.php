@@ -14,9 +14,8 @@ namespace Stripe;
  */
 class Collection extends StripeObject implements \IteratorAggregate
 {
-    const OBJECT_NAME = 'list';
-
     use ApiOperations\Request;
+    public const OBJECT_NAME = 'list';
 
     /** @var array */
     protected $filters = [];

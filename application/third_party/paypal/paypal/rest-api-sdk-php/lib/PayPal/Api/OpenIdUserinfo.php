@@ -1,4 +1,5 @@
 <?php
+
 namespace PayPal\Api;
 
 use PayPal\Common\PayPalResourceModel;
@@ -33,7 +34,6 @@ use PayPal\Rest\ApiContext;
  */
 class OpenIdUserinfo extends PayPalResourceModel
 {
-
     /**
      * Subject - Identifier for the End-User at the Issuer.
      *
@@ -512,7 +512,7 @@ class OpenIdUserinfo extends PayPalResourceModel
     {
         static $allowedParams = array('schema' => 1);
 
-        $params = is_array($params)  ? $params : array();
+        $params = is_array($params) ? $params : array();
 
         if (!array_key_exists('schema', $params)) {
             $params['schema'] = 'openid';

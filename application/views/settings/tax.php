@@ -39,12 +39,8 @@
 
                             <?php if (GST_INCL == 'inclusive') {
                                 echo '<option value="inclusive">*Inclusive*</option>';
-
-
                             } else {
                                 echo '<option value="yes">*Exclusive*</option>';
-
-
                             } ?>
                             <option value="inclusive">Inclusive</option>
                             <option value="yes">Exclusive</option>

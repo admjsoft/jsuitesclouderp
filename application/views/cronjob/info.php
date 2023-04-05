@@ -1,6 +1,5 @@
 <div class="card card-block">
     <?php if ($message) {
-
         echo '<div id = "notify" class="alert alert-success"  >
             <a href = "#" class="close" data - dismiss = "alert" >&times;</a >
 

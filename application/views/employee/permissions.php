@@ -45,36 +45,52 @@
                         <tbody>
                         <?php $i = 1;
 
-                        foreach ($permission as $row) {
-                            $i = $row['id'];
-                            $module = $row['module'];
+                foreach ($permission as $row) {
+                    $i = $row['id'];
+                    $module = $row['module'];
 
-                            echo "<tr>
+                    echo "<tr>
                     <td>$i</td>
                     <td>$module</td>"; ?>
 
                             <td><input type="checkbox" name="r_<?= $i ?>_1"
-                                       class="m-1" <?php if ($row['r_1']) echo 'checked="checked"' ?>></td>
+                                       class="m-1" <?php if ($row['r_1']) {
+                                           echo 'checked="checked"';
+                                       } ?>></td>
                             <td><input type="checkbox" name="r_<?= $i ?>_2"
-                                       class="m-1" <?php if ($row['r_2']) echo 'checked="checked"' ?>></td>
+                                       class="m-1" <?php if ($row['r_2']) {
+                                           echo 'checked="checked"';
+                                       } ?>></td>
                             <td><input type="checkbox" name="r_<?= $i ?>_3"
-                                       class="m-1" <?php if ($row['r_3']) echo 'checked="checked"' ?>></td>
+                                       class="m-1" <?php if ($row['r_3']) {
+                                           echo 'checked="checked"';
+                                       } ?>></td>
                             <td><input type="checkbox" name="r_<?= $i ?>_4"
-                                       class="m-1" <?php if ($row['r_4']) echo 'checked="checked"' ?>></td>
+                                       class="m-1" <?php if ($row['r_4']) {
+                                           echo 'checked="checked"';
+                                       } ?>></td>
                             <td><input type="checkbox" name="r_<?= $i ?>_5"
-                                       class="m-1" <?php if ($row['r_5']) echo 'checked="checked"' ?>></td>
+                                       class="m-1" <?php if ($row['r_5']) {
+                                           echo 'checked="checked"';
+                                       } ?>></td>
                             <td><input type="checkbox" name="r_<?= $i ?>_6"
-                                       class="m-1" <?php if ($row['r_6']) echo 'checked="checked"' ?>></td>
+                                       class="m-1" <?php if ($row['r_6']) {
+                                           echo 'checked="checked"';
+                                       } ?>></td>
                             <td><input type="checkbox" name="r_<?= $i ?>_7"
-                                       class="m-1" <?php if ($row['r_7']) echo 'checked="checked"' ?>></td>
+                                       class="m-1" <?php if ($row['r_7']) {
+                                           echo 'checked="checked"';
+                                       } ?>></td>
                             <td><input type="checkbox" name="r_<?= $i ?>_8"
-                                       class="m-1" <?php if ($row['r_8']) echo 'checked="checked"' ?>></td>
+                                       class="m-1" <?php if ($row['r_8']) {
+                                           echo 'checked="checked"';
+                                       } ?>></td>
                             <?php
                             echo "
                     </tr>";
-                            //  $i++;
-                        }
-                        ?>
+                    //  $i++;
+                }
+                ?>
                         </tbody>
                         <tfoot>
                         <tr>

@@ -22,18 +22,20 @@ use Twilio\Version;
  * @property string friendlyName
  * @property string sid
  */
-class AuthCallsIpAccessControlListMappingInstance extends InstanceResource {
+class AuthCallsIpAccessControlListMappingInstance extends InstanceResource
+{
     /**
      * Initialize the AuthCallsIpAccessControlListMappingInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $accountSid The unique id of the account that sent the call
      * @param string $domainSid A string that uniquely identifies the SIP Domain
      * @param string $sid Fetch by unique IP Access Control List Sid
-     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypes\AuthTypeCalls\AuthCallsIpAccessControlListMappingInstance 
+     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypes\AuthTypeCalls\AuthCallsIpAccessControlListMappingInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $domainSid, $sid = null) {
+    public function __construct(Version $version, array $payload, $accountSid, $domainSid, $sid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -55,11 +57,12 @@ class AuthCallsIpAccessControlListMappingInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypes\AuthTypeCalls\AuthCallsIpAccessControlListMappingContext Context for this
      *                                                                                                                      AuthCallsIpAccessControlListMappingInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new AuthCallsIpAccessControlListMappingContext(
                 $this->version,
@@ -74,33 +77,36 @@ class AuthCallsIpAccessControlListMappingInstance extends InstanceResource {
 
     /**
      * Fetch a AuthCallsIpAccessControlListMappingInstance
-     * 
+     *
      * @return AuthCallsIpAccessControlListMappingInstance Fetched
      *                                                     AuthCallsIpAccessControlListMappingInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Deletes the AuthCallsIpAccessControlListMappingInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->proxy()->delete();
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -115,10 +121,11 @@ class AuthCallsIpAccessControlListMappingInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

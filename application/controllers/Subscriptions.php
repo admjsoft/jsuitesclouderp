@@ -3,8 +3,6 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use Mike42\Escpos\PrintConnectors\FilePrintConnector;
-use Mike42\Escpos\Printer;
 
 class Subscriptions extends CI_Controller
 {
@@ -51,7 +49,6 @@ class Subscriptions extends CI_Controller
     //edit invoice
     public function edit()
     {
-
         $tid = intval($this->input->get('id'));
         $data['id'] = $tid;
         $data['title'] = "Edit Invoice $tid";
@@ -60,7 +57,9 @@ class Subscriptions extends CI_Controller
         $data['terms'] = $this->invocies->billingterms();
         $data['currency'] = $this->invocies->currencies();
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
+        if ($data['invoice']) {
+            $data['products'] = $this->invocies->invoice_products($tid);
+        }
         $head['title'] = "Edit Invoice #$tid";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->invocies->warehouses();
@@ -69,7 +68,9 @@ class Subscriptions extends CI_Controller
         $this->load->library("Common");
         $data['taxlist'] = $this->common->taxlist_edit($data['invoice']['taxstatus']);
         $this->load->view('fixed/header', $head);
-        if ($data['invoice']) $this->load->view('subscriptions/edit', $data);
+        if ($data['invoice']) {
+            $this->load->view('subscriptions/edit', $data);
+        }
         $this->load->view('fixed/footer');
     }
 
@@ -105,7 +106,9 @@ class Subscriptions extends CI_Controller
         $subtotal = rev_amountExchange_s($this->input->post('subtotal'), $currency, $this->aauth->get_user()->loc);
         $shipping = rev_amountExchange_s($this->input->post('shipping'), $currency, $this->aauth->get_user()->loc);
         $shipping_tax = rev_amountExchange_s($this->input->post('ship_tax'), $currency, $this->aauth->get_user()->loc);
-        if ($ship_taxtype == 'incl') $shipping = $shipping - $shipping_tax;
+        if ($ship_taxtype == 'incl') {
+            $shipping = $shipping - $shipping_tax;
+        }
         $refer = $this->input->post('refer', true);
         $total = rev_amountExchange_s($this->input->post('total'), $currency, $this->aauth->get_user()->loc);
         $i = 0;
@@ -170,8 +173,7 @@ class Subscriptions extends CI_Controller
                 $prodindex++;
                 $amt = numberClean($product_qty[$key]);
                 if ($product_id[$key] > 0) {
-
-                    $this->db->set('qty', "qty-$amt", FALSE);
+                    $this->db->set('qty', "qty-$amt", false);
                     $this->db->where('pid', $product_id[$key]);
                     $this->db->update('gtg_products');
                 }
@@ -255,7 +257,6 @@ class Subscriptions extends CI_Controller
 
     public function ajax_list()
     {
-
         $list = $this->invocies->get_datatables($this->limited);
         $data = array();
         $no = $this->input->post('start');
@@ -291,26 +292,35 @@ class Subscriptions extends CI_Controller
         $data['id'] = $tid;
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
         $data['attach'] = $this->invocies->attach($tid);
-        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']) $data['activity'] = $this->invocies->invoice_transactions($tid);
+        if ($data['invoice']) {
+            $data['products'] = $this->invocies->invoice_products($tid);
+        }
+        if ($data['invoice']) {
+            $data['activity'] = $this->invocies->invoice_transactions($tid);
+        }
         $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
         $head['title'] = "Invoice " . $data['invoice']['tid'];
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
-        if ($data['invoice']) $this->load->view('subscriptions/view', $data);
+        if ($data['invoice']) {
+            $this->load->view('subscriptions/view', $data);
+        }
         $this->load->view('fixed/footer');
     }
 
 
     public function printinvoice()
     {
-
         $tid = intval($this->input->get('id'));
         $data['id'] = $tid;
         $data['title'] = "Invoice $tid";
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        if ($data['invoice']) {
+            $data['products'] = $this->invocies->invoice_products($tid);
+        }
+        if ($data['invoice']) {
+            $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        }
         $data['general'] = array('title' => $this->lang->line('Invoice'), 'person' => $this->lang->line('Customer'), 'prefix' => prefix(3), 't_type' => 0);
         ini_set('memory_limit', '64M');
         if ($data['invoice']['taxstatus'] == 'cgst' || $data['invoice']['taxstatus'] == 'igst') {
@@ -334,7 +344,6 @@ class Subscriptions extends CI_Controller
         $pdf->WriteHTML($html);
 
         if ($this->input->get('d')) {
-
             $pdf->Output('Invoice_#' . $data['invoice']['tid'] . '.pdf', 'D');
         } else {
             $pdf->Output('Invoice_#' . $data['invoice']['tid'] . '.pdf', 'I');
@@ -349,7 +358,6 @@ class Subscriptions extends CI_Controller
                 echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('DELETED')));
             } else {
-
                 echo json_encode(array('status' => 'Error', 'message' =>
                 $this->lang->line('ERROR')));
             }
@@ -361,8 +369,6 @@ class Subscriptions extends CI_Controller
 
     public function editaction()
     {
-
-
         $customer_id = $this->input->post('customer_id');
         $invocieno = $this->input->post('invocieno');
         $iid = $this->input->post('iid');
@@ -381,14 +387,18 @@ class Subscriptions extends CI_Controller
         $subtotal = rev_amountExchange_s($this->input->post('subtotal'), $currency, $this->aauth->get_user()->loc);
         $shipping = rev_amountExchange_s($this->input->post('shipping'), $currency, $this->aauth->get_user()->loc);
         $shipping_tax = rev_amountExchange_s($this->input->post('ship_tax'), $currency, $this->aauth->get_user()->loc);
-        if ($ship_taxtype == 'incl') $shipping = $shipping - $shipping_tax;
+        if ($ship_taxtype == 'incl') {
+            $shipping = $shipping - $shipping_tax;
+        }
         $refer = $this->input->post('refer', true);
         $total = rev_amountExchange_s($this->input->post('total'), $currency, $this->aauth->get_user()->loc);
         $i = 0;
 
         if ($this->limited) {
             $employee = $this->invocies->invoice_details($iid, $this->limited);
-            if ($this->aauth->get_user()->id != $employee['eid']) exit();
+            if ($this->aauth->get_user()->id != $employee['eid']) {
+                exit();
+            }
         }
         if ($discountFormat == '0') {
             $discstatus = 0;
@@ -429,7 +439,6 @@ class Subscriptions extends CI_Controller
             $product_unit = $this->input->post('unit');
             $product_hsn = $this->input->post('hsn');
             foreach ($pid as $key => $value) {
-
                 $total_discount += numberClean(@$ptotal_disc[$key]);
                 $total_tax += numberClean($ptotal_tax[$key]);
                 $data = array(
@@ -452,7 +461,7 @@ class Subscriptions extends CI_Controller
                 $prodindex++;
                 $amt = numberClean(@$product_qty[$key]) - numberClean(@$old_product_qty[$key]);
                 if ($product_id[$key] > 0) {
-                    $this->db->set('qty', "qty-$amt", FALSE);
+                    $this->db->set('qty', "qty-$amt", false);
                     $this->db->where('pid', $product_id[$key]);
                     $this->db->update('gtg_products');
                 }
@@ -475,7 +484,7 @@ class Subscriptions extends CI_Controller
                     $prid = $myArray[0];
                     $dqty = numberClean($myArray[1]);
                     if ($prid > 0) {
-                        $this->db->set('qty', "qty+$dqty", FALSE);
+                        $this->db->set('qty', "qty+$dqty", false);
                         $this->db->where('pid', $prid);
                         $this->db->update('gtg_products');
                     }
@@ -576,7 +585,6 @@ class Subscriptions extends CI_Controller
             ));
             $files = (string)$this->uploadhandler_generic->filenaam();
             if ($files != '') {
-
                 $this->invocies->meta_insert($id, 1, $files);
             }
         }
@@ -584,14 +592,17 @@ class Subscriptions extends CI_Controller
 
     public function delivery()
     {
-
         $tid = intval($this->input->get('id'));
 
         $data['id'] = $tid;
         $data['title'] = "Invoice $tid";
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        if ($data['invoice']) {
+            $data['products'] = $this->invocies->invoice_products($tid);
+        }
+        if ($data['invoice']) {
+            $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        }
 
         ini_set('memory_limit', '64M');
 
@@ -607,7 +618,6 @@ class Subscriptions extends CI_Controller
         $pdf->WriteHTML($html);
 
         if ($this->input->get('d')) {
-
             $pdf->Output('DO_#' . $data['invoice']['tid'] . '.pdf', 'D');
         } else {
             $pdf->Output('DO_#' . $data['invoice']['tid'] . '.pdf', 'I');
@@ -616,14 +626,17 @@ class Subscriptions extends CI_Controller
 
     public function proforma()
     {
-
         $tid = intval($this->input->get('id'));
 
         $data['id'] = $tid;
         $data['title'] = "Invoice $tid";
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        if ($data['invoice']) {
+            $data['products'] = $this->invocies->invoice_products($tid);
+        }
+        if ($data['invoice']) {
+            $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        }
         ini_set('memory_limit', '64M');
         $html = $this->load->view('subscriptions/proforma', $data, true);
         //PDF Rendering

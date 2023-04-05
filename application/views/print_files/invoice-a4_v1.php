@@ -169,7 +169,9 @@
         .top_logo {
             max-height: 180px;
             max-width: 250px;
-        <?php if(LTR=='rtl') echo 'margin-left: 200px;' ?>
+        <?php if (LTR=='rtl') {
+            echo 'margin-left: 200px;';
+        } ?>
         }
 
     </style>
@@ -187,44 +189,66 @@
         <tbody>
         <tr>
             <td><strong><?php $loc = location($invoice['loc']);
-                    echo $loc['cname']; ?></strong><br>
+    echo $loc['cname']; ?></strong><br>
                 <?php echo
-                    $loc['address'] . '<br>' . $loc['city'] . ', ' . $loc['region'] . '<br>' . $loc['country'] . ' -  ' . $loc['postbox'] . '<br>' . $this->lang->line('Phone') . ': ' . $loc['phone'] . '<br> ' . $this->lang->line('Email') . ': ' . $loc['email'];
-                if ($loc['taxid']) echo '<br>' . $this->lang->line('TaxID') . ': ' . $loc['taxid'];
-                ?>
+    $loc['address'] . '<br>' . $loc['city'] . ', ' . $loc['region'] . '<br>' . $loc['country'] . ' -  ' . $loc['postbox'] . '<br>' . $this->lang->line('Phone') . ': ' . $loc['phone'] . '<br> ' . $this->lang->line('Email') . ': ' . $loc['email'];
+    if ($loc['taxid']) {
+        echo '<br>' . $this->lang->line('TaxID') . ': ' . $loc['taxid'];
+    }
+    ?>
             </td>
             <td>
                 <?php echo '<strong>' . $invoice['name'] . '</strong><br>';
-                if ($invoice['company']) echo $invoice['company'] . '<br>';
+    if ($invoice['company']) {
+        echo $invoice['company'] . '<br>';
+    }
 
-                echo $invoice['address'] . '<br>' . $invoice['city'] . ', ' . $invoice['region'];
-                if ($invoice['country']) echo '<br>' . $invoice['country'];
-                if ($invoice['postbox']) echo ' - ' . $invoice['postbox'];
-                if ($invoice['phone']) echo '<br>' . $this->lang->line('Phone') . ': ' . $invoice['phone'];
-                if ($invoice['email']) echo '<br> ' . $this->lang->line('Email') . ': ' . $invoice['email'];
+    echo $invoice['address'] . '<br>' . $invoice['city'] . ', ' . $invoice['region'];
+    if ($invoice['country']) {
+        echo '<br>' . $invoice['country'];
+    }
+    if ($invoice['postbox']) {
+        echo ' - ' . $invoice['postbox'];
+    }
+    if ($invoice['phone']) {
+        echo '<br>' . $this->lang->line('Phone') . ': ' . $invoice['phone'];
+    }
+    if ($invoice['email']) {
+        echo '<br> ' . $this->lang->line('Email') . ': ' . $invoice['email'];
+    }
 
-                if ($invoice['taxid']) echo '<br>' . $this->lang->line('TaxID') . ': ' . $invoice['taxid'];
-                if (is_array($c_custom_fields)) {
-                    echo '<br>';
-                    foreach ($c_custom_fields as $row) {
-                        echo $row['name'] . ': ' . $row['data'] . '<br>';
-                    }
-                }
-                ?>
+    if ($invoice['taxid']) {
+        echo '<br>' . $this->lang->line('TaxID') . ': ' . $invoice['taxid'];
+    }
+    if (is_array($c_custom_fields)) {
+        echo '<br>';
+        foreach ($c_custom_fields as $row) {
+            echo $row['name'] . ': ' . $row['data'] . '<br>';
+        }
+    }
+    ?>
                 </ul>
             </td>
         </tr><?php if (@$invoice['name_s']) { ?>
             <tr>
                 <td>
                     <?php echo '<strong>' . $this->lang->line('Shipping Address') . '</strong>:<br>';
-                    echo $invoice['name_s'] . '<br>';
-                    echo $invoice['address_s'] . '<br>' . $invoice['city_s'] . ', ' . $invoice['region_s'];
-                    if ($invoice['country_s']) echo '<br>' . $invoice['country_s'];
-                    if ($invoice['postbox_s']) echo ' - ' . $invoice['postbox_s'];
-                    if ($invoice['phone_s']) echo '<br>' . $this->lang->line('Phone') . ': ' . $invoice['phone_s'];
-                    if ($invoice['email_s']) echo '<br> ' . $this->lang->line('Email') . ': ' . $invoice['email_s'];
+            echo $invoice['name_s'] . '<br>';
+            echo $invoice['address_s'] . '<br>' . $invoice['city_s'] . ', ' . $invoice['region_s'];
+            if ($invoice['country_s']) {
+                echo '<br>' . $invoice['country_s'];
+            }
+            if ($invoice['postbox_s']) {
+                echo ' - ' . $invoice['postbox_s'];
+            }
+            if ($invoice['phone_s']) {
+                echo '<br>' . $this->lang->line('Phone') . ': ' . $invoice['phone_s'];
+            }
+            if ($invoice['email_s']) {
+                echo '<br> ' . $this->lang->line('Email') . ': ' . $invoice['email_s'];
+            }
 
-                    ?>
+            ?>
                 </td>
             </tr>
         <?php } ?>
@@ -245,85 +269,89 @@
             <td>
                 <?php echo $this->lang->line('Qty') ?>
             </td>
-            <?php if ($invoice['tax'] > 0) echo '<td>' . $this->lang->line('Tax') . '</td>';
-            if ($invoice['discount'] > 0) echo '<td>' . $this->lang->line('Discount') . '</td>'; ?>
+            <?php if ($invoice['tax'] > 0) {
+                echo '<td>' . $this->lang->line('Tax') . '</td>';
+            }
+            if ($invoice['discount'] > 0) {
+                echo '<td>' . $this->lang->line('Discount') . '</td>';
+            } ?>
             <td class="t_center">
                 <?php echo $this->lang->line('SubTotal') ?>
             </td>
         </tr>
         <?php
         $fill = true;
-        $sub_t = 0;
-        $sub_t_col = 3;
-        $n = 1;
-        foreach ($products as $row) {
-            $cols = 4;
-            if ($fill == true) {
-                $flag = ' mfill';
-            } else {
-                $flag = '';
-            }
-            $sub_t += $row['price'] * $row['qty'];
+    $sub_t = 0;
+    $sub_t_col = 3;
+    $n = 1;
+    foreach ($products as $row) {
+        $cols = 4;
+        if ($fill == true) {
+            $flag = ' mfill';
+        } else {
+            $flag = '';
+        }
+        $sub_t += $row['price'] * $row['qty'];
 
-            if ($row['serial']) $row['product_des'] .= ' - ' . $row['serial'];
-            echo '<tr class="item' . $flag . '">  <td>' . $n . '</td>
+        if ($row['serial']) {
+            $row['product_des'] .= ' - ' . $row['serial'];
+        }
+        echo '<tr class="item' . $flag . '">  <td>' . $n . '</td>
                             <td>' . $row['product'] . '</td>
 							<td style="width:12%;">' . amountExchange($row['price'], $invoice['multi'], $invoice['loc']) . '</td>
                             <td style="width:12%;" >' . +$row['qty'] . $row['unit'] . '</td>   ';
-            if ($invoice['tax'] > 0) {
-                $cols++;
-                echo '<td style="width:16%;">' . amountExchange($row['totaltax'], $invoice['multi'], $invoice['loc']) . ' <span class="tax">(' . amountFormat_s($row['tax']) . '%)</span></td>';
-            }
-            if ($invoice['discount'] > 0) {
-                $cols++;
-                echo ' <td style="width:16%;">' . amountExchange($row['totaldiscount'], $invoice['multi'], $invoice['loc']) . '</td>';
-            }
-            echo '<td class="t_center">' . amountExchange($row['subtotal'], $invoice['multi'], $invoice['loc']) . '</td></tr>';
+        if ($invoice['tax'] > 0) {
+            $cols++;
+            echo '<td style="width:16%;">' . amountExchange($row['totaltax'], $invoice['multi'], $invoice['loc']) . ' <span class="tax">(' . amountFormat_s($row['tax']) . '%)</span></td>';
+        }
+        if ($invoice['discount'] > 0) {
+            $cols++;
+            echo ' <td style="width:16%;">' . amountExchange($row['totaldiscount'], $invoice['multi'], $invoice['loc']) . '</td>';
+        }
+        echo '<td class="t_center">' . amountExchange($row['subtotal'], $invoice['multi'], $invoice['loc']) . '</td></tr>';
 
-            if ($row['product_des']) {
-                $cc = $cols++;
+        if ($row['product_des']) {
+            $cc = $cols++;
 
-                echo '<tr class="item' . $flag . ' descr">  <td> </td>
+            echo '<tr class="item' . $flag . ' descr">  <td> </td>
                             <td colspan="' . $cc . '">' . $row['product_des'] . '&nbsp;</td>
 							
                         </tr>';
-            }
-            if (CUSTOM) {
-                $p_custom_fields = $this->custom->view_fields_data($row['pid'], 4, 1);
+        }
+        if (CUSTOM) {
+            $p_custom_fields = $this->custom->view_fields_data($row['pid'], 4, 1);
 
-                if (is_array($p_custom_fields[0])) {
-                    $z_custom_fields = '';
+            if (is_array($p_custom_fields[0])) {
+                $z_custom_fields = '';
 
-                    foreach ($p_custom_fields as $row) {
-                        $z_custom_fields .= $row['name'] . ': ' . $row['data'] . '<br>';
-                    }
+                foreach ($p_custom_fields as $row) {
+                    $z_custom_fields .= $row['name'] . ': ' . $row['data'] . '<br>';
+                }
 
-                    echo '<tr class="item' . $flag . ' descr">  <td> </td>
+                echo '<tr class="item' . $flag . ' descr">  <td> </td>
                             <td colspan="' . $cc . '">' . $z_custom_fields . '&nbsp;</td>
 							
                         </tr>';
-                }
             }
-            $fill = !$fill;
-            $n++;
         }
+        $fill = !$fill;
+        $n++;
+    }
 
-        if ($invoice['shipping'] > 0) {
-
-            $sub_t_col++;
-        }
-        if ($invoice['tax'] > 0) {
-            $sub_t_col++;
-        }
-        if ($invoice['discount'] > 0) {
-            $sub_t_col++;
-        }
-        ?>
+    if ($invoice['shipping'] > 0) {
+        $sub_t_col++;
+    }
+    if ($invoice['tax'] > 0) {
+        $sub_t_col++;
+    }
+    if ($invoice['discount'] > 0) {
+        $sub_t_col++;
+    }
+    ?>
 
 
     </table>
     <br> <?php if (is_array(@$i_custom_fields)) {
-
         foreach ($i_custom_fields as $row) {
             echo $row['name'] . ': ' . $row['data'] . '<br>';
         }
@@ -336,20 +364,20 @@
         <tr>
             <td class="myco2" rowspan="<?php echo $sub_t_col ?>"><br>
                 <p><?php echo '<strong>' . $this->lang->line('Status') . ': ' . $this->lang->line(ucwords($invoice['status'])) . '</strong></p>';
-                    if (!$general['t_type']) {
-                        echo '<br><p>' . $this->lang->line('Total Amount') . ': ' . amountExchange($invoice['total'], $invoice['multi'], $invoice['loc']) . '</p><br><p>';
-                        if (@$round_off['other']) {
-                            $final_amount = round($invoice['total'], $round_off['active'], constant($round_off['other']));
-                            echo '<p>' . $this->lang->line('Round Off') . ' ' . $this->lang->line('Amount') . ': ' . amountExchange($final_amount, $invoice['multi'], $invoice['loc']) . '</p><br><p>';
-                        }
+    if (!$general['t_type']) {
+        echo '<br><p>' . $this->lang->line('Total Amount') . ': ' . amountExchange($invoice['total'], $invoice['multi'], $invoice['loc']) . '</p><br><p>';
+        if (@$round_off['other']) {
+            $final_amount = round($invoice['total'], $round_off['active'], constant($round_off['other']));
+            echo '<p>' . $this->lang->line('Round Off') . ' ' . $this->lang->line('Amount') . ': ' . amountExchange($final_amount, $invoice['multi'], $invoice['loc']) . '</p><br><p>';
+        }
 
-                        echo $this->lang->line('Paid Amount') . ': ' . amountExchange($invoice['pamnt'], $invoice['multi'], $invoice['loc']);
-                    }
+        echo $this->lang->line('Paid Amount') . ': ' . amountExchange($invoice['pamnt'], $invoice['multi'], $invoice['loc']);
+    }
 
-                    if ($general['t_type'] == 1) {
-                        echo '<hr>' . $this->lang->line('Proposal') . ': </br></br><small>' . $invoice['proposal'] . '</small>';
-                    }
-                    ?></p>
+    if ($general['t_type'] == 1) {
+        echo '<hr>' . $this->lang->line('Proposal') . ': </br></br><small>' . $invoice['proposal'] . '</small>';
+    }
+    ?></p>
             </td>
             <td><strong><?php echo $this->lang->line('Summary') ?>:</strong></td>
             <td>&nbsp;</td>
@@ -376,7 +404,7 @@
             <td>' . amountExchange($invoice['shipping'], $invoice['multi'], $invoice['loc']) . '</td>
         </tr>';
         }
-        ?>
+    ?>
         <tr>
             <td><?php echo $this->lang->line('Balance Due') ?>:</td>
             <td><strong><?php $rming = $invoice['total'] - $invoice['pamnt'];

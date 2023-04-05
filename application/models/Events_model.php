@@ -5,8 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Events_model extends CI_Model
 {
-
-
     /*Read the data from DB */
     public function getEvents($start, $end)
     {
@@ -19,7 +17,6 @@ class Events_model extends CI_Model
 
     public function addEvent($title, $start, $end, $description, $color)
     {
-
         $data = array(
             'title' => $title,
             'start' => $start,
@@ -40,7 +37,6 @@ class Events_model extends CI_Model
 
     public function updateEvent($id, $title, $description, $color)
     {
-
         $sql = "UPDATE gtg_events SET title = ?, description = ?, color = ? WHERE id = ?";
         $this->db->query($sql, array($title, $description, $color, $id));
         return ($this->db->affected_rows() != 1) ? false : true;
@@ -51,7 +47,6 @@ class Events_model extends CI_Model
 
     public function deleteEvent()
     {
-
         $sql = "DELETE FROM gtg_events WHERE id = ?";
         $this->db->query($sql, array($_GET['id']));
         return ($this->db->affected_rows() != 1) ? false : true;
@@ -61,7 +56,6 @@ class Events_model extends CI_Model
 
     public function dragUpdateEvent()
     {
-
         $sql = "UPDATE gtg_events SET  gtg_events.start = ? ,gtg_events.end = ?  WHERE id = ?";
         $this->db->query($sql, array($_POST['start'], $_POST['end'], $_POST['id']));
         return ($this->db->affected_rows() != 1) ? false : true;

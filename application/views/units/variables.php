@@ -27,22 +27,22 @@
             </thead>
             <tbody>
             <?php $i = 1;
-            foreach ($units as $row) {
-                $cid = $row['id'];
-                $name = $row['name'];
-                $variation = $row['variation'];
+        foreach ($units as $row) {
+            $cid = $row['id'];
+            $name = $row['name'];
+            $variation = $row['variation'];
 
 
-                echo "<tr>
+            echo "<tr>
                     <td>$i</td>
                     <td>$name</td>
                     <td>$variation</td>
                    
                  
                     <td><a href='" . base_url("units/edit_va?id=$cid") . "' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> " . $this->lang->line('Edit') . "</a>&nbsp;<a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='fa fa-trash'></i></a></td></tr>";
-                $i++;
-            }
-            ?>
+            $i++;
+        }
+        ?>
             </tbody>
             <tfoot>
             <tr>

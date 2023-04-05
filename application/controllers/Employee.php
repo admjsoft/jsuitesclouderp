@@ -13,7 +13,6 @@ class Employee extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if (!$this->aauth->premission(9)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->li_a = 'emp';
@@ -68,7 +67,6 @@ class Employee extends CI_Controller
 
     public function add()
     {
-
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Add Employee';
         $data['dept'] = $this->employee->department_list(0);
@@ -107,9 +105,12 @@ class Employee extends CI_Controller
         $region = $this->input->post('region', true);
         $country = $this->input->post('country', true);
         $postbox = $this->input->post('postbox', true);
+        $salary_type = $this->input->post('salary_type', true);
         $salary = numberClean($this->input->post('salary', true));
         $commission = $this->input->post('commission', true);
         $department = $this->input->post('department', true);
+        $epf_enabled = $this->input->post('epf_enabled', true);
+        $hrdf_enabled = $this->input->post('hrdf_enabled', true);
 
 
         $a = $this->aauth->create_user($email, $password, $username);
@@ -118,9 +119,25 @@ class Employee extends CI_Controller
             $nuid = (string)$this->aauth->get_user($a)->id;
 
             if ($nuid > 0) {
-
-
-                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary, $commission, $department);
+                $this->employee->add_employee(
+                    $nuid,
+                    (string)$this->aauth->get_user($a)->username,
+                    $name,
+                    $roleid,
+                    $phone,
+                    $address,
+                    $city,
+                    $region,
+                    $country,
+                    $postbox,
+                    $location,
+                    $salary,
+                    $commission,
+                    $department,
+                    $salary_type,
+                    $epf_enabled,
+                    $hrdf_enabled
+                );
             }
         } else {
             echo json_encode(array('status' => 'Error', 'message' =>
@@ -142,7 +159,6 @@ class Employee extends CI_Controller
 
     public function invoices_list()
     {
-
         $eid = $this->input->post('eid');
         $list = $this->employee->invoice_datatables($eid);
         $data = array();
@@ -235,7 +251,7 @@ class Employee extends CI_Controller
     }
 
 
-    function disable_user()
+    public function disable_user()
     {
         if (!$this->aauth->get_user()->roleid == 5) {
             redirect('/dashboard/', 'refresh');
@@ -248,7 +264,6 @@ class Employee extends CI_Controller
             echo json_encode(array('status' => 'Error', 'message' =>
             'You can not disable yourself!'));
         } else {
-
             $this->db->select('banned');
             $this->db->from('gtg_users');
             $this->db->where('id', $uid);
@@ -265,7 +280,7 @@ class Employee extends CI_Controller
         }
     }
 
-    function enable_user()
+    public function enable_user()
     {
         if (!$this->aauth->get_user()->roleid == 5) {
             redirect('/dashboard/', 'refresh');
@@ -278,8 +293,6 @@ class Employee extends CI_Controller
             echo json_encode(array('status' => 'Error', 'message' =>
             'You can not disable yourself!'));
         } else {
-
-
             $a = $this->aauth->unban_user($uid);
 
             echo json_encode(array('status' => 'Success', 'message' =>
@@ -287,7 +300,7 @@ class Employee extends CI_Controller
         }
     }
 
-    function delete_user()
+    public function delete_user()
     {
         if (!$this->aauth->get_user()->roleid == 5) {
             redirect('/dashboard/', 'refresh');
@@ -300,7 +313,6 @@ class Employee extends CI_Controller
             echo json_encode(array('status' => 'Error', 'message' =>
             'You can not delete yourself!'));
         } else {
-
             $this->db->delete('gtg_employees', array('id' => $uid));
 
             $this->db->delete('gtg_users', array('id' => $uid));
@@ -320,6 +332,18 @@ class Employee extends CI_Controller
 
             echo json_encode(array('status' => 'Success', 'message' =>
             '<br> Total Income: ' . amountExchange($details['credit'], 0, $this->aauth->get_user()->loc) . '<br> Total Expenses: ' . amountExchange($details['debit'], 0, $this->aauth->get_user()->loc)));
+        }
+    }
+
+    public function calc_salary()
+    {
+        $eid = $this->input->post('eid');
+
+        if ($this->employee->salary_details($eid)) {
+            $details = $this->employee->salary_details($eid);
+
+            echo json_encode(array('status' => 'Success', 'message' =>
+                '<br> Total Income: ' . amountExchange($details['credit'], 0, $this->aauth->get_user()->loc) . '<br> Total Expenses: ' . amountExchange($details['debit'], 0, $this->aauth->get_user()->loc)));
         }
     }
 
@@ -355,11 +379,32 @@ class Employee extends CI_Controller
             $country = $this->input->post('country', true);
             $postbox = $this->input->post('postbox', true);
             $location = $this->input->post('location', true);
+            $salary_type = $this->input->post('salary_type', true);
             $salary = numberClean($this->input->post('salary', true));
             $department = $this->input->post('department', true);
             $commission = $this->input->post('commission', true);
             $roleid = $this->input->post('roleid', true);
-            $this->employee->update_employee($eid, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary, $department, $commission, $roleid);
+            $epf_enabled = $this->input->post('epf_enabled', true);
+            $hrdf_enabled = $this->input->post('hrdf_enabled', true);
+            $this->employee->update_employee(
+                $eid,
+                $name,
+                $phone,
+                $phonealt,
+                $address,
+                $city,
+                $region,
+                $country,
+                $postbox,
+                $location,
+                $salary,
+                $department,
+                $commission,
+                $roleid,
+                $salary_type,
+                $epf_enabled,
+                $hrdf_enabled
+            );
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;
             $head['title'] = $head['usernm'] . ' Profile';
@@ -377,7 +422,6 @@ class Employee extends CI_Controller
 
     public function displaypic()
     {
-
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
         }
@@ -414,7 +458,6 @@ class Employee extends CI_Controller
 
     public function updatepassword()
     {
-
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
         }
@@ -428,10 +471,9 @@ class Employee extends CI_Controller
             $eid = $this->input->post('eid');
             $this->form_validation->set_rules('newpassword', 'Password', 'required');
             $this->form_validation->set_rules('renewpassword', 'Confirm Password', 'required|matches[newpassword]');
-            if ($this->form_validation->run() == FALSE) {
+            if ($this->form_validation->run() == false) {
                 echo json_encode(array('status' => 'Error', 'message' => '<br>Rules<br> Password length should  be at least 6 [a-z-0-9] allowed!<br>New Password & Re New Password should be same!'));
             } else {
-
                 $newpassword = $this->input->post('newpassword');
                 echo json_encode(array('status' => 'Success', 'message' => 'Password Updated Successfully!'));
                 $this->aauth->update_user($eid, false, $newpassword, false);
@@ -449,7 +491,6 @@ class Employee extends CI_Controller
 
     public function permissions()
     {
-
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Employee Permissions';
         $data['permission'] = $this->employee->employee_permissions();
@@ -460,7 +501,6 @@ class Employee extends CI_Controller
 
     public function permissions_update()
     {
-
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Employee Permissions';
         $permission = $this->employee->employee_permissions();
@@ -483,15 +523,33 @@ class Employee extends CI_Controller
             $val6 = 0;
             $val7 = 0;
             $val8 = 0;
-            if ($this->input->post($name1)) $val1 = 1;
-            if ($this->input->post($name2)) $val2 = 1;
-            if ($this->input->post($name3)) $val3 = 1;
-            if ($this->input->post($name4)) $val4 = 1;
-            if ($this->input->post($name5)) $val5 = 1;
-            if ($this->input->post($name6)) $val6 = 1;
-            if ($this->input->post($name7)) $val7 = 1;
-            if ($this->input->post($name8)) $val8 = 1;
-            if ($this->aauth->get_user()->roleid == 5 && $i == 9) $val5 = 1;
+            if ($this->input->post($name1)) {
+                $val1 = 1;
+            }
+            if ($this->input->post($name2)) {
+                $val2 = 1;
+            }
+            if ($this->input->post($name3)) {
+                $val3 = 1;
+            }
+            if ($this->input->post($name4)) {
+                $val4 = 1;
+            }
+            if ($this->input->post($name5)) {
+                $val5 = 1;
+            }
+            if ($this->input->post($name6)) {
+                $val6 = 1;
+            }
+            if ($this->input->post($name7)) {
+                $val7 = 1;
+            }
+            if ($this->input->post($name8)) {
+                $val8 = 1;
+            }
+            if ($this->aauth->get_user()->roleid == 5 && $i == 9) {
+                $val5 = 1;
+            }
             $data = array('r_1' => $val1, 'r_2' => $val2, 'r_3' => $val3, 'r_4' => $val4, 'r_5' => $val5, 'r_6' => $val6, 'r_7' => $val7,'r_8' => $val8);
             $this->db->set($data);
             $this->db->where('id', $i);
@@ -505,7 +563,6 @@ class Employee extends CI_Controller
 
     public function holidays()
     {
-
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Holidays';
         $this->load->view('fixed/header', $head);
@@ -561,9 +618,7 @@ class Employee extends CI_Controller
 
     public function addhday()
     {
-
         if ($this->input->post()) {
-
             $from = datefordatabase($this->input->post('from'));
             $todate = datefordatabase($this->input->post('todate'));
             $note = $this->input->post('note', true);
@@ -571,8 +626,6 @@ class Employee extends CI_Controller
             $date1 = new DateTime($from);
             $date2 = new DateTime($todate);
             if ($date1 <= $date2) {
-
-
                 if ($this->employee->addholidays($this->aauth->get_user()->loc, $from, $todate, $note)) {
                     echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('ADDED') . "   <a href='addhday' class='btn btn-indigo btn-lg'><span class='icon-plus-circle' aria-hidden='true'></span>  </a> <a href='holidays' class='btn btn-grey btn-lg'><span class='icon-eye' aria-hidden='true'></span>  </a>"));
                 }
@@ -592,10 +645,7 @@ class Employee extends CI_Controller
 
     public function editholiday()
     {
-
         if ($this->input->post()) {
-
-
             $id = $this->input->post('did');
             $from = datefordatabase($this->input->post('from'));
             $todate = datefordatabase($this->input->post('todate'));
@@ -620,7 +670,6 @@ class Employee extends CI_Controller
 
     public function departments()
     {
-
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['department_list'] = $this->employee->department_list($this->aauth->get_user()->loc);
         $head['title'] = 'Departments';
@@ -631,7 +680,6 @@ class Employee extends CI_Controller
 
     public function department()
     {
-
         $data['id'] = $this->input->get('id');
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['department'] = $this->employee->department_view($data['id'], $this->aauth->get_user()->loc);
@@ -644,7 +692,6 @@ class Employee extends CI_Controller
 
     public function delete_dep()
     {
-
         $id = $this->input->post('deleteid');
 
 
@@ -657,9 +704,7 @@ class Employee extends CI_Controller
 
     public function adddep()
     {
-
         if ($this->input->post()) {
-
             $name = $this->input->post('name', true);
 
 
@@ -669,7 +714,6 @@ class Employee extends CI_Controller
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
             }
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'Add Department';
             $this->load->view('fixed/header', $head);
@@ -680,9 +724,7 @@ class Employee extends CI_Controller
 
     public function editdep()
     {
-
         if ($this->input->post()) {
-
             $name = $this->input->post('name', true);
             $id = $this->input->post('did');
 
@@ -718,7 +760,6 @@ class Employee extends CI_Controller
 
     public function emp_search()
     {
-
         $name = $this->input->get('keyword', true);
 
 
@@ -732,7 +773,6 @@ class Employee extends CI_Controller
             echo '<ol>';
             $i = 1;
             foreach ($result as $row) {
-
                 echo "<li onClick=\"selectPay('" . $row['id'] . "','" . $row['name'] . " ','" . amountFormat_general($row['salary']) . "')\"><span>$i</span><p>" . $row['name'] . " &nbsp; &nbsp  " . $row['phone'] . "</p></li>";
                 $i++;
             }
@@ -742,7 +782,6 @@ class Employee extends CI_Controller
 
     public function payroll()
     {
-
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Employee Payroll Transactions';
 
@@ -754,7 +793,6 @@ class Employee extends CI_Controller
 
     public function payroll_emp()
     {
-
         $id = $this->input->get('id');
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Employee Payroll Transactions';
@@ -768,7 +806,6 @@ class Employee extends CI_Controller
 
     public function payrolllist()
     {
-
         $eid = $this->input->post('eid');
         $list = $this->employee->pay_get_datatables($eid);
         $data = array();
@@ -800,7 +837,6 @@ class Employee extends CI_Controller
 
     public function attendances()
     {
-
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Attendance';
         $this->load->view('fixed/header', $head);
@@ -865,14 +901,13 @@ class Employee extends CI_Controller
         $no = $this->input->post('start');
 
         foreach ($list as $obj) {
-
             $no++;
             $row = array();
             $row[] = $no;
             $row[] = $obj->name;
-            $row[] = dateformat($obj->adate) . ' &nbsp; ' . $obj->tfrom . ' - ' . $obj->tto;
-            $row[] = round((strtotime($obj->tto) - strtotime($obj->tfrom)) / 3600, 2);
-            $row[] = round($obj->actual_hours / 3600, 2);
+            $row[] = dateformat($obj->adate) . ' &nbsp; ' . $obj->tfrom . ($obj->tto ? ' - ' . $obj->tto : '');
+            $row[] = $obj->tto ? round((strtotime($obj->tto) - strtotime($obj->tfrom)) / 3600, 2) : 0;
+            $row[] = $obj->tto ? 0 : 1;
             $row[] = $obj->note;
 
             $row[] = '<a href="#" data-object-id="' . $obj->id . '" class="btn btn-danger btn-sm delete-object"><span class="fa fa-trash"></span></a>';
@@ -902,13 +937,13 @@ class Employee extends CI_Controller
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
         }
     }
-    public function employee_list(){
-
-    $list=$this->employee->list_employee();
-    $html='';
-        foreach($list as $item){
-        $html.='<option value="'.$item['id'].'">'.$item['name'].'</option>';
+    public function employee_list()
+    {
+        $list=$this->employee->list_employee();
+        $html='';
+        foreach ($list as $item) {
+            $html.='<option value="'.$item['id'].'">'.$item['name'].'</option>';
         }
-    echo $html;
+        echo $html;
     }
 }

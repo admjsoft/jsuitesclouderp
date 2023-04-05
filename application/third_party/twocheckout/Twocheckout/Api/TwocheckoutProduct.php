@@ -2,7 +2,6 @@
 
 class Twocheckout_Product extends Twocheckout
 {
-
     public static function create($params=array())
     {
         $request = new Twocheckout_Api_Requester();
@@ -14,7 +13,7 @@ class Twocheckout_Product extends Twocheckout
     public static function retrieve($params=array())
     {
         $request = new Twocheckout_Api_Requester();
-        if(array_key_exists("product_id",$params)) {
+        if (array_key_exists("product_id", $params)) {
             $urlSuffix = '/api/products/detail_product';
         } else {
             $urlSuffix = '/api/products/list_products';
@@ -38,5 +37,4 @@ class Twocheckout_Product extends Twocheckout
         $result = $request->doCall($urlSuffix, $params);
         return Twocheckout_Util::returnResponse($result);
     }
-
 }

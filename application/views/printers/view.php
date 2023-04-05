@@ -44,7 +44,7 @@
                                     <div class="stat">
                                         <div class="name"> <?php echo $this->lang->line('Business Location') ?></div>
                                         <div class="value"> <?php $loc = location($printer['val4']);
-                                            echo $loc['cname']; ?></div>
+                    echo $loc['cname']; ?></div>
 
                                     </div>
                                     <hr>

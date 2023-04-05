@@ -125,7 +125,7 @@ class POP3
     /**
      * Line break constant
      */
-    const CRLF = "\r\n";
+    public const CRLF = "\r\n";
 
     /**
      * Simple static wrapper for all-in-one POP before SMTP
@@ -144,9 +144,8 @@ class POP3
         $username = '',
         $password = '',
         $debug_level = 0
-    )
-    {
-        $pop = new POP3;
+    ) {
+        $pop = new POP3();
         return $pop->authorise($host, $port, $timeout, $username, $password, $debug_level);
     }
 
@@ -170,13 +169,13 @@ class POP3
         if (false === $port) {
             $this->port = $this->POP3_PORT;
         } else {
-            $this->port = (integer)$port;
+            $this->port = (int)$port;
         }
         // If no timeout value provided, use default
         if (false === $timeout) {
             $this->tval = $this->POP3_TIMEOUT;
         } else {
-            $this->tval = (integer)$timeout;
+            $this->tval = (int)$timeout;
         }
         $this->do_debug = $debug_level;
         $this->username = $username;

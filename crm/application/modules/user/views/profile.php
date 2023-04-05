@@ -27,7 +27,7 @@
 
                                         <img class="height-200 setpropileam"
                                              src="../../userfiles/customers/<?php $profile_pic = $user_data[0]->picture;
-                                             echo isset($profile_pic) ? $profile_pic : 'user.png'; ?>"
+                    echo isset($profile_pic) ? $profile_pic : 'user.png'; ?>"
                                              alt="User profile picture">
                                     </div>
                                     <br>

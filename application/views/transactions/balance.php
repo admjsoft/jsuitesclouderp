@@ -34,27 +34,27 @@
                     </thead>
                     <tbody>
                     <?php $i = 1;
-                    $gross = 0;
-                    foreach ($accounts as $row) {
-                        if ($row['account_type'] == 'Basic') {
-                            $aid = $row['id'];
-                            $acn = $row['acn'];
-                            $holder = $row['holder'];
+            $gross = 0;
+            foreach ($accounts as $row) {
+                if ($row['account_type'] == 'Basic') {
+                    $aid = $row['id'];
+                    $acn = $row['acn'];
+                    $holder = $row['holder'];
 
-                            $balance = $row['lastbal'];
-                            $qty = $row['adate'];
-                            echo "<tr>
+                    $balance = $row['lastbal'];
+                    $qty = $row['adate'];
+                    echo "<tr>
                     <td>$i</td>                    
                     <td>$holder</td>
                     <td>$acn</td>
                    
                     <td>" . amountExchange($balance, 0, $this->aauth->get_user()->loc) . "</td>
                     </tr>";
-                            $i++;
-                            $gross += $balance;
-                        }
-                    }
-                    ?>
+                    $i++;
+                    $gross += $balance;
+                }
+            }
+            ?>
                     </tbody>
                     <tfoot>
                     <tr>
@@ -84,27 +84,27 @@
                     </thead>
                     <tbody>
                     <?php $i = 1;
-                    $gross1 = 0;
-                    foreach ($accounts as $row) {
-                        if ($row['account_type'] == 'Assets') {
-                            $aid = $row['id'];
-                            $acn = $row['acn'];
-                            $holder = $row['holder'];
+            $gross1 = 0;
+            foreach ($accounts as $row) {
+                if ($row['account_type'] == 'Assets') {
+                    $aid = $row['id'];
+                    $acn = $row['acn'];
+                    $holder = $row['holder'];
 
-                            $balance = $row['lastbal'];
-                            $qty = $row['adate'];
-                            echo "<tr>
+                    $balance = $row['lastbal'];
+                    $qty = $row['adate'];
+                    echo "<tr>
                     <td>$i</td>                    
                     <td>$holder</td>
                     <td>$acn</td>
                    
                     <td>" . amountExchange($balance, 0, $this->aauth->get_user()->loc) . "</td>
                     </tr>";
-                            $i++;
-                            $gross1 += $balance;
-                        }
-                    }
-                    ?>
+                    $i++;
+                    $gross1 += $balance;
+                }
+            }
+            ?>
                     </tbody>
                     <tfoot>
                     <tr>
@@ -135,27 +135,27 @@
                     </thead>
                     <tbody>
                     <?php $i = 1;
-                    $gross2 = 0;
-                    foreach ($accounts as $row) {
-                        if ($row['account_type'] == 'Expenses') {
-                            $aid = $row['id'];
-                            $acn = $row['acn'];
-                            $holder = $row['holder'];
+            $gross2 = 0;
+            foreach ($accounts as $row) {
+                if ($row['account_type'] == 'Expenses') {
+                    $aid = $row['id'];
+                    $acn = $row['acn'];
+                    $holder = $row['holder'];
 
-                            $balance = $row['lastbal'];
-                            $qty = $row['adate'];
-                            echo "<tr>
+                    $balance = $row['lastbal'];
+                    $qty = $row['adate'];
+                    echo "<tr>
                     <td>$i</td>                    
                     <td>$holder</td>
                     <td>$acn</td>
                    
                     <td>" . amountExchange($balance, 0, $this->aauth->get_user()->loc) . "</td>
                     </tr>";
-                            $i++;
-                            $gross2 += $balance;
-                        }
-                    }
-                    ?>
+                    $i++;
+                    $gross2 += $balance;
+                }
+            }
+            ?>
                     </tbody>
                     <tfoot>
                     <tr>
@@ -186,27 +186,27 @@
                     </thead>
                     <tbody>
                     <?php $i = 1;
-                    $gross3 = 0;
-                    foreach ($accounts as $row) {
-                        if ($row['account_type'] == 'Income') {
-                            $aid = $row['id'];
-                            $acn = $row['acn'];
-                            $holder = $row['holder'];
+            $gross3 = 0;
+            foreach ($accounts as $row) {
+                if ($row['account_type'] == 'Income') {
+                    $aid = $row['id'];
+                    $acn = $row['acn'];
+                    $holder = $row['holder'];
 
-                            $balance = $row['lastbal'];
-                            $qty = $row['adate'];
-                            echo "<tr>
+                    $balance = $row['lastbal'];
+                    $qty = $row['adate'];
+                    echo "<tr>
                     <td>$i</td>                    
                     <td>$holder</td>
                     <td>$acn</td>
                    
                     <td>" . amountExchange($balance, 0, $this->aauth->get_user()->loc) . "</td>
                     </tr>";
-                            $i++;
-                            $gross3 += $balance;
-                        }
-                    }
-                    ?>
+                    $i++;
+                    $gross3 += $balance;
+                }
+            }
+            ?>
                     </tbody>
                     <tfoot>
                     <tr>
@@ -237,27 +237,27 @@
                     </thead>
                     <tbody>
                     <?php $i = 1;
-                    $gross4 = 0;
-                    foreach ($accounts as $row) {
-                        if ($row['account_type'] == 'Liabilities') {
-                            $aid = $row['id'];
-                            $acn = $row['acn'];
-                            $holder = $row['holder'];
+            $gross4 = 0;
+            foreach ($accounts as $row) {
+                if ($row['account_type'] == 'Liabilities') {
+                    $aid = $row['id'];
+                    $acn = $row['acn'];
+                    $holder = $row['holder'];
 
-                            $balance = $row['lastbal'];
-                            $qty = $row['adate'];
-                            echo "<tr>
+                    $balance = $row['lastbal'];
+                    $qty = $row['adate'];
+                    echo "<tr>
                     <td>$i</td>                    
                     <td>$holder</td>
                     <td>$acn</td>
                    
                     <td>" . amountExchange($balance, 0, $this->aauth->get_user()->loc) . "</td>
                     </tr>";
-                            $i++;
-                            $gross4 += $balance;
-                        }
-                    }
-                    ?>
+                    $i++;
+                    $gross4 += $balance;
+                }
+            }
+            ?>
                     </tbody>
                     <tfoot>
                     <tr>
@@ -288,27 +288,27 @@
                     </thead>
                     <tbody>
                     <?php $i = 1;
-                    $gross5 = 0;
-                    foreach ($accounts as $row) {
-                        if ($row['account_type'] == 'Equity') {
-                            $aid = $row['id'];
-                            $acn = $row['acn'];
-                            $holder = $row['holder'];
+            $gross5 = 0;
+            foreach ($accounts as $row) {
+                if ($row['account_type'] == 'Equity') {
+                    $aid = $row['id'];
+                    $acn = $row['acn'];
+                    $holder = $row['holder'];
 
-                            $balance = $row['lastbal'];
-                            $qty = $row['adate'];
-                            echo "<tr>
+                    $balance = $row['lastbal'];
+                    $qty = $row['adate'];
+                    echo "<tr>
                     <td>$i</td>                    
                     <td>$holder</td>
                     <td>$acn</td>
                    
                     <td>" . amountExchange($balance, 0, $this->aauth->get_user()->loc) . "</td>
                     </tr>";
-                            $i++;
-                            $gross5 += $balance;
-                        }
-                    }
-                    ?>
+                    $i++;
+                    $gross5 += $balance;
+                }
+            }
+            ?>
                     </tbody>
                     <tfoot>
                     <tr>

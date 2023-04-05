@@ -177,7 +177,9 @@
     </style>
 </head>
 
-<body <?php if (LTR == 'rtl') echo 'dir="rtl"'; ?>>
+<body <?php if (LTR == 'rtl') {
+    echo 'dir="rtl"';
+} ?>>
 
 <div class="invoice-box">
     <table>
@@ -235,16 +237,22 @@
             <td><strong><?php echo $this->config->item('ctitle'); ?></strong><br>
                 <?php echo
                     $this->config->item('address') . '<br>' . $this->config->item('city') . ',' . $this->config->item('country') . '<br>' . $this->lang->line('Phone') . ': ' . $this->config->item('phone') . '<br> ' . $this->lang->line('Email') . ': ' . $this->config->item('email');
-                if ($this->config->item('taxno')) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $this->config->item('taxno');
-                ?>
+    if ($this->config->item('taxno')) {
+        echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $this->config->item('taxno');
+    }
+    ?>
             </td>
 
             <td>
                 <?php echo '<strong>' . $invoice['name'] . '</strong><br>';
-                if ($invoice['company']) echo $invoice['company'] . '<br>';
-                echo $invoice['address'] . '<br>' . $invoice['city'] . '<br>' . $this->lang->line('Phone') . ': ' . $invoice['phone'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
-                if ($invoice['taxid']) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
-                ?>
+    if ($invoice['company']) {
+        echo $invoice['company'] . '<br>';
+    }
+    echo $invoice['address'] . '<br>' . $invoice['city'] . '<br>' . $this->lang->line('Phone') . ': ' . $invoice['phone'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
+    if ($invoice['taxid']) {
+        echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $invoice['taxid'];
+    }
+    ?>
             </td>
         </tr><?php if ($invoice['name_s']) { ?>
 
@@ -252,11 +260,11 @@
 
                 <td>
                     <?php echo '<strong>' . $this->lang->line('Shipping Address') . '</strong>:<br>';
-                    echo $invoice['name_s'] . '<br>';
+            echo $invoice['name_s'] . '<br>';
 
-                    echo $invoice['address_s'] . '<br>' . $invoice['city_s'] . '<br> ' . $this->lang->line('Phone') . ': ' . $invoice['phone_s'] . '<br> ' . $this->lang->line('Email') . ': ' . $invoice['email_s'];
+            echo $invoice['address_s'] . '<br>' . $invoice['city_s'] . '<br> ' . $this->lang->line('Phone') . ': ' . $invoice['phone_s'] . '<br> ' . $this->lang->line('Email') . ': ' . $invoice['email_s'];
 
-                    ?>
+            ?>
                 </td>
             </tr>
         <?php } ?>
@@ -281,41 +289,39 @@
 
         <?php
         $fill = true;
-        $sub_t = 0;
-        foreach ($products as $row) {
+    $sub_t = 0;
+    foreach ($products as $row) {
+        $cols = 1;
 
-            $cols = 1;
-
-            if ($fill == true) {
-                $flag = ' mfill';
-            } else {
-                $flag = '';
-            }
-            $sub_t += $row['price'] * $row['qty'];
+        if ($fill == true) {
+            $flag = ' mfill';
+        } else {
+            $flag = '';
+        }
+        $sub_t += $row['price'] * $row['qty'];
 
 
-            echo '<tr class="item' . $flag . '"> 
+        echo '<tr class="item' . $flag . '"> 
                             <td>' . $row['product'] . '</td>
 							
                             <td style="width:6%;" >' . amountFormat_general($row['qty']) . '</td></tr>   ';
 
 
-            if ($row['product_des']) {
-                $cc = $cols + 1;
-                echo '<tr class="item' . $flag . ' descr"> 
+        if ($row['product_des']) {
+            $cc = $cols + 1;
+            echo '<tr class="item' . $flag . ' descr"> 
                             <td colspan="' . $cc . '">' . $row['product_des'] . '<br>&nbsp;</td>
 							
                         </tr>';
-            }
-            $fill = !$fill;
-
         }
+        $fill = !$fill;
+    }
 
-        if ($invoice['shipping'] > 0) {
-            $cols++;
-        }
+    if ($invoice['shipping'] > 0) {
+        $cols++;
+    }
 
-        ?>
+    ?>
 
 
     </table>

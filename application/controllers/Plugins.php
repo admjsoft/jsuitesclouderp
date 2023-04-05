@@ -14,26 +14,20 @@ class Plugins extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
-
     }
 
 
     public function recaptcha()
     {
-
         if ($this->input->post()) {
             $public_key = $this->input->post('publickey', true);
             $private_key = $this->input->post('privatekey', true);
             $captcha = $this->input->post('captcha');
 
             $this->plugins->recaptcha($captcha, $public_key, $private_key);
-
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'reCaptcha Security';
             $data['captcha'] = $this->plugins->config_general();
@@ -41,20 +35,16 @@ class Plugins extends CI_Controller
             $this->load->view('plugins/security', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function shortner()
     {
-
         if ($this->input->post()) {
             $key1 = $this->input->post('key1');
             $enable = $this->input->post('enable');
 
             $this->plugins->update_api(1, $key1, '', $enable);
-
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'URL Shortner';
             $data['universal'] = $this->plugins->universal_api(1);
@@ -62,12 +52,10 @@ class Plugins extends CI_Controller
             $this->load->view('plugins/shortner', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function twilio()
     {
-
         if ($this->input->post()) {
             $key1 = $this->input->post('key1');
             $key2 = $this->input->post('key2');
@@ -75,10 +63,10 @@ class Plugins extends CI_Controller
             $enable = $this->input->post('enable');
             $this->plugins->update_api(2, $key1, $key2, $enable, $sender);
 
-            if (file_exists(APPPATH . 'plugins' . DIRECTORY_SEPARATOR . 'sms.json')) unlink(APPPATH . 'plugins' . DIRECTORY_SEPARATOR . 'sms.json');
-
+            if (file_exists(APPPATH . 'plugins' . DIRECTORY_SEPARATOR . 'sms.json')) {
+                unlink(APPPATH . 'plugins' . DIRECTORY_SEPARATOR . 'sms.json');
+            }
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'Twilio SMS';
             $data['universal'] = $this->plugins->universal_api(2);
@@ -86,7 +74,6 @@ class Plugins extends CI_Controller
             $this->load->view('plugins/twilio', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function woocommerce()
@@ -96,7 +83,6 @@ class Plugins extends CI_Controller
         $data['cornkey'] = $corn['cornkey'];
 
         if ($this->input->post()) {
-
         } else {
             $this->load->model('employee_model', 'employee');
             $data['emp'] = $this->employee->list_employee();
@@ -107,11 +93,5 @@ class Plugins extends CI_Controller
             echo 'Not Installed';
             $this->load->view('fixed/footer');
         }
-
-
     }
-
-
 }
-
-

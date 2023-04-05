@@ -2,7 +2,6 @@
 
 class Twocheckout_Return extends Twocheckout
 {
-
     public static function check($params=array(), $secretWord)
     {
         $hashSecretWord = $secretWord;
@@ -17,5 +16,4 @@ class Twocheckout_Return extends Twocheckout
         }
         return Twocheckout_Util::returnResponse($result);
     }
-
 }

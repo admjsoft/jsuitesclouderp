@@ -398,7 +398,7 @@ class TypeIntelligentMailBarcode implements TypeInterface
         for ($i = 0; $i < 65; ++$i) {
             $asc = (($characters[$asc_chr[$i]] & pow(2, $asc_pos[$i])) > 0);
             $dsc = (($characters[$dsc_chr[$i]] & pow(2, $dsc_pos[$i])) > 0);
-            if ($asc AND $dsc) {
+            if ($asc and $dsc) {
                 // full bar (F)
                 $p = 0;
                 $h = 3;

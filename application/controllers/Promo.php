@@ -14,7 +14,6 @@ class Promo extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->load->library("Coupon");
@@ -23,7 +22,6 @@ class Promo extends CI_Controller
 
     public function index()
     {
-
         $head['title'] = "Promo";
         $data['totalt'] = $this->promo->count_all();
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -45,7 +43,6 @@ class Promo extends CI_Controller
             $note = $this->input->post('note', true);
             $this->promo->create($code, $amount, $qty, $valid, $link_ac, $pay_acc, $note);
         } else {
-
             $data['accounts'] = $this->promo->accountslist();
             $head['title'] = "Add Promo";
             $head['usernm'] = $this->aauth->get_user()->username;
@@ -88,7 +85,7 @@ class Promo extends CI_Controller
                     'note' => $this->lang->line('Coupon') . ' ' . $this->lang->line('Delete') . ' ' . $this->lang->line('Qty') . '-' . $promo['available'],
                     'loc' => $this->aauth->get_user()->loc
                 );
-                $this->db->set('lastbal', "lastbal+$amount", FALSE);
+                $this->db->set('lastbal', "lastbal+$amount", false);
                 $this->db->where('id', $promo['reflect']);
                 $this->db->update('gtg_accounts');
                 $this->db->insert('gtg_transactions', $data);
@@ -145,7 +142,6 @@ class Promo extends CI_Controller
 
     public function promo_stats()
     {
-
         $this->promo->promo_stats();
     }
 

@@ -4,7 +4,7 @@ namespace Stripe;
 
 abstract class WebhookSignature
 {
-    const EXPECTED_SCHEME = "v1";
+    public const EXPECTED_SCHEME = "v1";
 
     /**
      * Verifies the signature header sent by Stripe. Throws an

@@ -1,14 +1,12 @@
 <?php
 
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 use Twilio\Rest\Client;
 
 class Sms_model extends CI_Model
 {
-
-
     public function send_sms($mobile, $text_message, $flag = true)
     {
         /*
@@ -59,14 +57,14 @@ class Sms_model extends CI_Model
         $sms_service = $this->plugins->universal_api(2);
 
 
-// Your Account SID and Auth Token from twilio.com/console
+        // Your Account SID and Auth Token from twilio.com/console
         $sid = $sms_service['key1'];
         $token = $sms_service['key2'];
         $client = new Client($sid, $token);
 
 
         $message = $client->messages->create(
-        // the number you'd like to send the message to
+            // the number you'd like to send the message to
             $mobile,
             array(
                 // A Twilio phone number you purchased at twilio.com/console
@@ -87,7 +85,6 @@ class Sms_model extends CI_Model
 
     private function textlocal($mobile, $text_message, $flag)
     {
-
         $apiKey = urlencode($this->config->item('textlocal_api_key'));
         // Message details
         $numbers = array($mobile);
@@ -113,7 +110,6 @@ class Sms_model extends CI_Model
                 echo json_encode(array('status' => 'Error', 'message' => 'SMS Service Error'));
             }
         }
-
     }
 
     private function clockwork($mobile, $text_message, $flag)
@@ -148,7 +144,6 @@ class Sms_model extends CI_Model
 
     private function generic($mobile, $text_message, $flag)
     {
-
         $apiKey = urlencode($this->config->item('generic_api_key'));
         $sender = urlencode($this->config->item('generic_sender_id'));
         $text_message = rawurlencode($text_message);
@@ -159,7 +154,9 @@ class Sms_model extends CI_Model
         $post_parameters = $this->config->item('generic_parameter_names');
         $data = array($post_parameters[0] => $apiKey, $post_parameters[1] => $mobile, $post_parameters[2] => $sender, $post_parameters[3] => $text_message);
 
-        if ($this->config->item('generic_method_post')) $data[] = $this->config->item('generic_post_data');
+        if ($this->config->item('generic_method_post')) {
+            $data[] = $this->config->item('generic_post_data');
+        }
 
 
         // Prepare data for POST request
@@ -167,8 +164,12 @@ class Sms_model extends CI_Model
         $ch = curl_init($this->config->item('generic_gateway_url'));
 
 
-        if ($this->config->item('generic_method_post')) curl_setopt($ch, CURLOPT_POST, true);
-        if ($this->config->item('generic_method_post')) curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        if ($this->config->item('generic_method_post')) {
+            curl_setopt($ch, CURLOPT_POST, true);
+        }
+        if ($this->config->item('generic_method_post')) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
         curl_close($ch);
@@ -182,12 +183,10 @@ class Sms_model extends CI_Model
                 echo json_encode(array('status' => 'Error', 'message' => 'SMS Service Error'));
             }
         }
-
     }
 
     private function nexmo($mobile, $text_message, $flag)
     {
-
     }
 
     private function msg91($mobile, $text_message, $flag)
@@ -267,26 +266,23 @@ class Sms_model extends CI_Model
 
                 }
                */
-
-
     }
 
     public function bulk_sms($mobile, $text_message, $flag)
     {
-
         $username = "xxxxxxx";
 
-//Enter your login password
+        //Enter your login password
         $password = "";
 
-//Enter your Sender ID
+        //Enter your Sender ID
         $sender = "";
 
-//do not edit below
+        //do not edit below
         $mobile_number = $mobile;
         $message = $text_message;
 
-//Don't change below code use as it is
+        //Don't change below code use as it is
         $url = "https://www.bulksmsgateway.in/sendmessage.php?user=" . urlencode($username) . "&password=" . urlencode($password) . "&
 mobile=" . urlencode($mobile_number) . "&message=" . urlencode($message) . "&sender=" . urlencode($sender) . "&type=" . urlencode('3');
 
@@ -301,6 +297,4 @@ mobile=" . urlencode($mobile_number) . "&message=" . urlencode($message) . "&sen
             echo json_encode(array('status' => 'Success', 'message' => 'Message sending successful.'));
         }
     }
-
-
 }

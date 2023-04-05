@@ -1,5 +1,7 @@
 $invoice['tid'] {invoice_id}
-<?php if (LTR == 'rtl') echo 'margin-left: 200px;' ?>    {LTR}
+<?php if (LTR == 'rtl') {
+    echo 'margin-left: 200px;';
+} ?>    {LTR}
 LTR {LTR_DIRECTION}
 <?php echo $this->lang->line('Our Info') ?>  {Text_Our Info}
 <?= $general['person'] ?>  {Person_type}

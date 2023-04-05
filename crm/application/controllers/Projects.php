@@ -1,9 +1,9 @@
 <?php
 
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Projects Extends CI_Controller
+class Projects extends CI_Controller
 {
     public function __construct()
     {
@@ -13,7 +13,6 @@ class Projects Extends CI_Controller
         if (!is_login()) {
             redirect(base_url() . 'user/profile', 'refresh');
         }
-
     }
 
     //todo section
@@ -25,7 +24,6 @@ class Projects Extends CI_Controller
         $this->load->view('includes/header');
         $this->load->view('projects/index', $data);
         $this->load->view('includes/footer');
-
     }
 
     public function explore()
@@ -39,7 +37,6 @@ class Projects Extends CI_Controller
 
             if ($this->projects->add_comment($comment, $id, $this->session->userdata('user_details')[0]->cid)) {
                 $data['comment'] = true;
-
             }
 
             $head['title'] = 'Project Overview';
@@ -59,8 +56,6 @@ class Projects Extends CI_Controller
             $this->load->view('projects/explore', $data);
             $this->load->view('includes/footer');
         } else {
-
-
             $id = $this->input->get('id');
 
             $head['title'] = 'Project Overview';
@@ -82,7 +77,6 @@ class Projects Extends CI_Controller
             $this->load->view('projects/explore', $data);
             $this->load->view('includes/footer');
         }
-
     }
 
 
@@ -100,12 +94,9 @@ class Projects Extends CI_Controller
 
     public function projects_stats()
     {
-
         $project = $this->input->get('id');
         //echo $project;
         $this->projects->project_stats($project);
-
-
     }
 
 
@@ -171,6 +162,4 @@ class Projects Extends CI_Controller
         );
         echo json_encode($output);
     }
-
-
 }

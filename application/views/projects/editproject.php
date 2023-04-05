@@ -43,7 +43,7 @@
                 <div class="col-sm-4">
                     <select name="status" class="form-control">
                         <?php echo '<option value="' . $project['status'] . '">** ' . $this->lang->line($project['status']) . ' **</option>';
-                        echo " <option value='Waiting'>" . $this->lang->line('Waiting') . "</option>
+      echo " <option value='Waiting'>" . $this->lang->line('Waiting') . "</option>
                             <option value='Pending'>" . $this->lang->line('Pending') . "</option>
                             <option value='Terminated'>" . $this->lang->line('Terminated') . "</option>
                             <option value='Finished'>" . $this->lang->line('Finished') . "</option>
@@ -241,17 +241,17 @@
                 <div class="col-sm-8">
                     <select name="employee[]" class="form-control select-box" multiple="multiple">
                         <?php
-                        foreach ($emp2 as $row) {
-                            $cid = $row['id'];
-                            $title = $row['name'];
-                            echo "<option value='$cid' selected>- $title -</option>";
-                        }
-                        foreach ($emp as $row) {
-                            $cid = $row['id'];
-                            $title = $row['name'];
-                            echo "<option value='$cid'>$title</option>";
-                        }
-                        ?>
+      foreach ($emp2 as $row) {
+          $cid = $row['id'];
+          $title = $row['name'];
+          echo "<option value='$cid' selected>- $title -</option>";
+      }
+      foreach ($emp as $row) {
+          $cid = $row['id'];
+          $title = $row['name'];
+          echo "<option value='$cid'>$title</option>";
+      }
+      ?>
                     </select>
 
 

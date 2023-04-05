@@ -1,4 +1,5 @@
 <?php
+
 $lang['Date'] = "Ημερομηνία";
 $lang['Edit'] = "Επεξεργασία";
 $lang['employee_login_panel'] = "Πίνακας σύνδεσης εργαζομένων";

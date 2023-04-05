@@ -101,4 +101,3 @@
  Code for localization
 <script src="<?= assets_url() ?>app-assets/vendors/js/fullcalendar/locale/es.js?v=<?= APPVER ?>"></script>
  */
-

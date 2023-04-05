@@ -75,7 +75,7 @@
                                 <strong> <?php echo $this->lang->line('Total Tax') ?></strong>
                             </div>
                             <div class="col-3"><?php echo currency($this->aauth->get_user()->loc);
-                                ?>
+                               ?>
                                 <span id="taxr" class="mr-1">0</span>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                                 <strong> <?php echo $this->lang->line('Total Discount') ?></strong>
                             </div>
                             <div class="col-9"><?php echo currency($this->aauth->get_user()->loc);
-                                ?>
+                               ?>
                                 <span id="discs"
                                       class="lightMode mr-1">0</span>
                                 <small>(<?php echo $this->lang->line('Products') ?>)</small>
@@ -95,7 +95,7 @@
                                 <strong> <?php echo $this->lang->line('Grand Total') ?></strong>
                             </div>
                             <div class="col-9"><?php echo currency($this->aauth->get_user()->loc);
-                                ?>
+                               ?>
                                 <span class="font-medium-1 blue text-bold-600"
                                       id="bigtotal">0.00</span>
                             </div>
@@ -128,12 +128,12 @@
 
                                     <select id="employee" name="employee" class="form-control form-control-sm">
                                         <?php
-                                        foreach ($employee as $row) {
-                                            $cid = $row['id'];
-                                            $title = $row['name'];
-                                            echo "<option value='$cid'>$title</option>";
-                                        }
-                                        ?>
+                                       foreach ($employee as $row) {
+                                           $cid = $row['id'];
+                                           $title = $row['name'];
+                                           echo "<option value='$cid'>$title</option>";
+                                       }
+                            ?>
                                     </select></div>
                             </div>
                         <?php } ?>
@@ -190,9 +190,9 @@
                                                     id="v2_warehouses"
                                                     class="selectpicker form-control round teal">
                                                 <?php echo $this->common->default_warehouse();
-                                                echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
-                                                    echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                                                } ?>
+                               echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
+                                   echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                               } ?>
 
                                             </select></div>
                                         <div class="col-4 blue text-xs-center"><?php echo $this->lang->line('Tax') ?>
@@ -277,8 +277,8 @@
                                             <?php echo $this->lang->line('Payment Terms') ?> <select
                                                     name="pterms"
                                                     class="selectpicker form-control"><?php foreach ($terms as $row) {
-                                                    echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                                                } ?>
+                                                        echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                                                    } ?>
 
                                             </select>
                                             <?php if ($exchange['active'] == 1) {
@@ -349,7 +349,7 @@
                                     $title = $row['title'];
                                     echo "<option value='$cid'>$title</option>";
                                 }
-                                ?>
+                               ?>
                             </select></div>
 
 
@@ -472,12 +472,12 @@
                                 <div class="col-sm-10">
                                     <select name="customergroup" class="form-control">
                                         <?php
-                                        foreach ($customergrouplist as $row) {
-                                            $cid = $row['id'];
-                                            $title = $row['title'];
-                                            echo "<option value='$cid'>$title</option>";
-                                        }
-                                        ?>
+                                       foreach ($customergrouplist as $row) {
+                                           $cid = $row['id'];
+                                           $title = $row['title'];
+                                           echo "<option value='$cid'>$title</option>";
+                                       }
+                               ?>
                                     </select>
 
 
@@ -502,9 +502,9 @@
 
 
                                     <?php }
-                                }
+                                    }
                             }
-                            ?>
+                               ?>
                         </div>
 
 
@@ -542,19 +542,19 @@
                         <div class="col-6">
                             <label for="cardNumber"><?php echo $this->lang->line('Payment Gateways') ?></label>
                             <select class="form-control" name="gateway"><?php
-                                $surcharge_t = false;
-                                foreach ($gateway as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['name'];
-                                    if ($row['surcharge'] > 0) {
-                                        $surcharge_t = true;
-                                        $fee = '(<span class="gate_total"></span>+' . amountFormat_s($row['surcharge']) . ' %)';
-                                    } else {
-                                        $fee = '';
-                                    }
-                                    echo "<option value='$cid'>$title $fee</option>";
-                                }
-                                ?>
+                                   $surcharge_t = false;
+                               foreach ($gateway as $row) {
+                                   $cid = $row['id'];
+                                   $title = $row['name'];
+                                   if ($row['surcharge'] > 0) {
+                                       $surcharge_t = true;
+                                       $fee = '(<span class="gate_total"></span>+' . amountFormat_s($row['surcharge']) . ' %)';
+                                   } else {
+                                       $fee = '';
+                                   }
+                                   echo "<option value='$cid'>$title $fee</option>";
+                               }
+                               ?>
                             </select>
                         </div>
                         <div class="col-4"><br><img class="img-responsive pull-right"
@@ -575,7 +575,9 @@
                     </div>
                     <div class="form-group">
 
-                        <?php if ($surcharge_t) echo '<br>' . $this->lang->line('Note: Payment Processing'); ?>
+                        <?php if ($surcharge_t) {
+                            echo '<br>' . $this->lang->line('Note: Payment Processing');
+                        } ?>
 
                     </div>
                     <div class="row" style="display:none;">
@@ -679,7 +681,7 @@
                                     <?php foreach ($acc_list as $row) {
                                         echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
                                     }
-                                    ?>
+                        ?>
                                 </select></div>
                         </div>
                     <?php } ?>
@@ -979,12 +981,12 @@
 
         <?php
         $round_off = $this->custom->api_config(4);
-        if ($round_off['other'] == 'PHP_ROUND_HALF_UP') {
-            echo ' roundoff=Math.ceil(roundoff);';
-        } elseif ($round_off['other'] == 'PHP_ROUND_HALF_DOWN') {
-            echo ' roundoff=Math.floor(roundoff);';
-        }
-        ?>
+                               if ($round_off['other'] == 'PHP_ROUND_HALF_UP') {
+                                   echo ' roundoff=Math.ceil(roundoff);';
+                               } elseif ($round_off['other'] == 'PHP_ROUND_HALF_DOWN') {
+                                   echo ' roundoff=Math.floor(roundoff);';
+                               }
+                               ?>
         $('#b_total').html(' <?= $this->config->item('currency'); ?> ' + accounting.formatNumber(roundoff));
         $('#p_amount').val(accounting.formatNumber(roundoff));
 
@@ -994,13 +996,13 @@
         var am_pos = accounting.unformat($('#p_amount').val(), accounting.settings.number.decimal);
         var ttl_pos = accounting.unformat($('#invoiceyoghtml').val(), accounting.settings.number.decimal);
         <?php
-        $round_off = $this->custom->api_config(4);
-        if ($round_off['other'] == 'PHP_ROUND_HALF_UP') {
-            echo ' ttl_pos=Math.ceil(ttl_pos);';
-        } elseif ($round_off['other'] == 'PHP_ROUND_HALF_DOWN') {
-            echo ' ttl_pos=Math.floor(ttl_pos);';
-        }
-        ?>
+                               $round_off = $this->custom->api_config(4);
+                               if ($round_off['other'] == 'PHP_ROUND_HALF_UP') {
+                                   echo ' ttl_pos=Math.ceil(ttl_pos);';
+                               } elseif ($round_off['other'] == 'PHP_ROUND_HALF_DOWN') {
+                                   echo ' ttl_pos=Math.floor(ttl_pos);';
+                               }
+                               ?>
 
         var due = parseFloat(ttl_pos - am_pos).toFixed(two_fixed);
 

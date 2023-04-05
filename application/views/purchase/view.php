@@ -82,7 +82,6 @@
 
                             </div><?php
                             if ($invoice['multi'] > 0) {
-
                                 echo '<div class="tag tag-info text-xs-center mt-2">' . $this->lang->line('Payment currency is different') . '</div>';
                             }
                         } else {
@@ -140,7 +139,7 @@
                         <div class="table-responsive col-sm-12">
                             <table class="table table-striped">
                                 <thead>
-                                <?php if ($invoice['taxstatus'] == 'cgst'){ ?>
+                                <?php if ($invoice['taxstatus'] == 'cgst') { ?>
 
                                 <tr>
                                     <th>#</th>
@@ -156,13 +155,13 @@
                                 </thead>
                                 <tbody>
                                 <?php $c = 1;
-                                $sub_t = 0;
+                                    $sub_t = 0;
 
-                                foreach ($products as $row) {
-                                    $sub_t += $row['price'] * $row['qty'];
-                                    $gst = $row['totaltax'] / 2;
-                                    $rate = $row['tax'] / 2;
-                                    echo '<tr>
+                                    foreach ($products as $row) {
+                                        $sub_t += $row['price'] * $row['qty'];
+                                        $gst = $row['totaltax'] / 2;
+                                        $rate = $row['tax'] / 2;
+                                        echo '<tr>
 <th scope="row">' . $c . '</th>
                             <td>' . $row['product'] . '</td> 
                             <td>' . $row['code'] . '</td>                          
@@ -174,9 +173,9 @@
                             <td>' . amountExchange($row['subtotal'], 0, $this->aauth->get_user()->loc) . '</td>
                         </tr>';
 
-                                    echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
-                                    $c++;
-                                } ?>
+                                        echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
+                                        $c++;
+                                    } ?>
 
                                 </tbody>
                                 <?php
@@ -312,12 +311,11 @@
                                     <tr class="bg-grey bg-lighten-4">
                                         <td class="text-bold-800"><?php echo $this->lang->line('Balance Due') ?></td>
                                         <td class="text-bold-800 text-xs-right"> <?php $myp = '';
-                                            $rming = $invoice['total'] - $invoice['pamnt'];
-                                            if ($rming < 0) {
-                                                $rming = 0;
-
-                                            }
-                                            echo ' <span id="paydue">' . amountExchange($rming, 0, $this->aauth->get_user()->loc) . '</span></strong>'; ?></td>
+                        $rming = $invoice['total'] - $invoice['pamnt'];
+                        if ($rming < 0) {
+                            $rming = 0;
+                        }
+                        echo ' <span id="paydue">' . amountExchange($rming, 0, $this->aauth->get_user()->loc) . '</span></strong>'; ?></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -349,7 +347,6 @@
                         </thead>
                         <tbody id="activity">
                         <?php foreach ($activity as $row) {
-
                             echo '<tr>
                             <td>' . $row['date'] . '</td>
                             <td>' . $this->lang->line($row['method']) . '</td>
@@ -370,7 +367,7 @@
                             <p> <?php
 
                                 echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
-                                ?></p>
+                        ?></p>
                         </div>
 
                     </div>
@@ -391,7 +388,6 @@
                         </thead>
                         <tbody id="activity">
                         <?php foreach ($attach as $row) {
-
                             echo '<tr><td><a data-url="' . base_url() . 'purchase/file_handling?op=delete&name=' . $row['col1'] . '&invoice=' . $invoice['iid'] . '" class="aj_delete"><i class="btn-danger btn-lg fa fa-trash"></i></a> <a class="n_item" href="' . base_url() . 'userfiles/attach/' . $row['col1'] . '"> ' . $row['col1'] . ' </a></td></tr>';
                         } ?>
 
@@ -513,7 +509,7 @@
                                 <?php foreach ($acclist as $row) {
                                     echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
                                 }
-                                ?>
+                        ?>
                             </select></div>
                     </div>
                     <div class="row">

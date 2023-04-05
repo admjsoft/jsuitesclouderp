@@ -5,8 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Barcode_model extends CI_Model
 {
-
-
     public function locations_list()
     {
         $query = $this->db->query("SELECT * FROM gtg_locations ORDER BY id DESC");
@@ -16,7 +14,6 @@ class Barcode_model extends CI_Model
 
     public function view($id)
     {
-
         $this->db->from('locations');
         $this->db->where('id', $id);
 

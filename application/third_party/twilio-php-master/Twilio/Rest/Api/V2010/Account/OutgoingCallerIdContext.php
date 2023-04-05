@@ -14,16 +14,18 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class OutgoingCallerIdContext extends InstanceContext {
+class OutgoingCallerIdContext extends InstanceContext
+{
     /**
      * Initialize the OutgoingCallerIdContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $accountSid The account_sid
      * @param string $sid Fetch by unique outgoing-caller-id Sid
-     * @return \Twilio\Rest\Api\V2010\Account\OutgoingCallerIdContext 
+     * @return \Twilio\Rest\Api\V2010\Account\OutgoingCallerIdContext
      */
-    public function __construct(Version $version, $accountSid, $sid) {
+    public function __construct(Version $version, $accountSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -34,11 +36,12 @@ class OutgoingCallerIdContext extends InstanceContext {
 
     /**
      * Fetch a OutgoingCallerIdInstance
-     * 
+     *
      * @return OutgoingCallerIdInstance Fetched OutgoingCallerIdInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -57,12 +60,13 @@ class OutgoingCallerIdContext extends InstanceContext {
 
     /**
      * Update the OutgoingCallerIdInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return OutgoingCallerIdInstance Updated OutgoingCallerIdInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array('FriendlyName' => $options['friendlyName'], ));
@@ -84,20 +88,22 @@ class OutgoingCallerIdContext extends InstanceContext {
 
     /**
      * Deletes the OutgoingCallerIdInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -22,18 +22,20 @@ use Twilio\Version;
  * @property string uri
  * @property integer waitTime
  */
-class MemberInstance extends InstanceResource {
+class MemberInstance extends InstanceResource
+{
     /**
      * Initialize the MemberInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $accountSid The account_sid
      * @param string $queueSid A string that uniquely identifies this queue
      * @param string $callSid The call_sid
-     * @return \Twilio\Rest\Api\V2010\Account\Queue\MemberInstance 
+     * @return \Twilio\Rest\Api\V2010\Account\Queue\MemberInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $queueSid, $callSid = null) {
+    public function __construct(Version $version, array $payload, $accountSid, $queueSid, $callSid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -55,11 +57,12 @@ class MemberInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Api\V2010\Account\Queue\MemberContext Context for this
      *                                                            MemberInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new MemberContext(
                 $this->version,
@@ -74,34 +77,37 @@ class MemberInstance extends InstanceResource {
 
     /**
      * Fetch a MemberInstance
-     * 
+     *
      * @return MemberInstance Fetched MemberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Update the MemberInstance
-     * 
+     *
      * @param string $url The url
      * @param string $method The method
      * @return MemberInstance Updated MemberInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($url, $method) {
+    public function update($url, $method)
+    {
         return $this->proxy()->update($url, $method);
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -116,10 +122,11 @@ class MemberInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

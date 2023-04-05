@@ -30,8 +30,6 @@ namespace Stripe;
  */
 class Account extends ApiResource
 {
-    const OBJECT_NAME = 'account';
-
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Delete;
@@ -40,38 +38,39 @@ class Account extends ApiResource
         retrieve as protected _retrieve;
     }
     use ApiOperations\Update;
+    public const OBJECT_NAME = 'account';
 
     /**
      * Possible string representations of an account's business type.
      * @link https://stripe.com/docs/api/accounts/object#account_object-business_type
      */
-    const BUSINESS_TYPE_COMPANY    = 'company';
-    const BUSINESS_TYPE_INDIVIDUAL = 'individual';
+    public const BUSINESS_TYPE_COMPANY    = 'company';
+    public const BUSINESS_TYPE_INDIVIDUAL = 'individual';
 
     /**
      * Possible string representations of an account's capabilities.
      * @link https://stripe.com/docs/api/accounts/object#account_object-capabilities
      */
-    const CAPABILITY_CARD_PAYMENTS     = 'card_payments';
-    const CAPABILITY_LEGACY_PAYMENTS   = 'legacy_payments';
-    const CAPABILITY_PLATFORM_PAYMENTS = 'platform_payments';
-    const CAPABILITY_TRANSFERS         = 'transfers';
+    public const CAPABILITY_CARD_PAYMENTS     = 'card_payments';
+    public const CAPABILITY_LEGACY_PAYMENTS   = 'legacy_payments';
+    public const CAPABILITY_PLATFORM_PAYMENTS = 'platform_payments';
+    public const CAPABILITY_TRANSFERS         = 'transfers';
 
     /**
      * Possible string representations of an account's capability status.
      * @link https://stripe.com/docs/api/accounts/object#account_object-capabilities
      */
-    const CAPABILITY_STATUS_ACTIVE   = 'active';
-    const CAPABILITY_STATUS_INACTIVE = 'inactive';
-    const CAPABILITY_STATUS_PENDING  = 'pending';
+    public const CAPABILITY_STATUS_ACTIVE   = 'active';
+    public const CAPABILITY_STATUS_INACTIVE = 'inactive';
+    public const CAPABILITY_STATUS_PENDING  = 'pending';
 
     /**
      * Possible string representations of an account's type.
      * @link https://stripe.com/docs/api/accounts/object#account_object-type
      */
-    const TYPE_CUSTOM   = 'custom';
-    const TYPE_EXPRESS  = 'express';
-    const TYPE_STANDARD = 'standard';
+    public const TYPE_CUSTOM   = 'custom';
+    public const TYPE_EXPRESS  = 'express';
+    public const TYPE_STANDARD = 'standard';
 
     public static function getSavedNestedResources()
     {
@@ -85,10 +84,10 @@ class Account extends ApiResource
         return $savedNestedResources;
     }
 
-    const PATH_CAPABILITIES = '/capabilities';
-    const PATH_EXTERNAL_ACCOUNTS = '/external_accounts';
-    const PATH_LOGIN_LINKS = '/login_links';
-    const PATH_PERSONS = '/persons';
+    public const PATH_CAPABILITIES = '/capabilities';
+    public const PATH_EXTERNAL_ACCOUNTS = '/external_accounts';
+    public const PATH_LOGIN_LINKS = '/login_links';
+    public const PATH_PERSONS = '/persons';
 
     public function instanceUrl()
     {

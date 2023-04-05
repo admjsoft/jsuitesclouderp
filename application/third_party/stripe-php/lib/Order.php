@@ -33,12 +33,11 @@ namespace Stripe;
  */
 class Order extends ApiResource
 {
-    const OBJECT_NAME = 'order';
-
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Retrieve;
     use ApiOperations\Update;
+    public const OBJECT_NAME = 'order';
 
     /**
      * @param array|null $params

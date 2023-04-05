@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Cronjob_model extends CI_Model
 {
-    var $table = 'gtg_accounts';
+    public $table = 'gtg_accounts';
 
     public function __construct()
     {
@@ -25,7 +25,6 @@ class Cronjob_model extends CI_Model
 
     public function generate()
     {
-
         $random = rand(11111111, 99999999);
         $data = array(
             'key1' => $random
@@ -45,7 +44,6 @@ class Cronjob_model extends CI_Model
 
     public function due_mail()
     {
-
         $duedate = date('Y-m-d');
 
         $this->db->select('gtg_invoices.*,gtg_customers.name,gtg_customers.email');
@@ -60,7 +58,6 @@ class Cronjob_model extends CI_Model
 
     public function reports()
     {
-
         $year = date('Y');
 
         $this->db->delete('gtg_reports', array('year' => $year));
@@ -91,7 +88,6 @@ class Cronjob_model extends CI_Model
         $batch = array();
         $i = 0;
         foreach ($output as $row) {
-
             $batch[$i] = array('month' => $row['month'], 'year' => $row['year'], 'invoices' => @$row['invoices'], 'sales' => @$row['sales'], 'items' => @$row['items'], 'income' => @$row['income'], 'expense' => @$row['expense']);
             $i++;
         }
@@ -103,7 +99,6 @@ class Cronjob_model extends CI_Model
 
     public function exchange_rate($base, $exchangeRates = '')
     {
-
         $updateData = array();
         //$cindex = 0;
         $this->db->select('id,code,rate');
@@ -111,11 +106,9 @@ class Cronjob_model extends CI_Model
         $query = $this->db->get();
         $result = $query->result_array();
         foreach ($result as $key => $value) {
-
             $index = $base . $value['code'];
             $updateData[] = array('id' => $value['id'], 'rate' => $exchangeRates[$index]);
             //  print_r($value);
-
         }
         //print_r($updateData);
         $this->db->update_batch('gtg_currencies', $updateData, 'id');
@@ -167,7 +160,6 @@ class Cronjob_model extends CI_Model
             $old_invoice_list = array();
             $inv_index = 0;
             foreach ($result as $row) {
-
                 $last++;
                 $last_id++;
 
@@ -190,8 +182,6 @@ class Cronjob_model extends CI_Model
                 $productlist_p = array();
                 $prodindex_p = 0;
                 foreach ($result_p as $rowp) {
-
-
                     $data_p = array(
                         'tid' => $last_id,
                         'pid' => $rowp['pid'],
@@ -211,13 +201,11 @@ class Cronjob_model extends CI_Model
                     $prodindex_p++;
                     $amt = $rowp['qty'];
                     if ($rowp['pid'] > 0) {
-                        $this->db->set('qty', "qty-$amt", FALSE);
+                        $this->db->set('qty', "qty-$amt", false);
                         $this->db->where('pid', $rowp['pid']);
                         $this->db->update('gtg_products');
                     }
                     //    $itc += $amt;
-
-
                 }
                 $this->db->insert_batch('gtg_invoice_items', $productlist_p);
 
@@ -241,7 +229,6 @@ class Cronjob_model extends CI_Model
             }
 
             if ($result) {
-
                 $this->db->insert_batch('gtg_invoices', $invoice_list);
                 if ($this->db->update_batch('gtg_invoices', $old_invoice_list, 'id')) {
                     return true;
@@ -254,12 +241,10 @@ class Cronjob_model extends CI_Model
 
     public function stock()
     {
-
         $query = $this->db->query("SELECT product_name,product_price,qty,unit FROM gtg_products WHERE qty<=alert ORDER BY product_name");
         $result = $query->result_array();
         $html_table = '<h2>Product Stock Alert</h2><p>Dear Business Owner, You have some products running low/out of stock.</p><table><tr><th>Product Name</th><th>Qty</th><th>Price</th></tr>';
         foreach ($result as $row) {
-
             $html_table .= '<tr><td>' . $row['product_name'] . '</td><td>' . amountFormat_general($row['qty']) . ' ' . $row['unit'] . '</td><td>' . amountExchange($row['product_price'], $invoice['multi'], $this->aauth->get_user()->loc) . '</td></tr>';
         }
         $html_table .= '</table>';
@@ -269,12 +254,10 @@ class Cronjob_model extends CI_Model
 
     public function expiry()
     {
-
         $query = $this->db->query("SELECT product_name,product_price,qty,unit,expiry FROM gtg_products WHERE DATE(expiry)<='" . date('Y-m-d') . "' ORDER BY product_name");
         $result = $query->result_array();
         $html_table = '<h2>Product Expiry Alert</h2><p>Dear Business Owner, You have some products near to expire.</p><table><tr><th>Product Name</th><th>Qty</th><th>Price</th></tr>';
         foreach ($result as $row) {
-
             $html_table .= '<tr><td>' . $row['product_name'] . '</td><td>' . $row['qty'] . ' ' . $row['unit'] . '</td><td>' . $row['product_price'] . '</td></tr>';
         }
         $html_table .= '</table>';
@@ -284,10 +267,11 @@ class Cronjob_model extends CI_Model
 
     public function customer_mail($limit = 100, $start = 1)
     {
-
         $this->db->select('id,name,email,phone');
         $this->db->from('gtg_customers');
-        if ($limit && $start) $this->db->limit($limit, $start);
+        if ($limit && $start) {
+            $this->db->limit($limit, $start);
+        }
         $query = $this->db->get();
         return $query->result_array();
     }

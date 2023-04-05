@@ -30,16 +30,18 @@ use Twilio\Version;
  * @property string workspaceSid
  * @property string url
  */
-class WorkersCumulativeStatisticsInstance extends InstanceResource {
+class WorkersCumulativeStatisticsInstance extends InstanceResource
+{
     /**
      * Initialize the WorkersCumulativeStatisticsInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $workspaceSid The workspace_sid
-     * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersCumulativeStatisticsInstance 
+     * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersCumulativeStatisticsInstance
      */
-    public function __construct(Version $version, array $payload, $workspaceSid) {
+    public function __construct(Version $version, array $payload, $workspaceSid)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -64,11 +66,12 @@ class WorkersCumulativeStatisticsInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\Worker\WorkersCumulativeStatisticsContext Context for this
      *                                                                                        WorkersCumulativeStatisticsInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new WorkersCumulativeStatisticsContext(
                 $this->version,
@@ -81,24 +84,26 @@ class WorkersCumulativeStatisticsInstance extends InstanceResource {
 
     /**
      * Fetch a WorkersCumulativeStatisticsInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return WorkersCumulativeStatisticsInstance Fetched
      *                                             WorkersCumulativeStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array()) {
+    public function fetch($options = array())
+    {
         return $this->proxy()->fetch($options);
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -113,10 +118,11 @@ class WorkersCumulativeStatisticsInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

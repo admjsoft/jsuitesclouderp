@@ -245,7 +245,8 @@ function tln_getnxtag($body, $offset)
                 $retary = array(false, false, false, $lt, $gt);
                 return $retary;
             }
-        //intentional fall-through
+            //intentional fall-through
+            // no break
         case '>':
             return array($tagname, false, $tagtype, $lt, $pos);
             break;
@@ -346,7 +347,8 @@ function tln_getnxtag($body, $offset)
                     $retary = array(false, false, false, $lt, $gt);
                     return $retary;
                 }
-            //intentional fall-through
+                //intentional fall-through
+                // no break
             case '>':
                 $attary{$attname} = '"yes"';
                 return array($tagname, $attary, $tagtype, $lt, $pos);
@@ -519,8 +521,7 @@ function tln_fixatts(
     $add_attr_to_tag,
     $trans_image_path,
     $block_external_images
-)
-{
+) {
     while (list($attname, $attvalue) = each($attary)) {
         /**
          * See if this attribute should be removed.
@@ -723,8 +724,8 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
                 break;
         }
     }
-    if ($bSucces == FALSE) {
-        return array(FALSE, strlen($body));
+    if ($bSucces == false) {
+        return array(false, strlen($body));
     }
 
 
@@ -849,8 +850,7 @@ function tln_sanitize(
     $add_attr_to_tag,
     $trans_image_path,
     $block_external_images
-)
-{
+) {
     /**
      * Normalize rm_tags and rm_tags_with_content.
      */
@@ -881,9 +881,10 @@ function tln_sanitize(
         if ($tagname == "style" && $tagtype == 1) {
             list($free_content, $curpos) =
                 tln_fixstyle($body, $gt + 1, $trans_image_path, $block_external_images);
-            if ($free_content != FALSE) {
+            if ($free_content != false) {
                 if (!empty($attary)) {
-                    $attary = tln_fixatts($tagname,
+                    $attary = tln_fixatts(
+                        $tagname,
                         $attary,
                         $rm_attnames,
                         $bad_attvals,
@@ -1012,7 +1013,6 @@ function tln_sanitize(
 
 function HTMLFilter($body, $trans_image_path, $block_external_images = false)
 {
-
     $tag_list = array(
         false,
         "object",

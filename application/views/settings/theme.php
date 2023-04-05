@@ -20,13 +20,12 @@
                     <div class="col-sm-6"><select name="tdirection" class="form-control">
 
                             <?php switch (LTR) {
-                                case 'ltr' :
+                                case 'ltr':
                                     echo '<option value="ltr">**' . $this->lang->line('LTR') . '**</option>';
                                     break;
-                                case 'rtl' :
+                                case 'rtl':
                                     echo '<option value="rtl">**' . $this->lang->line('RTL') . '**</option>';
                                     break;
-
                             } ?>
                             <option value="ltr"><?php echo $this->lang->line('LTR') ?></option>
                             <option value="rtl"><?php echo $this->lang->line('RTL') ?></option>
@@ -44,13 +43,12 @@
                     <div class="col-sm-6"><select name="menu" class="form-control">
 
                             <?php switch (MENU) {
-                                case '0' :
+                                case '0':
                                     echo '<option value="0">**Horizontal**</option>';
                                     break;
-                                case '1' :
+                                case '1':
                                     echo '<option value="1">** Vertical**</option>';
                                     break;
-
                             } ?>
                             <option value="0">Horizontal</option>
                             <option value="1">Vertical</option>

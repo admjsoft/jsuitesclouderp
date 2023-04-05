@@ -29,18 +29,20 @@ use Twilio\Version;
  * @property boolean beta
  * @property string capabilities
  */
-class SharedCostInstance extends InstanceResource {
+class SharedCostInstance extends InstanceResource
+{
     /**
      * Initialize the SharedCostInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $accountSid The 34 character string that uniquely identifies
      *                           your account.
      * @param string $countryCode The ISO Country code to lookup phone numbers for.
-     * @return \Twilio\Rest\Api\V2010\Account\AvailablePhoneNumberCountry\SharedCostInstance 
+     * @return \Twilio\Rest\Api\V2010\Account\AvailablePhoneNumberCountry\SharedCostInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $countryCode) {
+    public function __construct(Version $version, array $payload, $accountSid, $countryCode)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -65,12 +67,13 @@ class SharedCostInstance extends InstanceResource {
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -85,10 +88,11 @@ class SharedCostInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         return '[Twilio.Api.V2010.SharedCostInstance]';
     }
 }

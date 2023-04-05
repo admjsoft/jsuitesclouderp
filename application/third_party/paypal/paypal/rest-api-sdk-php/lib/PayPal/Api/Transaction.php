@@ -59,5 +59,4 @@ class Transaction extends TransactionBase
     {
         return $this->purchase_unit_reference_id;
     }
-
 }

@@ -16,16 +16,18 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class EntityContext extends InstanceContext {
+class EntityContext extends InstanceContext
+{
     /**
      * Initialize the EntityContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $serviceSid Service Sid.
      * @param string $identity Unique identity of the Entity
-     * @return \Twilio\Rest\Preview\Authy\Service\EntityContext 
+     * @return \Twilio\Rest\Preview\Authy\Service\EntityContext
      */
-    public function __construct(Version $version, $serviceSid, $identity) {
+    public function __construct(Version $version, $serviceSid, $identity)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -36,11 +38,12 @@ class EntityContext extends InstanceContext {
 
     /**
      * Fetch a EntityInstance
-     * 
+     *
      * @return EntityInstance Fetched EntityInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -59,10 +62,11 @@ class EntityContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

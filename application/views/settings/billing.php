@@ -34,7 +34,7 @@
                                 <?php
 
                                 echo $langs;
-                                ?>
+                    ?>
 
                             </select>
                         </div>

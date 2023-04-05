@@ -39,24 +39,24 @@
                     </thead>
                     <tbody>
                     <?php $i = 1;
-                    foreach ($cat as $row) {
-                        $cid = $row['id'];
-                        $title = $row['title'];
-                        $total = $row['pc'];
-                        $qty = +$row['qty'];
-                        $salessum = amountExchange($row['salessum'], 0, $this->aauth->get_user()->loc);
-                        $worthsum = amountExchange($row['worthsum'], 0, $this->aauth->get_user()->loc);
+            foreach ($cat as $row) {
+                $cid = $row['id'];
+                $title = $row['title'];
+                $total = $row['pc'];
+                $qty = +$row['qty'];
+                $salessum = amountExchange($row['salessum'], 0, $this->aauth->get_user()->loc);
+                $worthsum = amountExchange($row['worthsum'], 0, $this->aauth->get_user()->loc);
 
-                        echo "<tr>
+                echo "<tr>
                     <td>$i</td>
                     <td>$title</td>
                     <td>$total</td>
                     <td>$qty</td>
                     <td>$salessum/$worthsum</td>
                     <td><a href='" . base_url("productcategory/viewwarehouse?id=$cid") . "' class='btn btn-success btn-sm'><i class='fa fa-eye'></i> " . $this->lang->line('View') . "</a>&nbsp;<a class='btn btn-info  btn-sm' href='" . base_url() . "productcategory/warehouse_report?id=" . $cid . "' > <span class='fa fa-pie-chart'></span> " . $this->lang->line('Reports') . "</a>&nbsp;<a href='" . base_url("productcategory/editwarehouse?id=$cid") . "' class='btn btn-warning btn-sm'><i class='fa fa-pencil'></i> " . $this->lang->line('Edit') . "</a>&nbsp;<a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-sm delete-object' title='Delete'><i class='fa fa-trash-o'></i></a></td></tr>";
-                        $i++;
-                    }
-                    ?>
+                $i++;
+            }
+            ?>
                     </tbody>
                     <tfoot>
                     <tr>

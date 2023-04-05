@@ -89,12 +89,12 @@
     $(document).ready(function () {
         var cat_data = [
             <?php foreach ($chart as $item) {
-            if ($item['type'] == 'Income') {
-                echo '{label: "' . $item['type'] . '", value: ' . $item['credit'] . ' },';
-            } elseif ($item['type'] == 'Expense') {
-                echo '{label: "' . $item['type'] . '", value: ' . $item['debit'] . ' },';
+                if ($item['type'] == 'Income') {
+                    echo '{label: "' . $item['type'] . '", value: ' . $item['credit'] . ' },';
+                } elseif ($item['type'] == 'Expense') {
+                    echo '{label: "' . $item['type'] . '", value: ' . $item['debit'] . ' },';
+                }
             }
-        }
             ?>
         ];
         draw_c(cat_data);

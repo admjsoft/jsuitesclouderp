@@ -25,8 +25,8 @@
                                 <div class="card-body">
                                     <?php
                                     $attributes = array('class' => 'form-horizontal form-simple', 'id' => 'login_form');
-                                    echo form_open('user/checklogin', $attributes);
-                                    ?>
+                                         echo form_open('user/checklogin', $attributes);
+                                         ?>
                                     <fieldset class="form-group position-relative has-icon-left">
                                         <input type="text" class="form-control" id="user-name" name="username"
                                                placeholder="<?php echo $this->lang->line('Your Email') ?>" required>

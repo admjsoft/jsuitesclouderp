@@ -26,20 +26,22 @@ use Twilio\Version;
  * @method \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueRealTimeStatisticsContext realTimeStatistics()
  * @method \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueCumulativeStatisticsContext cumulativeStatistics()
  */
-class TaskQueueContext extends InstanceContext {
+class TaskQueueContext extends InstanceContext
+{
     protected $_statistics = null;
     protected $_realTimeStatistics = null;
     protected $_cumulativeStatistics = null;
 
     /**
      * Initialize the TaskQueueContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $workspaceSid The workspace_sid
      * @param string $sid The sid
-     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueueContext 
+     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueueContext
      */
-    public function __construct(Version $version, $workspaceSid, $sid) {
+    public function __construct(Version $version, $workspaceSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -50,11 +52,12 @@ class TaskQueueContext extends InstanceContext {
 
     /**
      * Fetch a TaskQueueInstance
-     * 
+     *
      * @return TaskQueueInstance Fetched TaskQueueInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -73,12 +76,13 @@ class TaskQueueContext extends InstanceContext {
 
     /**
      * Update the TaskQueueInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return TaskQueueInstance Updated TaskQueueInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -107,20 +111,22 @@ class TaskQueueContext extends InstanceContext {
 
     /**
      * Deletes the TaskQueueInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Access the statistics
-     * 
-     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueStatisticsList 
+     *
+     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueStatisticsList
      */
-    protected function getStatistics() {
+    protected function getStatistics()
+    {
         if (!$this->_statistics) {
             $this->_statistics = new TaskQueueStatisticsList(
                 $this->version,
@@ -134,10 +140,11 @@ class TaskQueueContext extends InstanceContext {
 
     /**
      * Access the realTimeStatistics
-     * 
-     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueRealTimeStatisticsList 
+     *
+     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueRealTimeStatisticsList
      */
-    protected function getRealTimeStatistics() {
+    protected function getRealTimeStatistics()
+    {
         if (!$this->_realTimeStatistics) {
             $this->_realTimeStatistics = new TaskQueueRealTimeStatisticsList(
                 $this->version,
@@ -151,10 +158,11 @@ class TaskQueueContext extends InstanceContext {
 
     /**
      * Access the cumulativeStatistics
-     * 
-     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueCumulativeStatisticsList 
+     *
+     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueCumulativeStatisticsList
      */
-    protected function getCumulativeStatistics() {
+    protected function getCumulativeStatistics()
+    {
         if (!$this->_cumulativeStatistics) {
             $this->_cumulativeStatistics = new TaskQueueCumulativeStatisticsList(
                 $this->version,
@@ -168,12 +176,13 @@ class TaskQueueContext extends InstanceContext {
 
     /**
      * Magic getter to lazy load subresources
-     * 
+     *
      * @param string $name Subresource to return
      * @return \Twilio\ListResource The requested subresource
      * @throws \Twilio\Exceptions\TwilioException For unknown subresources
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (property_exists($this, '_' . $name)) {
             $method = 'get' . ucfirst($name);
             return $this->$method();
@@ -184,13 +193,14 @@ class TaskQueueContext extends InstanceContext {
 
     /**
      * Magic caller to get resource contexts
-     * 
+     *
      * @param string $name Resource to return
      * @param array $arguments Context parameters
      * @return \Twilio\InstanceContext The requested resource context
      * @throws \Twilio\Exceptions\TwilioException For unknown resource
      */
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         $property = $this->$name;
         if (method_exists($property, 'getContext')) {
             return call_user_func_array(array($property, 'getContext'), $arguments);
@@ -201,10 +211,11 @@ class TaskQueueContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

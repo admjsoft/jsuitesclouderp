@@ -96,7 +96,9 @@ class Quote extends CI_Controller
         $ship_taxtype = $this->input->post('ship_taxtype');
 
 
-        if ($ship_taxtype == 'incl') $shipping = $shipping - $shipping_tax;
+        if ($ship_taxtype == 'incl') {
+            $shipping = $shipping - $shipping_tax;
+        }
         $refer = $this->input->post('refer');
         $total = rev_amountExchange_s($this->input->post('total'), $currency, $this->aauth->get_user()->loc);
         $proposal = $this->input->post('propos');
@@ -152,7 +154,6 @@ class Quote extends CI_Controller
             $product_hsn = $this->input->post('hsn');
             $product_unit = $this->input->post('unit');
             foreach ($pid as $key => $value) {
-
                 $total_discount += numberClean(@$ptotal_disc[$key]);
                 $total_tax += numberClean($ptotal_tax[$key]);
                 $data = array(
@@ -248,14 +249,15 @@ class Quote extends CI_Controller
         $head['title'] = "Quote #" . $data['invoice']['tid'];
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
-        if ($data['invoice']) $this->load->view('quotes/view', $data);
+        if ($data['invoice']) {
+            $this->load->view('quotes/view', $data);
+        }
         $this->load->view('fixed/footer');
     }
 
 
     public function printquote()
     {
-
         $tid = intval($this->input->get('id'));
 
         $data['id'] = $tid;
@@ -306,7 +308,6 @@ class Quote extends CI_Controller
 
     public function editaction()
     {
-
         $customer_id = $this->input->post('customer_id');
         $invocieno_n = $this->input->post('invocieno');
         $invocieno = $this->input->post('iid');
@@ -324,7 +325,9 @@ class Quote extends CI_Controller
         $subtotal = rev_amountExchange_s($this->input->post('subtotal'), $currency, $this->aauth->get_user()->loc);
         $shipping = rev_amountExchange_s($this->input->post('shipping'), $currency, $this->aauth->get_user()->loc);
         $shipping_tax = rev_amountExchange_s($this->input->post('ship_tax'), $currency, $this->aauth->get_user()->loc);
-        if ($ship_taxtype == 'incl') $shipping = $shipping - $shipping_tax;
+        if ($ship_taxtype == 'incl') {
+            $shipping = $shipping - $shipping_tax;
+        }
         $refer = $this->input->post('refer', true);
         $total = rev_amountExchange_s($this->input->post('total'), $currency, $this->aauth->get_user()->loc);
 
@@ -368,7 +371,6 @@ class Quote extends CI_Controller
         $product_unit = $this->input->post('unit');
 
         foreach ($pid as $key => $value) {
-
             $total_discount += numberClean(@$ptotal_disc[$key]);
             $total_tax += numberClean($ptotal_tax[$key]);
 
@@ -390,7 +392,8 @@ class Quote extends CI_Controller
 
             $flag = true;
             $productlist[$prodindex] = $data;
-            $i += numberClean($product_qty[$key]);;
+            $i += numberClean($product_qty[$key]);
+            ;
             $prodindex++;
         }
 
@@ -405,7 +408,6 @@ class Quote extends CI_Controller
         $this->db->where('id', $invocieno);
 
         if ($flag) {
-
             if ($this->db->update('gtg_quotes', $data)) {
                 $this->db->insert_batch('gtg_quotes_items', $productlist);
                 echo json_encode(array('status' => 'Success', 'message' =>
@@ -450,7 +452,6 @@ class Quote extends CI_Controller
 
 
         if ($this->quote->convert($tid)) {
-
             echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('Quote to invoice conversion')));
         } else {
@@ -466,7 +467,6 @@ class Quote extends CI_Controller
 
 
         if ($this->quote->convert_po($tid, $person)) {
-
             echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('Quote to invoice conversion')));
         } else {

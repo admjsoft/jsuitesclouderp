@@ -1,7 +1,7 @@
 <?php
 
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Myapp extends CI_Controller
 {
@@ -10,7 +10,7 @@ class Myapp extends CI_Controller
         $ci =& get_instance();
         $ci->load->database();
         $query = $ci->db->query("SELECT * FROM gtg_system WHERE id=1 LIMIT 1");
-        if(is_array($query->row_array())) {
+        if (is_array($query->row_array())) {
             $row = $query->row_array();
             $this->lang->load($row["lang"], $row["lang"]);
             $this->lang->load('part', $row["lang"]);
@@ -51,5 +51,4 @@ class Myapp extends CI_Controller
             exit('Critical Database connectivity issue! Please check you database!');
         }
     }
-
 }

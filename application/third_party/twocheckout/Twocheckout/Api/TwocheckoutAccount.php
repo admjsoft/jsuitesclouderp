@@ -2,7 +2,6 @@
 
 class Twocheckout_Company extends Twocheckout
 {
-
     public static function retrieve()
     {
         $request = new Twocheckout_Api_Requester();
@@ -14,7 +13,6 @@ class Twocheckout_Company extends Twocheckout
 
 class Twocheckout_Contact extends Twocheckout
 {
-
     public static function retrieve()
     {
         $request = new Twocheckout_Api_Requester();

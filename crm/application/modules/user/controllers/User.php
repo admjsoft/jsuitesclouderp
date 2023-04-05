@@ -1,10 +1,10 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed ');
 
 class User extends CI_Controller
 {
-
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->load->model('User_model');
@@ -33,8 +33,6 @@ class User extends CI_Controller
      */
     public function login()
     {
-
-
         $data['captcha_on'] = $this->captcha;
         $data['captcha'] = $this->general->public_key()->recaptcha_p;
 
@@ -92,7 +90,6 @@ class User extends CI_Controller
      */
     public function auth_user($page = '')
     {
-
         if ($this->captcha) {
             $this->load->helper('recaptchalib_helper');
             $reCaptcha = new ReCaptcha($this->general->public_key()->recaptcha_s);
@@ -262,7 +259,7 @@ class User extends CI_Controller
             $output_arr['data'][$key][count($output_arr['data'][$key]) - 1] = '';
             if (CheckPermission('user', "all_update")) {
                 $output_arr['data'][$key][count($output_arr['data'][$key]) - 1] .= '<a id="btnEditRow" class="modalButtonUser mClass"  href="javascript:;" type="button" data-src="' . $id . '" title="Edit"><i class="fa fa-pencil" data-id=""></i></a>';
-            } else if (CheckPermission('user', "own_update") && (CheckPermission('user', "all_update") != true)) {
+            } elseif (CheckPermission('user', "own_update") && (CheckPermission('user', "all_update") != true)) {
                 $user_id = getRowByTableColomId($table, $id, 'users_id', 'user_id');
                 if ($user_id == $this->user_id) {
                     $output_arr['data'][$key][count($output_arr['data'][$key]) - 1] .= '<a id="btnEditRow" class="modalButtonUser mClass"  href="javascript:;" type="button" data-src="' . $id . '" title="Edit"><i class="fa fa-pencil" data-id=""></i></a>';
@@ -271,7 +268,7 @@ class User extends CI_Controller
 
             if (CheckPermission('user', "all_delete")) {
                 $output_arr['data'][$key][count($output_arr['data'][$key]) - 1] .= '<a style="cursor:pointer;" data-toggle="modal" class="mClass" onclick="setId(' . $id . ', \'user\')" data-target="#cnfrm_delete" title="delete"><i class="fa fa-trash-o" ></i></a>';
-            } else if (CheckPermission('user', "own_delete") && (CheckPermission('user', "all_delete") != true)) {
+            } elseif (CheckPermission('user', "own_delete") && (CheckPermission('user', "all_delete") != true)) {
                 $user_id = getRowByTableColomId($table, $id, 'users_id', 'user_id');
                 if ($user_id == $this->user_id) {
                     $output_arr['data'][$key][count($output_arr['data'][$key]) - 1] .= '<a style="cursor:pointer;" data-toggle="modal" class="mClass" onclick="setId(' . $id . ', \'user\')" data-target="#cnfrm_delete" title="delete"><i class="fa fa-trash-o" ></i></a>';
@@ -319,7 +316,7 @@ class User extends CI_Controller
      * This function is used to upload file
      * @return Void
      */
-    function upload()
+    public function upload()
     {
         foreach ($_FILES as $name => $fileInfo) {
             $filename = $_FILES[$name]['name'];
@@ -486,9 +483,7 @@ class User extends CI_Controller
 
 
                 if ($this->form_validation->run()) {
-
                     if ($this->common->front_end()->email_confirm) {
-
                         $this->load->library('parser');
                         $data['status'] = 'wait';
                         $udata['code'] = $this->generate_token();
@@ -509,7 +504,6 @@ class User extends CI_Controller
                     $this->User_model->insertRow('users', $udata);
                     $this->custom->save_fields_data($cid, 1);
                     if ($this->common->front_end()->email_confirm) {
-
                         $this->load->library('parser');
 
                         $template = $this->User_model->template_info(14);
@@ -517,14 +511,14 @@ class User extends CI_Controller
                             'Company' => $this->config->item('ctitle'),
                             'NAME' => $data['name']
                         );
-                        $subject = $this->parser->parse_string($template['key1'], $tdata, TRUE);
+                        $subject = $this->parser->parse_string($template['key1'], $tdata, true);
                         $reg_url = base_url() . 'user/confirm?token=' . $udata['code'];
                         $tdata = array(
                             'Company' => $this->config->item('ctitle'),
                             'NAME' => $data['name'],
                             'REG_URL' => $reg_url
                         );
-                        $message = $this->parser->parse_string($template['other'], $tdata, TRUE);
+                        $message = $this->parser->parse_string($template['other'], $tdata, true);
 
                         $this->general->send_email($zdata1['email'], $data['name'], $subject, $message);
                     }
@@ -599,7 +593,8 @@ class User extends CI_Controller
                             if ($emm) {
                                 $darr = array('email' => $mailValue, 'var_key' => $var_key);
                                 $this->User_model->insertRow('users', $darr);
-                                $result['seccessCount'] += 1;;
+                                $result['seccessCount'] += 1;
+                                ;
                             }
                         } else {
                             $result['existCount'] += 1;
@@ -647,7 +642,7 @@ class User extends CI_Controller
         $data = $this->input->post();
         $password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
         $data['password'] = $password;
-        $data['var_key'] = NULL;
+        $data['var_key'] = null;
         $data['is_deleted'] = 0;
         $data['status'] = 'active';
         $data['user_id'] = 1;
@@ -720,14 +715,10 @@ class User extends CI_Controller
 
     public function confirm()
     {
-
-
         if ($this->input->get('token', true) && $this->input->get('token', true) != '') {
             $res = $this->User_model->get_data_by_row('users', 'code', $this->input->get('token'));
 
             if ($res['code']) {
-
-
                 $this->User_model->updateRow('users', 'code', $this->input->get('token'), array('status' => 'active', 'code' => null));
                 $this->session->set_flashdata('messagePr', 'Activated.');
                 $result['result'] = 'success';
@@ -743,7 +734,6 @@ class User extends CI_Controller
 
     public function reset()
     {
-
         if ($this->input->post('n_code', true) && $this->input->post('n_password', true) != ''  && $this->input->post('n_password', true) != '') {
             $return = $this->User_model->ResetPpassword();
 
@@ -754,7 +744,7 @@ class User extends CI_Controller
                 $this->session->set_flashdata('messagePr', 'Unable to update password');
                 // redirect(base_url() . 'user/login', 'refresh');
             }
-        } else if ($this->input->get('email', true) && $this->input->get('token', true) != '') {
+        } elseif ($this->input->get('email', true) && $this->input->get('token', true) != '') {
             $data['code'] = $this->input->get('token', true);
             $data['email'] = $this->input->get('email', true);
             $this->load->view('header');
@@ -768,8 +758,6 @@ class User extends CI_Controller
             $res = $this->User_model->get_data_by_row('users', 'code', $this->input->get('token'));
 
             if ($res['code']) {
-
-
                 $this->User_model->updateRow('users', 'code', $this->input->get('token'), array('status' => 'active', 'code' => null));
                 $this->session->set_flashdata('messagePr', 'Activated.');
                 $result['result'] = 'success';
@@ -789,7 +777,6 @@ class User extends CI_Controller
             $res = $this->User_model->get_data_by_row('users', 'email', $this->input->post('email'));
 
             if ($res['email']) {
-
                 if ($this->common->front_end()->email_confirm) {
                     $res['code'] = $this->generate_token();
                     $this->User_model->updateRow('users', 'email', $res['email'], array('code' =>  $res['code']));
@@ -800,14 +787,14 @@ class User extends CI_Controller
                         'Company' => $this->config->item('ctitle'),
                         'NAME' => $res['name']
                     );
-                    $subject = $this->parser->parse_string($template['key1'], $tdata, TRUE);
+                    $subject = $this->parser->parse_string($template['key1'], $tdata, true);
                     $reg_url = base_url() . 'user/reset?token=' . $res['code'] . '&email=' . $res['email'];
                     $tdata = array(
                         'Company' => $this->config->item('ctitle'),
                         'NAME' => $res['name'],
                         'RESET_URL' => $reg_url
                     );
-                    $message = $this->parser->parse_string($template['other'], $tdata, TRUE);
+                    $message = $this->parser->parse_string($template['other'], $tdata, true);
 
                     $this->general->send_email($res['email'], $res['name'], $subject, $message);
                 }

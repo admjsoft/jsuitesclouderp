@@ -32,17 +32,19 @@ use Twilio\Version;
  * @property string sourceIpAddress
  * @property string url
  */
-class EventInstance extends InstanceResource {
+class EventInstance extends InstanceResource
+{
     /**
      * Initialize the EventInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $workspaceSid The unique ID of the Workspace
      * @param string $sid The sid
-     * @return \Twilio\Rest\Taskrouter\V1\Workspace\EventInstance 
+     * @return \Twilio\Rest\Taskrouter\V1\Workspace\EventInstance
      */
-    public function __construct(Version $version, array $payload, $workspaceSid, $sid = null) {
+    public function __construct(Version $version, array $payload, $workspaceSid, $sid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -70,11 +72,12 @@ class EventInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Taskrouter\V1\Workspace\EventContext Context for this
      *                                                           EventInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new EventContext(
                 $this->version,
@@ -88,22 +91,24 @@ class EventInstance extends InstanceResource {
 
     /**
      * Fetch a EventInstance
-     * 
+     *
      * @return EventInstance Fetched EventInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -118,10 +123,11 @@ class EventInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

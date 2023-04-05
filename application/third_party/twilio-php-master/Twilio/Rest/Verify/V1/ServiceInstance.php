@@ -18,7 +18,7 @@ use Twilio\Version;
 
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
- * 
+ *
  * @property string sid
  * @property string accountSid
  * @property string friendlyName
@@ -28,19 +28,21 @@ use Twilio\Version;
  * @property string url
  * @property array links
  */
-class ServiceInstance extends InstanceResource {
+class ServiceInstance extends InstanceResource
+{
     protected $_verifications = null;
     protected $_verificationChecks = null;
 
     /**
      * Initialize the ServiceInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $sid Verification Service Instance SID.
-     * @return \Twilio\Rest\Verify\V1\ServiceInstance 
+     * @return \Twilio\Rest\Verify\V1\ServiceInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null) {
+    public function __construct(Version $version, array $payload, $sid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -61,11 +63,12 @@ class ServiceInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Verify\V1\ServiceContext Context for this
      *                                               ServiceInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new ServiceContext($this->version, $this->solution['sid']);
         }
@@ -75,51 +78,56 @@ class ServiceInstance extends InstanceResource {
 
     /**
      * Fetch a ServiceInstance
-     * 
+     *
      * @return ServiceInstance Fetched ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Update the ServiceInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return ServiceInstance Updated ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         return $this->proxy()->update($options);
     }
 
     /**
      * Access the verifications
-     * 
-     * @return \Twilio\Rest\Verify\V1\Service\VerificationList 
+     *
+     * @return \Twilio\Rest\Verify\V1\Service\VerificationList
      */
-    protected function getVerifications() {
+    protected function getVerifications()
+    {
         return $this->proxy()->verifications;
     }
 
     /**
      * Access the verificationChecks
-     * 
-     * @return \Twilio\Rest\Verify\V1\Service\VerificationCheckList 
+     *
+     * @return \Twilio\Rest\Verify\V1\Service\VerificationCheckList
      */
-    protected function getVerificationChecks() {
+    protected function getVerificationChecks()
+    {
         return $this->proxy()->verificationChecks;
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -134,10 +142,11 @@ class ServiceInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

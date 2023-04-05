@@ -46,7 +46,11 @@
                 <div class="col-sm-4">
                     <select name="spos" class="form-control">
                         <?php
-                        if ($currency_d['cpos'] == 0) $method = '**Left**'; else $method = '**Right**';
+                        if ($currency_d['cpos'] == 0) {
+                            $method = '**Left**';
+                        } else {
+                            $method = '**Right**';
+                        }
                         echo '<option value="' . $currency_d['cpos'] . '">' . $method . '</option>'; ?>
                         <option value="0">Left</option>
                         <option value="1">Right</option>
@@ -111,7 +115,7 @@
                         <?php
                         echo '<option value="' . $currency_d['dpoint'] . '">' . $currency_d['dpoint'] . '</option>';
 
-                        ?>
+            ?>
                         <option value=",">, (Comma)</option>
                         <option value=".">. (Dot)</option>
                         <option value="">None</option>

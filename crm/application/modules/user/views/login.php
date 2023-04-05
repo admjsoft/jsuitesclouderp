@@ -156,7 +156,7 @@ color:#fff !important;
                                     <?php
                                   //  $attributes = array('class' => 'form-horizontal form-simple mt-5 mb-2', 'id' => 'login_form');
                                   //  echo form_open('user/checklogin', $attributes);
-                                    ?>
+?>
                                 <form class="form-horizontal form-simple mt-5 mb-2"
                                       action="<?php echo base_url() . 'user/auth_user'; ?>" method="post" id="login_form">
                                     <fieldset class="form-group position-relative has-icon-left">
@@ -172,10 +172,10 @@ color:#fff !important;
 
                                     </fieldset>
                     <?php if ($this->session->flashdata("messagePr")) {
-                                        echo '<div id="notify" class="alert alert-danger" >
+                        echo '<div id="notify" class="alert alert-danger" >
                             <a href="#" class="close" data-dismiss="alert">&times;</a><div class="message">' .$this->session->flashdata("messagePr")  . '</div></div>';
-                            unset($_SESSION['messagePr']);
-                                    } ?>
+                        unset($_SESSION['messagePr']);
+                    } ?>
                                     <?php if ($captcha_on) {
                                         echo '<script src="https://www.google.com/recaptcha/api.js"></script>
 									<fieldset class="form-group position-relative has-icon-left">
@@ -246,11 +246,11 @@ color:#fff !important;
                                     </fieldset>
 
 								<?php if ($captcha_on) {
-                                        echo '<script src="https://www.google.com/recaptcha/api.js"></script>
+								    echo '<script src="https://www.google.com/recaptcha/api.js"></script>
 									<fieldset class="form-group position-relative has-icon-left">
                                       <div class="g-recaptcha" data-sitekey="'.$captcha.'"></div>
                                     </fieldset>';
-                                    } ?>
+								} ?>
 
 
 

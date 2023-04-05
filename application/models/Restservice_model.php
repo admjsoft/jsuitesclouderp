@@ -5,14 +5,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Restservice_model extends CI_Model
 {
-
     public function customers($id = '')
     {
-
         $this->db->select('*');
         $this->db->from('gtg_customers');
         if ($id != '') {
-
             $this->db->where('id', $id);
         }
         $query = $this->db->get();
@@ -26,11 +23,9 @@ class Restservice_model extends CI_Model
 
     public function products($id = '')
     {
-
         $this->db->select('*');
         $this->db->from('gtg_products');
         if ($id != '') {
-
             $this->db->where('id', $id);
         }
         $query = $this->db->get();

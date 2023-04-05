@@ -30,24 +30,23 @@ namespace Stripe;
  */
 class SetupIntent extends ApiResource
 {
-    const OBJECT_NAME = 'setup_intent';
-
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Retrieve;
     use ApiOperations\Update;
+    public const OBJECT_NAME = 'setup_intent';
 
     /**
      * These constants are possible representations of the status field.
      *
      * @link https://stripe.com/docs/api/setup_intents/object#setup_intent_object-status
      */
-    const STATUS_CANCELED                = 'canceled';
-    const STATUS_PROCESSING              = 'processing';
-    const STATUS_REQUIRES_ACTION         = 'requires_action';
-    const STATUS_REQUIRES_CONFIRMATION   = 'requires_confirmation';
-    const STATUS_REQUIRES_PAYMENT_METHOD = 'requires_payment_method';
-    const STATUS_SUCCEEDED               = 'succeeded';
+    public const STATUS_CANCELED                = 'canceled';
+    public const STATUS_PROCESSING              = 'processing';
+    public const STATUS_REQUIRES_ACTION         = 'requires_action';
+    public const STATUS_REQUIRES_CONFIRMATION   = 'requires_confirmation';
+    public const STATUS_REQUIRES_PAYMENT_METHOD = 'requires_payment_method';
+    public const STATUS_SUCCEEDED               = 'succeeded';
 
     /**
      * @param array|null $params

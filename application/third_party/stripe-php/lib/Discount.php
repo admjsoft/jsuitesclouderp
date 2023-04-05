@@ -16,5 +16,5 @@ namespace Stripe;
  */
 class Discount extends StripeObject
 {
-    const OBJECT_NAME = 'discount';
+    public const OBJECT_NAME = 'discount';
 }

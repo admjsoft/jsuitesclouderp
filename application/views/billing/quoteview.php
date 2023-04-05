@@ -108,7 +108,7 @@
                             <div class="table-responsive col-sm-12">
                                 <table class="table table-striped">
                                     <thead>
-                                    <?php if ($invoice['taxstatus'] == 'cgst'){ ?>
+                                    <?php if ($invoice['taxstatus'] == 'cgst') { ?>
 
                                     <tr>
                                         <th>#</th>
@@ -124,13 +124,13 @@
                                     </thead>
                                     <tbody>
                                     <?php $c = 1;
-                                    $sub_t = 0;
+                                        $sub_t = 0;
 
-                                    foreach ($products as $row) {
-                                        $sub_t += $row['price'] * $row['qty'];
-                                        $gst = $row['totaltax'] / 2;
-                                        $rate = $row['tax'] / 2;
-                                        echo '<tr>
+                                        foreach ($products as $row) {
+                                            $sub_t += $row['price'] * $row['qty'];
+                                            $gst = $row['totaltax'] / 2;
+                                            $rate = $row['tax'] / 2;
+                                            echo '<tr>
 <th scope="row">' . $c . '</th>
                             <td>' . $row['product'] . '</td> 
                             <td>' . $row['code'] . '</td>                          
@@ -142,9 +142,9 @@
                             <td>' . amountExchange($row['subtotal'], $invoice['multi'], $invoice['loc']) . '</td>
                         </tr>';
 
-                                        echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
-                                        $c++;
-                                    } ?>
+                                            echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
+                                            $c++;
+                                        } ?>
 
                                     </tbody>
                                     <?php
@@ -300,7 +300,7 @@
                                 <p> <?php
 
                                     echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
-                                    ?></p>
+                            ?></p>
                             </div>
 
                         </div>
@@ -319,7 +319,6 @@
                                 </thead>
                                 <tbody id="activity">
                                 <?php foreach ($attach as $row) {
-
                                     echo '<tr><td><a href="' . base_url() . 'userfiles/attach/' . $row['col1'] . '"><i class="btn-info btn-lg icon-download"></i> ' . $row['col1'] . ' </a></td></tr>';
                                 } ?>
 

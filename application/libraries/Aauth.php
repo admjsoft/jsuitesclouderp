@@ -3,7 +3,9 @@
 
 
 
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /**
  * Aauth is a User Authorizationsend_pm Library for CodeIgniter 2.x, which aims to make
@@ -30,7 +32,6 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  */
 class Aauth
 {
-
     /**
      * The CodeIgniter object variable
      * @access public
@@ -93,7 +94,6 @@ class Aauth
      */
     public function __construct()
     {
-
         // get main CI object
         $this->CI = &get_instance();
         $this->CI->li_a = '';
@@ -109,7 +109,7 @@ class Aauth
         $this->CI->config->load('aauth');
         $this->config_vars = $this->CI->config->item('aauth');
 
-        $this->aauth_db = $this->CI->load->database($this->config_vars['db_profile'], TRUE);
+        $this->aauth_db = $this->CI->load->database($this->config_vars['db_profile'], true);
 
         // load error and info messages from flashdata (but don't store back in flashdata)
         $this->errors = $this->CI->session->flashdata('errors') ?: array();
@@ -134,9 +134,8 @@ class Aauth
      * @param bool $remember
      * @return bool Indicates successful login.
      */
-    public function login($identifier, $pass, $remember = false, $captcha = false, $totp_code = NULL)
+    public function login($identifier, $pass, $remember = false, $captcha = false, $totp_code = null)
     {
-
         // Remove cookies first
         $cookie = array(
             'name' => 'user',
@@ -146,9 +145,8 @@ class Aauth
         );
         $this->CI->input->set_cookie($cookie);
         if ($this->config_vars['ddos_protection'] && !$this->update_login_attempts()) {
-
             $this->error($this->CI->lang->line('aauth_error_login_attempts_exceeded'));
-            return FALSE;
+            return false;
         }
         if (!@$this->CI->_ci_camrap) {
             exit();
@@ -166,21 +164,20 @@ class Aauth
 
             if (!$resp->success) {
                 $this->error($this->CI->lang->line('aauth_error_recaptcha_not_correct'));
-                return FALSE;
+                return false;
             }
         }
-        if ($this->config_vars['login_with_name'] == TRUE) {
-
+        if ($this->config_vars['login_with_name'] == true) {
             if (!$identifier or strlen($pass) < $this->config_vars['min'] or strlen($pass) > $this->config_vars['max']) {
                 $this->error($this->CI->lang->line('aauth_error_login_failed_name'));
-                return FALSE;
+                return false;
             }
             $db_identifier = 'username';
         } else {
             $this->CI->load->helper('email');
             if (!valid_email($identifier) or strlen($pass) < $this->config_vars['min'] or strlen($pass) > $this->config_vars['max']) {
                 $this->error($this->CI->lang->line('aauth_error_login_failed_email'));
-                return FALSE;
+                return false;
             }
             $db_identifier = 'email';
         }
@@ -194,7 +191,7 @@ class Aauth
 
         if ($query->num_rows() > 0) {
             $this->error($this->CI->lang->line('aauth_error_account_not_verified'));
-            return FALSE;
+            return false;
         }
 
         // to find user id, create sessions and cookies
@@ -203,10 +200,10 @@ class Aauth
 
         if ($query->num_rows() == 0) {
             $this->error($this->CI->lang->line('aauth_error_no_user'));
-            return FALSE;
+            return false;
         }
-        if ($this->config_vars['totp_active'] == TRUE and $this->config_vars['totp_only_on_ip_change'] == FALSE and $this->config_vars['totp_two_step_login_active'] == FALSE) {
-            if ($this->config_vars['totp_two_step_login_active'] == TRUE) {
+        if ($this->config_vars['totp_active'] == true and $this->config_vars['totp_only_on_ip_change'] == false and $this->config_vars['totp_two_step_login_active'] == false) {
+            if ($this->config_vars['totp_two_step_login_active'] == true) {
                 $this->CI->session->set_userdata('totp_required', true);
             }
 
@@ -216,7 +213,7 @@ class Aauth
             $totp_secret = $query->row()->totp_secret;
             if ($query->num_rows() > 0 and !$totp_code) {
                 $this->error($this->CI->lang->line('aauth_error_totp_code_required'));
-                return FALSE;
+                return false;
             } else {
                 if (!empty($totp_secret)) {
                     $this->CI->load->helper('googleauthenticator');
@@ -224,13 +221,13 @@ class Aauth
                     $checkResult = $ga->verifyCode($totp_secret, $totp_code, 0);
                     if (!$checkResult) {
                         $this->error($this->CI->lang->line('aauth_error_totp_code_invalid'));
-                        return FALSE;
+                        return false;
                     }
                 }
             }
         }
 
-        if ($this->config_vars['totp_active'] == TRUE and $this->config_vars['totp_only_on_ip_change'] == TRUE) {
+        if ($this->config_vars['totp_active'] == true and $this->config_vars['totp_only_on_ip_change'] == true) {
             $query = null;
             $query = $this->aauth_db->where($db_identifier, $identifier);
             $query = $this->aauth_db->get($this->config_vars['users']);
@@ -240,10 +237,10 @@ class Aauth
 
             if ($query->num_rows() > 0 and !$totp_code) {
                 if ($ip_address != $current_ip_address) {
-                    if ($this->config_vars['totp_two_step_login_active'] == FALSE) {
+                    if ($this->config_vars['totp_two_step_login_active'] == false) {
                         $this->error($this->CI->lang->line('aauth_error_totp_code_required'));
-                        return FALSE;
-                    } else if ($this->config_vars['totp_two_step_login_active'] == TRUE) {
+                        return false;
+                    } elseif ($this->config_vars['totp_two_step_login_active'] == true) {
                         $this->CI->session->set_userdata('totp_required', true);
                     }
                 }
@@ -255,7 +252,7 @@ class Aauth
                         $checkResult = $ga->verifyCode($totp_secret, $totp_code, 0);
                         if (!$checkResult) {
                             $this->error($this->CI->lang->line('aauth_error_totp_code_invalid'));
-                            return FALSE;
+                            return false;
                         }
                     }
                 }
@@ -275,7 +272,6 @@ class Aauth
         $password = ($this->config_vars['use_password_hash'] ? $pass : $this->hash_password($pass, @$row->id));
 
         if ($query->num_rows() != 0 && $this->verify_password($password, $row->pass)) {
-
             // If email and pass matches
             // create session
             $data = array(
@@ -283,7 +279,7 @@ class Aauth
                 'username' => $row->username,
                 'email' => $row->email,
                 's_role' => 'r_' . $row->roleid,
-                'loggedin' => TRUE
+                'loggedin' => true
             );
 
             $this->CI->session->set_userdata($data);
@@ -308,16 +304,15 @@ class Aauth
             $this->update_last_login($row->id);
             $this->update_activity();
 
-            if ($this->config_vars['remove_successful_attempts'] == TRUE) {
+            if ($this->config_vars['remove_successful_attempts'] == true) {
                 $this->reset_login_attempts();
             }
 
-            return TRUE;
+            return true;
         } // if not matches
         else {
-
             $this->error($this->CI->lang->line('aauth_error_login_failed_all'));
-            return FALSE;
+            return false;
         }
     }
 
@@ -330,16 +325,15 @@ class Aauth
      */
     public function is_loggedin()
     {
-
         if ($this->CI->session->userdata('loggedin')) {
-            return TRUE;
+            return true;
         } else {
-            if (!$this->CI->input->cookie('user', TRUE)) {
-                return FALSE;
+            if (!$this->CI->input->cookie('user', true)) {
+                return false;
             } else {
-                $cookie = explode('-', $this->CI->input->cookie('user', TRUE));
+                $cookie = explode('-', $this->CI->input->cookie('user', true));
                 if (!is_numeric($cookie[0]) or strlen($cookie[1]) < 13) {
-                    return FALSE;
+                    return false;
                 } else {
                     $query = $this->aauth_db->where('id', $cookie[0]);
                     $query = $this->aauth_db->where('remember_exp', $cookie[1]);
@@ -349,21 +343,20 @@ class Aauth
 
                     if ($query->num_rows() < 1) {
                         $this->update_remember($cookie[0]);
-                        return FALSE;
+                        return false;
                     } else {
-
                         if (strtotime($row->remember_time) > strtotime("now")) {
                             $this->login_fast($cookie[0]);
-                            return TRUE;
+                            return true;
                         } // if time is expired
                         else {
-                            return FALSE;
+                            return false;
                         }
                     }
                 }
             }
         }
-        return FALSE;
+        return false;
     }
 
     /**
@@ -376,9 +369,8 @@ class Aauth
      *
      * @param bool $perm_par If not given just control user logged in or not
      */
-    public function control($perm_par = FALSE)
+    public function control($perm_par = false)
     {
-
         $this->CI->load->helper('url');
 
         if ($this->CI->session->userdata('totp_required')) {
@@ -388,19 +380,19 @@ class Aauth
 
         $perm_id = $this->get_perm_id($perm_par);
         $this->update_activity();
-        if ($perm_par == FALSE) {
+        if ($perm_par == false) {
             if ($this->is_loggedin()) {
-                return TRUE;
-            } else if (!$this->is_loggedin()) {
+                return true;
+            } elseif (!$this->is_loggedin()) {
                 $this->error($this->CI->lang->line('aauth_error_no_access'));
-                if ($this->config_vars['no_permission'] !== FALSE) {
+                if ($this->config_vars['no_permission'] !== false) {
                     redirect($this->config_vars['no_permission']);
                 }
             }
-        } else if (!$this->is_allowed($perm_id) or !$this->is_group_allowed($perm_id)) {
+        } elseif (!$this->is_allowed($perm_id) or !$this->is_group_allowed($perm_id)) {
             if ($this->config_vars['no_permission']) {
                 $this->error($this->CI->lang->line('aauth_error_no_access'));
-                if ($this->config_vars['no_permission'] !== FALSE) {
+                if ($this->config_vars['no_permission'] !== false) {
                     redirect($this->config_vars['no_permission']);
                 }
             } else {
@@ -419,7 +411,6 @@ class Aauth
      */
     public function logout()
     {
-
         $cookie = array(
             'name' => 'user',
             'value' => '',
@@ -441,7 +432,6 @@ class Aauth
      */
     public function login_fast($user_id)
     {
-
         $query = $this->aauth_db->where('id', $user_id);
         $query = $this->aauth_db->where('banned', 0);
         $query = $this->aauth_db->get($this->config_vars['users']);
@@ -449,7 +439,6 @@ class Aauth
         $row = $query->row();
 
         if ($query->num_rows() > 0) {
-
             // if id matches
             // create session
             $data = array(
@@ -457,13 +446,13 @@ class Aauth
                 'username' => $row->username,
                 'email' => $row->email,
                 's_role' => 'r_' . $row->roleid,
-                'loggedin' => TRUE
+                'loggedin' => true
             );
 
             $this->CI->session->set_userdata($data);
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
 
     /**
@@ -491,7 +480,6 @@ class Aauth
      */
     public function remind_password($email)
     {
-
         $query = $this->aauth_db->where('email', $email);
         $query = $this->aauth_db->get($this->config_vars['users']);
 
@@ -523,7 +511,7 @@ class Aauth
 
             return $user_r;
         }
-        return FALSE;
+        return false;
     }
 
     /**
@@ -543,15 +531,14 @@ class Aauth
         $pass = random_string('alnum', $pass_length);
 
         if ($query->num_rows() > 0) {
-
             $row = $query->row();
             $data = array(
                 'verification_code' => '',
                 'pass' => $this->hash_password($password, $row->id)
             );
 
-            if ($this->config_vars['totp_active'] == TRUE and $this->config_vars['totp_reset_over_reset_password'] == TRUE) {
-                $data['totp_secret'] = NULL;
+            if ($this->config_vars['totp_active'] == true and $this->config_vars['totp_reset_over_reset_password'] == true) {
+                $data['totp_secret'] = null;
             }
 
             $email = $row->email;
@@ -571,10 +558,10 @@ class Aauth
                         $this->CI->email->message($this->CI->lang->line('aauth_email_reset_success_new_password') . $pass);
                         $this->CI->email->send();
             */
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 
     //tested
@@ -585,11 +572,11 @@ class Aauth
      * @param int|bool $user_id User id to update or FALSE for current user
      * @return bool Update fails/succeeds
      */
-    public function update_last_login($user_id = FALSE)
+    public function update_last_login($user_id = false)
     {
-
-        if ($user_id == FALSE)
+        if ($user_id == false) {
             $user_id = $this->CI->session->userdata('id');
+        }
 
         $data['last_login'] = date("Y-m-d H:i:s");
         $data['ip_address'] = $this->CI->input->ip_address();
@@ -622,7 +609,7 @@ class Aauth
             $data['timestamp'] = date("Y-m-d H:i:s");
             $data['login_attempts'] = 1;
             $this->aauth_db->insert($this->config_vars['login_attempts'], $data);
-            return TRUE;
+            return true;
         } else {
             $row = $query->row();
             $data = array();
@@ -632,9 +619,9 @@ class Aauth
             $this->aauth_db->update($this->config_vars['login_attempts'], $data);
 
             if ($data['login_attempts'] > $this->config_vars['max_login_attempt']) {
-                return FALSE;
+                return false;
             } else {
-                return TRUE;
+                return true;
             }
         }
     }
@@ -672,7 +659,6 @@ class Aauth
      */
     public function update_remember($user_id, $expression = null, $expire = null)
     {
-
         $data['remember_time'] = $expire;
         $data['remember_exp'] = $expression;
 
@@ -694,42 +680,40 @@ class Aauth
      * @param string $username User's username
      * @return int|bool False if create fails or returns user id if successful
      */
-    public function create_user($email, $pass, $username = FALSE)
+    public function create_user($email, $pass, $username = false)
     {
+        $valid = true;
 
-
-        $valid = TRUE;
-
-        if ($this->config_vars['login_with_name'] == TRUE) {
+        if ($this->config_vars['login_with_name'] == true) {
             if (empty($username)) {
                 $this->error($this->CI->lang->line('aauth_error_username_required'));
-                $valid = FALSE;
+                $valid = false;
             }
         }
-        if ($this->user_exist_by_username($username) && $username != FALSE) {
+        if ($this->user_exist_by_username($username) && $username != false) {
             $this->error($this->CI->lang->line('aauth_error_username_exists'));
-            $valid = FALSE;
+            $valid = false;
         }
 
         if ($this->user_exist_by_email($email)) {
             $this->error($this->CI->lang->line('aauth_error_email_exists'));
-            $valid = FALSE;
+            $valid = false;
         }
         $valid_email = (bool)filter_var($email, FILTER_VALIDATE_EMAIL);
         if (!$valid_email) {
             $this->error($this->CI->lang->line('aauth_error_email_invalid'));
-            $valid = FALSE;
+            $valid = false;
         }
         if (strlen($pass) < $this->config_vars['min'] or strlen($pass) > $this->config_vars['max']) {
             $this->error($this->CI->lang->line('aauth_error_password_invalid'));
-            $valid = FALSE;
+            $valid = false;
         }
-        if ($username != FALSE && !ctype_alnum(str_replace($this->config_vars['additional_valid_chars'], '', $username))) {
+        if ($username != false && !ctype_alnum(str_replace($this->config_vars['additional_valid_chars'], '', $username))) {
             $this->error($this->CI->lang->line('aauth_error_username_invalid'));
-            $valid = FALSE;
+            $valid = false;
         }
         if (!$valid) {
-            return FALSE;
+            return false;
         }
 
         $data = array(
@@ -744,7 +728,6 @@ class Aauth
 
 
         if ($this->aauth_db->insert($this->config_vars['users'], $data)) {
-
             $user_id = $this->aauth_db->insert_id();
 
             // set default group
@@ -772,7 +755,7 @@ class Aauth
 
             return $user_id;
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -787,56 +770,55 @@ class Aauth
      * @param string|bool $name User's name, or FALSE if not to be updated
      * @return bool Update fails/succeeds
      */
-    public function update_user($user_id, $email = FALSE, $pass = FALSE, $username = FALSE)
+    public function update_user($user_id, $email = false, $pass = false, $username = false)
     {
-
         $data = array();
-        $valid = TRUE;
+        $valid = true;
         $user = $this->get_user($user_id);
 
         if ($user->email == $email) {
-            $email = FALSE;
+            $email = false;
         }
 
-        if ($email != FALSE) {
+        if ($email != false) {
             if ($this->user_exist_by_email($email)) {
                 $this->error($this->CI->lang->line('aauth_error_update_email_exists'));
-                $valid = FALSE;
+                $valid = false;
             }
             $valid_email = (bool)filter_var($email, FILTER_VALIDATE_EMAIL);
             if (!$valid_email) {
                 $this->error($this->CI->lang->line('aauth_error_email_invalid'));
-                $valid = FALSE;
+                $valid = false;
             }
             $data['email'] = $email;
         }
 
-        if ($pass != FALSE) {
+        if ($pass != false) {
             if (strlen($pass) < $this->config_vars['min'] or strlen($pass) > $this->config_vars['max']) {
                 $this->error($this->CI->lang->line('aauth_error_password_invalid'));
-                $valid = FALSE;
+                $valid = false;
             }
             $data['pass'] = $this->hash_password($pass, $user_id);
         }
 
         if ($user->username == $username) {
-            $username = FALSE;
+            $username = false;
         }
 
-        if ($username != FALSE) {
+        if ($username != false) {
             if ($this->user_exist_by_username($username)) {
                 $this->error($this->CI->lang->line('aauth_error_update_username_exists'));
-                $valid = FALSE;
+                $valid = false;
             }
             if ($username != '' && !ctype_alnum(str_replace($this->config_vars['additional_valid_chars'], '', $username))) {
                 $this->error($this->CI->lang->line('aauth_error_username_invalid'));
-                $valid = FALSE;
+                $valid = false;
             }
             $data['username'] = $username;
         }
 
         if (!$valid || empty($data)) {
-            return FALSE;
+            return false;
         }
 
         $this->aauth_db->where('id', $user_id);
@@ -855,21 +837,18 @@ class Aauth
      * @param string $sort Order by MYSQL string (e.g. 'name ASC', 'email DESC')
      * @return array Array of users
      */
-    public function list_users($group_par = FALSE, $limit = FALSE, $offset = FALSE, $include_banneds = FALSE, $sort = FALSE)
+    public function list_users($group_par = false, $limit = false, $offset = false, $include_banneds = false, $sort = false)
     {
-
         // if group_par is given
-        if ($group_par != FALSE) {
-
+        if ($group_par != false) {
             $group_par = $this->get_group_id($group_par);
             $this->aauth_db->select('*')
                 ->from($this->config_vars['users'])
                 ->join($this->config_vars['user_to_group'], $this->config_vars['users'] . ".id = " . $this->config_vars['user_to_group'] . ".user_id")
                 ->where($this->config_vars['user_to_group'] . ".group_id", $group_par);
 
-            // if group_par is not given, lists all users
+        // if group_par is not given, lists all users
         } else {
-
             $this->aauth_db->select('*')
                 ->from($this->config_vars['users']);
         }
@@ -886,11 +865,11 @@ class Aauth
 
         // limit
         if ($limit) {
-
-            if ($offset == FALSE)
+            if ($offset == false) {
                 $this->aauth_db->limit($limit);
-            else
+            } else {
                 $this->aauth_db->limit($limit, $offset);
+            }
         }
 
         $query = $this->aauth_db->get();
@@ -906,27 +885,29 @@ class Aauth
      * @param int|bool $user_id User id to get or FALSE for current user
      * @return object User information
      */
-    public function get_user($user_id = FALSE)
+    public function get_user($user_id = false)
     {
-
-        if ($user_id == FALSE)
+        if ($user_id == false) {
             $user_id = $this->CI->session->userdata('id');
+        }
 
         $query = $this->aauth_db->where('id', $user_id);
         $query = $this->aauth_db->get($this->config_vars['users']);
 
         if ($query->num_rows() <= 0) {
             $this->error($this->CI->lang->line('aauth_error_no_user'));
-            return FALSE;
+            return false;
         }
-        $this->CI->config->set_item('currency',  currency($query->row()->loc));
+        $this->CI->config->set_item('currency', currency($query->row()->loc));
         return $query->row();
     }
 
     public function premission($module_id)
     {
         $role = $this->CI->session->userdata('s_role');
-        if ($role == 'r_-1') $role = 'r_6';
+        if ($role == 'r_-1') {
+            $role = 'r_6';
+        }
         $this->aauth_db->select($role);
         $this->aauth_db->where('id', $module_id);
         $query = $this->aauth_db->get('gtg_premissions');
@@ -943,14 +924,12 @@ class Aauth
      */
     public function verify_user($user_id, $ver_code)
     {
-
         $query = $this->aauth_db->where('id', $user_id);
         $query = $this->aauth_db->where('verification_code', $ver_code);
         $query = $this->aauth_db->get($this->config_vars['users']);
 
         // if ver code is TRUE
         if ($query->num_rows() > 0) {
-
             $data = array(
                 'verification_code' => '',
                 'banned' => 0
@@ -958,9 +937,9 @@ class Aauth
 
             $this->aauth_db->where('id', $user_id);
             $this->aauth_db->update($this->config_vars['users'], $data);
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
 
     /**
@@ -971,7 +950,6 @@ class Aauth
      */
     public function send_verification($user_id)
     {
-
         $query = $this->aauth_db->where('id', $user_id);
         $query = $this->aauth_db->get($this->config_vars['users']);
 
@@ -1012,7 +990,6 @@ class Aauth
      */
     public function delete_user($user_id)
     {
-
         // delete from perm_to_user
         // $this->aauth_db->where('user_id', $user_id);
         //  $this->aauth_db->delete($this->config_vars['perm_to_user']);
@@ -1040,7 +1017,6 @@ class Aauth
      */
     public function ban_user($user_id)
     {
-
         $data = array(
             'banned' => 1,
             'verification_code' => ''
@@ -1062,7 +1038,6 @@ class Aauth
      */
     public function unban_user($user_id)
     {
-
         $data = array(
             'banned' => 0
         );
@@ -1082,16 +1057,16 @@ class Aauth
      */
     public function is_banned($user_id)
     {
-
         $query = $this->aauth_db->where('id', $user_id);
         $query = $this->aauth_db->where('banned', 1);
 
         $query = $this->aauth_db->get($this->config_vars['users']);
 
-        if ($query->num_rows() > 0)
-            return TRUE;
-        else
-            return FALSE;
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -1107,10 +1082,11 @@ class Aauth
 
         $query = $this->aauth_db->get($this->config_vars['users']);
 
-        if ($query->num_rows() > 0)
-            return TRUE;
-        else
-            return FALSE;
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -1138,10 +1114,11 @@ class Aauth
 
         $query = $this->aauth_db->get($this->config_vars['users']);
 
-        if ($query->num_rows() > 0)
-            return TRUE;
-        else
-            return FALSE;
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -1157,10 +1134,11 @@ class Aauth
 
         $query = $this->aauth_db->get($this->config_vars['users']);
 
-        if ($query->num_rows() > 0)
-            return TRUE;
-        else
-            return FALSE;
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -1169,9 +1147,8 @@ class Aauth
      * @param string|bool $email Email address for user
      * @return int User id
      */
-    public function get_user_id($email = FALSE)
+    public function get_user_id($email = false)
     {
-
         if (!$email) {
             $query = $this->aauth_db->where('id', $this->CI->session->userdata('id'));
         } else {
@@ -1182,7 +1159,7 @@ class Aauth
 
         if ($query->num_rows() <= 0) {
             $this->error($this->CI->lang->line('aauth_error_no_user'));
-            return FALSE;
+            return false;
         }
         return $query->row()->id;
     }
@@ -1218,14 +1195,14 @@ class Aauth
      * @param int|bool $user_id User id to update or FALSE for current user
      * @return bool Update fails/succeeds
      */
-    public function update_activity($user_id = FALSE)
+    public function update_activity($user_id = false)
     {
-
-        if ($user_id == FALSE)
+        if ($user_id == false) {
             $user_id = $this->CI->session->userdata('id');
+        }
 
-        if ($user_id == FALSE) {
-            return FALSE;
+        if ($user_id == false) {
+            return false;
         }
 
         $data['last_activity'] = date("Y-m-d H:i:s");
@@ -1244,7 +1221,7 @@ class Aauth
      * @param $userid
      * @return string Hashed password
      */
-    function hash_password($pass, $userid)
+    public function hash_password($pass, $userid)
     {
         if ($this->config_vars['use_password_hash']) {
             return password_hash($pass, $this->config_vars['password_hash_algo'], $this->config_vars['password_hash_options']);
@@ -1262,7 +1239,7 @@ class Aauth
      * @param string $user_id
      * @return bool False or True
      */
-    function verify_password($password, $hash)
+    public function verify_password($password, $hash)
     {
         if ($this->config_vars['use_password_hash']) {
             return password_verify($password, $hash);
@@ -1976,14 +1953,13 @@ class Aauth
      */
     public function send_pm($sender_id, $receiver_id, $title, $message)
     {
-
         if (!is_numeric($receiver_id) or $sender_id == $receiver_id) {
             $this->error($this->CI->lang->line('aauth_error_self_pm'));
-            return FALSE;
+            return false;
         }
         if (($this->is_banned($receiver_id) || !$this->user_exist_by_id($receiver_id)) || ($sender_id && ($this->is_banned($sender_id) || !$this->user_exist_by_id($sender_id)))) {
             $this->error($this->CI->lang->line('aauth_error_no_user'));
-            return FALSE;
+            return false;
         }
         if (!$sender_id) {
             $sender_id = 0;
@@ -2024,7 +2000,7 @@ class Aauth
         }
         if ($sender_id && ($this->is_banned($sender_id) || !$this->user_exist_by_id($sender_id))) {
             $this->error($this->CI->lang->line('aauth_error_no_user'));
-            return FALSE;
+            return false;
         }
         if (!$sender_id) {
             $sender_id = 0;
@@ -2068,7 +2044,7 @@ class Aauth
      * @param int $receiver_id User id of private message receiver
      * @return object Array of private messages
      */
-    public function list_pms($limit = 5, $offset = 0, $receiver_id = NULL, $sender_id = NULL)
+    public function list_pms($limit = 5, $offset = 0, $receiver_id = null, $sender_id = null)
     {
         $this->aauth_db->select('gtg_pms.*,gtg_pms.id AS pid,gtg_employees.*');
         $this->aauth_db->from('gtg_pms');
@@ -2110,14 +2086,14 @@ class Aauth
      * @param bool $set_as_read Whether or not to mark message as read
      * @return object Private message
      */
-    public function get_pm($pm_id, $user_id = NULL, $set_as_read = TRUE)
+    public function get_pm($pm_id, $user_id = null, $set_as_read = true)
     {
         if (!$user_id) {
             $user_id = $this->CI->session->userdata('id');
         }
         if (!is_numeric($user_id) || !is_numeric($pm_id)) {
             $this->error($this->CI->lang->line('aauth_error_no_pm'));
-            return FALSE;
+            return false;
         }
 
         $query = $this->aauth_db->where('id', $pm_id);
@@ -2131,7 +2107,7 @@ class Aauth
 
         if ($query->num_rows() < 1) {
             $this->error($this->CI->lang->line('aauth_error_no_pm'));
-            return FALSE;
+            return false;
         }
 
         $result = $query->row();
@@ -2157,14 +2133,14 @@ class Aauth
      * @param int $pm_id Private message id to be deleted
      * @return bool Delete success/failure
      */
-    public function delete_pm($pm_id, $user_id = NULL)
+    public function delete_pm($pm_id, $user_id = null)
     {
         if (!$user_id) {
             $user_id = $this->CI->session->userdata('id');
         }
         if (!is_numeric($user_id) || !is_numeric($pm_id)) {
             $this->error($this->CI->lang->line('aauth_error_no_pm'));
-            return FALSE;
+            return false;
         }
 
         $query = $this->aauth_db->where('id', $pm_id);
@@ -2180,7 +2156,7 @@ class Aauth
             }
 
             return $this->aauth_db->update($this->config_vars['pms'], array('pm_deleted_sender' => 1), array('id' => $pm_id));
-        } else if ($user_id == $result->receiver_id) {
+        } elseif ($user_id == $result->receiver_id) {
             if ($result->pm_deleted_sender == 1) {
                 return $this->aauth_db->delete($this->config_vars['pms'], array('id' => $pm_id));
             }
@@ -2211,15 +2187,14 @@ class Aauth
      * @param int|bool $receiver_id User id for message receiver, if FALSE returns for current user
      * @return int Number of unread messages
      */
-    public function count_unread_pms($receiver_id = FALSE)
+    public function count_unread_pms($receiver_id = false)
     {
-
         if (!$receiver_id) {
             $receiver_id = $this->CI->session->userdata('id');
         }
 
         $query = $this->aauth_db->where('receiver_id', $receiver_id);
-        $query = $this->aauth_db->where('date_read', NULL);
+        $query = $this->aauth_db->where('date_read', null);
         $query = $this->aauth_db->where('pm_deleted_sender', 0);
         $query = $this->aauth_db->where('pm_deleted_receiver', 0);
         $query = $this->aauth_db->get($this->config_vars['pms']);
@@ -2236,7 +2211,6 @@ class Aauth
      */
     public function set_as_read_pm($pm_id)
     {
-
         $data = array(
             'date_read' => date('Y-m-d H:i:s')
         );
@@ -2254,7 +2228,7 @@ class Aauth
      * @param string $message Message to add to array
      * @param boolean $flashdata if TRUE add $message to CI flashdata (deflault: FALSE)
      */
-    public function error($message = '', $flashdata = FALSE)
+    public function error($message = '', $flashdata = false)
     {
         $this->errors[] = $message;
         if ($flashdata) {
@@ -2273,7 +2247,7 @@ class Aauth
      * @see http://ellislab.com/codeigniter/user-guide/libraries/sessions.html
      * @param boolean $include_non_flash TRUE if it should stow basic errors as flashdata (default = FALSE)
      */
-    public function keep_errors($include_non_flash = FALSE)
+    public function keep_errors($include_non_flash = false)
     {
         // NOTE: keep_flashdata() overwrites anything new that has been added to flashdata so we are manually reviving flash data
         // $this->CI->session->keep_flashdata('errors');
@@ -2338,7 +2312,7 @@ class Aauth
      * @param string $message Message to add to infos array
      * @param boolean $flashdata if TRUE add $message to CI flashdata (deflault: FALSE)
      */
-    public function info($message = '', $flashdata = FALSE)
+    public function info($message = '', $flashdata = false)
     {
         $this->infos[] = $message;
         if ($flashdata) {
@@ -2357,7 +2331,7 @@ class Aauth
      * @see http://ellislab.com/codeigniter/user-guide/libraries/sessions.html
      * @param boolean $include_non_flash TRUE if it should stow basic infos as flashdata (default = FALSE)
      */
-    public function keep_infos($include_non_flash = FALSE)
+    public function keep_infos($include_non_flash = false)
     {
         // NOTE: keep_flashdata() overwrites anything new that has been added to flashdata so we are manually reviving flash data
         // $this->CI->session->keep_flashdata('infos');
@@ -2390,7 +2364,6 @@ class Aauth
      */
     public function print_infos($divider = '<br />')
     {
-
         $msg = '';
         $msg_num = count($this->infos);
         $i = 1;
@@ -2481,11 +2454,11 @@ class Aauth
         return $content;
     }
 
-    public function update_user_totp_secret($user_id = FALSE, $secret = false)
+    public function update_user_totp_secret($user_id = false, $secret = false)
     {
-
-        if ($user_id == FALSE)
+        if ($user_id == false) {
             $user_id = $this->CI->session->userdata('id');
+        }
 
         $data['totp_secret'] = $secret;
 
@@ -2516,17 +2489,17 @@ class Aauth
         return $ga->getQRCodeGoogleUrl($this->config_vars['name'], $secret);
     }
 
-    public function verify_user_totp_code($totp_code, $user_id = FALSE)
+    public function verify_user_totp_code($totp_code, $user_id = false)
     {
         if (!$this->is_totp_required()) {
-            return TRUE;
+            return true;
         }
-        if ($user_id == FALSE) {
+        if ($user_id == false) {
             $user_id = $this->CI->session->userdata('id');
         }
         if (empty($totp_code)) {
             $this->error($this->CI->lang->line('aauth_error_totp_code_required'));
-            return FALSE;
+            return false;
         }
         $query = $this->aauth_db->where('id', $user_id);
         $query = $this->aauth_db->get($this->config_vars['users']);
@@ -2536,23 +2509,23 @@ class Aauth
         $checkResult = $ga->verifyCode($totp_secret, $totp_code, 0);
         if (!$checkResult) {
             $this->error($this->CI->lang->line('aauth_error_totp_code_invalid'));
-            return FALSE;
+            return false;
         } else {
             $this->CI->session->unset_userdata('totp_required');
-            return TRUE;
+            return true;
         }
     }
 
     public function is_totp_required()
     {
         if (!$this->CI->session->userdata('totp_required')) {
-            return FALSE;
-        } else if ($this->CI->session->userdata('totp_required')) {
-            return TRUE;
+            return false;
+        } elseif ($this->CI->session->userdata('totp_required')) {
+            return true;
         }
     }
 
-    function user_premission($input1, $input2)
+    public function user_premission($input1, $input2)
     {
         if (hash_equals($input1, $input2)) {
             return true;
@@ -2561,23 +2534,23 @@ class Aauth
         }
     }
 
-    function applog($input1, $input2 = '')
+    public function applog($input1, $input2 = '')
     {
         $this->aauth_db->insert('gtg_log', array('note' => $input1, 'user' => $input2, 'created' => date('Y-m-d H:i:s')));
     }
 
     public function clock()
     {
-
         $this->aauth_db->select('clock');
         $this->aauth_db->where('id', $this->CI->session->userdata('id'));
         $this->aauth_db->from('gtg_employees');
         $query = $this->aauth_db->get();
         $emp = $query->row_array();
-        if (is_array($emp)){
-        return null;
-        }else{
-        return $emp['clock'];}
+        if (is_array($emp)) {
+            return $emp['clock'];
+        } else {
+            return null;
+        }
     }
 
     public function auto_attend()
@@ -2587,10 +2560,11 @@ class Aauth
         $this->aauth_db->from('univarsal_api');
         $query = $this->aauth_db->get();
         $emp = $query->row_array();
-        if (is_array($emp)){
-        return null;
-        }else{
-        return $emp['key1'];}
+        if (is_array($emp)) {
+            return $emp['key1'];
+        } else {
+            return null;
+        }
     }
 } // end class
 

@@ -1,4 +1,5 @@
 <?php
+
 set_include_path(get_include_path() . PATH_SEPARATOR . "..");
 include_once("xlsxwriter.class.php");
 
@@ -25,5 +26,3 @@ $writer->writeSheetRow('Sheet1', $rowdata = array(300, 234, 456, 789), $styles7)
 $writer->writeSheetRow('Sheet1', $rowdata = array(300, 234, 456, 789), $styles8);
 $writer->writeSheetRow('Sheet1', $rowdata = array(300, 234, 456, 789), $styles9);
 $writer->writeToFile('xlsx-styles.xlsx');
-
-

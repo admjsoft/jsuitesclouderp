@@ -120,7 +120,8 @@ class Stockreturn extends CI_Controller
         $data['customergrouplist'] = $this->customers->group_list();
         $data['terms'] = $this->stockreturn->billingterms();
         $data['invoice'] = $this->stockreturn->purchase_details($tid);
-        $data['products'] = $this->stockreturn->purchase_products($tid);;
+        $data['products'] = $this->stockreturn->purchase_products($tid);
+        ;
         $head['title'] = "Stock return Order " . $data['invoice']['iid'];
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->stockreturn->warehouses();
@@ -142,7 +143,8 @@ class Stockreturn extends CI_Controller
         $data['customergrouplist'] = $this->customers->group_list();
         $data['terms'] = $this->stockreturn->billingterms();
         $data['invoice'] = $this->stockreturn->purchase_details($tid);
-        $data['products'] = $this->stockreturn->purchase_products($tid);;
+        $data['products'] = $this->stockreturn->purchase_products($tid);
+        ;
         $head['title'] = "Credit Note " . $data['invoice']['iid'];
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->stockreturn->warehouses();
@@ -229,7 +231,9 @@ class Stockreturn extends CI_Controller
         $subtotal = rev_amountExchange_s($this->input->post('subtotal'), $currency, $this->aauth->get_user()->loc);
         $shipping = rev_amountExchange_s($this->input->post('shipping'), $currency, $this->aauth->get_user()->loc);
         $shipping_tax = rev_amountExchange_s($this->input->post('ship_tax'), $currency, $this->aauth->get_user()->loc);
-        if ($ship_taxtype == 'incl') $shipping = $shipping - $shipping_tax;
+        if ($ship_taxtype == 'incl') {
+            $shipping = $shipping - $shipping_tax;
+        }
         $refer = $this->input->post('refer', true);
         $total = rev_amountExchange_s($this->input->post('total'), $currency, $this->aauth->get_user()->loc);
         if ($customer_id == 0) {
@@ -243,7 +247,9 @@ class Stockreturn extends CI_Controller
         //Invoice Data
         $bill_date = datefordatabase($invoicedate);
         $bill_due_date = datefordatabase($invocieduedate);
-        if (!$currency) $currency = 0;
+        if (!$currency) {
+            $currency = 0;
+        }
         $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'eid' => $this->aauth->get_user()->id, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'loc' => $this->aauth->get_user()->loc, 'i_class' => $person_type, 'multi' => $currency,);
         if ($this->db->insert('gtg_stock_r', $data)) {
             $invocieno = $this->db->insert_id();
@@ -288,11 +294,10 @@ class Stockreturn extends CI_Controller
                 $amt = numberClean($product_qty[$key]);
                 if ($product_id[$key] > 0) {
                     if ($this->input->post('update_stock') == 'yes') {
-
                         if ($person_type) {
-                            $this->db->set('qty', "qty+$amt", FALSE);
+                            $this->db->set('qty', "qty+$amt", false);
                         } else {
-                            $this->db->set('qty', "qty-$amt", FALSE);
+                            $this->db->set('qty', "qty-$amt", false);
                         }
 
                         $this->db->where('pid', $product_id[$key]);
@@ -371,7 +376,9 @@ class Stockreturn extends CI_Controller
         $head['title'] = "Stock return Order " . $data['invoice']['iid'];
         if (($data['invoice']['i_class'] != 2 && $this->aauth->premission(2)) or ($data['invoice']['i_class'] == 2 && $this->aauth->premission(1))) {
             $this->load->view('fixed/header', $head);
-            if ($data['invoice']['tid']) $this->load->view('stockreturn/view', $data);
+            if ($data['invoice']['tid']) {
+                $this->load->view('stockreturn/view', $data);
+            }
             $this->load->view('fixed/footer');
         }
     }
@@ -470,7 +477,9 @@ class Stockreturn extends CI_Controller
         $subtotal = rev_amountExchange_s($this->input->post('subtotal'), $currency, $this->aauth->get_user()->loc);
         $shipping = rev_amountExchange_s($this->input->post('shipping'), $currency, $this->aauth->get_user()->loc);
         $shipping_tax = rev_amountExchange_s($this->input->post('ship_tax'), $currency, $this->aauth->get_user()->loc);
-        if ($ship_taxtype == 'incl') $shipping = $shipping - $shipping_tax;
+        if ($ship_taxtype == 'incl') {
+            $shipping = $shipping - $shipping_tax;
+        }
         $refer = $this->input->post('refer', true);
         $total = rev_amountExchange_s($this->input->post('total'), $currency, $this->aauth->get_user()->loc);
         $this->db->trans_start();
@@ -485,7 +494,9 @@ class Stockreturn extends CI_Controller
         $product_name1 = $this->input->post('product_name', true);
         $product_qty = $this->input->post('product_qty');
         $old_product_qty = $this->input->post('old_product_qty');
-        if ($old_product_qty == '') $old_product_qty = 0;
+        if ($old_product_qty == '') {
+            $old_product_qty = 0;
+        }
         $product_price = $this->input->post('product_price');
         $product_tax = $this->input->post('product_tax');
         $product_discount = $this->input->post('product_discount');
@@ -518,7 +529,7 @@ class Stockreturn extends CI_Controller
             $prodindex++;
             if ($this->input->post('update_stock') == 'yes') {
                 $amt = numberClean(@$product_qty[$key]) - numberClean(@$old_product_qty[$key]);
-                $this->db->set('qty', "qty-$amt", FALSE);
+                $this->db->set('qty', "qty-$amt", false);
                 $this->db->where('pid', $product_id[$key]);
                 $this->db->update('gtg_products');
             }
@@ -552,7 +563,7 @@ class Stockreturn extends CI_Controller
                     $prid = $myArray[0];
                     $dqty = numberClean($myArray[1]);
                     if ($prid > 0) {
-                        $this->db->set('qty', "qty-$dqty", FALSE);
+                        $this->db->set('qty', "qty-$dqty", false);
                         $this->db->where('pid', $prid);
                         $this->db->update('gtg_products');
                     }
@@ -613,7 +624,7 @@ class Stockreturn extends CI_Controller
         $query = $this->db->get();
         $stock = $query->row_array();
         if (($stock['i_class'] != 2 && $this->aauth->premission(2)) or ($stock['i_class'] == 2 && $this->aauth->premission(1))) {
-            $this->db->set('pamnt', "0.00", FALSE);
+            $this->db->set('pamnt', "0.00", false);
             $this->db->set('status', 'canceled');
             $this->db->where('id', $tid);
             $this->db->update('gtg_stock_r');
@@ -626,7 +637,7 @@ class Stockreturn extends CI_Controller
             $revresult = $query->result_array();
             foreach ($revresult as $trans) {
                 $amt = $trans['credit'];
-                $this->db->set('lastbal', "lastbal-$amt", FALSE);
+                $this->db->set('lastbal', "lastbal-$amt", false);
                 $this->db->where('id', $trans['acid']);
                 $this->db->update('gtg_accounts');
             }
@@ -637,7 +648,7 @@ class Stockreturn extends CI_Controller
             $prevresult = $query->result_array();
             foreach ($prevresult as $prd) {
                 $amt = $prd['qty'];
-                $this->db->set('qty', "qty+$amt", FALSE);
+                $this->db->set('qty', "qty+$amt", false);
                 $this->db->where('pid', $prd['pid']);
                 $this->db->update('gtg_products');
             }
@@ -658,7 +669,6 @@ class Stockreturn extends CI_Controller
         $query = $this->db->get();
         $stock = $query->row_array();
         if (($stock['i_class'] != 2 && $this->aauth->premission(2)) or ($stock['i_class'] == 2 && $this->aauth->premission(1))) {
-
             $amount = rev_amountExchange_s($this->input->post('amount', true), 0, $this->aauth->get_user()->loc);
             $paydate = $this->input->post('paydate');
             $note = $this->input->post('shortnote', true);
@@ -701,12 +711,12 @@ class Stockreturn extends CI_Controller
                 $totalrm = $invresult->total - $invresult->pamnt;
                 if ($totalrm > $amount) {
                     $this->db->set('pmethod', $pmethod);
-                    $this->db->set('pamnt', "pamnt+$amount", FALSE);
+                    $this->db->set('pamnt', "pamnt+$amount", false);
                     $this->db->set('status', 'partial');
                     $this->db->where('id', $tid);
                     $this->db->update('gtg_stock_r');
                     //account update
-                    $this->db->set('lastbal', "lastbal-$amount", FALSE);
+                    $this->db->set('lastbal', "lastbal-$amount", false);
                     $this->db->where('id', $acid);
                     $this->db->update('gtg_accounts');
                     $paid_amount = $invresult->pamnt + $amount;
@@ -714,12 +724,12 @@ class Stockreturn extends CI_Controller
                     $totalrm = $totalrm - $amount;
                 } else {
                     $this->db->set('pmethod', $pmethod);
-                    $this->db->set('pamnt', "pamnt+$amount", FALSE);
+                    $this->db->set('pamnt', "pamnt+$amount", false);
                     $this->db->set('status', 'accepted');
                     $this->db->where('id', $tid);
                     $this->db->update('gtg_stock_r');
                     //acount update
-                    $this->db->set('lastbal', "lastbal-$amount", FALSE);
+                    $this->db->set('lastbal', "lastbal-$amount", false);
                     $this->db->where('id', $acid);
                     $this->db->update('gtg_accounts');
                     $totalrm = 0;
@@ -728,7 +738,6 @@ class Stockreturn extends CI_Controller
                 }
                 $dual = $this->custom->api_config(65);
                 if ($dual['key1']) {
-
                     $this->db->select('holder');
                     $this->db->from('gtg_accounts');
                     $this->db->where('id', $dual['url']);
@@ -745,13 +754,11 @@ class Stockreturn extends CI_Controller
                     $this->db->insert('gtg_transactions', $data);
 
                     //account update
-                    $this->db->set('lastbal', "lastbal+$amount", FALSE);
+                    $this->db->set('lastbal', "lastbal+$amount", false);
                     $this->db->where('id', $dual['url']);
                     $this->db->update('gtg_accounts');
                 }
             } else {
-
-
                 $this->db->select('holder');
                 $this->db->from('gtg_accounts');
                 $this->db->where('id', $acid);
@@ -783,12 +790,12 @@ class Stockreturn extends CI_Controller
                 $totalrm = $invresult->total - $invresult->pamnt;
                 if ($totalrm > $amount) {
                     $this->db->set('pmethod', $pmethod);
-                    $this->db->set('pamnt', "pamnt+$amount", FALSE);
+                    $this->db->set('pamnt', "pamnt+$amount", false);
                     $this->db->set('status', 'partial');
                     $this->db->where('id', $tid);
                     $this->db->update('gtg_stock_r');
                     //account update
-                    $this->db->set('lastbal', "lastbal-$amount", FALSE);
+                    $this->db->set('lastbal', "lastbal-$amount", false);
                     $this->db->where('id', $acid);
                     $this->db->update('gtg_accounts');
                     $paid_amount = $invresult->pamnt + $amount;
@@ -796,12 +803,12 @@ class Stockreturn extends CI_Controller
                     $totalrm = $totalrm - $amount;
                 } else {
                     $this->db->set('pmethod', $pmethod);
-                    $this->db->set('pamnt', "pamnt+$amount", FALSE);
+                    $this->db->set('pamnt', "pamnt+$amount", false);
                     $this->db->set('status', 'accepted');
                     $this->db->where('id', $tid);
                     $this->db->update('gtg_stock_r');
                     //acount update
-                    $this->db->set('lastbal', "lastbal-$amount", FALSE);
+                    $this->db->set('lastbal', "lastbal-$amount", false);
                     $this->db->where('id', $acid);
                     $this->db->update('gtg_accounts');
                     $totalrm = 0;

@@ -205,7 +205,7 @@
                                 <?php foreach ($acclist as $row) {
                                     echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
                                 }
-                                ?>
+            ?>
                             </select>
                     </div>   </div>
                             <div class="form-group row">

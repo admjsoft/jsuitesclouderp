@@ -5,12 +5,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Projects_model extends CI_Model
 {
-
-    var $column_order = array('gtg_projects.status', 'gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.worth', null);
-    var $column_search = array('gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.status');
-    var $tcolumn_order = array('status', 'name', 'duedate', 'start', null, null);
-    var $tcolumn_search = array('name', 'edate', 'status');
-    var $order = array('id' => 'desc');
+    public $column_order = array('gtg_projects.status', 'gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.worth', null);
+    public $column_search = array('gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.status');
+    public $tcolumn_order = array('status', 'name', 'duedate', 'start', null, null);
+    public $tcolumn_search = array('name', 'edate', 'status');
+    public $order = array('id' => 'desc');
 
 
     public function explore($id)
@@ -110,12 +109,10 @@ class Projects_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->column_search as $item) // loop column
-        {
+        foreach ($this->column_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
             if ($value) {
-
                 if ($i === 0) {
                     $this->db->group_start();
                     $this->db->like($item, $value);
@@ -123,33 +120,33 @@ class Projects_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->column_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function project_datatables($cday = '')
+    public function project_datatables($cday = '')
     {
-
-
         $this->_project_datatables_query($cday);
 
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function project_count_filtered($cday = '')
+    public function project_count_filtered($cday = '')
     {
         $this->_project_datatables_query($cday);
         $query = $this->db->get();
@@ -166,7 +163,6 @@ class Projects_model extends CI_Model
 
     public function project_stats($project)
     {
-
         $query = $this->db->query("SELECT
 				COUNT(IF( status = 'Waiting', id, NULL)) AS Waiting,
 				COUNT(IF( status = 'Progress', id, NULL)) AS Progress,
@@ -180,23 +176,19 @@ class Projects_model extends CI_Model
 
     private function _task_datatables_query($cday = '')
     {
-
         $this->db->from('gtg_todolist');
         $this->db->where('related', 1);
         if ($cday) {
-
             $this->db->where('rid=', $cday);
         }
 
 
         $i = 0;
 
-        foreach ($this->tcolumn_search as $item) // loop column
-        {
+        foreach ($this->tcolumn_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
             if ($value) {
-
                 if ($i === 0) {
                     $this->db->group_start();
                     $this->db->like($item, $value);
@@ -204,35 +196,35 @@ class Projects_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->tcolumn_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->tcolumn_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->tcolumn_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function task_datatables($cday = '')
+    public function task_datatables($cday = '')
     {
-
-
         $this->_task_datatables_query($cday);
 
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $this->db->where('related', 1);
         $this->db->where('rid=', $cday);
         $query = $this->db->get();
         return $query->result();
     }
 
-    function task_count_filtered($cday = '')
+    public function task_count_filtered($cday = '')
     {
         $this->_task_datatables_query($cday);
         $this->db->where('related', 1);
@@ -255,7 +247,6 @@ class Projects_model extends CI_Model
 
     public function task_thread($id)
     {
-
         $this->db->select('gtg_projects.id AS prj');
         $this->db->from('gtg_projects');
         $this->db->where('gtg_projects.id', $id);
@@ -283,7 +274,6 @@ class Projects_model extends CI_Model
 
     public function milestones($id)
     {
-
         $this->db->select('gtg_projects.id AS prj');
         $this->db->from('gtg_projects');
         $this->db->where('gtg_projects.id', $id);
@@ -309,7 +299,6 @@ class Projects_model extends CI_Model
 
     public function milestones_list($id)
     {
-
         $this->db->select('gtg_projects.id AS prj');
         $this->db->from('gtg_projects');
         $this->db->where('gtg_projects.id', $id);
@@ -332,7 +321,6 @@ class Projects_model extends CI_Model
 
     public function p_files($id)
     {
-
         $this->db->select('gtg_projects.id AS prj');
         $this->db->from('gtg_projects');
         $this->db->where('gtg_projects.id', $id);
@@ -361,7 +349,6 @@ class Projects_model extends CI_Model
 
     public function comments_thread($id)
     {
-
         $this->db->select('gtg_projects.id AS prj');
         $this->db->from('gtg_projects');
         $this->db->where('gtg_projects.id', $id);
@@ -393,7 +380,6 @@ class Projects_model extends CI_Model
 
     public function add_comment($comment, $prid, $cust)
     {
-
         $this->db->select('gtg_projects.*,gtg_projects.id AS prj, gtg_customers.name AS customer,gtg_project_meta.*');
         $this->db->from('gtg_projects');
         $this->db->where('gtg_projects.id', $prid);
@@ -407,7 +393,6 @@ class Projects_model extends CI_Model
         $result = $query->row_array();
 
         if ($result['prj'] == $prid) {
-
             $data = array('pid' => $prid, 'meta_key' => 13, 'key3' => $cust, 'value' => $comment . '<br><small>@' . date('Y-m-d H:i:s') . '</small>');
             if ($prid) {
                 return $this->db->insert('gtg_project_meta', $data);

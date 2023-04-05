@@ -14,16 +14,18 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class ActivityContext extends InstanceContext {
+class ActivityContext extends InstanceContext
+{
     /**
      * Initialize the ActivityContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $workspaceSid The workspace_sid
      * @param string $sid The sid
-     * @return \Twilio\Rest\Taskrouter\V1\Workspace\ActivityContext 
+     * @return \Twilio\Rest\Taskrouter\V1\Workspace\ActivityContext
      */
-    public function __construct(Version $version, $workspaceSid, $sid) {
+    public function __construct(Version $version, $workspaceSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -34,11 +36,12 @@ class ActivityContext extends InstanceContext {
 
     /**
      * Fetch a ActivityInstance
-     * 
+     *
      * @return ActivityInstance Fetched ActivityInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -57,12 +60,13 @@ class ActivityContext extends InstanceContext {
 
     /**
      * Update the ActivityInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return ActivityInstance Updated ActivityInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array('FriendlyName' => $options['friendlyName'], ));
@@ -84,20 +88,22 @@ class ActivityContext extends InstanceContext {
 
     /**
      * Deletes the ActivityInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

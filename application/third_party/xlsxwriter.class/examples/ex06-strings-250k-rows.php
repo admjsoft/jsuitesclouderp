@@ -1,11 +1,13 @@
 <?php
+
 set_include_path(get_include_path() . PATH_SEPARATOR . "..");
 include_once("xlsxwriter.class.php");
 
 $chars = "abcdefghijklmnopqrstuvwxyz0123456789 ";
 $s = '';
-for ($j = 0; $j < 16192; $j++)
+for ($j = 0; $j < 16192; $j++) {
     $s .= $chars[rand() % 36];
+}
 
 
 $writer = new XLSXWriter();
@@ -19,4 +21,3 @@ for ($i = 0; $i < 250000; $i++) {
 }
 $writer->writeToFile('xlsx-strings-250k.xlsx');
 echo '#' . floor((memory_get_peak_usage()) / 1024 / 1024) . "MB" . "\n";
-

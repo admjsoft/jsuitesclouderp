@@ -14,7 +14,6 @@ class Accounts extends CI_Controller
         }
 
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->load->model('accounts_model', 'accounts');
@@ -127,8 +126,6 @@ class Accounts extends CI_Controller
 
     public function balancesheet()
     {
-
-
         $head['title'] = "Balance Summary";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['accounts'] = $this->accounts->accountslist();
@@ -140,7 +137,6 @@ class Accounts extends CI_Controller
 
     public function account_stats()
     {
-
         $this->accounts->account_stats();
     }
 }

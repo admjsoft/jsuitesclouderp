@@ -45,6 +45,7 @@ use chillerlan\Traits\ContainerAbstract;
  *
  * @property array  $moduleValues
  */
-class QROptions extends ContainerAbstract{
-	use QROptionsTrait;
+class QROptions extends ContainerAbstract
+{
+    use QROptionsTrait;
 }

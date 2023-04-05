@@ -5,8 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Locations_model extends CI_Model
 {
-
-
     public function locations_list()
     {
         $query = $this->db->query("SELECT * FROM gtg_locations ORDER BY id DESC");
@@ -16,7 +14,9 @@ class Locations_model extends CI_Model
     public function locations_list2()
     {
         $where = '';
-        if ($this->aauth->get_user()->loc) $where = 'WHERE id=' . $this->aauth->get_user()->loc . '';
+        if ($this->aauth->get_user()->loc) {
+            $where = 'WHERE id=' . $this->aauth->get_user()->loc . '';
+        }
         $query = $this->db->query("SELECT * FROM gtg_locations $where ORDER BY id DESC");
         return $query->result_array();
     }
@@ -24,7 +24,6 @@ class Locations_model extends CI_Model
 
     public function view($id)
     {
-
         $this->db->from('gtg_locations');
         $this->db->where('id', $id);
         $query = $this->db->get();
@@ -91,7 +90,6 @@ class Locations_model extends CI_Model
 
     public function currencies()
     {
-
         $this->db->select('*');
         $this->db->from('gtg_currencies');
 
@@ -124,7 +122,6 @@ class Locations_model extends CI_Model
 
     public function online_pay_settings($id)
     {
-
         $this->db->select('gtg_accounts.id,gtg_accounts.holder,');
         $this->db->from('gtg_locations');
         $this->db->where('gtg_locations.id', $id);

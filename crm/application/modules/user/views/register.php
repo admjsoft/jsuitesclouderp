@@ -113,12 +113,14 @@
 
                                                 <?php
                                                 $r++;
-                                                if ($r % 2 == 0) echo '</div><div class="form-group row">';
+                                                if ($r % 2 == 0) {
+                                                    echo '</div><div class="form-group row">';
+                                                }
                                             }
                                         }
                                         echo '</div>';
                                     }
-                                    ?>
+                                                      ?>
 
 
 
@@ -150,7 +152,7 @@
 </body>
 <script>
     $(document).ready(function () {
-        <?php if($this->input->get('invited') && $this->input->get('invited') != ''){ ?>
+        <?php if ($this->input->get('invited') && $this->input->get('invited') != '') { ?>
         $burl = '<?php echo base_url() ?>';
         $.ajax({
             url: $burl + 'user/chekInvitation',

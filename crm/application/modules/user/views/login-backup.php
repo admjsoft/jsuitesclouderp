@@ -39,11 +39,11 @@
                                     </fieldset>
 
 								<?php if ($captcha_on) {
-                                        echo '<script src="https://www.google.com/recaptcha/api.js"></script>
+								    echo '<script src="https://www.google.com/recaptcha/api.js"></script>
 									<fieldset class="form-group position-relative has-icon-left">
                                       <div class="g-recaptcha" data-sitekey="'.$captcha.'"></div>
                                     </fieldset>';
-                                    } ?>
+								} ?>
 
 
 
@@ -51,7 +51,7 @@
                                                 class="icon-unlock2"></i> Login
                                     </button>
                                 </form> <?php    if ($this->common->front_end()->register) {
-        ?> <br> <div class="row"><span class="col-xs-7"><a
+                                    ?> <br> <div class="row"><span class="col-xs-7"><a
                                                     href="<?php echo base_url('user/registration'); ?>" class="card-link">
                                                <?php echo $this->lang->line('Register')  ?></a></span><span class="col-xs-5"><a
                                                     href="<?php echo base_url('user/forgot'); ?>" class="card-link">

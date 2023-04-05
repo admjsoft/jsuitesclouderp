@@ -17,16 +17,15 @@ use chillerlan\QRCode\Data\MaskPatternTester;
 use chillerlan\QRCode\QROptions;
 use chillerlan\QRCodeTest\QRTestAbstract;
 
-class MaskPatternTesterTest extends QRTestAbstract{
+class MaskPatternTesterTest extends QRTestAbstract
+{
+    protected $FQCN = MaskPatternTester::class;
 
-	protected $FQCN = MaskPatternTester::class;
+    // coverage
+    public function testMaskpattern()
+    {
+        $matrix = (new Byte(new QROptions(['version' => 10]), 'test'))->initMatrix(0, true);
 
-	// coverage
-	public function testMaskpattern(){
-		$matrix = (new Byte(new QROptions(['version' => 10]), 'test'))->initMatrix(0, true);
-
-		$this->assertSame(6178, (new MaskPatternTester($matrix))->testPattern());
-	}
-
-
+        $this->assertSame(6178, (new MaskPatternTester($matrix))->testPattern());
+    }
 }

@@ -100,7 +100,6 @@ class Productcategory extends CI_Controller
             }
 
             if ($cat_name) {
-
                 $this->products_cat->addwarehouse($cat_name, $cat_desc, $lid);
             }
         } else {
@@ -132,7 +131,6 @@ class Productcategory extends CI_Controller
         if ($this->aauth->premission(11)) {
             $id = intval($this->input->post('deleteid'));
             if ($id) {
-
                 $query = $this->db->query("DELETE gtg_movers FROM gtg_movers LEFT JOIN gtg_products ON  gtg_movers.rid1=gtg_products.pid LEFT JOIN gtg_product_cat ON  gtg_products.pcat=gtg_product_cat.id WHERE gtg_product_cat.id='$id' AND  gtg_movers.d_type='1'");
 
                 $this->db->delete('gtg_products', array('pcat' => $id));
@@ -152,7 +150,6 @@ class Productcategory extends CI_Controller
         if ($this->aauth->premission(11)) {
             $id = intval($this->input->post('deleteid'));
             if ($id) {
-
                 $query = $this->db->query("DELETE gtg_movers FROM gtg_movers LEFT JOIN gtg_products ON  gtg_movers.rid1=gtg_products.pid LEFT JOIN gtg_product_cat ON  gtg_products.sub_id=gtg_product_cat.id WHERE gtg_product_cat.id='$id' AND  gtg_movers.d_type='1'");
 
                 $this->db->delete('gtg_products', array('sub_id' => $id));
@@ -219,7 +216,6 @@ class Productcategory extends CI_Controller
 
 
             if ($cat_name) {
-
                 $this->products_cat->editwarehouse($cid, $cat_name, $cat_desc, $lid);
             }
         } else {
@@ -262,7 +258,9 @@ class Productcategory extends CI_Controller
         $e_date = datefordatabase($this->input->post('e_date'));
         $sub_date = $this->input->post('sub');
         $filter = 'pcat';
-        if ($sub_date) $filter = 'sub_id';
+        if ($sub_date) {
+            $filter = 'sub_id';
+        }
 
         if ($pid && $r_type) {
             $qj = '';

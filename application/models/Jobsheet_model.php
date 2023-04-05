@@ -6,12 +6,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Jobsheet_model extends CI_Model
 {
-
-
     //documents list
 
-    var $doccolumn_order = array(null, 'jobName', 'created_at', null);
-    var $doccolumn_search = array('jobName', 'created_at');
+    public $doccolumn_order = array(null, 'jobName', 'created_at', null);
+    public $doccolumn_search = array('jobName', 'created_at');
 
 
     public function jobs()
@@ -20,7 +18,7 @@ class Jobsheet_model extends CI_Model
         return $query->result_array();
     }
 
-    function addtaskdocument($title, $filename, $complaintid)
+    public function addtaskdocument($title, $filename, $complaintid)
     {
         $cid=0;
         $this->aauth->applog("[Jobsheets Doc Added]  DocId $title ComplaintId " . $complaintid, $this->aauth->get_user()->username);
@@ -28,8 +26,9 @@ class Jobsheet_model extends CI_Model
         return $this->db->insert('gtg_documents', $data);
     }
 
-    function deletetaskdocument($id, $complaintid)
-    {   $cid=0;
+    public function deletetaskdocument($id, $complaintid)
+    {
+        $cid=0;
         $this->db->select('filename');
         $this->db->from('gtg_documents');
         $this->db->where('id', $id);
@@ -52,55 +51,55 @@ class Jobsheet_model extends CI_Model
 
     public function addtask($title, $description, $timeFrame, $user, $created_at)
     {
-            $data = array(
-                'jobName' => $title,
-                'jobDescription' => $description,
-                'manDays' => $timeFrame,
-                'createdBy' => $user,
-                'updated_at' => $created_at,
-                'created_at' => $created_at
-            );
+        $data = array(
+            'jobName' => $title,
+            'jobDescription' => $description,
+            'manDays' => $timeFrame,
+            'createdBy' => $user,
+            'updated_at' => $created_at,
+            'created_at' => $created_at
+        );
 
-            $cid=0;
-            if ($this->db->insert('gtg_job', $data)) {
-                $cid = $this->db->insert_id();
-            }
-            return $cid;
+        $cid=0;
+        if ($this->db->insert('gtg_job', $data)) {
+            $cid = $this->db->insert_id();
+        }
+        return $cid;
     }
 
     public function delete($id)
-        {
-            $this->db->delete('gtg_customers', array('id' => $id));
-            return true;
-        }
-
-   function jobsheet_datatables($filt)
     {
-        $this->jobsheet_datatables_query($filt);
-        if ($this->input->post('length') != -1)
-            $this->db->limit($this->input->post('length'), $this->input->post('start'));
-        $query = $this->db->get();
-        return $query->result();
+        $this->db->delete('gtg_customers', array('id' => $id));
+        return true;
     }
+
+   public function jobsheet_datatables($filt)
+   {
+       $this->jobsheet_datatables_query($filt);
+       if ($this->input->post('length') != -1) {
+           $this->db->limit($this->input->post('length'), $this->input->post('start'));
+       }
+       $query = $this->db->get();
+       return $query->result();
+   }
     private function jobsheet_datatables_query($filt)
     {
-
         $this->db->from('gtg_job');
         if ($filt == 'Assign') {
             $this->db->where('status=', '3');
-        }else if($filt == 'Pending') {
+        } elseif ($filt == 'Pending') {
             $this->db->where('status=', '2');
-        }else if($filt == 'Completed') {
+        } elseif ($filt == 'Completed') {
             $this->db->where('status=', '1');
         }
         $i = 0;
 
-        foreach ($this->doccolumn_search as $item) // loop column
-        {
+        foreach ($this->doccolumn_search as $item) { // loop column
             $search = $this->input->post('search');
-        $value='';
-        if(!empty($search))
-        {  $value = $search['value'];}
+            $value='';
+            if (!empty($search)) {
+                $value = $search['value'];
+            }
 
             if ($value) {
                 if ($i === 0) {
@@ -110,20 +109,21 @@ class Jobsheet_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->doccolumn_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->doccolumn_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->doccolumn_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
-    function jobsheet_count_filtered($filt)
+    public function jobsheet_count_filtered($filt)
     {
         $this->jobsheet_datatables_query($filt);
         $query = $this->db->get();
@@ -159,7 +159,8 @@ class Jobsheet_model extends CI_Model
         $port = $smtpresult['port'];
         $auth = $smtpresult['auth'];
         $auth_type = $smtpresult['auth_type'];
-        $username = $smtpresult['username'];;
+        $username = $smtpresult['username'];
+        ;
         $password = $smtpresult['password'];
         $mailfrom = $smtpresult['sender'];
         $mailfromtilte = $this->config->item('ctitle');
@@ -194,11 +195,10 @@ class Jobsheet_model extends CI_Model
         return $query->row();
     }
 
-    function addjobsheetadminreply($thread_id, $message, $filename)
+    public function addjobsheetadminreply($thread_id, $message, $filename)
     {
         $data = array('jid' => $thread_id, 'message' => $message, 'cid' => 0, 'eid' => 0 ,'aid'=> $this->aauth->get_user()->id, 'cdate' => date('Y-m-d H:i:s'), 'attach' => $filename);
         if ($this->ticket()->key2) {
-
             $customer = $this->thread_jobsheet_info($thread_id);
             $email = $this->thread_user_info($customer['userId']);
 
@@ -219,7 +219,8 @@ class Jobsheet_model extends CI_Model
         $port = $smtpresult['port'];
         $auth = $smtpresult['auth'];
         $auth_type = $smtpresult['auth_type'];
-        $username = $smtpresult['username'];;
+        $username = $smtpresult['username'];
+        ;
         $password = $smtpresult['password'];
         $mailfrom = $smtpresult['sender'];
         $mailfromtilte = $this->config->item('ctitle');
@@ -229,7 +230,7 @@ class Jobsheet_model extends CI_Model
 
 
 
-    function deletejobsheetticket($id)
+    public function deletejobsheetticket($id)
     {
         $this->db->delete('gtg_job', array('id' => $id));
 
@@ -240,7 +241,6 @@ class Jobsheet_model extends CI_Model
         $result = $query->result_array();
         foreach ($result as $row) {
             if ($row['attach'] != '') {
-
                 unlink(FCPATH . 'userfiles/support/' . $row['attach']);
             }
         }
@@ -254,53 +254,53 @@ class Jobsheet_model extends CI_Model
         $created_at=date("Y-m-d")." ".date("h:i:s");
         $data = array('jobId' => $jobid, 'assignType' => $jobtype, 'assignBy' => $assignby, 'assignDate' =>$created_at, 'status' => 0, 'staffId'=>$empid, 'updated_at' => $created_at,'created_at'=>$created_at);
         $res= $this->db->insert('gtg_jobtransaction', $data);
-            if($res){
-                $st=2;
-                $jobdata = array(
-                'userId'  =>  $empid,
-                'status' => $st,
-                'updated_at' =>  $created_at
-                );
-                $this->db->where('id', $jobid);
-                $result=$this->db->update('gtg_job', $jobdata);
-                    if($result){
-                        $status=true;
-                    }else{
-                        $this->db->delete('gtg_jobtransaction', array('jobId' => $jobid));
-                    }
+        if ($res) {
+            $st=2;
+            $jobdata = array(
+            'userId'  =>  $empid,
+            'status' => $st,
+            'updated_at' =>  $created_at
+            );
+            $this->db->where('id', $jobid);
+            $result=$this->db->update('gtg_job', $jobdata);
+            if ($result) {
+                $status=true;
+            } else {
+                $this->db->delete('gtg_jobtransaction', array('jobId' => $jobid));
             }
+        }
         return $status;
     }
 
-   function jobsheet_my_datatables($filt)
-    {
-        $this->jobsheet_my_datatables_query($filt);
-        if ($this->input->post('length') != -1)
-            $this->db->limit($this->input->post('length'), $this->input->post('start'));
-        $query = $this->db->get();
-        return $query->result();
-    }
+   public function jobsheet_my_datatables($filt)
+   {
+       $this->jobsheet_my_datatables_query($filt);
+       if ($this->input->post('length') != -1) {
+           $this->db->limit($this->input->post('length'), $this->input->post('start'));
+       }
+       $query = $this->db->get();
+       return $query->result();
+   }
     private function jobsheet_my_datatables_query($filt)
     {
-
         $this->db->from('gtg_job');
         $this->db->where('userId=', $this->aauth->get_user()->id);
         if ($filt == 'Assign') {
             $this->db->where('status=', '3');
-        }else if($filt == 'Pending') {
+        } elseif ($filt == 'Pending') {
             $this->db->where('status=', '2');
-        }else if($filt == 'Completed') {
+        } elseif ($filt == 'Completed') {
             $this->db->where('status=', '1');
         }
         $i = 0;
 
-        foreach ($this->doccolumn_search as $item) // loop column
-        {
-
+        foreach ($this->doccolumn_search as $item) { // loop column
+            
             $search = $this->input->post('search');
-        $value='';
-        if(!empty($search))
-        {  $value = $search['value'];}
+            $value='';
+            if (!empty($search)) {
+                $value = $search['value'];
+            }
 
             if ($value) {
                 if ($i === 0) {
@@ -310,21 +310,22 @@ class Jobsheet_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->doccolumn_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->doccolumn_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->doccolumn_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function jobsheet_my_count_filtered($filt)
+    public function jobsheet_my_count_filtered($filt)
     {
         $this->jobsheet_my_datatables_query($filt);
         $query = $this->db->get();
@@ -338,11 +339,10 @@ class Jobsheet_model extends CI_Model
         return $query->num_rows();
     }
 
-    function addjobsheetreply($thread_id, $message, $filename)
+    public function addjobsheetreply($thread_id, $message, $filename)
     {
         $data = array('jid' => $thread_id, 'message' => $message, 'cid' => 0, 'eid' => $this->aauth->get_user()->id,'aid'=>0, 'cdate' => date('Y-m-d H:i:s'), 'attach' => $filename);
         if ($this->ticket()->key2) {
-
             $customer = $this->thread_jobsheet_info($thread_id);
             $email = $this->thread_user_info($customer['userId']);
 
@@ -355,10 +355,10 @@ class Jobsheet_model extends CI_Model
     {
 
         $query = $this->db->query("SELECT
-				COUNT(IF( status = 'Waiting', id, NULL)) AS Waiting,
-				COUNT(IF( status = 'Processing', id, NULL)) AS Processing,
-				COUNT(IF( status = 'Solved', id, NULL)) AS Solved
-				FROM gtg_tickets ");
+                COUNT(IF( status = 'Waiting', id, NULL)) AS Waiting,
+                COUNT(IF( status = 'Processing', id, NULL)) AS Processing,
+                COUNT(IF( status = 'Solved', id, NULL)) AS Solved
+                FROM gtg_tickets ");
         echo json_encode($query->result_array());
     }
 
@@ -372,8 +372,4 @@ class Jobsheet_model extends CI_Model
         return $query->result();
     }
 */
-
-
-
-
 }

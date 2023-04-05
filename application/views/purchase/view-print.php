@@ -187,16 +187,20 @@
             <td><h3><?php echo $this->config->item('ctitle'); ?></h3>
                 <?php echo
                     $this->config->item('address') . '<br>' . $this->config->item('city') . ',' . $this->config->item('country') . '<br>' . $this->lang->line('Phone') . ': ' . $this->config->item('phone') . '<br> ' . $this->lang->line('Email') . ': ' . $this->config->item('email');
-                if ($this->config->item('taxno')) echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $this->config->item('taxno');
-                ?>
+    if ($this->config->item('taxno')) {
+        echo '<br>' . $this->lang->line('Tax') . ' ID: ' . $this->config->item('taxno');
+    }
+    ?>
             </td>
 
             <td>
                 <?php echo $invoice['name'] . '</strong><br>';
-                if ($invoice['company']) echo $invoice['company'] . '<br>';
-                echo $invoice['address'] . '<br>' . $invoice['city'] . '<br>Phone: ' . $invoice['phone'] . '<br>Email: ' . $invoice['email'];
+    if ($invoice['company']) {
+        echo $invoice['company'] . '<br>';
+    }
+    echo $invoice['address'] . '<br>' . $invoice['city'] . '<br>Phone: ' . $invoice['phone'] . '<br>Email: ' . $invoice['email'];
 
-                ?>
+    ?>
             </td>
         </tr>
         </tbody>
@@ -215,7 +219,9 @@
             <td>
                 <?php echo $this->lang->line('Qty') ?>
             </td>
-            <?php if ($invoice['tax'] > 0) echo '<td>' . $this->lang->line('Tax') . '</td>'; ?>
+            <?php if ($invoice['tax'] > 0) {
+                echo '<td>' . $this->lang->line('Tax') . '</td>';
+            } ?>
             <td>
                 <?php echo $this->lang->line('Discount') ?>
             </td>
@@ -225,40 +231,40 @@
         </tr>
 
         <?php $i = 1;
-        $fill = false;
-        $sub_t = 0;
-        foreach ($products as $row) {
-            $sub_t += $row['price'] * $row['qty'];
-            $cols = 3;
+    $fill = false;
+    $sub_t = 0;
+    foreach ($products as $row) {
+        $sub_t += $row['price'] * $row['qty'];
+        $cols = 3;
 
-            if ($fill == true) {
-                $flag = ' mfill';
-            } else {
-                $flag = '';
-            }
-            echo '<tr class="item' . $flag . '"> 
+        if ($fill == true) {
+            $flag = ' mfill';
+        } else {
+            $flag = '';
+        }
+        echo '<tr class="item' . $flag . '"> 
                             <td>' . $row['product'] . '</td>
 							<td style="width:12%;">' . amountExchange($row['price'], 0, $this->aauth->get_user()->loc) . '</td>
                             <td style="width:6%;">' . amountFormat_general($row['qty']) . '</td>   ';
-            if ($invoice['tax'] > 0) {
-                echo '<td style="width:16%;">' . amountExchange($row['totaltax'], 0, $this->aauth->get_user()->loc) . ' <span class="tax">(' . amountFormat_s($row['tax']) . '%)</span></td>';
-                $cols++;
-            }
-            echo ' <td style="width:16%;">' . amountExchange($row['totaldiscount'], 0, $this->aauth->get_user()->loc) . '</td>
+        if ($invoice['tax'] > 0) {
+            echo '<td style="width:16%;">' . amountExchange($row['totaltax'], 0, $this->aauth->get_user()->loc) . ' <span class="tax">(' . amountFormat_s($row['tax']) . '%)</span></td>';
+            $cols++;
+        }
+        echo ' <td style="width:16%;">' . amountExchange($row['totaldiscount'], 0, $this->aauth->get_user()->loc) . '</td>
                             <td>' . amountExchange($row['subtotal'], 0, $this->aauth->get_user()->loc) . '</td>
                         </tr>';
-            if ($row['product_des']) {
-                $cols++;
-                echo '<tr class="item' . $flag . '"> 
+        if ($row['product_des']) {
+            $cols++;
+            echo '<tr class="item' . $flag . '"> 
                             <td colspan="' . $cols . '">' . $row['product_des'] . '<br>&nbsp;</td>
 							
                         </tr>';
-            }
-            $fill = !$fill;
-            $i++;
         }
+        $fill = !$fill;
+        $i++;
+    }
 
-        ?>
+    ?>
 
 
     </table>

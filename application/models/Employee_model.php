@@ -4,6 +4,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Employee_model extends CI_Model
 {
+    public function get_employee($id)
+    {
+        $this->db->select('*');
+        $this->db->where('id', $id);
+        $this->db->from('gtg_employees');
+        $get = $this->db->get()->result_array();
+        if (count($get) > 0) {
+            return $get[0];
+        } else {
+            return null;
+        }
+    }
 
     public function list_employee()
     {
@@ -14,7 +26,9 @@ class Employee_model extends CI_Model
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('gtg_users.loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
             $this->db->group_end();
         }
         $this->db->order_by('gtg_users.roleid', 'DESC');
@@ -55,7 +69,7 @@ class Employee_model extends CI_Model
         return $query->result_array();
     }
 
-    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary = 0, $department = -1, $commission = 0, $roleid = false)
+    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary = 0, $department = -1, $commission = 0, $roleid = false, $salary_type = 0, $epf_enabled = 0, $hrdf_enabled = 0)
     {
         $this->db->select('salary');
         $this->db->from('gtg_employees');
@@ -78,8 +92,11 @@ class Employee_model extends CI_Model
             'region' => $region,
             'country' => $country,
             'postbox' => $postbox,
+            'salary_type' => $salary_type,
             'salary' => $salary,
-            'c_rate' => $commission
+            'c_rate' => $commission,
+            'epf_enabled' => $epf_enabled,
+            'hrdf_enabled' => $hrdf_enabled,
         );
         if ($department > -1) {
             $data = array(
@@ -91,9 +108,12 @@ class Employee_model extends CI_Model
                 'region' => $region,
                 'country' => $country,
                 'postbox' => $postbox,
+                'salary_type' => $salary_type,
                 'salary' => $salary,
                 'dept' => $department,
-                'c_rate' => $commission
+                'c_rate' => $commission,
+                'epf_enabled' => $epf_enabled,
+                'hrdf_enabled' => $hrdf_enabled,
             );
         }
 
@@ -103,7 +123,6 @@ class Employee_model extends CI_Model
 
 
         if ($this->db->update('gtg_employees')) {
-
             if ($roleid && $role['roleid'] != 5) {
                 $this->db->set('loc', $location);
                 $this->db->set('roleid', $roleid);
@@ -179,17 +198,16 @@ class Employee_model extends CI_Model
         $this->db->set($data);
         $this->db->where('id', $id);
         if ($this->db->update('gtg_employees')) {
-
             unlink(FCPATH . 'userfiles/employee_sign/' . $result['sign']);
             unlink(FCPATH . 'userfiles/employee_sign/thumbnail/' . $result['sign']);
         }
     }
 
 
-    var $table = 'gtg_invoices';
-    var $column_order = array(null, 'gtg_invoices.tid', 'gtg_invoices.invoicedate', 'gtg_invoices.total', 'gtg_invoices.status');
-    var $column_search = array('gtg_invoices.tid', 'gtg_invoices.invoicedate', 'gtg_invoices.total', 'gtg_invoices.status');
-    var $order = array('gtg_invoices.tid' => 'asc');
+    public $table = 'gtg_invoices';
+    public $column_order = array(null, 'gtg_invoices.tid', 'gtg_invoices.invoicedate', 'gtg_invoices.total', 'gtg_invoices.status');
+    public $column_search = array('gtg_invoices.tid', 'gtg_invoices.invoicedate', 'gtg_invoices.total', 'gtg_invoices.status');
+    public $order = array('gtg_invoices.tid' => 'asc');
 
 
     private function _invoice_datatables_query($id)
@@ -201,46 +219,44 @@ class Employee_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->column_search as $item) // loop column
-        {
+        foreach ($this->column_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
-            if ($value) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
+            if ($value) { // if datatable send POST for search
+                
+                if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $value);
                 } else {
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
-        if ($search) // here order processing
-        {
+        if ($search) { // here order processing
             $this->db->order_by($this->column_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function invoice_datatables($id)
+    public function invoice_datatables($id)
     {
         $this->_invoice_datatables_query($id);
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function invoicecount_filtered($id)
+    public function invoicecount_filtered($id)
     {
         $this->_invoice_datatables_query($id);
         $query = $this->db->get();
@@ -263,14 +279,13 @@ class Employee_model extends CI_Model
     //transaction
 
 
-    var $tcolumn_order = array(null, 'account', 'type', 'cat', 'amount', 'stat');
-    var $tcolumn_search = array('id', 'account');
-    var $torder = array('id' => 'asc');
-    var $eid = '';
+    public $tcolumn_order = array(null, 'account', 'type', 'cat', 'amount', 'stat');
+    public $tcolumn_search = array('id', 'account');
+    public $torder = array('id' => 'asc');
+    public $eid = '';
 
     private function _get_datatables_query()
     {
-
         $this->db->from('gtg_transactions');
 
         $this->db->where('eid', $this->eid);
@@ -278,45 +293,43 @@ class Employee_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->tcolumn_search as $item) // loop column
-        {
-            if ($this->input->post('search')['value']) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
+        foreach ($this->tcolumn_search as $item) { // loop column
+            if ($this->input->post('search')['value']) { // if datatable send POST for search
+                
+                if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $this->input->post('search')['value']);
                 } else {
                     $this->db->or_like($item, $this->input->post('search')['value']);
                 }
 
-                if (count($this->tcolumn_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->tcolumn_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
 
-        if (isset($_POST['order'])) // here order processing
-        {
+        if (isset($_POST['order'])) { // here order processing
             $this->db->order_by($this->tcolumn_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        } else if (isset($this->torder)) {
+        } elseif (isset($this->torder)) {
             $order = $this->torder;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function get_datatables($eid)
+    public function get_datatables($eid)
     {
         $this->eid = $eid;
         $this->_get_datatables_query();
-        if ($_POST['length'] != -1)
+        if ($_POST['length'] != -1) {
             $this->db->limit($_POST['length'], $_POST['start']);
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function count_filtered()
+    public function count_filtered()
     {
         $this->db->from('gtg_transactions');
         $query = $this->db->get();
@@ -331,7 +344,7 @@ class Employee_model extends CI_Model
     }
 
 
-    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary = 0, $commission = 0, $department = 0)
+    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary = 0, $commission = 0, $department = 0, $salary_type = 0, $epf_enabled = 0, $hrdf_enabled = 0)
     {
         $data = array(
             'id' => $id,
@@ -344,8 +357,11 @@ class Employee_model extends CI_Model
             'postbox' => $postbox,
             'phone' => $phone,
             'dept' => $department,
+            'salary_type' => $salary_type,
             'salary' => $salary,
-            'c_rate' => $commission
+            'c_rate' => $commission,
+            'epf_enabled' => $epf_enabled,
+            'hrdf_enabled' => $hrdf_enabled,
         );
 
 
@@ -405,22 +421,19 @@ class Employee_model extends CI_Model
 
     //documents list
 
-    var $doccolumn_order = array(null, 'val1', 'val2', null);
-    var $doccolumn_search = array('val1', 'val2');
+    public $doccolumn_order = array(null, 'val1', 'val2', null);
+    public $doccolumn_search = array('val1', 'val2');
 
 
-    function addholidays($loc, $hday, $hdayto, $note)
+    public function addholidays($loc, $hday, $hdayto, $note)
     {
         $data = array('typ' => 2, 'rid' => $loc, 'val1' => $hday, 'val2' => $hdayto, 'val3' => $note);
         return $this->db->insert('gtg_hrm', $data);
     }
 
-    function deleteholidays($id)
+    public function deleteholidays($id)
     {
-
         if ($this->db->delete('gtg_hrm', array('id' => $id, 'typ' => 2))) {
-
-
             return true;
         } else {
             return false;
@@ -428,18 +441,18 @@ class Employee_model extends CI_Model
     }
 
 
-    function holidays_datatables()
+    public function holidays_datatables()
     {
         $this->holidays_datatables_query();
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
     private function holidays_datatables_query()
     {
-
         $this->db->from('gtg_hrm');
         $this->db->where('typ', 2);
         if ($this->aauth->get_user()->loc) {
@@ -447,12 +460,10 @@ class Employee_model extends CI_Model
         }
         $i = 0;
 
-        foreach ($this->doccolumn_search as $item) // loop column
-        {
+        foreach ($this->doccolumn_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
             if ($value) {
-
                 if ($i === 0) {
                     $this->db->group_start();
                     $this->db->like($item, $value);
@@ -460,21 +471,22 @@ class Employee_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->doccolumn_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->doccolumn_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->doccolumn_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->doccolumn_order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function holidays_count_filtered()
+    public function holidays_count_filtered()
     {
         $this->holidays_datatables_query();
         $query = $this->db->get();
@@ -504,7 +516,6 @@ class Employee_model extends CI_Model
 
     public function edithday($id, $loc, $from, $todate, $note)
     {
-
         $data = array('typ' => 2, 'val1' => $from, 'val2' => $todate, 'val3' => $note);
 
 
@@ -557,18 +568,15 @@ class Employee_model extends CI_Model
         return $query->row_array();
     }
 
-    function adddepartment($loc, $name)
+    public function adddepartment($loc, $name)
     {
         $data = array('typ' => 3, 'rid' => $loc, 'val1' => $name);
         return $this->db->insert('gtg_hrm', $data);
     }
 
-    function deletedepartment($id)
+    public function deletedepartment($id)
     {
-
         if ($this->db->delete('gtg_hrm', array('id' => $id, 'typ' => 3))) {
-
-
             return true;
         } else {
             return false;
@@ -577,7 +585,6 @@ class Employee_model extends CI_Model
 
     public function editdepartment($id, $loc, $name)
     {
-
         $data = array(
             'val1' => $name
         );
@@ -598,7 +605,6 @@ class Employee_model extends CI_Model
 
     private function _pay_get_datatables_query($eid)
     {
-
         $this->db->from('gtg_transactions');
         if ($this->aauth->get_user()->loc) {
             $this->db->where('loc', $this->aauth->get_user()->loc);
@@ -611,45 +617,42 @@ class Employee_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->tcolumn_search as $item) // loop column
-        {
-            if ($this->input->post('search')['value']) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
+        foreach ($this->tcolumn_search as $item) { // loop column
+            if ($this->input->post('search')['value']) { // if datatable send POST for search
+                
+                if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $this->input->post('search')['value']);
                 } else {
                     $this->db->or_like($item, $this->input->post('search')['value']);
                 }
 
-                if (count($this->tcolumn_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->tcolumn_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
 
-        if (isset($_POST['order'])) // here order processing
-        {
+        if (isset($_POST['order'])) { // here order processing
             $this->db->order_by($this->tcolumn_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        } else if (isset($this->torder)) {
+        } elseif (isset($this->torder)) {
             $order = $this->torder;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function pay_get_datatables($eid)
+    public function pay_get_datatables($eid)
     {
-
         $this->_pay_get_datatables_query($eid);
-        if ($_POST['length'] != -1)
+        if ($_POST['length'] != -1) {
             $this->db->limit($_POST['length'], $_POST['start']);
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function pay_count_filtered($eid)
+    public function pay_count_filtered($eid)
     {
         $this->db->from('gtg_transactions');
         $this->db->where('ext', 4);
@@ -671,11 +674,9 @@ class Employee_model extends CI_Model
     }
 
 
-    function addattendance($emp, $adate, $tfrom, $tto, $note)
+    public function addattendance($emp, $adate, $tfrom, $tto, $note)
     {
-
         foreach ($emp as $row) {
-
             $this->db->where('emp', $row);
             $this->db->where('DATE(adate)', $adate);
             $num = $this->db->count_all_results('gtg_attendance');
@@ -689,9 +690,20 @@ class Employee_model extends CI_Model
         return true;
     }
 
-    function deleteattendance($id)
+    public function clockout($emp, $tto, $note)
     {
+        foreach ($emp as $row) {
+            $update = ['tto' => $tto, 'note' => $note];
+            $data = $this->db->where('emp', $row)->where('tto', null)->order_by('id', 'desc')->select()->get('gtg_attendance', 1);
+            $this->db->where('id', $data->result_array()[0]['id'])->update('gtg_attendance', $update);
+//                ->update('gtg_attendance', $update);
+        }
 
+        return true;
+    }
+
+    public function deleteattendance($id)
+    {
         if ($this->db->delete('gtg_attendance', array('id' => $id))) {
             return true;
         } else {
@@ -699,14 +711,15 @@ class Employee_model extends CI_Model
         }
     }
 
-    var $acolumn_order = array(null, 'gtg_attendance.emp', 'gtg_attendance.adate', null, null);
-    var $acolumn_search = array('gtg_employees.name', 'gtg_attendance.adate');
+    public $acolumn_order = array(null, 'gtg_attendance.emp', 'gtg_attendance.adate', null, null);
+    public $acolumn_search = array('gtg_employees.name', 'gtg_attendance.adate');
 
-    function attendance_datatables($cid)
+    public function attendance_datatables($cid)
     {
         $this->attendance_datatables_query($cid);
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $query = $this->db->get();
         return $query->result();
     }
@@ -720,15 +733,15 @@ class Employee_model extends CI_Model
             $this->db->join('gtg_users', 'gtg_users.id=gtg_attendance.emp', 'left');
             $this->db->where('gtg_users.loc', $this->aauth->get_user()->loc);
         }
-        if ($cid) $this->db->where('gtg_attendance.emp', $cid);
+        if ($cid) {
+            $this->db->where('gtg_attendance.emp', $cid);
+        }
         $i = 0;
 
-        foreach ($this->acolumn_search as $item) // loop column
-        {
+        foreach ($this->acolumn_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
             if ($value) {
-
                 if ($i === 0) {
                     $this->db->group_start();
                     $this->db->like($item, $value);
@@ -736,21 +749,22 @@ class Employee_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->acolumn_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->acolumn_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->acolumn_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->acolumn_order)) {
+        } elseif (isset($this->acolumn_order)) {
             $order = $this->acolumn_order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function attendance_count_filtered($cid)
+    public function attendance_count_filtered($cid)
     {
         $this->attendance_datatables_query($cid);
         $query = $this->db->get();
@@ -766,14 +780,12 @@ class Employee_model extends CI_Model
 
     public function getAttendance($emp, $start, $end)
     {
-
         $sql = "SELECT  CONCAT(tfrom, ' - ', tto) AS title,DATE(adate) as start ,DATE(adate) as end FROM gtg_attendance WHERE (emp='$emp') AND (DATE(adate) BETWEEN ? AND ? ) ORDER BY DATE(adate) ASC";
         return $this->db->query($sql, array($start, $end))->result();
     }
 
     public function getHolidays($loc, $start, $end)
     {
-
         $sql = "SELECT  CONCAT(DATE(val1), ' - ', DATE(val2),' - ',val3) AS title,DATE(val1) as start ,DATE(val2) as end FROM gtg_hrm WHERE  (typ='2') AND  (rid='$loc') AND (DATE(val1) BETWEEN ? AND ? ) ORDER BY DATE(val1) ASC";
         return $this->db->query($sql, array($start, $end))->result();
     }

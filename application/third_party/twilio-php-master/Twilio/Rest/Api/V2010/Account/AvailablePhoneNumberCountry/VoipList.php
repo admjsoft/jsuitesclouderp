@@ -15,17 +15,19 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class VoipList extends ListResource {
+class VoipList extends ListResource
+{
     /**
      * Construct the VoipList
-     * 
+     *
      * @param Version $version Version that contains the resource
      * @param string $accountSid The 34 character string that uniquely identifies
      *                           your account.
      * @param string $countryCode The ISO Country code to lookup phone numbers for.
-     * @return \Twilio\Rest\Api\V2010\Account\AvailablePhoneNumberCountry\VoipList 
+     * @return \Twilio\Rest\Api\V2010\Account\AvailablePhoneNumberCountry\VoipList
      */
-    public function __construct(Version $version, $accountSid, $countryCode) {
+    public function __construct(Version $version, $accountSid, $countryCode)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -41,7 +43,7 @@ class VoipList extends ListResource {
      * is reached.
      * The results are returned as a generator, so this operation is memory
      * efficient.
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @param int $limit Upper limit for the number of records to return. stream()
      *                   guarantees to never return more than limit.  Default is no
@@ -53,7 +55,8 @@ class VoipList extends ListResource {
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($options = array(), $limit = null, $pageSize = null) {
+    public function stream($options = array(), $limit = null, $pageSize = null)
+    {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($options, $limits['pageSize']);
@@ -65,7 +68,7 @@ class VoipList extends ListResource {
      * Reads VoipInstance records from the API as a list.
      * Unlike stream(), this operation is eager and will load `limit` records into
      * memory before returning.
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @param int $limit Upper limit for the number of records to return. read()
      *                   guarantees to never return more than limit.  Default is no
@@ -77,21 +80,23 @@ class VoipList extends ListResource {
      *                        efficient page size, i.e. min(limit, 1000)
      * @return VoipInstance[] Array of results
      */
-    public function read($options = array(), $limit = null, $pageSize = null) {
+    public function read($options = array(), $limit = null, $pageSize = null)
+    {
         return iterator_to_array($this->stream($options, $limit, $pageSize), false);
     }
 
     /**
      * Retrieve a single page of VoipInstance records from the API.
      * Request is executed immediately
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @param mixed $pageSize Number of records to return, defaults to 50
      * @param string $pageToken PageToken provided by the API
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of VoipInstance
      */
-    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
+    public function page($options = array(), $pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
+    {
         $options = new Values($options);
         $params = Values::of(array(
             'AreaCode' => $options['areaCode'],
@@ -129,11 +134,12 @@ class VoipList extends ListResource {
     /**
      * Retrieve a specific page of VoipInstance records from the API.
      * Request is executed immediately
-     * 
+     *
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of VoipInstance
      */
-    public function getPage($targetUrl) {
+    public function getPage($targetUrl)
+    {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -144,10 +150,11 @@ class VoipList extends ListResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         return '[Twilio.Api.V2010.VoipList]';
     }
 }

@@ -37,20 +37,22 @@ use Twilio\Version;
  * @property string to
  * @property string uri
  */
-class MessageInstance extends InstanceResource {
+class MessageInstance extends InstanceResource
+{
     protected $_media = null;
     protected $_feedback = null;
 
     /**
      * Initialize the MessageInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $accountSid The unique sid that identifies this account
      * @param string $sid Fetch by unique message Sid
-     * @return \Twilio\Rest\Api\V2010\Account\MessageInstance 
+     * @return \Twilio\Rest\Api\V2010\Account\MessageInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
+    public function __construct(Version $version, array $payload, $accountSid, $sid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -83,11 +85,12 @@ class MessageInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Api\V2010\Account\MessageContext Context for this
      *                                                       MessageInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new MessageContext(
                 $this->version,
@@ -101,62 +104,68 @@ class MessageInstance extends InstanceResource {
 
     /**
      * Deletes the MessageInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->proxy()->delete();
     }
 
     /**
      * Fetch a MessageInstance
-     * 
+     *
      * @return MessageInstance Fetched MessageInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Update the MessageInstance
-     * 
+     *
      * @param string $body The text of the message you want to send, limited to
      *                     1600 characters.
      * @return MessageInstance Updated MessageInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($body) {
+    public function update($body)
+    {
         return $this->proxy()->update($body);
     }
 
     /**
      * Access the media
-     * 
-     * @return \Twilio\Rest\Api\V2010\Account\Message\MediaList 
+     *
+     * @return \Twilio\Rest\Api\V2010\Account\Message\MediaList
      */
-    protected function getMedia() {
+    protected function getMedia()
+    {
         return $this->proxy()->media;
     }
 
     /**
      * Access the feedback
-     * 
-     * @return \Twilio\Rest\Api\V2010\Account\Message\FeedbackList 
+     *
+     * @return \Twilio\Rest\Api\V2010\Account\Message\FeedbackList
      */
-    protected function getFeedback() {
+    protected function getFeedback()
+    {
         return $this->proxy()->feedback;
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -171,10 +180,11 @@ class MessageInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

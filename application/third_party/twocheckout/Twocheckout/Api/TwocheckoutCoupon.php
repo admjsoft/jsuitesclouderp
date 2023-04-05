@@ -2,7 +2,6 @@
 
 class Twocheckout_Coupon extends Twocheckout
 {
-
     public static function create($params=array())
     {
         $request = new Twocheckout_Api_Requester();
@@ -14,7 +13,7 @@ class Twocheckout_Coupon extends Twocheckout
     public static function retrieve($params=array())
     {
         $request = new Twocheckout_Api_Requester();
-        if(array_key_exists("coupon_code",$params)) {
+        if (array_key_exists("coupon_code", $params)) {
             $urlSuffix = '/api/products/detail_coupon';
         } else {
             $urlSuffix = '/api/products/list_coupons';
@@ -38,5 +37,4 @@ class Twocheckout_Coupon extends Twocheckout
         $result = $request->doCall($urlSuffix, $params);
         return Twocheckout_Util::returnResponse($result);
     }
-
 }

@@ -32,8 +32,6 @@ class Manager extends CI_Controller
         $stat = $this->input->post('stat');
         $this->manager->settask($id, $stat);
         echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('UPDATED'), 'pstatus' => 'Success'));
-
-
     }
 
     public function view_task()
@@ -91,8 +89,6 @@ class Manager extends CI_Controller
         $tlist = '';
         $tc = 0;
         foreach ($tasks as $row) {
-
-
             $tlist .= '<a href="javascript:void(0)" >
                       <div class="media">
                         <div class="media-left valign-middle"><i class="fa fa-bullhorn icon-bg-circle bg-cyan"></i></div>
@@ -106,8 +102,6 @@ class Manager extends CI_Controller
         }
 
         echo json_encode(array('tasks' => $tlist, 'tcount' => $tc));
-
-
     }
 
     //projects
@@ -121,7 +115,6 @@ class Manager extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('manager/index', $data);
         $this->load->view('fixed/footer');
-
     }
 
 
@@ -159,12 +152,9 @@ class Manager extends CI_Controller
 
     public function projects_stats()
     {
-
         $project = $this->input->get('id');
         //echo $project;
         $this->manager->project_stats($project);
-
-
     }
 
     public function explore()
@@ -188,7 +178,6 @@ class Manager extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('manager/explore', $data);
         $this->load->view('fixed/footer');
-
     }
 
 
@@ -196,7 +185,6 @@ class Manager extends CI_Controller
     {
         $id = $this->input->get('id');
         $this->manager->task_stats(intval($id));
-
     }
 
 
@@ -248,12 +236,10 @@ class Manager extends CI_Controller
         $this->load->view('manager/addtask', $data);
         $this->load->view('fixed/footer');
            */
-
     }
 
     public function addmilestone()
     {
-
         if ($this->input->post()) {
             $name = $this->input->post('name', true);
             $stdate = $this->input->post('staskdate', true);
@@ -269,9 +255,7 @@ class Manager extends CI_Controller
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
             }
-
         } else {
-
             $this->load->model('employee_model', 'employee');
             $head['usernm'] = $this->aauth->get_user()->username;
             $data['emp'] = $this->employee->list_employee();
@@ -282,7 +266,6 @@ class Manager extends CI_Controller
             $this->load->view('manager/addmilestone', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function b_save_addtask()
@@ -302,19 +285,15 @@ class Manager extends CI_Controller
         // $out=$this->projects->addtask($name, $status, $priority, $stdate, $tdate, $employee, $assign, $content, $prid, $milestone);
         // print_r($out);
         if ($this->manager->paddtask($name, $status, $priority, $stdate, $tdate, $employee, $assign, $content, $prid, $milestone)) {
-
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('New Task Added') . '&nbsp; Return to project <a href="' . base_url("manager/explore?id=" . $prid) . '" class="btn btn-primary btn-xs"><i class="icon-eye"></i> ' . $this->lang->line('Yes') . '</a>'));
-
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
         }
-
     }
 
 
     public function addactivity()
     {
-
         if ($this->input->post()) {
             $name = $this->input->post('name', true);
             $prid = $this->input->post('project', true);
@@ -324,9 +303,7 @@ class Manager extends CI_Controller
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
             }
-
         } else {
-
             $this->load->model('employee_model', 'employee');
             $head['usernm'] = $this->aauth->get_user()->username;
             $data['emp'] = $this->employee->list_employee();
@@ -337,7 +314,6 @@ class Manager extends CI_Controller
             $this->load->view('manager/addactivity', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function file_handling()
@@ -351,8 +327,6 @@ class Manager extends CI_Controller
             $fid = rand(100, 9999);
             $this->manager->meta_insert($id, 9, $fid, $files);
         }
-
-
     }
 
     public function delete_file()
@@ -363,8 +337,6 @@ class Manager extends CI_Controller
 
 
         echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
-
-
     }
 
     public function clock_in()
@@ -384,6 +356,4 @@ class Manager extends CI_Controller
         $this->projects->clockout($id, $eid);
         redirect('manager/explore?id=' . $id);
     }
-
-
 }

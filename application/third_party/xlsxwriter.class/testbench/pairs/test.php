@@ -1,4 +1,5 @@
 <?php
+
 include_once("../../xlsxwriter.class.php");
 
 $writer = new XLSXWriter();
@@ -71,7 +72,3 @@ $row = array('12-31-1999 01:23:00', '12-31-1999 01:23:00', '12-31-1999 01:23:00'
 $writer->writeSheet(array($row), 'Time', $header);
 
 $writer->writeToFile('formats_.xlsx');
-
-
-
-

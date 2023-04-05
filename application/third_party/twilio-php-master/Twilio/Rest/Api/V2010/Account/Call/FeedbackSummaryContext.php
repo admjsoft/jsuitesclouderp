@@ -13,16 +13,18 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class FeedbackSummaryContext extends InstanceContext {
+class FeedbackSummaryContext extends InstanceContext
+{
     /**
      * Initialize the FeedbackSummaryContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $accountSid The account_sid
      * @param string $sid The sid
-     * @return \Twilio\Rest\Api\V2010\Account\Call\FeedbackSummaryContext 
+     * @return \Twilio\Rest\Api\V2010\Account\Call\FeedbackSummaryContext
      */
-    public function __construct(Version $version, $accountSid, $sid) {
+    public function __construct(Version $version, $accountSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -33,11 +35,12 @@ class FeedbackSummaryContext extends InstanceContext {
 
     /**
      * Fetch a FeedbackSummaryInstance
-     * 
+     *
      * @return FeedbackSummaryInstance Fetched FeedbackSummaryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -56,20 +59,22 @@ class FeedbackSummaryContext extends InstanceContext {
 
     /**
      * Deletes the FeedbackSummaryInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

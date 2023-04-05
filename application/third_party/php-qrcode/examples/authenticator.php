@@ -14,4 +14,4 @@ require_once '../vendor/autoload.php';
 
 header('Content-type: image/svg+xml');
 
-echo (new MyAuthenticatorClass)->getQRCode();
+echo (new MyAuthenticatorClass())->getQRCode();

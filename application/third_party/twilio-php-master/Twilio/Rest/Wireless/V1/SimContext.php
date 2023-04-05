@@ -21,18 +21,20 @@ use Twilio\Version;
  * @property \Twilio\Rest\Wireless\V1\Sim\UsageRecordList usageRecords
  * @property \Twilio\Rest\Wireless\V1\Sim\DataSessionList dataSessions
  */
-class SimContext extends InstanceContext {
+class SimContext extends InstanceContext
+{
     protected $_usageRecords = null;
     protected $_dataSessions = null;
 
     /**
      * Initialize the SimContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $sid The sid
-     * @return \Twilio\Rest\Wireless\V1\SimContext 
+     * @return \Twilio\Rest\Wireless\V1\SimContext
      */
-    public function __construct(Version $version, $sid) {
+    public function __construct(Version $version, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -43,11 +45,12 @@ class SimContext extends InstanceContext {
 
     /**
      * Fetch a SimInstance
-     * 
+     *
      * @return SimInstance Fetched SimInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -61,12 +64,13 @@ class SimContext extends InstanceContext {
 
     /**
      * Update the SimInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return SimInstance Updated SimInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -100,10 +104,11 @@ class SimContext extends InstanceContext {
 
     /**
      * Access the usageRecords
-     * 
-     * @return \Twilio\Rest\Wireless\V1\Sim\UsageRecordList 
+     *
+     * @return \Twilio\Rest\Wireless\V1\Sim\UsageRecordList
      */
-    protected function getUsageRecords() {
+    protected function getUsageRecords()
+    {
         if (!$this->_usageRecords) {
             $this->_usageRecords = new UsageRecordList($this->version, $this->solution['sid']);
         }
@@ -113,10 +118,11 @@ class SimContext extends InstanceContext {
 
     /**
      * Access the dataSessions
-     * 
-     * @return \Twilio\Rest\Wireless\V1\Sim\DataSessionList 
+     *
+     * @return \Twilio\Rest\Wireless\V1\Sim\DataSessionList
      */
-    protected function getDataSessions() {
+    protected function getDataSessions()
+    {
         if (!$this->_dataSessions) {
             $this->_dataSessions = new DataSessionList($this->version, $this->solution['sid']);
         }
@@ -126,12 +132,13 @@ class SimContext extends InstanceContext {
 
     /**
      * Magic getter to lazy load subresources
-     * 
+     *
      * @param string $name Subresource to return
      * @return \Twilio\ListResource The requested subresource
      * @throws \Twilio\Exceptions\TwilioException For unknown subresources
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (property_exists($this, '_' . $name)) {
             $method = 'get' . ucfirst($name);
             return $this->$method();
@@ -142,13 +149,14 @@ class SimContext extends InstanceContext {
 
     /**
      * Magic caller to get resource contexts
-     * 
+     *
      * @param string $name Resource to return
      * @param array $arguments Context parameters
      * @return \Twilio\InstanceContext The requested resource context
      * @throws \Twilio\Exceptions\TwilioException For unknown resource
      */
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         $property = $this->$name;
         if (method_exists($property, 'getContext')) {
             return call_user_func_array(array($property, 'getContext'), $arguments);
@@ -159,10 +167,11 @@ class SimContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

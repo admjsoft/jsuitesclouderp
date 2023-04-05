@@ -18,15 +18,17 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class IntentList extends ListResource {
+class IntentList extends ListResource
+{
     /**
      * Construct the IntentList
-     * 
+     *
      * @param Version $version Version that contains the resource
      * @param string $assistantSid The unique ID of the Assistant.
-     * @return \Twilio\Rest\Preview\Understand\Assistant\IntentList 
+     * @return \Twilio\Rest\Preview\Understand\Assistant\IntentList
      */
-    public function __construct(Version $version, $assistantSid) {
+    public function __construct(Version $version, $assistantSid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -42,7 +44,7 @@ class IntentList extends ListResource {
      * is reached.
      * The results are returned as a generator, so this operation is memory
      * efficient.
-     * 
+     *
      * @param int $limit Upper limit for the number of records to return. stream()
      *                   guarantees to never return more than limit.  Default is no
      *                   limit
@@ -53,7 +55,8 @@ class IntentList extends ListResource {
      *                        efficient page size, i.e. min(limit, 1000)
      * @return \Twilio\Stream stream of results
      */
-    public function stream($limit = null, $pageSize = null) {
+    public function stream($limit = null, $pageSize = null)
+    {
         $limits = $this->version->readLimits($limit, $pageSize);
 
         $page = $this->page($limits['pageSize']);
@@ -65,7 +68,7 @@ class IntentList extends ListResource {
      * Reads IntentInstance records from the API as a list.
      * Unlike stream(), this operation is eager and will load `limit` records into
      * memory before returning.
-     * 
+     *
      * @param int $limit Upper limit for the number of records to return. read()
      *                   guarantees to never return more than limit.  Default is no
      *                   limit
@@ -76,20 +79,22 @@ class IntentList extends ListResource {
      *                        efficient page size, i.e. min(limit, 1000)
      * @return IntentInstance[] Array of results
      */
-    public function read($limit = null, $pageSize = null) {
+    public function read($limit = null, $pageSize = null)
+    {
         return iterator_to_array($this->stream($limit, $pageSize), false);
     }
 
     /**
      * Retrieve a single page of IntentInstance records from the API.
      * Request is executed immediately
-     * 
+     *
      * @param mixed $pageSize Number of records to return, defaults to 50
      * @param string $pageToken PageToken provided by the API
      * @param mixed $pageNumber Page Number, this value is simply for client state
      * @return \Twilio\Page Page of IntentInstance
      */
-    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE) {
+    public function page($pageSize = Values::NONE, $pageToken = Values::NONE, $pageNumber = Values::NONE)
+    {
         $params = Values::of(array(
             'PageToken' => $pageToken,
             'Page' => $pageNumber,
@@ -108,11 +113,12 @@ class IntentList extends ListResource {
     /**
      * Retrieve a specific page of IntentInstance records from the API.
      * Request is executed immediately
-     * 
+     *
      * @param string $targetUrl API-generated URL for the requested results page
      * @return \Twilio\Page Page of IntentInstance
      */
-    public function getPage($targetUrl) {
+    public function getPage($targetUrl)
+    {
         $response = $this->version->getDomain()->getClient()->request(
             'GET',
             $targetUrl
@@ -123,7 +129,7 @@ class IntentList extends ListResource {
 
     /**
      * Create a new IntentInstance
-     * 
+     *
      * @param string $uniqueName A user-provided string that uniquely identifies
      *                           this resource as an alternative to the sid. Unique
      *                           up to 64 characters long.
@@ -131,7 +137,8 @@ class IntentList extends ListResource {
      * @return IntentInstance Newly created IntentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($uniqueName, $options = array()) {
+    public function create($uniqueName, $options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -152,20 +159,22 @@ class IntentList extends ListResource {
 
     /**
      * Constructs a IntentContext
-     * 
+     *
      * @param string $sid The sid
-     * @return \Twilio\Rest\Preview\Understand\Assistant\IntentContext 
+     * @return \Twilio\Rest\Preview\Understand\Assistant\IntentContext
      */
-    public function getContext($sid) {
+    public function getContext($sid)
+    {
         return new IntentContext($this->version, $this->solution['assistantSid'], $sid);
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         return '[Twilio.Preview.Understand.IntentList]';
     }
 }

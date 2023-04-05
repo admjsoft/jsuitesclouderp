@@ -25,20 +25,19 @@ namespace Stripe;
  */
 class BankAccount extends ApiResource
 {
-    const OBJECT_NAME = 'bank_account';
-
     use ApiOperations\Delete;
     use ApiOperations\Update;
+    public const OBJECT_NAME = 'bank_account';
 
     /**
      * Possible string representations of the bank verification status.
      * @link https://stripe.com/docs/api/external_account_bank_accounts/object#account_bank_account_object-status
      */
-    const STATUS_NEW                 = 'new';
-    const STATUS_VALIDATED           = 'validated';
-    const STATUS_VERIFIED            = 'verified';
-    const STATUS_VERIFICATION_FAILED = 'verification_failed';
-    const STATUS_ERRORED             = 'errored';
+    public const STATUS_NEW                 = 'new';
+    public const STATUS_VALIDATED           = 'validated';
+    public const STATUS_VERIFIED            = 'verified';
+    public const STATUS_VERIFICATION_FAILED = 'verification_failed';
+    public const STATUS_ERRORED             = 'errored';
 
     /**
      * @return string The instance URL for this resource. It needs to be special

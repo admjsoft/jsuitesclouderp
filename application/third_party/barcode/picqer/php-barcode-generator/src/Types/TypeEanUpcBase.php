@@ -51,11 +51,11 @@ abstract class TypeEanUpcBase implements TypeInterface
             $code = '0' . $code;
             ++$length;
         }
-        
+
         if ($this->upce) {
             // convert UPC-A to UPC-E
             $tmp = substr($code, 4, 3);
-            if (($tmp == '000') OR ($tmp == '100') OR ($tmp == '200')) {
+            if (($tmp == '000') or ($tmp == '100') or ($tmp == '200')) {
                 // manufacturer code ends in 000, 100, or 200
                 $upce_code = substr($code, 2, 2) . substr($code, 9, 3) . substr($code, 4, 1);
             } else {
@@ -191,7 +191,7 @@ abstract class TypeEanUpcBase implements TypeInterface
         $w = 0;
         for ($i = 0; $i < $clen; ++$i) {
             $w += 1;
-            if (($i == ($clen - 1)) OR (($i < ($clen - 1)) AND ($seq[$i] != $seq[($i + 1)]))) {
+            if (($i == ($clen - 1)) or (($i < ($clen - 1)) and ($seq[$i] != $seq[($i + 1)]))) {
                 if ($seq[$i] == '1') {
                     $t = true; // bar
                 } else {

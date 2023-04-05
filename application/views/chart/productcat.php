@@ -90,8 +90,8 @@
     $(window).on("load", function () {
         var cat_data = [
             <?php foreach ($chart as $item) {
-            echo '{label: "' . $item['title'] . ' | ' . +$item['qty'] . '", value: ' . $item['subtotal'] . ' },';
-        }
+                echo '{label: "' . $item['title'] . ' | ' . +$item['qty'] . '", value: ' . $item['subtotal'] . ' },';
+            }
             ?>
         ];
         draw_c(cat_data);

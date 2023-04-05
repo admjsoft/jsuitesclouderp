@@ -81,9 +81,9 @@
     $(document).ready(function () {
         var cat_data = [
             <?php foreach ($chart as $item) {
-            $prod = str_replace('/', '', $item['product_name']);
-            echo '{y: "' . str_replace('"', '', $prod) . '", a: ' . $item['qty'] . ' },';
-        }
+                $prod = str_replace('/', '', $item['product_name']);
+                echo '{y: "' . str_replace('"', '', $prod) . '", a: ' . $item['qty'] . ' },';
+            }
             ?>
         ];
         draw_c(cat_data);

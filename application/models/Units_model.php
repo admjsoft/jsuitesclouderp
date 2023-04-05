@@ -5,8 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Units_model extends CI_Model
 {
-
-
     public function units_list()
     {
         $query = $this->db->query("SELECT * FROM gtg_units WHERE type=0 ORDER BY id DESC");
@@ -16,7 +14,6 @@ class Units_model extends CI_Model
 
     public function view($id)
     {
-
         $this->db->from('gtg_units');
         $this->db->where('id', $id);
 

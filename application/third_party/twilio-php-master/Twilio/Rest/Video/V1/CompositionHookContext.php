@@ -18,16 +18,18 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class CompositionHookContext extends InstanceContext {
+class CompositionHookContext extends InstanceContext
+{
     /**
      * Initialize the CompositionHookContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $sid The Composition Hook Sid that uniquely identifies the
      *                    Composition Hook to fetch.
-     * @return \Twilio\Rest\Video\V1\CompositionHookContext 
+     * @return \Twilio\Rest\Video\V1\CompositionHookContext
      */
-    public function __construct(Version $version, $sid) {
+    public function __construct(Version $version, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -38,11 +40,12 @@ class CompositionHookContext extends InstanceContext {
 
     /**
      * Fetch a CompositionHookInstance
-     * 
+     *
      * @return CompositionHookInstance Fetched CompositionHookInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -56,32 +59,38 @@ class CompositionHookContext extends InstanceContext {
 
     /**
      * Deletes the CompositionHookInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Update the CompositionHookInstance
-     * 
+     *
      * @param string $friendlyName Friendly name of the Composition Hook to be
      *                             shown in the console.
      * @param array|Options $options Optional Arguments
      * @return CompositionHookInstance Updated CompositionHookInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($friendlyName, $options = array()) {
+    public function update($friendlyName, $options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array(
             'FriendlyName' => $friendlyName,
             'Enabled' => Serialize::booleanToString($options['enabled']),
             'VideoLayout' => Serialize::jsonObject($options['videoLayout']),
-            'AudioSources' => Serialize::map($options['audioSources'], function($e) { return $e; }),
-            'AudioSourcesExcluded' => Serialize::map($options['audioSourcesExcluded'], function($e) { return $e; }),
+            'AudioSources' => Serialize::map($options['audioSources'], function ($e) {
+                return $e;
+            }),
+            'AudioSourcesExcluded' => Serialize::map($options['audioSourcesExcluded'], function ($e) {
+                return $e;
+            }),
             'Trim' => Serialize::booleanToString($options['trim']),
             'Format' => $options['format'],
             'Resolution' => $options['resolution'],
@@ -101,10 +110,11 @@ class CompositionHookContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

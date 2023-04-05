@@ -2,7 +2,9 @@
 
 
 
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 
 function dateformat($input)
@@ -35,7 +37,6 @@ function datefordatabase($input)
 
 function timefordatabase($input)
 {
-
     $time = new DateTime($input);
     $time = $time->format('H:i:s');
     return $time;
@@ -188,7 +189,6 @@ function amountExchange($number, $id = 0, $loc = 0)
             return @number_format($totalamount, $decimal_after, $dec_point, $thosand) . ' ' . $currency;
         }
     } else {
-
         $query = $ci->db->query("SELECT currency FROM gtg_system WHERE id=1 LIMIT 1");
         $row = $query->row_array();
         $currency = $row['currency'];
@@ -315,7 +315,6 @@ function rev_amountExchange_s($number, $id = 0, $loc = 0)
         $number = str_replace($row['thous'], "", $number);
         $number = str_replace($row['dpoint'], ".", $number);
         if (!$revers) {
-
             $number = (float)$number / $rate;
         }
     } else {
@@ -358,7 +357,7 @@ function array_compare()
             }
             if ($first[$criterion] < $second[$criterion]) {
                 return -1 * $sortOrder;
-            } else if ($first[$criterion] > $second[$criterion]) {
+            } elseif ($first[$criterion] > $second[$criterion]) {
                 return 1 * $sortOrder;
             }
         }
@@ -391,7 +390,6 @@ function location($number = 0)
 
 function active($input1)
 {
-
     $t_file = APPPATH . 'config' . DIRECTORY_SEPARATOR . 'lic.php';
     if (is_writeable($t_file)) {
         file_put_contents($t_file, $input1);
@@ -449,8 +447,6 @@ function custom_plugins_checker($name = 'sms')
 {
     $path = FCPATH . 'application' . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . $name;
     if (file_exists($path)) {
-
-
         $plugins = array_diff(scandir($path), array('.', '..'));
         foreach ($plugins as $row) {
             $url = file_get_contents($path . '/' . $row);
@@ -469,7 +465,9 @@ function datatable_lang()
     $result = '';
     $lang = $ci->config->item('mylang');
     $dfile = FCPATH . 'application/language/' . $lang . '/datatable.php';
-    if (file_exists($dfile)) $result = include_once($dfile);
+    if (file_exists($dfile)) {
+        $result = include_once($dfile);
+    }
     echo $result;
 }
 

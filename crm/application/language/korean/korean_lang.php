@@ -1,4 +1,5 @@
 <?php
+
 $lang['Date'] = "데이트";
 $lang['Edit'] = "편집하다";
 $lang['employee_login_panel'] = "직원 로그인 패널";

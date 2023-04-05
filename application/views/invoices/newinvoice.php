@@ -51,9 +51,9 @@
                                             id="s_warehouses"
                                             class="form-control round">
                                         <?php echo $this->common->default_warehouse();
-                                        echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
-                                            echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                                        } ?>
+                                            echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
+                                                echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                                            } ?>
 
                                     </select>
                                 </div>
@@ -241,9 +241,9 @@
                                     <strong><?php echo $this->lang->line('Total Discount') ?></strong></td>
                                 <td align="left" colspan="2"><span
                                             class="currenty lightMode"><?php echo $this->config->item('currency');
-                                        if (isset($_GET['project'])) {
-                                            echo '<input type="hidden" value="' . intval($_GET['project']) . '" name="prjid">';
-                                        } ?></span>
+                                            if (isset($_GET['project'])) {
+                                                echo '<input type="hidden" value="' . intval($_GET['project']) . '" name="prjid">';
+                                            } ?></span>
                                     <span id="discs" class="lightMode">0</span></td>
                             </tr>
 
@@ -278,9 +278,9 @@
 
 
                             <tr class="sub_c" style="display: table-row;">
-                                <td colspan="2"><?php if (isset($employee)){
-                                       echo $this->lang->line('Employee')
-                                ?><br>
+                                <td colspan="2"><?php if (isset($employee)) {
+                                    echo $this->lang->line('Employee')
+                                    ?><br>
                                     <select name="employee"
                                             class=" mt-1 col form-control form-control-sm">
 
@@ -288,8 +288,8 @@
                                             echo '<option value="' . $row['id'] . '">' . $row['name'] . ' (' . $row['name'] . ')</option>';
                                         } ?>
 
-                                    </select><?php } ?><br><?php if ($exchange['active'] == 1){
-                                    echo $this->lang->line('Payment Currency client') . ' <small>' . $this->lang->line('based on live market') ?></small>
+                                    </select><?php } ?><br><?php if ($exchange['active'] == 1) {
+                                        echo $this->lang->line('Payment Currency client') . ' <small>' . $this->lang->line('based on live market') ?></small>
                                     <select name="mcurrency"
                                             class="selectpicker form-control">
                                         <option value="0">Default</option>
@@ -310,8 +310,8 @@
                             <tr class="sub_c" style="display: table-row;">
                                 <td colspan="2"><?php echo $this->lang->line('Payment Terms') ?> <select name="pterms"
                                                                                                          class="selectpicker form-control"><?php foreach ($terms as $row) {
-                                            echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                                        } ?>
+                                                                                                             echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                                                                                                         } ?>
 
                                     </select></td>
                                 <td class="reverse_align" colspan="6"><input type="submit"
@@ -327,10 +327,10 @@
                         </table>
 
                         <?php
-                        if(is_array($custom_fields)){
-                          echo'<div class="card">';
-                                    foreach ($custom_fields as $row) {
-                                        if ($row['f_type'] == 'text') { ?>
+                        if (is_array($custom_fields)) {
+                            echo'<div class="card">';
+                            foreach ($custom_fields as $row) {
+                                if ($row['f_type'] == 'text') { ?>
                                             <div class="row mt-1">
 
                                                 <label class="col-sm-8"
@@ -345,10 +345,10 @@
 
 
                                         <?php }
-                                    }
-                                    echo'</div>';
+                                }
+                            echo'</div>';
                         }
-                                    ?>
+                                            ?>
                     </div>
                     <input type="hidden" value="new_i" id="inv_page">
                     <input type="hidden" value="invoices/action" id="action-url">
@@ -485,12 +485,12 @@
                                 <div class="col-sm-10">
                                     <select name="customergroup" class="form-control form-control-sm">
                                         <?php
-                                        foreach ($customergrouplist as $row) {
-                                            $cid = $row['id'];
-                                            $title = $row['title'];
-                                            echo "<option value='$cid'>$title</option>";
-                                        }
-                                        ?>
+                                                foreach ($customergrouplist as $row) {
+                                                    $cid = $row['id'];
+                                                    $title = $row['title'];
+                                                    echo "<option value='$cid'>$title</option>";
+                                                }
+                                            ?>
                                     </select>
 
 
@@ -592,9 +592,9 @@
 
                     </div>
                                    <?php
-                                   if(is_array($custom_fields_c)){
-                                    foreach ($custom_fields_c as $row) {
-                                        if ($row['f_type'] == 'text') { ?>
+                                   if (is_array($custom_fields_c)) {
+                                       foreach ($custom_fields_c as $row) {
+                                           if ($row['f_type'] == 'text') { ?>
                                             <div class="form-group row">
 
                                                 <label class="col-sm-2 col-form-label"
@@ -609,9 +609,9 @@
 
 
                                         <?php }
-                                    }
+                                           }
                                    }
-                                    ?>
+                                            ?>
                 </div>
                 <!-- Modal Footer -->
                 <div class="modal-footer">

@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Accounts_model extends CI_Model
 {
-    var $table = 'gtg_accounts';
+    public $table = 'gtg_accounts';
 
     public function __construct()
     {
@@ -19,9 +19,13 @@ class Accounts_model extends CI_Model
         if ($l) {
             if ($this->aauth->get_user()->loc) {
                 $this->db->where('loc', $this->aauth->get_user()->loc);
-                if (BDATA) $this->db->or_where('loc', 0);
+                if (BDATA) {
+                    $this->db->or_where('loc', 0);
+                }
             } else {
-                if (!BDATA) $this->db->where('loc', 0);
+                if (!BDATA) {
+                    $this->db->where('loc', 0);
+                }
             }
         } else {
             $this->db->where('loc', $lid);
@@ -33,14 +37,15 @@ class Accounts_model extends CI_Model
 
     public function details($acid)
     {
-
         $this->db->select('*');
         $this->db->from('gtg_accounts');
         $this->db->where('id', $acid);
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('loc', $this->aauth->get_user()->loc);
-            if (BDATA)  $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
             $this->db->group_end();
         }
         $query = $this->db->get();
@@ -109,7 +114,9 @@ class Accounts_model extends CI_Model
         $whr = ' ';
         if ($this->aauth->get_user()->loc) {
             $whr = ' WHERE loc=' . $this->aauth->get_user()->loc;
-            if (BDATA) $whr .= 'OR loc=0 ';
+            if (BDATA) {
+                $whr .= 'OR loc=0 ';
+            }
         }
 
         $query = $this->db->query("SELECT SUM(lastbal) AS balance,COUNT(id) AS count_a FROM gtg_accounts $whr");

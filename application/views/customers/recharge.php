@@ -68,7 +68,6 @@
                     </thead>
                     <tbody id="activity">
                     <?php foreach ($activity as $row) {
-
                         echo '<tr>
                             <td>' . amountExchange($row['col1'], 0, $this->aauth->get_user()->loc) . '</td><td>' . $row['col2'] . '</td>
                            

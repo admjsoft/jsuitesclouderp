@@ -23,19 +23,21 @@ use Twilio\Version;
  * @method \Twilio\Rest\IpMessaging\V2\Service\User\UserChannelContext userChannels(string $channelSid)
  * @method \Twilio\Rest\IpMessaging\V2\Service\User\UserBindingContext userBindings(string $sid)
  */
-class UserContext extends InstanceContext {
+class UserContext extends InstanceContext
+{
     protected $_userChannels = null;
     protected $_userBindings = null;
 
     /**
      * Initialize the UserContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $serviceSid Sid of the Service this user belongs to.
      * @param string $sid Key that uniquely defines the user to fetch.
-     * @return \Twilio\Rest\IpMessaging\V2\Service\UserContext 
+     * @return \Twilio\Rest\IpMessaging\V2\Service\UserContext
      */
-    public function __construct(Version $version, $serviceSid, $sid) {
+    public function __construct(Version $version, $serviceSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -46,11 +48,12 @@ class UserContext extends InstanceContext {
 
     /**
      * Fetch a UserInstance
-     * 
+     *
      * @return UserInstance Fetched UserInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -69,22 +72,24 @@ class UserContext extends InstanceContext {
 
     /**
      * Deletes the UserInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Update the UserInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return UserInstance Updated UserInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -110,10 +115,11 @@ class UserContext extends InstanceContext {
 
     /**
      * Access the userChannels
-     * 
-     * @return \Twilio\Rest\IpMessaging\V2\Service\User\UserChannelList 
+     *
+     * @return \Twilio\Rest\IpMessaging\V2\Service\User\UserChannelList
      */
-    protected function getUserChannels() {
+    protected function getUserChannels()
+    {
         if (!$this->_userChannels) {
             $this->_userChannels = new UserChannelList(
                 $this->version,
@@ -127,10 +133,11 @@ class UserContext extends InstanceContext {
 
     /**
      * Access the userBindings
-     * 
-     * @return \Twilio\Rest\IpMessaging\V2\Service\User\UserBindingList 
+     *
+     * @return \Twilio\Rest\IpMessaging\V2\Service\User\UserBindingList
      */
-    protected function getUserBindings() {
+    protected function getUserBindings()
+    {
         if (!$this->_userBindings) {
             $this->_userBindings = new UserBindingList(
                 $this->version,
@@ -144,12 +151,13 @@ class UserContext extends InstanceContext {
 
     /**
      * Magic getter to lazy load subresources
-     * 
+     *
      * @param string $name Subresource to return
      * @return \Twilio\ListResource The requested subresource
      * @throws \Twilio\Exceptions\TwilioException For unknown subresources
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (property_exists($this, '_' . $name)) {
             $method = 'get' . ucfirst($name);
             return $this->$method();
@@ -160,13 +168,14 @@ class UserContext extends InstanceContext {
 
     /**
      * Magic caller to get resource contexts
-     * 
+     *
      * @param string $name Resource to return
      * @param array $arguments Context parameters
      * @return \Twilio\InstanceContext The requested resource context
      * @throws \Twilio\Exceptions\TwilioException For unknown resource
      */
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         $property = $this->$name;
         if (method_exists($property, 'getContext')) {
             return call_user_func_array(array($property, 'getContext'), $arguments);
@@ -177,10 +186,11 @@ class UserContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

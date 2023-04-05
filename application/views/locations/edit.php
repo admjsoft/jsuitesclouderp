@@ -133,10 +133,10 @@
                             <select name="wid"
                                     class="selectpicker form-control round">
                                 <?php echo '<option value="' . $ware . '" selected>' . $this->lang->line('Do not change') . '</option>';
-                                echo $this->common->default_warehouse();
-                                echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
-                                    echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                                } ?>
+            echo $this->common->default_warehouse();
+            echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
+                echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+            } ?>
 
                             </select>
                         </div>
@@ -151,7 +151,9 @@
                                     class="selectpicker form-control">
                                 <option value="0">Default</option>
                                 <?php foreach ($currency as $row) {
-                                    if ($cur == $row['id']) echo '<option value="' . $row['id'] . '" selected>--' . $row['symbol'] . ' (' . $row['code'] . ')--</option>';
+                                    if ($cur == $row['id']) {
+                                        echo '<option value="' . $row['id'] . '" selected>--' . $row['symbol'] . ' (' . $row['code'] . ')--</option>';
+                                    }
                                     echo '<option value="' . $row['id'] . '">' . $row['symbol'] . ' (' . $row['code'] . ')</option>';
                                 } ?>
 
@@ -168,10 +170,10 @@
 
                                 <?php
                                 echo '<option value="' . $online_pay['default_acid'] . '" selected>--' . $online_pay['holder'] . ' / ' . $online_pay['acn'] . '--</option>';
-                                foreach ($accounts as $row) {
-                                    echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
-                                }
-                                ?>
+            foreach ($accounts as $row) {
+                echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
+            }
+            ?>
                             </select>
                         </div>
                     </div>

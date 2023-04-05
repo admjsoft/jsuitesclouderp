@@ -1,13 +1,12 @@
 <?php
-namespace PayPal\Api;
 
+namespace PayPal\Api;
 
 use PayPal\Core\PayPalConstants;
 use PayPal\Rest\ApiContext;
 
 class OpenIdSession
 {
-
     /**
      * Returns the PayPal URL to which the user must be redirected to
      * start the authentication / authorization process.
@@ -69,7 +68,6 @@ class OpenIdSession
      */
     public static function getLogoutUrl($redirectUri, $idToken, $apiContext = null)
     {
-
         if (is_null($apiContext)) {
             $apiContext = new ApiContext();
         }
@@ -91,10 +89,9 @@ class OpenIdSession
      */
     private static function getBaseUrl($config)
     {
-
         if (array_key_exists('openid.RedirectUri', $config)) {
             return $config['openid.RedirectUri'];
-        } else if (array_key_exists('mode', $config)) {
+        } elseif (array_key_exists('mode', $config)) {
             switch (strtoupper($config['mode'])) {
                 case 'SANDBOX':
                     return PayPalConstants::OPENID_REDIRECT_SANDBOX_URL;

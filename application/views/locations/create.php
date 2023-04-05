@@ -131,9 +131,9 @@
                             <select name="wid"
                                     class="selectpicker form-control round">
                                 <?php echo $this->common->default_warehouse();
-                                echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
-                                    echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                                } ?>
+            echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
+                echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+            } ?>
 
                             </select>
                         </div>
@@ -169,7 +169,7 @@
                                 foreach ($accounts as $row) {
                                     echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
                                 }
-                                ?>
+            ?>
                             </select>
                         </div>
                     </div>

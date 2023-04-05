@@ -5,14 +5,11 @@ namespace Razorpay\Api;
 use Requests;
 use Exception;
 use Requests_Hooks;
-use Razorpay\Api\Errors;
 use Razorpay\Api\Errors\ErrorCode;
-
 
 // Available since PHP 5.5.19 and 5.6.3
 // https://git.io/fAMVS | https://secure.php.net/manual/en/curl.constants.php
-if (defined('CURL_SSLVERSION_TLSv1_1') === false)
-{
+if (defined('CURL_SSLVERSION_TLSv1_1') === false) {
     define('CURL_SSLVERSION_TLSv1_1', 5);
 }
 
@@ -94,18 +91,14 @@ class Request
         $body = $response->body;
         $httpStatusCode = $response->status_code;
 
-        try
-        {
+        try {
             $body = json_decode($response->body, true);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->throwServerError($body, $httpStatusCode);
         }
 
         if (($httpStatusCode < 200) or
-            ($httpStatusCode >= 300))
-        {
+            ($httpStatusCode >= 300)) {
             $this->processError($body, $httpStatusCode, $response);
         }
     }
@@ -131,8 +124,7 @@ class Request
         $description = $body['error']['description'];
 
         $field = null;
-        if (isset($body['error']['field']))
-        {
+        if (isset($body['error']['field'])) {
             $field = $body['error']['field'];
 
             // Create an instance of the error and then throw it
@@ -150,7 +142,8 @@ class Request
         throw new Errors\ServerError(
             $description,
             ErrorCode::SERVER_ERROR,
-            $httpStatusCode);
+            $httpStatusCode
+        );
     }
 
     protected function getRequestHeaders()
@@ -179,14 +172,11 @@ class Request
 
         $appsDetailsUa = '';
 
-        foreach ($appsDetails as $app)
-        {
-            if ((isset($app['title'])) and (is_string($app['title'])))
-            {
+        foreach ($appsDetails as $app) {
+            if ((isset($app['title'])) and (is_string($app['title']))) {
                 $appUa = $app['title'];
 
-                if ((isset($app['version'])) and (is_scalar($app['version'])))
-                {
+                if ((isset($app['version'])) and (is_scalar($app['version']))) {
                     $appUa .= '/' . $app['version'];
                 }
 
@@ -207,21 +197,18 @@ class Request
      */
     protected function verifyErrorFormat($body, $httpStatusCode)
     {
-        if (is_array($body) === false)
-        {
+        if (is_array($body) === false) {
             $this->throwServerError($body, $httpStatusCode);
         }
 
         if ((isset($body['error']) === false) or
-            (isset($body['error']['code']) === false))
-        {
+            (isset($body['error']['code']) === false)) {
             $this->throwServerError($body, $httpStatusCode);
         }
 
         $code = $body['error']['code'];
 
-        if (Errors\ErrorCode::exists($code) === false)
-        {
+        if (Errors\ErrorCode::exists($code) === false) {
             $this->throwServerError($body, $httpStatusCode);
         }
     }

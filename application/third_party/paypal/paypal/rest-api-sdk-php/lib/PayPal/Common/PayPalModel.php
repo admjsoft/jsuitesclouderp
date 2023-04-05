@@ -11,7 +11,6 @@ use PayPal\Validation\JsonValidator;
  */
 class PayPalModel
 {
-
     private $_propMap = array();
 
     /**

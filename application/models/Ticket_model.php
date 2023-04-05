@@ -6,12 +6,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Ticket_model extends CI_Model
 {
-
-
     //documents list
 
-    var $doccolumn_order = array(null, 'subject', 'created', null);
-    var $doccolumn_search = array('subject', 'created');
+    public $doccolumn_order = array(null, 'subject', 'created', null);
+    public $doccolumn_search = array('subject', 'created');
 
 
     public function thread_list($id)
@@ -36,7 +34,8 @@ class Ticket_model extends CI_Model
         $port = $smtpresult['port'];
         $auth = $smtpresult['auth'];
         $auth_type = $smtpresult['auth_type'];
-        $username = $smtpresult['username'];;
+        $username = $smtpresult['username'];
+        ;
         $password = $smtpresult['password'];
         $mailfrom = $smtpresult['sender'];
         $mailfromtilte = $this->config->item('ctitle');
@@ -63,11 +62,10 @@ class Ticket_model extends CI_Model
         return $query->row();
     }
 
-    function addreply($thread_id, $message, $filename)
+    public function addreply($thread_id, $message, $filename)
     {
         $data = array('tid' => $thread_id, 'message' => $message, 'cid' => 0, 'eid' => $this->aauth->get_user()->id, 'cdate' => date('Y-m-d H:i:s'), 'attach' => $filename);
         if ($this->ticket()->key2) {
-
             $customer = $this->thread_info($thread_id);
 
             $this->send_email($customer['email'], $customer['name'], '[Customer Ticket] #' . $thread_id, $message . $this->ticket()->other, $attachmenttrue = false, $attachment = '');
@@ -75,7 +73,7 @@ class Ticket_model extends CI_Model
         return $this->db->insert('gtg_tickets_th', $data);
     }
 
-    function deleteticket($id)
+    public function deleteticket($id)
     {
         $this->db->delete('gtg_tickets', array('id' => $id));
 
@@ -86,7 +84,6 @@ class Ticket_model extends CI_Model
         $result = $query->result_array();
         foreach ($result as $row) {
             if ($row['attach'] != '') {
-
                 unlink(FCPATH . 'userfiles/support/' . $row['attach']);
             }
         }
@@ -96,7 +93,6 @@ class Ticket_model extends CI_Model
 
     public function ticket_stats()
     {
-
         $query = $this->db->query("SELECT
 				COUNT(IF( status = 'Waiting', id, NULL)) AS Waiting,
 				COUNT(IF( status = 'Processing', id, NULL)) AS Processing,
@@ -106,18 +102,18 @@ class Ticket_model extends CI_Model
     }
 
 
-    function ticket_datatables($filt)
+    public function ticket_datatables($filt)
     {
         $this->ticket_datatables_query($filt);
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
     private function ticket_datatables_query($filt)
     {
-
         $this->db->from('gtg_tickets');
         if ($filt == 'unsolved') {
             $this->db->where('status!=', 'Solved');
@@ -125,12 +121,10 @@ class Ticket_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->doccolumn_search as $item) // loop column
-        {
+        foreach ($this->doccolumn_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
             if ($value) {
-
                 if ($i === 0) {
                     $this->db->group_start();
                     $this->db->like($item, $value);
@@ -138,21 +132,22 @@ class Ticket_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->doccolumn_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->doccolumn_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->doccolumn_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function ticket_count_filtered($filt)
+    public function ticket_count_filtered($filt)
     {
         $this->ticket_datatables_query($filt);
         $query = $this->db->get();

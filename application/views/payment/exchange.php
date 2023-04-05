@@ -86,13 +86,17 @@
                     <div class="">
                         <label class="display-inline-block custom-control custom-radio ml-1">
                             <input type="radio" name="reverse"
-                                   value="1" <?php if ($exchange['other']) echo 'checked=""' ?>>
+                                   value="1" <?php if ($exchange['other']) {
+                                       echo 'checked=""';
+                                   } ?>>
                             <span class="custom-control-indicator"></span>
                             <span class="custom-control-description ml-0"><?php echo $this->lang->line('Yes') ?></span>
                         </label>
                         <label class="display-inline-block custom-control custom-radio">
                             <input type="radio" name="reverse"
-                                   value="0" <?php if (!$exchange['other']) echo 'checked=""' ?>>
+                                   value="0" <?php if (!$exchange['other']) {
+                                       echo 'checked=""';
+                                   } ?>>
                             <span class="custom-control-indicator"></span>
                             <span class="custom-control-description ml-0"><?php echo $this->lang->line('No') ?></span>
                         </label>

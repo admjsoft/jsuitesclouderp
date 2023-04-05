@@ -15,28 +15,29 @@ namespace chillerlan\QRCodeTest\Output;
 use chillerlan\QRCode\Output\QRString;
 use chillerlan\QRCode\QRCode;
 
-class QRStringTest extends QROutputTestAbstract{
+class QRStringTest extends QROutputTestAbstract
+{
+    protected $FQCN = QRString::class;
 
-	protected $FQCN = QRString::class;
+    public function types()
+    {
+        return [
+            [QRCode::OUTPUT_STRING_JSON],
+            [QRCode::OUTPUT_STRING_TEXT],
+        ];
+    }
 
-	public function types(){
-		return [
-			[QRCode::OUTPUT_STRING_JSON],
-			[QRCode::OUTPUT_STRING_TEXT],
-		];
-	}
+    /**
+     * @dataProvider types
+     * @param $type
+     */
+    public function testStringOutput($type)
+    {
+        $this->options->outputType = $type;
+        $this->options->cachefile  = $this::cachefile.$type;
+        $this->setOutputInterface();
+        $data = $this->outputInterface->dump();
 
-	/**
-	 * @dataProvider types
-	 * @param $type
-	 */
-	public function testStringOutput($type){
-		$this->options->outputType = $type;
-		$this->options->cachefile  = $this::cachefile.$type;
-		$this->setOutputInterface();
-		$data = $this->outputInterface->dump();
-
-		$this->assertSame($data, file_get_contents($this->options->cachefile));
-	}
-
+        $this->assertSame($data, file_get_contents($this->options->cachefile));
+    }
 }

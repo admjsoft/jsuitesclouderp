@@ -25,7 +25,7 @@
 
                             echo $company['zone'];
 
-                            ?></option>
+            ?></option>
                         <option value="Pacific/Midway">(UTC-11:00) Midway Island</option>
                         <option value="Pacific/Samoa">(UTC-11:00) Samoa</option>
                         <option value="Pacific/Honolulu">(UTC-10:00) Hawaii</option>

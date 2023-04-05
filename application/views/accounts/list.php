@@ -79,14 +79,14 @@
                         </thead>
                         <tbody>
                         <?php $i = 1;
-                        foreach ($accounts as $row) {
-                            $aid = $row['id'];
-                            $acn = $row['acn'];
-                            $holder = $row['holder'];
-                            $balance = amountExchange($row['lastbal'], 0, $this->aauth->get_user()->loc);
-                            $type = $row['account_type'];
-                            $qty = $row['adate'];
-                            echo "<tr>
+                            foreach ($accounts as $row) {
+                                $aid = $row['id'];
+                                $acn = $row['acn'];
+                                $holder = $row['holder'];
+                                $balance = amountExchange($row['lastbal'], 0, $this->aauth->get_user()->loc);
+                                $type = $row['account_type'];
+                                $qty = $row['adate'];
+                                echo "<tr>
                     <td>$i</td>
                     <td>$acn</td>
                     <td>$holder</td>
@@ -94,9 +94,9 @@
                     <td>$balance</td>
                      <td>$type</td>
                     <td><a href='" . base_url("accounts/view?id=$aid") . "' class='btn btn-success btn-xs'><i class='fa fa-eye'></i>  " . $this->lang->line('View') . "</a>&nbsp;<a href='" . base_url("accounts/edit?id=$aid") . "' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i>  " . $this->lang->line('Edit') . "</a>&nbsp;<a href='#' data-object-id='" . $aid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='fa fa-trash'></i></a></td></tr>";
-                            $i++;
-                        }
-                        ?>
+                                $i++;
+                            }
+                            ?>
                         </tbody>
                         <tfoot>
                         <tr>

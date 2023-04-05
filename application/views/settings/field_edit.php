@@ -33,7 +33,9 @@
 
                     <div class="col-sm-6">
                         <select class="form-control" name="f_view">
-                            <?php if ($customfields['f_view']) echo ' <option value="required">**Yes**</option>'; ?>
+                            <?php if ($customfields['f_view']) {
+                                echo ' <option value="required">**Yes**</option>';
+                            } ?>
                             <option value="0">No</option>
                             <option value="1">Yes</option>
                         </select>
@@ -47,7 +49,9 @@
 
                     <div class="col-sm-6">
                         <select class="form-control" name="f_required">
-                            <?php if ($customfields['other']) echo ' <option value="required">**Yes**</option>'; ?>
+                            <?php if ($customfields['other']) {
+                                echo ' <option value="required">**Yes**</option>';
+                            } ?>
                             <option value="">No</option>
                             <option value="required">Yes</option>
                         </select>

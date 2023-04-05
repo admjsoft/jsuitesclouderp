@@ -5,8 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Cronjob extends CI_Controller
 {
-
-
     public function __construct()
     {
         parent::__construct();
@@ -23,7 +21,6 @@ class Cronjob extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $data['message'] = false;
@@ -41,14 +38,12 @@ class Cronjob extends CI_Controller
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
             if ($this->aauth->get_user()->roleid < 5) {
-
                 exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
             }
         }
 
 
         if ($this->cronjob->generate()) {
-
             $data['message'] = true;
 
 
@@ -62,9 +57,8 @@ class Cronjob extends CI_Controller
     }
 
 
-    function due_invoices_email()
+    public function due_invoices_email()
     {
-
         $corn = $this->cronjob->config();
         $this->load->library('parser');
 
@@ -84,8 +78,6 @@ class Cronjob extends CI_Controller
             $this->load->model('communication_model', 'communication');
 
             foreach ($emails as $invoice) {
-
-
                 $validtoken = hash_hmac('ripemd160', $invoice['id'], $this->config->item('encryption_key'));
 
                 $link = base_url('billing/view?id=' . $invoice['id'] . '&token=' . $validtoken);
@@ -96,7 +88,7 @@ class Cronjob extends CI_Controller
                     'Company' => $loc['cname'],
                     'BillNumber' => $invoice['tid']
                 );
-                $subject = $this->parser->parse_string($template['key1'], $data, TRUE);
+                $subject = $this->parser->parse_string($template['key1'], $data, true);
 
 
                 $data = array(
@@ -109,12 +101,11 @@ class Cronjob extends CI_Controller
                     'DueDate' => dateformat($invoice['invoiceduedate']),
                     'Amount' => amountExchange($invoice['total'], $invoice['multi'])
                 );
-                $message = $this->parser->parse_string($template['other'], $data, TRUE);
+                $message = $this->parser->parse_string($template['other'], $data, true);
 
                 if ($this->communication->send_corn_email($invoice['email'], $invoice['name'], $subject, $message)) {
                     echo "---------------$i. Email Sent! -------------------------\n";
                 } else {
-
                     echo "---------------$i. Error! -------------------------\n";
                 }
 
@@ -122,15 +113,13 @@ class Cronjob extends CI_Controller
                 $i++;
             }
         } else {
-
             echo "---------------Error! Invalid Token! -------------------------\n";
         }
     }
 
 
-    function reports()
+    public function reports()
     {
-
         $corn = $this->cronjob->config();
 
         $cornkey = $corn['cornkey'];
@@ -140,8 +129,6 @@ class Cronjob extends CI_Controller
 
 
         if ($cornkey == $this->input->get('token')) {
-
-
             echo "---------------Cron started-------\n";
 
             $this->cronjob->reports();
@@ -153,14 +140,12 @@ class Cronjob extends CI_Controller
 
     public function update_exchange_rate()
     {
-
         $corn = $this->cronjob->config();
 
         $cornkey = $corn['cornkey'];
 
         echo "---------------Updating Exchange Rates-------\n";
         if ($cornkey == $this->input->get('token')) {
-
             echo "---------------Cron started-------\n";
             $this->load->model('plugins_model', 'plugins');
             $exchange = $this->plugins->universal_api(5);
@@ -198,17 +183,14 @@ class Cronjob extends CI_Controller
 
 
         if ($cornkey == $this->input->get('token')) {
-
             echo "---------------Process Started -------------------------\n";
 
             if ($this->cronjob->subs()) {
-
                 echo "---------------Success! Process Done! -------------------------\n";
             } else {
                 echo "---------------Error! Process Halted! -------------------------\n";
             }
         } else {
-
             echo "---------------Error! Invalid Token! -------------------------\n";
         }
     }
@@ -225,7 +207,6 @@ class Cronjob extends CI_Controller
 
 
         if ($cornkey == $this->input->get('token')) {
-
             echo "---------------Process Started -------------------------\n";
 
             // $ndate = date("Y-m-d", strtotime(date('Y-m-d') . " -7 days"));
@@ -236,7 +217,6 @@ class Cronjob extends CI_Controller
 
             echo "---------------Success! Process Done! -------------------------\n";
         } else {
-
             echo "---------------Error! Invalid Token! -------------------------\n";
         }
     }
@@ -252,7 +232,6 @@ class Cronjob extends CI_Controller
 
 
         if ($cornkey == $this->input->get('token')) {
-
             echo "---------------Process Started -------------------------\n";
 
 
@@ -269,7 +248,6 @@ class Cronjob extends CI_Controller
 
             echo "---------------Success! Process Done! -------------------------\n";
         } else {
-
             echo "---------------Error! Invalid Token! -------------------------\n";
         }
     }
@@ -286,18 +264,15 @@ class Cronjob extends CI_Controller
 
 
         if ($cornkey == $this->input->get('token')) {
-
             echo "---------------Process Started -------------------------\n";
             $subject = 'Stock Alert ' . date('Y-m-d H:i:s');
 
             if ($this->communication->send_corn_email($this->config->item('email'), $this->config->item('cname'), $subject, $this->cronjob->stock())) {
                 echo "-------------- Email Sent! -------------------------\n";
             } else {
-
                 echo "---------------. Error! -------------------------\n";
             }
         } else {
-
             echo "---------------Error! Invalid Token! -------------------------\n";
         }
     }
@@ -314,7 +289,6 @@ class Cronjob extends CI_Controller
 
 
         if ($cornkey == $this->input->get('token')) {
-
             echo "---------------Process Started -------------------------\n";
             $bdate = 'backup_' . date('Y_m_d_H_i_s');
             $this->load->dbutil();
@@ -322,7 +296,6 @@ class Cronjob extends CI_Controller
             $this->load->helper('file');
             write_file(FCPATH . 'userfiles/' . $bdate . '-' . rand(99, 999) . '.gz', $backup);
         } else {
-
             echo "---------------Error! Invalid Token! -------------------------\n";
         }
     }
@@ -338,7 +311,6 @@ class Cronjob extends CI_Controller
 
 
         if ($cornkey == $this->input->get('token')) {
-
             echo "---------------Process Started -------------------------\n";
 
             // $ndate = date("Y-m-d", strtotime(date('Y-m-d') . " -7 days"));
@@ -347,7 +319,6 @@ class Cronjob extends CI_Controller
 
             echo "---------------Success! Process Done! -------------------------\n";
         } else {
-
             echo "---------------Error! Invalid Token! -------------------------\n";
         }
     }
@@ -364,24 +335,21 @@ class Cronjob extends CI_Controller
 
 
         if ($cornkey == $this->input->get('token')) {
-
             echo "---------------Process Started -------------------------\n";
             $subject = 'Expiry Alert ' . date('Y-m-d H:i:s');
 
             if ($this->communication->send_corn_email($this->config->item('email'), $this->config->item('cname'), $subject, $this->cronjob->expiry())) {
                 echo "-------------- Email Sent! -------------------------\n";
             } else {
-
                 echo "---------------. Error! -------------------------\n";
             }
         } else {
-
             echo "---------------Error! Invalid Token! -------------------------\n";
         }
     }
 
 
-    function anniversary_mail()
+    public function anniversary_mail()
     {
         $corn = $this->cronjob->config();
         $this->load->library('parser');
@@ -403,7 +371,7 @@ class Cronjob extends CI_Controller
             $data = array(
                 'Company' => $loc['cname']
             );
-            $subject = $this->parser->parse_string($template['key1'], $data, TRUE);
+            $subject = $this->parser->parse_string($template['key1'], $data, true);
             $data = array(
                 'Company' => $loc['cname'],
                 'CompanyDetails' => '<h6><strong>' . $loc['cname'] . ',</strong></h6>
@@ -411,12 +379,10 @@ class Cronjob extends CI_Controller
             Phone: ' . $loc['phone'] . '<br> Email: ' . $loc['email']
 
             );
-            $message = $this->parser->parse_string($template['other'], $data, TRUE);
+            $message = $this->parser->parse_string($template['other'], $data, true);
 
 
             if (date('m-d', strtotime($loc['foundation'])) === date('m-d', strtotime(date('Y-m-d')))) {
-
-
                 $date1 = strtotime($anniversary_cron['other']);
                 $date2 = strtotime(date('Y-m-d')); // Can use date/string just like strtotime.
 
@@ -432,7 +398,7 @@ class Cronjob extends CI_Controller
                     } else {
                         echo "---------------$i. Esrror! -------------------------\n";
                     }
-                } else if ($anniversary_cron['active'] == 1) {
+                } elseif ($anniversary_cron['active'] == 1) {
                     $emails = $this->cronjob->customer_mail($anniversary_cron['method'], $anniversary_cron['key2']);
 
                     $user = $this->communication->group_email($emails, $subject, $message, false, '', false);
@@ -443,7 +409,7 @@ class Cronjob extends CI_Controller
                         $futureDate = date('Y-m-d', strtotime('+1 year'));
                         $vv = $this->plugins->m_update_api(67, 0, $user, date('Y-m-d'), $anniversary_cron['method'], $futureDate, 2);
                     }
-                } else if ($anniversary_cron['active'] == 2 and $date1 == $date2) {
+                } elseif ($anniversary_cron['active'] == 2 and $date1 == $date2) {
                     echo "---------------. Email Sent! block 1-------------------------\n";
                     $emails = $this->cronjob->customer_mail($anniversary_cron['method'], $anniversary_cron['key2'] + 1);
                     $user = $this->communication->group_email($emails, $subject, $message, false, '', false);
@@ -457,13 +423,12 @@ class Cronjob extends CI_Controller
                 }
             }
         } else {
-
             echo "---------------Error! Invalid Token! -------------------------\n";
         }
     }
 
 
-    function anniversary_sms()
+    public function anniversary_sms()
     {
         $corn = $this->cronjob->config();
         $this->load->library('parser');
@@ -485,7 +450,7 @@ class Cronjob extends CI_Controller
             $data = array(
                 'Company' => $loc['cname']
             );
-            $subject = $this->parser->parse_string($template['key1'], $data, TRUE);
+            $subject = $this->parser->parse_string($template['key1'], $data, true);
             $data = array(
                 'Company' => $loc['cname'],
                 'CompanyDetails' => '<h6><strong>' . $loc['cname'] . ',</strong></h6>
@@ -493,12 +458,10 @@ class Cronjob extends CI_Controller
             Phone: ' . $loc['phone'] . '<br> Email: ' . $loc['email']
 
             );
-            $message = $this->parser->parse_string($template['other'], $data, TRUE);
+            $message = $this->parser->parse_string($template['other'], $data, true);
 
 
             if (date('m-d', strtotime($loc['foundation'])) === date('m-d', strtotime(date('Y-m-d')))) {
-
-
                 $date1 = strtotime($anniversary_cron['other']);
                 $date2 = strtotime(date('Y-m-d')); // Can use date/string just like strtotime.
 
@@ -518,7 +481,7 @@ class Cronjob extends CI_Controller
                     } else {
                         echo "---------------$i. Esrror! -------------------------\n";
                     }
-                } else if ($anniversary_cron['active'] == 1) {
+                } elseif ($anniversary_cron['active'] == 1) {
                     $numbers = $this->cronjob->customer_mail($anniversary_cron['method'], $anniversary_cron['key2']);
 
                     foreach ($numbers as $mob) {
@@ -532,7 +495,7 @@ class Cronjob extends CI_Controller
                         $futureDate = date('Y-m-d', strtotime('+1 year'));
                         $vv = $this->plugins->m_update_api(68, 0, $user, date('Y-m-d'), $anniversary_cron['method'], $futureDate, 2);
                     }
-                } else if ($anniversary_cron['active'] == 2 and $date1 == $date2) {
+                } elseif ($anniversary_cron['active'] == 2 and $date1 == $date2) {
                     echo "---------------. Sms Sent! block 1-------------------------\n";
                     $numbers = $this->cronjob->customer_mail($anniversary_cron['method'], $anniversary_cron['key2'] + 1);
                     foreach ($numbers as $mob) {
@@ -549,7 +512,6 @@ class Cronjob extends CI_Controller
                 }
             }
         } else {
-
             echo "---------------Error! Invalid Token! -------------------------\n";
         }
     }

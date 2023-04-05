@@ -28,7 +28,6 @@ class Quote extends CI_Controller
 
     public function ajax_list()
     {
-
         $list = $this->quote->get_datatables();
         $data = array();
 
@@ -57,7 +56,6 @@ class Quote extends CI_Controller
         );
         //output to json format
         echo json_encode($output);
-
     }
 
     public function view()
@@ -76,7 +74,6 @@ class Quote extends CI_Controller
             $this->load->view('quotes/view', $data);
             $this->load->view('includes/footer');
         }
-
     }
 
     public function approve()
@@ -92,14 +89,9 @@ class Quote extends CI_Controller
 
             $data['employee'] = $this->quote->employee($data['invoice']['eid']);
             $m=array('message'=>'Approved!');
-            $this->session->set_flashdata('item',$m);
-            $this->session->keep_flashdata('item',$m);
+            $this->session->set_flashdata('item', $m);
+            $this->session->keep_flashdata('item', $m);
             redirect(base_url('quote/view?id=' . $tid));
-
-
         }
-
     }
-
-
 }

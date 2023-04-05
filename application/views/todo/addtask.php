@@ -40,7 +40,7 @@
                                 <?php echo "<option value='Due'>" . $this->lang->line('Due') . "</option>
                             <option value='Done'>" . $this->lang->line('Done') . "</option>
                             <option value='Progress'>" . $this->lang->line('Progress') . "</option>";
-                                ?>
+            ?>
 
                             </select>
                         </div>
@@ -95,12 +95,12 @@
                         <div class="col-sm-4">
                             <select name="employee" class="form-control select-box">
                                 <?php
-                                foreach ($emp as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['name'];
-                                    echo "<option value='$cid'>$title</option>";
-                                }
-                                ?>
+            foreach ($emp as $row) {
+                $cid = $row['id'];
+                $title = $row['name'];
+                echo "<option value='$cid'>$title</option>";
+            }
+            ?>
                             </select>
 
 

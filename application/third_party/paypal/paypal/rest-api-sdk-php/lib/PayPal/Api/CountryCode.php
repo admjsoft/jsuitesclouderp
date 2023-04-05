@@ -37,5 +37,4 @@ class CountryCode extends PayPalModel
     {
         return $this->country_code;
     }
-
 }

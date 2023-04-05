@@ -64,9 +64,6 @@ class Invoices extends CI_Controller
 
     public function view()
     {
-
-
-
         $data['acclist'] = '';
         $tid = intval($this->input->get('id'));
         $data['id'] = $tid;

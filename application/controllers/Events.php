@@ -6,7 +6,7 @@ class Events extends CI_Controller
 {
     public function __construct()
     {
-        parent:: __construct();
+        parent::__construct();
 
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
@@ -14,13 +14,10 @@ class Events extends CI_Controller
         }
 
         if (!$this->aauth->premission(6)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $this->load->model('events_model');
         $this->li_a = 'misc';
-
     }
 
 
@@ -29,8 +26,6 @@ class Events extends CI_Controller
         $this->load->view('fixed/header');
         $this->load->view('events/cal');
         $this->load->view('fixed/footer');
-
-
     }
 
     /*Get all Events */
@@ -53,7 +48,6 @@ class Events extends CI_Controller
         $color = $this->input->post('color');
 
         $result = $this->events_model->addEvent($title, $start, $end, $description, $color);
-
     }
 
     /*Update Event */
@@ -76,9 +70,7 @@ class Events extends CI_Controller
 
     public function dragUpdateEvent()
     {
-
         $result = $this->events_model->dragUpdateEvent();
         echo $result;
     }
-
 }

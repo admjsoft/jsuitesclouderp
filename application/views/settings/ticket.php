@@ -21,8 +21,6 @@
 
                             <?php if ($support['key1'] == 1) {
                                 echo '<option value="1">*' . $this->lang->line('On') . '*</option>';
-
-
                             } ?>
                             <option value="0"><?php echo $this->lang->line('Off') ?></option>
                             <option value='1'><?php echo $this->lang->line('On') ?></option>
@@ -43,8 +41,6 @@
 
                             <?php if ($support['key2'] == 1) {
                                 echo '<option value="1">*' . $this->lang->line('On') . '*</option>';
-
-
                             } ?>
                             <option value="0"><?php echo $this->lang->line('Off') ?></option>
                             <option value='1'><?php echo $this->lang->line('On') ?></option>

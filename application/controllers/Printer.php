@@ -14,7 +14,6 @@ class Printer extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
     }
@@ -41,7 +40,6 @@ class Printer extends CI_Controller
 
             $this->printer->create($p_name, $p_type, $p_connect, $lid, $p_mode);
         } else {
-
             $data['printers'] = $this->printer->printers_list();
             $data['locations'] = $this->locations_model->locations_list();
             $head['title'] = "Printers";
@@ -78,7 +76,6 @@ class Printer extends CI_Controller
 
             $this->printer->edit($id, $p_name, $p_type, $p_connect, $lid, $p_mode);
         } else {
-
             $data['printers'] = $this->printer->printers_list();
             $data['locations'] = $this->locations_model->locations_list();
             $head['title'] = "Printers";

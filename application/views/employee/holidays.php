@@ -90,7 +90,7 @@
             </div>
             <div class="modal-body">
                 <?php echo $this->lang->line('Delete');
-                echo ' ' . $this->lang->line('Holiday'); ?>
+            echo ' ' . $this->lang->line('Holiday'); ?>
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="object-id" value="">

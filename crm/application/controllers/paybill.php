@@ -8,7 +8,7 @@ class Paybill extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-       // $this->load->model('invoices_model', 'invocies');
+        // $this->load->model('invoices_model', 'invocies');
         if (!is_login()) {
             redirect(base_url() . 'user/profile', 'refresh');
         }

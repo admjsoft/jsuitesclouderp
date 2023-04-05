@@ -90,7 +90,6 @@
             </td>
         </tr>
         <?php foreach ($products as $row) {
-
             echo '<tr>
             <td >' . $row['product'] . '</td>
              <td>' . amountFormat_general($row['qty']) . ' ' . $row['unit'] . '</td>
@@ -119,8 +118,7 @@
                 <td><b><?php echo amountExchange($gst, $invoice['multi'], $invoice['loc']) ?></b> (<?= $rate ?>%)</td>
             </tr>
 
-        <?php } else if ($invoice['taxstatus'] == 'igst') {
-
+        <?php } elseif ($invoice['taxstatus'] == 'igst') {
             ?>
             <tr>
                 <td><b><?php echo $this->lang->line('IGST') ?></b></td>

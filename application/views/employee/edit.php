@@ -145,11 +145,11 @@
                                     <option value="0"><?php echo $this->lang->line('Default') ?></option>
                                     <?php $loc = locations();
 
-                                    foreach ($loc as $row) {
-                                        echo ' <option value="' . $row['id'] . '"> ' . $row['cname'] . '</option>';
-                                    }
+                foreach ($loc as $row) {
+                    echo ' <option value="' . $row['id'] . '"> ' . $row['cname'] . '</option>';
+                }
 
-                                    ?>
+                ?>
                                 </select>
                             </div>
                         </div>
@@ -161,7 +161,9 @@
 
                                 <div class="col-sm-5">
                                     <select name="roleid"
-                                            class="form-control margin-bottom" <?php if ($user['roleid'] == 5) echo 'disabled' ?>>
+                                            class="form-control margin-bottom" <?php if ($user['roleid'] == 5) {
+                                                echo 'disabled';
+                                            } ?>>
                                         <option value="<?= $user['roleid'] ?>">--<?= user_role($user['roleid']) ?>--
                                         </option>
                                         <option value="4"><?= $this->lang->line('Business Manager') ?></option>
@@ -192,11 +194,24 @@
                                         echo ' <option value="' . $row['id'] . '"> ' . $row['val1'] . '</option>';
                                     }
 
-                                    ?>
+                ?>
                                 </select>
                             </div>
                         </div>
 
+                        <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label"
+                                   for="salary_type">Salary Type</label>
+
+                            <div class="col-sm-5">
+                                <select name="salary_type" class="form-control margin-bottom">
+                                    <option value="0" <?= $user['salary_type'] === 0 ? 'selected' : '' ?>>Monthly</option>
+                                    <option value="1" <?= $user['salary_type'] === 1 ? 'selected' : '' ?>>Daily</option>
+                                    <option value="2" <?= $user['salary_type'] === 2 ? 'selected' : '' ?>>Hourly</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
@@ -222,6 +237,30 @@
                                 taxes,shipping,discounts
                             </small>
 
+                        </div>
+                        <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label"
+                                   for="epf_enabled">Enable EPF?</label>
+
+                            <div class="col-sm-5">
+                                <select name="epf_enabled" class="form-control margin-bottom">
+                                    <option value="0" <?= $user['epf_enabled'] === 0 ? 'selected' : '' ?>>No</option>
+                                    <option value="1" <?= $user['epf_enabled'] === 1 ? 'selected' : '' ?>>Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label"
+                                   for="hrdf_enabled">Enable HRDF?</label>
+
+                            <div class="col-sm-5">
+                                <select name="hrdf_enabled" class="form-control margin-bottom">
+                                    <option value="0" <?= $user['hrdf_enabled'] === 0 ? 'selected' : '' ?>>No</option>
+                                    <option value="1" <?= $user['hrdf_enabled'] === 1 ? 'selected' : '' ?>>Yes</option>
+                                </select>
+                            </div>
                         </div>
                         <input type="hidden"
                                name="eid"

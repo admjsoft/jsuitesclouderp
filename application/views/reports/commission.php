@@ -45,7 +45,7 @@
 
                                         echo "<option value='$cid'>$name</option>";
                                     }
-                                    ?>
+            ?>
                                 </select>
 
 

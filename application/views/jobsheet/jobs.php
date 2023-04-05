@@ -1,13 +1,14 @@
 <article class="content-body">
 <div class="row">
 <div class="col-12">
-<?php if(isset($_SESSION['status'])){
- echo '<div id="notify" class="alert alert-'.$_SESSION['status'].'">
+<?php if (isset($_SESSION['status'])) {
+    echo '<div id="notify" class="alert alert-'.$_SESSION['status'].'">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
 
             <div class="message">' .$_SESSION['message']. '</div>
         </div>';
-unset($_SESSION['status']);unset($_SESSION['message']);
+    unset($_SESSION['status']);
+    unset($_SESSION['message']);
 } ?>
 </div>
 </div>
@@ -90,7 +91,7 @@ unset($_SESSION['status']);unset($_SESSION['message']);
         <div class="card-body">
             <div class="header-block">
                 <h3 class="title">
-                    <?php //echo $this->lang->line('Support Tickets') ?>
+                    <?php //echo $this->lang->line('Support Tickets')?>
                 </h3></div>
 
 
@@ -142,18 +143,18 @@ unset($_SESSION['status']);unset($_SESSION['message']);
     </div>
 </div>
 <?php echo form_open('jobsheets/assign');
- ?>
+?>
 <div id="assign_model" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
 
-                <h4 class="modal-title"><?php //echo $this->lang->line('Assign') ?>Assign</h4>
+                <h4 class="modal-title"><?php //echo $this->lang->line('Assign')?>Assign</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <p><?php //echo $this->lang->line('delete this ticket') ?>Employee</p>
+                <p><?php //echo $this->lang->line('delete this ticket')?>Employee</p>
         <select name="employee" class="form-control employee emp-list" >
             <option>-- Select Employee --</option>
         </select>
@@ -163,7 +164,7 @@ unset($_SESSION['status']);unset($_SESSION['message']);
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="object-id" class="jobid" name="jobid" value="">
-                <input type="submit" class="btn btn-primary" value="<?php // echo $this->lang->line('Assign') ?>Assign" />
+                <input type="submit" class="btn btn-primary" value="<?php // echo $this->lang->line('Assign')?>Assign" />
                 <button type="button" data-dismiss="modal"
                         class="btn"><?php echo $this->lang->line('Cancel') ?></button>
             </div>

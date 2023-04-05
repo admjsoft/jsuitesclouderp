@@ -19,16 +19,15 @@ namespace Stripe;
  */
 class SubscriptionItem extends ApiResource
 {
-    const OBJECT_NAME = 'subscription_item';
-
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Delete;
     use ApiOperations\NestedResource;
     use ApiOperations\Retrieve;
     use ApiOperations\Update;
+    public const OBJECT_NAME = 'subscription_item';
 
-    const PATH_USAGE_RECORDS = "/usage_records";
+    public const PATH_USAGE_RECORDS = "/usage_records";
 
     /**
      * @param string|null $id The ID of the subscription item on which to create the usage record.

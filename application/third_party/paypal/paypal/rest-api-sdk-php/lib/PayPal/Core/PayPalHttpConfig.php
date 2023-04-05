@@ -32,9 +32,9 @@ class PayPalHttpConfig
         //Adding it like this for backward compatibility with older versions of curl
     );
 
-    const HEADER_SEPARATOR = ';';
-    const HTTP_GET = 'GET';
-    const HTTP_POST = 'POST';
+    public const HEADER_SEPARATOR = ';';
+    public const HTTP_GET = 'GET';
+    public const HTTP_POST = 'POST';
 
     private $headers = array();
 
@@ -64,7 +64,7 @@ class PayPalHttpConfig
         // Update the Cipher List based on OpenSSL or NSS settings
         $curl = curl_version();
         $sslVersion = isset($curl['ssl_version']) ? $curl['ssl_version'] : '';
-        if($sslVersion && substr_compare($sslVersion, "NSS/", 0, strlen("NSS/")) === 0) {
+        if ($sslVersion && substr_compare($sslVersion, "NSS/", 0, strlen("NSS/")) === 0) {
             //Remove the Cipher List for NSS
             $this->removeCurlOption(CURLOPT_SSL_CIPHER_LIST);
         }

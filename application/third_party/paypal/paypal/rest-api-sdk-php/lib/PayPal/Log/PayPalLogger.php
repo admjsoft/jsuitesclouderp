@@ -8,7 +8,6 @@ use Psr\Log\LogLevel;
 
 class PayPalLogger extends AbstractLogger
 {
-
     /**
      * @var array Indexed list of all log levels.
      */

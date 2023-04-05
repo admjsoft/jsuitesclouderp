@@ -144,8 +144,8 @@
                         <select name="language" class="form-control b_input">
 
 <?php echo' <option value="'.$customer['lang'].'">'.$customer['lang'].'</option>' ;
-                            echo $this->common->languages();
-                            ?>
+                echo $this->common->languages();
+                ?>
                         </select>
                     </div>
                     </div>

@@ -15,17 +15,19 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class IntentStatisticsList extends ListResource {
+class IntentStatisticsList extends ListResource
+{
     /**
      * Construct the IntentStatisticsList
-     * 
+     *
      * @param Version $version Version that contains the resource
      * @param string $assistantSid The unique ID of the parent Assistant.
      * @param string $intentSid The unique ID of the Intent associated with this
      *                          Field.
-     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentStatisticsList 
+     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentStatisticsList
      */
-    public function __construct(Version $version, $assistantSid, $intentSid) {
+    public function __construct(Version $version, $assistantSid, $intentSid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -34,10 +36,11 @@ class IntentStatisticsList extends ListResource {
 
     /**
      * Constructs a IntentStatisticsContext
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentStatisticsContext 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentStatisticsContext
      */
-    public function getContext() {
+    public function getContext()
+    {
         return new IntentStatisticsContext(
             $this->version,
             $this->solution['assistantSid'],
@@ -47,10 +50,11 @@ class IntentStatisticsList extends ListResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         return '[Twilio.Preview.Understand.IntentStatisticsList]';
     }
 }

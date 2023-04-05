@@ -29,12 +29,11 @@
                                         }
 
                                         if ($this->aauth->is_loggedin()) {
-
                                             echo '<a class="btn btn-warning  mr-1"
                                                     href = "' . base_url('invoices/view?id=' . $invoice['iid']) . '" role = "button" ><i
                                                         class="fa fa-backward" ></i > </a >';
                                         }
-                                        ?>
+                            ?>
 
                                     </div>
                                 </div>
@@ -62,8 +61,8 @@
 
 
                             </div><?php } else {
-                            echo '<h2 class="btn btn-oval btn-danger">' . $this->lang->line('Cancelled') . '</h2>';
-                        } ?>
+                                echo '<h2 class="btn btn-oval btn-danger">' . $this->lang->line('Cancelled') . '</h2>';
+                            } ?>
                     </div>
                 </div>
 
@@ -86,12 +85,12 @@
                     <div class="col-md-6 col-sm-12 text-xs-center text-md-right mt-2">
                         <h2><?php echo $this->lang->line('INVOICE') ?></h2>
                         <p class="pb-1"> <?php if ($invoice['i_class'] == 1) {
-                                echo prefix(7);
-                            } elseif ($invoice['i_class'] > 1) {
-                                echo prefix(3);
-                            } else {
-                                echo $this->config->item('prefix');
-                            }
+                            echo prefix(7);
+                        } elseif ($invoice['i_class'] > 1) {
+                            echo prefix(3);
+                        } else {
+                            echo $this->config->item('prefix');
+                        }
                             echo ' ' . $invoice['tid'] . '</p>
                             <p class="pb-1">' . $this->lang->line('Reference') . ':' . $invoice['refer'] . '</p>'; ?>
                         <ul class="px-0 list-unstyled">
@@ -116,14 +115,14 @@
 
                                 <li class="text-bold-800"><strong
                                             class="invoice_a"><?php echo $invoice['name'] . '</strong></li><li>' . $invoice['address'] . '</li><li>' . $invoice['city'] . ', ' . $invoice['region'] . '</li><li>' . $invoice['country'] . ', ' . $invoice['postbox'] . '</li><li>' . $this->lang->line('Phone') . ' : ' . $invoice['phone'] . '</li><li>' . $this->lang->line('Email') . ' : ' . $invoice['email'] . ' </li>';
-                                    if (isset($c_custom_fields)){
-                                    foreach ($c_custom_fields
+                        if (isset($c_custom_fields)) {
+                            foreach ($c_custom_fields
 
-                                    as $row) {
-                                    echo '<li>' . $row['name'] . ': ' . $row['data'] ?></li>
+                            as $row) {
+                                echo '<li>' . $row['name'] . ': ' . $row['data'] ?></li>
 
                                 <?php }
-                                } ?>
+                            } ?>
 
                             </ul>
 
@@ -142,9 +141,11 @@
                         </div>
                         <div class="col-md-3 col-sm-12 text-xs-center text-md-left">
                             <?php $date_text = $this->lang->line('Due Date');
-                            if ($invoice['i_class'] > 1) $date_text = $this->lang->line('Renew Date');
-                            echo '<p><span class="text-muted">' . $this->lang->line('Invoice Date') . ' :</span> ' . dateformat($invoice['invoicedate']) . '</p> <p><span class="text-muted">' . $date_text . ' :</span> ' . dateformat($invoice['invoiceduedate']) . '</p>  <p><span class="text-muted">' . $this->lang->line('Terms') . ' :</span> ' . $invoice['termtit'] . '</p>';
-                            ?>
+                        if ($invoice['i_class'] > 1) {
+                            $date_text = $this->lang->line('Renew Date');
+                        }
+                        echo '<p><span class="text-muted">' . $this->lang->line('Invoice Date') . ' :</span> ' . dateformat($invoice['invoicedate']) . '</p> <p><span class="text-muted">' . $date_text . ' :</span> ' . dateformat($invoice['invoiceduedate']) . '</p>  <p><span class="text-muted">' . $this->lang->line('Terms') . ' :</span> ' . $invoice['termtit'] . '</p>';
+                        ?>
                         </div>
                     </div>
                 </div>
@@ -156,7 +157,7 @@
                         <div class="table-responsive col-sm-12">
                             <table class="table table-striped">
                                 <thead>
-                                <?php if ($invoice['taxstatus'] == 'cgst'){ ?>
+                                <?php if ($invoice['taxstatus'] == 'cgst') { ?>
 
                                 <tr>
                                     <th>#</th>
@@ -172,13 +173,13 @@
                                 </thead>
                                 <tbody>
                                 <?php $c = 1;
-                                $sub_t = 0;
+                                    $sub_t = 0;
 
-                                foreach ($products as $row) {
-                                    $sub_t += $row['price'] * $row['qty'];
-                                    $gst = $row['totaltax'] / 2;
-                                    $rate = $row['tax'] / 2;
-                                    echo '<tr>
+                                    foreach ($products as $row) {
+                                        $sub_t += $row['price'] * $row['qty'];
+                                        $gst = $row['totaltax'] / 2;
+                                        $rate = $row['tax'] / 2;
+                                        echo '<tr>
 <th scope="row">' . $c . '</th>
                             <td>' . $row['product'] . '</td>
                             <td>' . $row['code'] . '</td>
@@ -190,24 +191,24 @@
                             <td>' . amountExchange($row['subtotal'], $invoice['multi'], $invoice['loc']) . '</td>
                         </tr>';
 
-                                    echo '<tr><td colspan=7>' . $row['product_des'] . '</td></tr>';
-                                    if (CUSTOM) {
-                                        $p_custom_fields = $this->custom->view_fields_data($row['pid'], 4, 1);
+                                        echo '<tr><td colspan=7>' . $row['product_des'] . '</td></tr>';
+                                        if (CUSTOM) {
+                                            $p_custom_fields = $this->custom->view_fields_data($row['pid'], 4, 1);
 
 
-                                        $z_custom_fields = '';
+                                            $z_custom_fields = '';
 
-                                        foreach ($p_custom_fields as $row) {
-                                            $z_custom_fields .= $row['name'] . ': ' . $row['data'] . '<br>';
-                                        }
+                                            foreach ($p_custom_fields as $row) {
+                                                $z_custom_fields .= $row['name'] . ': ' . $row['data'] . '<br>';
+                                            }
 
-                                        echo '<tr>
+                                            echo '<tr>
                             <td colspan="7">' . $z_custom_fields . '&nbsp;</td>
 
                         </tr>';
-                                    }
-                                    $c++;
-                                } ?>
+                                        }
+                                        $c++;
+                                    } ?>
 
                                 </tbody>
                                 <?php
@@ -367,9 +368,9 @@
                                         <td class="text-bold-800 text-xs-right"> <?php echo amountExchange($invoice['total'], $invoice['multi'], $invoice['loc']) ?></td>
                                     </tr>
                                     <?php $roundoff = $this->custom->api_config(4);
-                                    if ($roundoff['other']) {
-                                        $final_amount = round($invoice['total'], $roundoff['active'], constant($roundoff['other']));
-                                        ?>
+                        if ($roundoff['other']) {
+                            $final_amount = round($invoice['total'], $roundoff['active'], constant($roundoff['other']));
+                            ?>
 
                                         <tr>
                                             <td>
@@ -379,8 +380,8 @@
                                             <td class="text-bold-800 text-xs-right"> <?php echo amountExchange($final_amount, $invoice['multi'], $invoice['loc']) ?></td>
                                         </tr>
                                         <?php
-                                    }
-                                    ?>
+                        }
+                        ?>
                                     <tr>
                                         <td><?php echo $this->lang->line('Payment Made'); ?></td>
                                         <td class="pink text-xs-right">
@@ -390,14 +391,13 @@
                                         <td class="text-bold-800"><?php echo $this->lang->line('Balance Due'); ?></td>
                                         <td class="text-bold-800 text-xs-right"> <?php $myp = '';
 
-                                            if ($rming < 0) {
-                                                $rming = 0;
-
-                                            }
-                                            if ($roundoff['other']) {
-                                                $rming = round($rming, $roundoff['active'], constant($roundoff['other']));
-                                            }
-                                            echo ' <span id="paydue">' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '</span></strong>'; ?></td>
+                        if ($rming < 0) {
+                            $rming = 0;
+                        }
+                        if ($roundoff['other']) {
+                            $rming = round($rming, $roundoff['active'], constant($roundoff['other']));
+                        }
+                        echo ' <span id="paydue">' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '</span></strong>'; ?></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -450,7 +450,7 @@
                             <p> <?php
 
                                 echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
-                                ?></p>
+                        ?></p>
                         </div>
 
                     </div>
@@ -469,7 +469,6 @@
                                 </thead>
                                 <tbody id="activity">
                                 <?php foreach ($attach as $row) {
-
                                     echo '<tr><td><a href="' . base_url() . 'userfiles/attach/' . $row['col1'] . '"><i class="btn-info btn-lg icon-download"></i> ' . $row['col1'] . ' </a></td></tr>';
                                 } ?>
 
@@ -518,7 +517,7 @@
                                              src="' . assets_url('assets/gateway_logo/' . $cid . '.png') . '">
 </a><br>';
                     }
-                    ?>
+    ?>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default " data-dismiss="modal">Close</button>

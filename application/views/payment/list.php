@@ -24,22 +24,22 @@
             </thead>
             <tbody>
             <?php $i = 1;
-            foreach ($gateway as $row) {
-                $cid = $row['id'];
-                $title = $row['name'];
-                $enable = $row['enable'];
-                $dev_mode = $row['dev_mode'];
+        foreach ($gateway as $row) {
+            $cid = $row['id'];
+            $title = $row['name'];
+            $enable = $row['enable'];
+            $dev_mode = $row['dev_mode'];
 
-                echo "<tr>
+            echo "<tr>
                     <td>$i</td>
                     <td>$title</td>
                     <td>$enable</td>
                     <td>$dev_mode</td>
                   
                     <td><a href='" . base_url("paymentgateways/edit?id=$cid") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i>" . $this->lang->line('Edit') . "</a></td></tr>";
-                $i++;
-            }
-            ?>
+            $i++;
+        }
+        ?>
             </tbody>
             <tfoot>
             <tr>

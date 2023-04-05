@@ -5,7 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Search_products extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -33,14 +32,19 @@ class Search_products extends CI_Controller
         if ($wid > 0) {
             $qw = "(gtg_products.warehouse='$wid') AND ";
         }
-        if ($billing_settings['key2']) $qw .= "(gtg_products.expiry IS NULL OR DATE (gtg_products.expiry)<" . date('Y-m-d') . ") AND ";
+        if ($billing_settings['key2']) {
+            $qw .= "(gtg_products.expiry IS NULL OR DATE (gtg_products.expiry)<" . date('Y-m-d') . ") AND ";
+        }
         $join = '';
 
         if ($this->aauth->get_user()->loc) {
             $join = 'LEFT JOIN gtg_warehouse ON gtg_warehouse.id=gtg_products.warehouse';
             $join2 = 'LEFT JOIN gtg_warehouse ON gtg_warehouse.id=gtg_products.warehouse';
-            if (BDATA) $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' OR gtg_warehouse.loc=0) AND ';
-            else $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            if (BDATA) {
+                $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' OR gtg_warehouse.loc=0) AND ';
+            } else {
+                $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            }
         } elseif (!BDATA) {
             $join = 'LEFT JOIN gtg_warehouse ON gtg_warehouse.id=gtg_products.warehouse';
             $qw .= '(gtg_warehouse.loc=0) AND ';
@@ -53,7 +57,6 @@ class Search_products extends CI_Controller
         }
 
         if ($name) {
-
             if ($billing_settings['key1'] == 2) {
                 $e .= ',gtg_product_serials.serial';
                 $query = $this->db->query("SELECT gtg_products.pid,gtg_products.product_name,gtg_products.product_price,gtg_products.product_code,gtg_products.taxrate,gtg_products.disrate,gtg_products.product_des,gtg_products.qty,gtg_products.unit $e  FROM gtg_product_serials LEFT JOIN gtg_products  ON gtg_products.pid=gtg_product_serials.product_id $join WHERE " . $qw . "(UPPER(gtg_product_serials.serial) LIKE '" . strtoupper($name) . "%')  LIMIT 6");
@@ -84,8 +87,11 @@ class Search_products extends CI_Controller
         $join = '';
         if ($this->aauth->get_user()->loc) {
             $join = 'LEFT JOIN gtg_warehouse ON gtg_warehouse.id=gtg_products.warehouse';
-            if (BDATA) $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' OR gtg_warehouse.loc=0) AND ';
-            else $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            if (BDATA) {
+                $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' OR gtg_warehouse.loc=0) AND ';
+            } else {
+                $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            }
         } elseif (!BDATA) {
             $join = 'LEFT JOIN gtg_warehouse ON gtg_warehouse.id=gtg_products.warehouse';
             $qw .= '(gtg_warehouse.loc=0) AND ';
@@ -111,7 +117,9 @@ class Search_products extends CI_Controller
         $whr = '';
         if ($this->aauth->get_user()->loc) {
             $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
-            if (!BDATA) $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            if (!BDATA) {
+                $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            }
         } elseif (!BDATA) {
             $whr = ' (loc=0) AND ';
         }
@@ -121,7 +129,6 @@ class Search_products extends CI_Controller
             echo '<ol>';
             $i = 1;
             foreach ($result as $row) {
-
                 echo "<li onClick=\"selectCustomer('" . $row['id'] . "','" . $row['name'] . " ','" . $row['address'] . "','" . $row['city'] . "','" . $row['phone'] . "','" . $row['email'] . "','" . amountFormat_general($row['discount_c']) . "')\"><span>$i</span><p>" . $row['name'] . " &nbsp; &nbsp  " . $row['phone'] . "</p></li>";
                 $i++;
             }
@@ -137,13 +144,17 @@ class Search_products extends CI_Controller
         $name = $this->input->get('keyword', true);
 
         $ty = $this->input->get('ty', true);
-        if ($ty) $tbl = 'gtg_supplier';
+        if ($ty) {
+            $tbl = 'gtg_supplier';
+        }
         $whr = '';
 
 
         if ($this->aauth->get_user()->loc) {
             $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
-            if (!BDATA) $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            if (!BDATA) {
+                $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            }
         } elseif (!BDATA) {
             $whr = ' (loc=0) AND ';
         }
@@ -155,7 +166,6 @@ class Search_products extends CI_Controller
             echo '<ol>';
             $i = 1;
             foreach ($result as $row) {
-
                 echo "<li onClick=\"selectCustomer('" . $row['id'] . "','" . $row['name'] . " ','" . $row['address'] . "','" . $row['city'] . "','" . $row['phone'] . "','" . $row['email'] . "')\"><span>$i</span><p>" . $row['name'] . " &nbsp; &nbsp  " . $row['phone'] . "</p></li>";
                 $i++;
             }
@@ -171,7 +181,9 @@ class Search_products extends CI_Controller
         $whr = '';
         if ($this->aauth->get_user()->loc) {
             $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
-            if (!BDATA) $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            if (!BDATA) {
+                $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            }
         } elseif (!BDATA) {
             $whr = ' (loc=0) AND ';
         }
@@ -199,7 +211,9 @@ class Search_products extends CI_Controller
         $whr = '';
         if ($this->aauth->get_user()->loc) {
             $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
-            if (!BDATA) $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            if (!BDATA) {
+                $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            }
         } elseif (!BDATA) {
             $whr = ' (loc=0) AND ';
         }
@@ -218,7 +232,6 @@ class Search_products extends CI_Controller
 
     public function pos_search()
     {
-
         $out = '';
         $this->load->model('plugins_model', 'plugins');
         $billing_settings = $this->plugins->universal_api(67);
@@ -229,15 +242,20 @@ class Search_products extends CI_Controller
         if ($wid > 0) {
             $qw .= "(gtg_products.warehouse='$wid') AND ";
         }
-        if ($billing_settings['key2']) $qw .= "(gtg_products.expiry IS NULL OR DATE (gtg_products.expiry)<" . date('Y-m-d') . ") AND ";
+        if ($billing_settings['key2']) {
+            $qw .= "(gtg_products.expiry IS NULL OR DATE (gtg_products.expiry)<" . date('Y-m-d') . ") AND ";
+        }
         if ($cid > 0) {
             $qw .= "(gtg_products.pcat='$cid') AND ";
         }
         $join = '';
         if ($this->aauth->get_user()->loc) {
             $join = 'LEFT JOIN gtg_warehouse ON gtg_warehouse.id=gtg_products.warehouse';
-            if (BDATA) $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' OR gtg_warehouse.loc=0) AND ';
-            else $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            if (BDATA) {
+                $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' OR gtg_warehouse.loc=0) AND ';
+            } else {
+                $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            }
         } elseif (!BDATA) {
             $join = 'LEFT JOIN gtg_warehouse ON gtg_warehouse.id=gtg_products.warehouse';
             $qw .= '(gtg_warehouse.loc=0) AND ';
@@ -263,7 +281,6 @@ class Search_products extends CI_Controller
             $bar = " OR (gtg_products.barcode LIKE '" . (substr($barcode, 0, -1)) . "%' OR gtg_products.barcode LIKE '" . $name . "%')";
         }
         if ($billing_settings['key1'] == 2) {
-
             $query = "SELECT gtg_products.*,gtg_product_serials.serial FROM gtg_product_serials  LEFT JOIN gtg_products  ON gtg_products.pid=gtg_product_serials.product_id $join WHERE " . $qw . "gtg_product_serials.serial LIKE '" . strtoupper($name) . "%'  AND (gtg_products.qty>0) LIMIT 16";
         } else {
             $query = "SELECT gtg_products.* $e FROM gtg_products $join WHERE " . $qw . "(UPPER(gtg_products.product_name) LIKE '%" . strtoupper($name) . "%' $bar OR gtg_products.product_code LIKE '" . strtoupper($name) . "%') AND (gtg_products.qty>0) LIMIT 16";
@@ -276,7 +293,6 @@ class Search_products extends CI_Controller
         $i = 0;
         echo '<div class="row match-height">';
         foreach ($result as $row) {
-
             $out .= '    <div class="col-3 border mb-1 "><div class="rounded">
                                  <a   id="posp' . $i . '"  class="select_pos_item btn btn-outline-light-blue round"   data-name="' . $row['product_name'] . '"  data-price="' . amountExchange_s($row['product_price'], 0, $this->aauth->get_user()->loc) . '"  data-tax="' . amountFormat_general($row['taxrate']) . '"  data-discount="' . amountFormat_general($row['disrate']) . '"   data-pcode="' . $row['product_code'] . '"   data-pid="' . $row['pid'] . '"  data-stock="' . amountFormat_general($row['qty']) . '" data-unit="' . $row['unit'] . '" data-serial="' . @$row['serial'] . '">
                                         <img class="round"
@@ -299,7 +315,6 @@ class Search_products extends CI_Controller
 
     public function v2_pos_search()
     {
-
         $out = '';
         $this->load->model('plugins_model', 'plugins');
         $billing_settings = $this->plugins->universal_api(67);
@@ -314,7 +329,9 @@ class Search_products extends CI_Controller
         if ($wid > 0) {
             $qw .= "(gtg_products.warehouse='$wid') AND ";
         }
-        if ($billing_settings['key2']) $qw .= "(gtg_products.expiry IS NULL OR DATE (gtg_products.expiry)<" . date('Y-m-d') . ") AND ";
+        if ($billing_settings['key2']) {
+            $qw .= "(gtg_products.expiry IS NULL OR DATE (gtg_products.expiry)<" . date('Y-m-d') . ") AND ";
+        }
         if ($cid > 0) {
             $qw .= "(gtg_products.pcat='$cid') AND ";
         }
@@ -322,8 +339,11 @@ class Search_products extends CI_Controller
 
         if ($this->aauth->get_user()->loc) {
             $join = 'LEFT JOIN gtg_warehouse ON gtg_warehouse.id=gtg_products.warehouse';
-            if (BDATA) $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' OR gtg_warehouse.loc=0) AND ';
-            else $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            if (BDATA) {
+                $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' OR gtg_warehouse.loc=0) AND ';
+            } else {
+                $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            }
         } elseif (!BDATA) {
             $join = 'LEFT JOIN gtg_warehouse ON gtg_warehouse.id=gtg_products.warehouse';
             $qw .= '(gtg_warehouse.loc=0) AND ';
@@ -347,10 +367,8 @@ class Search_products extends CI_Controller
         } elseif ($enable_bar == 'false' or !$enable_bar) {
             $flag_p = true;
             if ($billing_settings['key1'] == 2) {
-
                 $query = "SELECT gtg_products.*,gtg_product_serials.serial FROM gtg_product_serials  LEFT JOIN gtg_products  ON gtg_products.pid=gtg_product_serials.product_id $join WHERE " . $qw . "gtg_product_serials.serial LIKE '" . strtoupper($name) . "%'  AND (gtg_products.qty>0) LIMIT 18";
             } else {
-
                 $query = "SELECT gtg_products.* $e FROM gtg_products $join WHERE " . $qw . "(UPPER(gtg_products.product_name) LIKE '%" . strtoupper($name) . "%' $bar OR gtg_products.product_code LIKE '" . strtoupper($name) . "%') AND (gtg_products.qty>0) ORDER BY gtg_products.product_name LIMIT 18";
             }
         }
@@ -361,7 +379,9 @@ class Search_products extends CI_Controller
             $i = 0;
             $out = '<div class="row match-height">';
             foreach ($result as $row) {
-                if ($bar) $bar = $row['barcode'];
+                if ($bar) {
+                    $bar = $row['barcode'];
+                }
                 $out .= '    <div class="col-2 border mb-1"  ><div class=" rounded" >
                                  <a  id="posp' . $i . '"  class="' . $p_class . ' round"   data-name="' . $row['product_name'] . '"  data-price="' . amountExchange_s($row['product_price'], 0, $this->aauth->get_user()->loc) . '"  data-tax="' . amountFormat_general($row['taxrate']) . '"  data-discount="' . amountFormat_general($row['disrate']) . '" data-pcode="' . $row['product_code'] . '"   data-pid="' . $row['pid'] . '"  data-stock="' . amountFormat_general($row['qty']) . '" data-unit="' . $row['unit'] . '" data-serial="' . @$row['serial'] . '" data-bar="' . $bar . '">
                                         <img class="round"
@@ -387,7 +407,6 @@ class Search_products extends CI_Controller
 
     public function group_pos_search()
     {
-
         $out = '';
         $this->load->model('plugins_model', 'plugins');
         $billing_settings = $this->plugins->universal_api(67);
@@ -407,8 +426,11 @@ class Search_products extends CI_Controller
         if ($this->aauth->get_user()->loc) {
             $qw .= "(gtg_product_groups.loc='" . $this->aauth->get_user()->loc . "') AND ";
             $join = 'LEFT JOIN gtg_warehouse ON gtg_warehouse.id=gtg_products.warehouse';
-            if (BDATA) $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' OR gtg_warehouse.loc=0) AND ';
-            else $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            if (BDATA) {
+                $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' OR gtg_warehouse.loc=0) AND ';
+            } else {
+                $qw .= '(gtg_warehouse.loc=' . $this->aauth->get_user()->loc . ' ) AND ';
+            }
         } elseif (!BDATA) {
             $join = 'LEFT JOIN gtg_warehouse ON gtg_warehouse.id=gtg_products.warehouse';
             $qw .= '(gtg_warehouse.loc=0) AND ';
@@ -435,7 +457,6 @@ class Search_products extends CI_Controller
             //  $query = "SELECT gtg_products.* FROM gtg_products $join WHERE " . $qw . " $bar AND (gtg_products.qty>0) LIMIT 16";
         }
         if ($billing_settings['key1'] == 2) {
-
             $query = "SELECT gtg_products.*,gtg_product_serials.serial FROM gtg_product_serials  LEFT JOIN gtg_products  ON gtg_products.pid=gtg_product_serials.product_id $join WHERE " . $qw . "gtg_product_serials.serial LIKE '" . strtoupper($name) . "%'  AND (gtg_products.qty>0) LIMIT 18";
         } else {
             $query = "SELECT gtg_products.* $e FROM gtg_products $join WHERE " . $qw . "(UPPER(gtg_products.product_name) LIKE '%" . strtoupper($name) . "%' $bar OR gtg_products.product_code LIKE '" . strtoupper($name) . "%') AND (gtg_products.qty>0) ORDER BY gtg_products.product_name LIMIT 18";
@@ -446,7 +467,6 @@ class Search_products extends CI_Controller
         $i = 0;
         echo '<div class="row match-height">';
         foreach ($result as $row) {
-
             $out .= '    <div class="col-2 border mb-1"  ><div class=" rounded" >
                                  <a  id="posp' . $i . '"  class="v2_select_pos_item round"   data-name="' . $row['product_name'] . '"  data-price="' . amountExchange_s($row['product_price'], 0, $this->aauth->get_user()->loc) . '"  data-tax="' . amountFormat_general($row['taxrate']) . '"  data-discount="' . amountFormat_general($row['disrate']) . '" data-pcode="' . $row['product_code'] . '"   data-pid="' . $row['pid'] . '"  data-stock="' . amountFormat_general($row['qty']) . '" data-unit="' . $row['unit'] . '" data-serial="' . @$row['serial'] . '">
                                         <img class="round"

@@ -18,11 +18,10 @@ namespace Stripe;
  */
 class ApplicationFeeRefund extends ApiResource
 {
-    const OBJECT_NAME = 'fee_refund';
-
     use ApiOperations\Update {
         save as protected _save;
     }
+    public const OBJECT_NAME = 'fee_refund';
 
     /**
      * @return string The API URL for this Stripe refund.

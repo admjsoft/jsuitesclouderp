@@ -2,7 +2,7 @@
 
 class User_model extends CI_Model
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->user_id = isset($this->session->get_userdata()['user_details'][0]->id) ? $this->session->get_userdata()['user_details'][0]->users_id : '1';
@@ -11,7 +11,7 @@ class User_model extends CI_Model
     /**
      * This function is used authenticate user at login
      */
-    function auth_user()
+    public function auth_user()
     {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
@@ -35,7 +35,7 @@ class User_model extends CI_Model
      * This function is used to delete user
      * @param: $id - id of user table
      */
-    function delete($id = '')
+    public function delete($id = '')
     {
         $this->db->where('users_id', $id);
         $this->db->delete('users');
@@ -44,7 +44,7 @@ class User_model extends CI_Model
     /**
      * This function is used to load view of reset password and varify user too
      */
-    function mail_varify()
+    public function mail_varify()
     {
         $ucode = $this->input->get('code');
         $this->db->select('email as e_mail');
@@ -63,7 +63,7 @@ class User_model extends CI_Model
     /**
      * This function is used Reset password
      */
-    function ResetPpassword()
+    public function ResetPpassword()
     {
         $code = $this->input->post('n_code');
         if ($this->input->post('n_password') == $this->input->post('n_password2')) {
@@ -77,7 +77,7 @@ class User_model extends CI_Model
     /**
      * This function is used to select data form table
      */
-    function get_data_by($tableName = '', $value = '', $colum = '', $condition = '')
+    public function get_data_by($tableName = '', $value = '', $colum = '', $condition = '')
     {
         if ((!empty($value)) && (!empty($colum))) {
             $this->db->where($colum, $value);
@@ -91,7 +91,7 @@ class User_model extends CI_Model
     /**
      * This function is used to check user is alredy exist or not
      */
-    function check_exists($table = '', $colom = '', $colomValue = '')
+    public function check_exists($table = '', $colom = '', $colomValue = '')
     {
         $this->db->where($colom, $colomValue);
         $res = $this->db->get($table)->row();
@@ -105,14 +105,14 @@ class User_model extends CI_Model
     /**
      * This function is used to get users detail
      */
-    function get_users($userID = '')
+    public function get_users($userID = '')
     {
         $this->db->select('users.*,gtg_customers.picture');
         $this->db->from('users');
         $this->db->where('users.is_deleted', '0');
         if (isset($userID) && $userID != '') {
             $this->db->where('users.users_id', $userID);
-        } else if ($this->session->userdata('user_details')[0]->user_type == 'admin') {
+        } elseif ($this->session->userdata('user_details')[0]->user_type == 'admin') {
             $this->db->where('users.user_type', 'admin');
         } else {
             $this->db->where('users.users_id !=', '1');
@@ -126,7 +126,7 @@ class User_model extends CI_Model
     /**
      * This function is used to get email template
      */
-    function get_template($code)
+    public function get_template($code)
     {
         $this->db->where('code', $code);
         return $this->db->get('templates')->row();
@@ -159,9 +159,8 @@ class User_model extends CI_Model
         return $query->row_array();
     }
 
-    function get_data_by_row($tableName = '', $colum = '',  $value = '', $condition = '')
+    public function get_data_by_row($tableName = '', $colum = '', $value = '', $condition = '')
     {
-
         $this->db->select('*');
         $this->db->from($tableName);
         $this->db->where($colum, $value);
@@ -169,14 +168,14 @@ class User_model extends CI_Model
         return $query->row_array();
     }
 
-    function get_users_full($userID = '')
+    public function get_users_full($userID = '')
     {
         $this->db->select('users.*,gtg_customers.*');
         $this->db->from('users');
         $this->db->where('users.is_deleted', '0');
         if (isset($userID) && $userID != '') {
             $this->db->where('users.users_id', $userID);
-        } else if ($this->session->userdata('user_details')[0]->user_type == 'admin') {
+        } elseif ($this->session->userdata('user_details')[0]->user_type == 'admin') {
             $this->db->where('users.user_type', 'admin');
         } else {
             $this->db->where('users.users_id !=', '1');

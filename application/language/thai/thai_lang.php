@@ -1,4 +1,5 @@
 <?php
+
 $lang['Date'] = "วันที่";
 $lang['Edit'] = "แก้ไข";
 $lang['employee_login_panel'] = "แผงเข้าสู่ระบบของพนักงาน";

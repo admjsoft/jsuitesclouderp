@@ -13,7 +13,6 @@ class Productgroups extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if (!$this->aauth->premission(2)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->load->model('products_model', 'products');

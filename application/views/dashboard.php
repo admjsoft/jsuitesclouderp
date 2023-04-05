@@ -1,20 +1,22 @@
 <script type="text/javascript">
     var dataVisits = [
-        <?php $tt_inc = 0;foreach ($incomechart as $row) {
-        $tt_inc += $row['total'];
-        echo "{ x: '" . $row['date'] . "', y: " . intval(amountExchange_s($row['total'], 0, $this->aauth->get_user()->loc)) . "},";
-    }
+        <?php $tt_inc = 0;
+        foreach ($incomechart as $row) {
+            $tt_inc += $row['total'];
+            echo "{ x: '" . $row['date'] . "', y: " . intval(amountExchange_s($row['total'], 0, $this->aauth->get_user()->loc)) . "},";
+        }
         ?>
     ];
     var dataVisits2 = [
-        <?php $tt_exp = 0; foreach ($expensechart as $row) {
-        $tt_exp += $row['total'];
-        echo "{ x: '" . $row['date'] . "', y: " . intval(amountExchange_s($row['total'], 0, $this->aauth->get_user()->loc)) . "},";
-    }
+        <?php $tt_exp = 0;
+        foreach ($expensechart as $row) {
+            $tt_exp += $row['total'];
+            echo "{ x: '" . $row['date'] . "', y: " . intval(amountExchange_s($row['total'], 0, $this->aauth->get_user()->loc)) . "},";
+        }
         ?>];
 
 </script>
-<?php if(ENVIRONMENT == 'development') { ?>
+<?php if (ENVIRONMENT == 'development') { ?>
 <div class="alert alert-primary alert-danger" style="">
     <a href="#" class="close" data-dismiss="alert">×</a>
     <div class="message"><strong>Alert</strong>: Application is running in Development/Debug mode! Set it production mode <a href="<?=base_url('settings/debug') ?>">here</a></div>
@@ -199,9 +201,7 @@
                 <div id="recent-buyers" class="media-list height-450  mt-1 position-relative">
                     <?php
                     if (isset($recent_buy[0]['csd'])) {
-
                         foreach ($recent_buy as $item) {
-
                             echo '       <a href="' . base_url('customers/view?id=' . $item['csd']) . '" class="media border-0">
                         <div class="media-left pr-1">
                             <span class="avatar avatar-md avatar-online"><img class="media-object rounded-circle" src="' . base_url() . 'userfiles/customers/thumbnail/' . $item['picture'] . '">
@@ -213,13 +213,12 @@
                             <p class="list-group-item-text mb-0"><span class="badge  st-' . $item['status'] . '">' . $this->lang->line(ucwords($item['status'])) . '</span></p>
                         </div>
                     </a>';
-
                         }
                     } elseif ($recent_buy == 'sql') {
                         echo ' <div class="media-body w-100">  <h5 class="list-group-item-heading bg-danger white">Critical SQL Strict Mode Error: </h5>Please Disable Strict SQL Mode for in database  settings.</div>';
                     }
 
-                    ?>
+        ?>
 
 
                 </div>
@@ -263,25 +262,25 @@
                         <tbody>
                         <?php
 
-                        foreach ($recent as $item) {
-                            $page = 'subscriptions';
-                            $t = 'Sub ';
-                            if ($item['i_class'] == 0) {
-                                $page = 'invoices';
-                                $t = '';
-                            } elseif ($item['i_class'] == 1) {
-                                $page = 'pos_invoices';
-                                $t = 'POS ';
-                            }
-                            echo '    <tr>
+            foreach ($recent as $item) {
+                $page = 'subscriptions';
+                $t = 'Sub ';
+                if ($item['i_class'] == 0) {
+                    $page = 'invoices';
+                    $t = '';
+                } elseif ($item['i_class'] == 1) {
+                    $page = 'pos_invoices';
+                    $t = 'POS ';
+                }
+                echo '    <tr>
                                 <td class="text-truncate"><a href="' . base_url() . $page . '/view?id=' . $item['id'] . '">' . $t . '#' . $item['tid'] . '</a></td>
                              
                                 <td class="text-truncate"> ' . $item['name'] . '</td>
                                 <td class="text-truncate"><span class="badge  st-' . $item['status'] . ' st-' . $item['status'] . '">' . $this->lang->line(ucwords($item['status'])) . '</span></td><td class="text-truncate">' . dateformat($item['invoicedate']) . '</td>
                                 <td class="text-truncate">' . amountExchange($item['total'], 0, $this->aauth->get_user()->loc) . '</td>
                             </tr>';
-                        }
-                        ?>
+            }
+        ?>
 
                         </tbody>
                     </table>
@@ -452,14 +451,14 @@
                         </thead>
                         <tbody>
                         <?php
-                        $t = 0;
-                        foreach ($tasks as $row) {
-                            $name = '<a class="check text-default" data-id="' . $row['id'] . '" data-stat="Due"> <i class="fa fa-check"></i> </a><a href="#" data-id="' . $row['id'] . '" class="view_task"></a>';
-                            if ($row['status'] == 'Done') {
-                                $name = '<a class="check text-success" data-id="' . $row['id'] . '" data-stat="Done"> <i class="fa fa-check"></i> </a><a href="#" data-id="' . $row['id'] . '" class="view_task"></a>';
-                            }
+        $t = 0;
+        foreach ($tasks as $row) {
+            $name = '<a class="check text-default" data-id="' . $row['id'] . '" data-stat="Due"> <i class="fa fa-check"></i> </a><a href="#" data-id="' . $row['id'] . '" class="view_task"></a>';
+            if ($row['status'] == 'Done') {
+                $name = '<a class="check text-success" data-id="' . $row['id'] . '" data-stat="Done"> <i class="fa fa-check"></i> </a><a href="#" data-id="' . $row['id'] . '" class="view_task"></a>';
+            }
 
-                            echo ' <tr>
+            echo ' <tr>
                                 <td class="text-truncate">
                                    ' . $name . '
                                 </td>
@@ -469,9 +468,9 @@
                             </tr>';
 
 
-                            $t++;
-                        }
-                        ?>
+            $t++;
+        }
+        ?>
 
                         </tbody>
                     </table>
@@ -513,17 +512,15 @@
                         <tbody>
                         <?php
 
-                        foreach ($recent_payments as $item) {
-
-                            echo '<tr>
+        foreach ($recent_payments as $item) {
+            echo '<tr>
                                 <td class="text-truncate"><a href="' . base_url() . 'transactions/view?id=' . $item['id'] . '">' . dateformat($item['date']) . '</a></td>
                                 <td class="text-truncate"> ' . $item['account'] . '</td>
                                 <td class="text-truncate">' . amountExchange($item['debit'], 0, $this->aauth->get_user()->loc) . '</td>
                                 <td class="text-truncate">' . amountExchange($item['credit'], 0, $this->aauth->get_user()->loc) . '</td>                    
                                 <td class="text-truncate">' . $this->lang->line($item['method']) . '</td>
                             </tr>';
-
-                        } ?>
+        } ?>
 
                         </tbody>
                     </table>
@@ -563,8 +560,8 @@
          ********************************************/
         var sales_data = [
             <?php foreach ($countmonthlychart as $row) {
-            echo "{ y: '" . $row['date'] . "', sales: " . intval(amountExchange_s($row['total'], 0, $this->aauth->get_user()->loc)) . ", invoices: " . intval($row['ttlid']) . "},";
-        } ?>
+                echo "{ y: '" . $row['date'] . "', sales: " . intval(amountExchange_s($row['total'], 0, $this->aauth->get_user()->loc)) . ", invoices: " . intval($row['ttlid']) . "},";
+            } ?>
         ];
         var months = ["<?=lang('Jan') ?>", "<?=lang('Feb') ?>", "<?=lang('Mar') ?>", "<?=lang('Apr') ?>", "<?=lang('May') ?>", "<?=lang('Jun') ?>", "<?=lang('Jul') ?>", "<?=lang('Aug') ?>", "<?=lang('Sep') ?>", "<?=lang('Oct') ?>", "<?=lang('Nov') ?>", "<?=lang('Dec') ?>"];
         Morris.Area({

@@ -17,29 +17,28 @@ use chillerlan\QRCode\QRCode;
 /**
  * Byte mode, ISO-8859-1 or UTF-8
  */
-class Byte extends QRDataAbstract{
+class Byte extends QRDataAbstract
+{
+    /**
+     * @inheritdoc
+     */
+    protected $datamode = QRCode::DATA_BYTE;
 
-	/**
-	 * @inheritdoc
-	 */
-	protected $datamode = QRCode::DATA_BYTE;
+    /**
+     * @inheritdoc
+     */
+    protected $lengthBits = [8, 16, 16];
 
-	/**
-	 * @inheritdoc
-	 */
-	protected $lengthBits = [8, 16, 16];
+    /**
+     * @inheritdoc
+     */
+    protected function write(string $data)
+    {
+        $i = 0;
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function write(string $data){
-		$i = 0;
-
-		while($i < $this->strlen){
-			$this->bitBuffer->put(ord($data[$i]), 8);
-			$i++;
-		}
-
-	}
-
+        while ($i < $this->strlen) {
+            $this->bitBuffer->put(ord($data[$i]), 8);
+            $i++;
+        }
+    }
 }

@@ -14,15 +14,17 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class WorkspaceRealTimeStatisticsContext extends InstanceContext {
+class WorkspaceRealTimeStatisticsContext extends InstanceContext
+{
     /**
      * Initialize the WorkspaceRealTimeStatisticsContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $workspaceSid The workspace_sid
-     * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkspaceRealTimeStatisticsContext 
+     * @return \Twilio\Rest\Taskrouter\V1\Workspace\WorkspaceRealTimeStatisticsContext
      */
-    public function __construct(Version $version, $workspaceSid) {
+    public function __construct(Version $version, $workspaceSid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -33,13 +35,14 @@ class WorkspaceRealTimeStatisticsContext extends InstanceContext {
 
     /**
      * Fetch a WorkspaceRealTimeStatisticsInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return WorkspaceRealTimeStatisticsInstance Fetched
      *                                             WorkspaceRealTimeStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array()) {
+    public function fetch($options = array())
+    {
         $options = new Values($options);
 
         $params = Values::of(array('TaskChannel' => $options['taskChannel'], ));
@@ -59,10 +62,11 @@ class WorkspaceRealTimeStatisticsContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

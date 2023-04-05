@@ -162,7 +162,7 @@
             </td>
             <td class="myw">
                 <?php echo $this->lang->line('Product') . ' ' . $this->lang->line('Statement');
-                $balance = 0; ?>
+$balance = 0; ?>
             </td>
         </tr>
     </table>
@@ -173,19 +173,18 @@
             <td> <?php echo $this->lang->line('Our Info') ?>:</td>
 
             <td><?php switch ($r_type) {
-                    case 1 :
-                        echo $this->lang->line('Sales');
-                        break;
-                    case 2 :
-                        echo $this->lang->line('Purchase Order');
-                        break;
-                    case 3 :
-                        echo $this->lang->line('Stock');
-                        break;
+                case 1:
+                    echo $this->lang->line('Sales');
+                    break;
+                case 2:
+                    echo $this->lang->line('Purchase Order');
+                    break;
+                case 3:
+                    echo $this->lang->line('Stock');
+                    break;
+            }
 
-                }
-
-                echo ' ' . $this->lang->line('Details') ?>:
+echo ' ' . $this->lang->line('Details') ?>:
             </td>
         </tr>
         </thead>
@@ -193,12 +192,12 @@
         <tr>
             <td><h3><?php echo $this->config->item('ctitle'); ?></h3>
                 <?php echo
-                    $this->config->item('address') . '<br>' . $this->config->item('city') . ',' . $this->config->item('country') . '<br>Phone: ' . $this->config->item('phone') . '<br> Email: ' . $this->config->item('email'); ?>
+                $this->config->item('address') . '<br>' . $this->config->item('city') . ',' . $this->config->item('country') . '<br>Phone: ' . $this->config->item('phone') . '<br> Email: ' . $this->config->item('email'); ?>
             </td>
 
             <td>
                 <?php echo $this->lang->line('Product Name') . ' : ' . $product['product_name'] . '</strong><br>' . $this->lang->line('Product Code') . ' : ' . $product['product_code'] . '<br>';
-                echo $this->lang->line('Warehouse') . ' : ' . $cat_ware['watt'] . '</strong><br>' . $this->lang->line('Product Category') . ' : ' . $cat_ware['catt']; ?>
+echo $this->lang->line('Warehouse') . ' : ' . $cat_ware['watt'] . '</strong><br>' . $this->lang->line('Product Category') . ' : ' . $cat_ware['catt']; ?>
             </td>
         </tr>
         </tbody>
@@ -263,11 +262,9 @@
 
 
                 $fill = !$fill;
-
-
             }
         }
-        ?> </table>
+?> </table>
     <table class="subtotal">
 
         <tbody>

@@ -18,16 +18,18 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class ShortCodeContext extends InstanceContext {
+class ShortCodeContext extends InstanceContext
+{
     /**
      * Initialize the ShortCodeContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $serviceSid Service Sid.
      * @param string $sid A string that uniquely identifies this Short Code.
-     * @return \Twilio\Rest\Proxy\V1\Service\ShortCodeContext 
+     * @return \Twilio\Rest\Proxy\V1\Service\ShortCodeContext
      */
-    public function __construct(Version $version, $serviceSid, $sid) {
+    public function __construct(Version $version, $serviceSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -38,21 +40,23 @@ class ShortCodeContext extends InstanceContext {
 
     /**
      * Deletes the ShortCodeInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Fetch a ShortCodeInstance
-     * 
+     *
      * @return ShortCodeInstance Fetched ShortCodeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -71,12 +75,13 @@ class ShortCodeContext extends InstanceContext {
 
     /**
      * Update the ShortCodeInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return ShortCodeInstance Updated ShortCodeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array('IsReserved' => Serialize::booleanToString($options['isReserved']), ));
@@ -98,10 +103,11 @@ class ShortCodeContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

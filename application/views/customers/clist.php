@@ -224,7 +224,9 @@ if ($this->input->get('due')) {
             'ajax': {
                 'url': "<?php echo site_url('customers/load_list')?>",
                 'type': 'POST',
-                'data': {'<?=$this->security->get_csrf_token_name()?>': crsf_hash <?php if ($due) echo ",'due':true" ?> }
+                'data': {'<?=$this->security->get_csrf_token_name()?>': crsf_hash <?php if ($due) {
+                    echo ",'due':true";
+                } ?> }
             },
             'columnDefs': [
                 {
@@ -253,7 +255,9 @@ if ($this->input->get('due')) {
             jQuery.ajax({
                 url: "<?php echo site_url('customers/delete_i')?>",
                 type: 'POST',
-                data: $("input[name='cust[]']:checked").serialize() + '&<?=$this->security->get_csrf_token_name()?>=' + crsf_hash + '<?php if ($due) echo "&due=true" ?>',
+                data: $("input[name='cust[]']:checked").serialize() + '&<?=$this->security->get_csrf_token_name()?>=' + crsf_hash + '<?php if ($due) {
+                    echo "&due=true";
+                } ?>',
                   dataType: 'json',
                 success: function (data) {
                     $("input[name='cust[]']:checked").closest('tr').remove();

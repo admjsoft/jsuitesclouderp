@@ -9,8 +9,8 @@ class BarcodeBar
     protected $positionVertical;
     protected $type;
 
-    const TYPE_BAR = 1;
-    const TYPE_SPACING = 0;
+    public const TYPE_BAR = 1;
+    public const TYPE_SPACING = 0;
 
     public function __construct(int $width, int $height, bool $drawBar = true, int $positionVertical = 0)
     {

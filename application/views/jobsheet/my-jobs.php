@@ -1,13 +1,14 @@
 <article class="content-body">
 <div class="row">
 <div class="col-12">
-<?php if(isset($_SESSION['status'])){
- echo '<div id="notify" class="alert alert-'.$_SESSION['status'].'">
+<?php if (isset($_SESSION['status'])) {
+    echo '<div id="notify" class="alert alert-'.$_SESSION['status'].'">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
 
             <div class="message">' .$_SESSION['message']. '</div>
         </div>';
-unset($_SESSION['status']);unset($_SESSION['message']);
+    unset($_SESSION['status']);
+    unset($_SESSION['message']);
 } ?>
 </div>
 </div>
@@ -89,7 +90,7 @@ unset($_SESSION['status']);unset($_SESSION['message']);
         <div class="card-body">
             <div class="header-block">
                 <h3 class="title">
-                    <?php //echo $this->lang->line('Support Tickets') ?>
+                    <?php //echo $this->lang->line('Support Tickets')?>
                 </h3></div>
             <p>&nbsp;</p>
             <table id="doctable" class="table table-striped table-bordered zero-configuration" cellspacing="0"

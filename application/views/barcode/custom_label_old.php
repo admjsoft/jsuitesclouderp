@@ -21,35 +21,52 @@
             <tr>
                 <?php  for ($z =0; $z <= $style['items_per_row']; $z++) { ?>
                 <td style="border: 1px solid;" class="text-center"><strong><?= $lab['product_name'] ?></strong><br>
-                    <?php if ($style['product_code']) echo '<br>' . $style['product_code'] . $lab['product_code'];
-                    if ($style['warehouse_name']) echo '<br>' . $style['warehouse'] ?>
+                    <?php if ($style['product_code']) {
+                        echo '<br>' . $style['product_code'] . $lab['product_code'];
+                    }
+                    if ($style['warehouse_name']) {
+                        echo '<br>' . $style['warehouse'];
+                    } ?>
                     <br><br>
                     <barcode code="<?= $lab['barcode'] ?>" text="1" class="barcode"
                              height="<?= $style['bar_height'] ?>"/>
                     </barcode><br><br>
-                    <br><?php if ($style['store_name']) echo $style['store'] . '<br><br>';
-                    if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+                    <br><?php if ($style['store_name']) {
+                        echo $style['store'] . '<br><br>';
+                    }
+                    if ($lab['expiry']) {
+                        echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+                    }
                     ?>
-                    <h3><?php if ($style['product_price']) echo amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '<br><br>'; ?></h3>
+                    <h3><?php if ($style['product_price']) {
+                        echo amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '<br><br>';
+                    } ?></h3>
                 </td>
 <?php } ?>
                 <?php
                 if ($style['items_per_row'] == 'x2') {
-
                     ?>
                     <td style="border: 1px solid;" class="text-center"><strong><?= $lab['product_name'] ?></strong>
 
 
-                        <?php if ($style['product_code']) echo '<br>' . $lab['product_code'] ?>
-                        <?php if ($style['warehouse_name']) echo $style['warehouse_name'] . '<br>' . $style['warehouse'] ?>
+                        <?php if ($style['product_code']) {
+                            echo '<br>' . $lab['product_code'];
+                        } ?>
+                        <?php if ($style['warehouse_name']) {
+                            echo $style['warehouse_name'] . '<br>' . $style['warehouse'];
+                        } ?>
                         <br><br>
                         <barcode code="<?= $lab['barcode'] ?>" text="1" class="barcode"
                                  height="<?= $style['bar_height'] ?>"/>
                         </barcode><br><br>
-                        <br> <?php if ($style['store_name']) echo $style['store'] . '<br><br>'; ?>
+                        <br> <?php if ($style['store_name']) {
+                            echo $style['store'] . '<br><br>';
+                        } ?>
                         <?php
-                        if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
-                        ?>
+                        if ($lab['expiry']) {
+                            echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+                        }
+                    ?>
                         <h3><?= amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) ?></h3>
                     </td>
 
@@ -57,21 +74,28 @@
 
                 }
                                 if ($style['items_per_row'] >  'x2') {
-
-                    ?>
+                                    ?>
                     <td style="border: 1px solid;" class="text-center"><strong><?= $lab['product_name'] ?></strong>
 
 
-                        <?php if ($style['product_code']) echo '<br>' . $lab['product_code'] ?>
-                        <?php if ($style['warehouse_name']) echo $style['warehouse_name'] . '<br>' . $style['warehouse'] ?>
+                        <?php if ($style['product_code']) {
+                            echo '<br>' . $lab['product_code'];
+                        } ?>
+                        <?php if ($style['warehouse_name']) {
+                            echo $style['warehouse_name'] . '<br>' . $style['warehouse'];
+                        } ?>
                         <br><br>
                         <barcode code="<?= $lab['barcode'] ?>" text="1" class="barcode"
                                  height="<?= $style['bar_height'] ?>"/>
                         </barcode><br><br>
-                        <br> <?php if ($style['store_name']) echo $style['store'] . '<br><br>'; ?>
+                        <br> <?php if ($style['store_name']) {
+                            echo $style['store'] . '<br><br>';
+                        } ?>
                         <?php
-                        if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
-                        ?>
+                        if ($lab['expiry']) {
+                            echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+                        }
+                                    ?>
                         <h3><?= amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) ?></h3>
                     </td>
                     <td style="border: 1px solid;" class="text-center">
@@ -82,19 +106,21 @@
                         </barcode><br><br>
                         <br><?= $style['store'] ?><br><br>
                         <?php
-                        if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
-                        ?>
+                                    if ($lab['expiry']) {
+                                        echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+                                    }
+                                    ?>
                         <h3><?= amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) ?></h3>
                     </td>
                     <?php
 
-                }
-                ?>
+                                }
+            ?>
 
 
             </tr>
         <?php }
-    } ?>
+        } ?>
 
 </table>
 </body>

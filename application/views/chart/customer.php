@@ -88,8 +88,8 @@
     $(document).ready(function () {
         var cat_data = [
             <?php foreach ($chart as $item) {
-            echo '{y: "' . $item['name'] . '", a: ' . $item['total'] . ' },';
-        }
+                echo '{y: "' . $item['name'] . '", a: ' . $item['total'] . ' },';
+            }
             ?>
         ];
         draw_c(cat_data);

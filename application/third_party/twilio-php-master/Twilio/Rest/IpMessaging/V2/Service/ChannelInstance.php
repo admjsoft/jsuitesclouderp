@@ -32,7 +32,8 @@ use Twilio\Version;
  * @property string url
  * @property array links
  */
-class ChannelInstance extends InstanceResource {
+class ChannelInstance extends InstanceResource
+{
     protected $_members = null;
     protected $_messages = null;
     protected $_invites = null;
@@ -40,15 +41,16 @@ class ChannelInstance extends InstanceResource {
 
     /**
      * Initialize the ChannelInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $serviceSid The unique id of the Service this channel belongs
      *                           to.
      * @param string $sid Key that uniquely defines the channel to fetch.
-     * @return \Twilio\Rest\IpMessaging\V2\Service\ChannelInstance 
+     * @return \Twilio\Rest\IpMessaging\V2\Service\ChannelInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $sid = null) {
+    public function __construct(Version $version, array $payload, $serviceSid, $sid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -75,11 +77,12 @@ class ChannelInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\IpMessaging\V2\Service\ChannelContext Context for this
      *                                                            ChannelInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new ChannelContext(
                 $this->version,
@@ -93,79 +96,87 @@ class ChannelInstance extends InstanceResource {
 
     /**
      * Fetch a ChannelInstance
-     * 
+     *
      * @return ChannelInstance Fetched ChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Deletes the ChannelInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->proxy()->delete();
     }
 
     /**
      * Update the ChannelInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return ChannelInstance Updated ChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         return $this->proxy()->update($options);
     }
 
     /**
      * Access the members
-     * 
-     * @return \Twilio\Rest\IpMessaging\V2\Service\Channel\MemberList 
+     *
+     * @return \Twilio\Rest\IpMessaging\V2\Service\Channel\MemberList
      */
-    protected function getMembers() {
+    protected function getMembers()
+    {
         return $this->proxy()->members;
     }
 
     /**
      * Access the messages
-     * 
-     * @return \Twilio\Rest\IpMessaging\V2\Service\Channel\MessageList 
+     *
+     * @return \Twilio\Rest\IpMessaging\V2\Service\Channel\MessageList
      */
-    protected function getMessages() {
+    protected function getMessages()
+    {
         return $this->proxy()->messages;
     }
 
     /**
      * Access the invites
-     * 
-     * @return \Twilio\Rest\IpMessaging\V2\Service\Channel\InviteList 
+     *
+     * @return \Twilio\Rest\IpMessaging\V2\Service\Channel\InviteList
      */
-    protected function getInvites() {
+    protected function getInvites()
+    {
         return $this->proxy()->invites;
     }
 
     /**
      * Access the webhooks
-     * 
-     * @return \Twilio\Rest\IpMessaging\V2\Service\Channel\WebhookList 
+     *
+     * @return \Twilio\Rest\IpMessaging\V2\Service\Channel\WebhookList
      */
-    protected function getWebhooks() {
+    protected function getWebhooks()
+    {
         return $this->proxy()->webhooks;
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -180,10 +191,11 @@ class ChannelInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

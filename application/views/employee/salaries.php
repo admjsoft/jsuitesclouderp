@@ -42,23 +42,21 @@
                     <tbody>
                     <?php $i = 1;
 
-                    foreach ($employee as $row) {
-                        $aid = $row['id'];
-                        $username = $row['username'];
-                        $name = $row['name'];
-                        $role = user_role($row['roleid']);
-                        $status = $row['banned'];
-                        $salary = amountExchange($row['salary'], 0, $row['loc']);
+                foreach ($employee as $row) {
+                    $aid = $row['id'];
+                    $username = $row['username'];
+                    $name = $row['name'];
+                    $role = user_role($row['roleid']);
+                    $status = $row['banned'];
+                    $salary = amountExchange($row['salary'], 0, $row['loc']);
 
-                        if ($status == 1) {
-                            $status = 'Deactive';
+                    if ($status == 1) {
+                        $status = 'Deactive';
+                    } else {
+                        $status = 'Active';
+                    }
 
-                        } else {
-                            $status = 'Active';
-
-                        }
-
-                        echo "<tr>
+                    echo "<tr>
                     <td>$i</td>
                     <td>$name</td>
                          <td>$salary</td>
@@ -66,9 +64,9 @@
                     <td>$status</td>
                  
                     <td><a href='" . base_url("employee/history?id=$aid") . "' class='btn btn-success btn-xs'><i class='fa fa-list-ul'></i> " . $this->lang->line('History') . "</a></td></tr>";
-                        $i++;
-                    }
-                    ?>
+                    $i++;
+                }
+                ?>
                     </tbody>
                     <tfoot>
                     <tr>

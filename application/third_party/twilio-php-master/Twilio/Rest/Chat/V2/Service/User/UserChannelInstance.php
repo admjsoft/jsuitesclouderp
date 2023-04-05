@@ -27,19 +27,21 @@ use Twilio\Version;
  * @property string url
  * @property string notificationLevel
  */
-class UserChannelInstance extends InstanceResource {
+class UserChannelInstance extends InstanceResource
+{
     /**
      * Initialize the UserChannelInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $serviceSid The unique id of the Service this channel belongs
      *                           to.
      * @param string $userSid The unique id of the User this Channel belongs to.
      * @param string $channelSid The unique id of a Channel.
-     * @return \Twilio\Rest\Chat\V2\Service\User\UserChannelInstance 
+     * @return \Twilio\Rest\Chat\V2\Service\User\UserChannelInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $userSid, $channelSid = null) {
+    public function __construct(Version $version, array $payload, $serviceSid, $userSid, $channelSid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -67,12 +69,13 @@ class UserChannelInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Chat\V2\Service\User\UserChannelContext Context for
      *                                                              this
      *                                                              UserChannelInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new UserChannelContext(
                 $this->version,
@@ -87,34 +90,37 @@ class UserChannelInstance extends InstanceResource {
 
     /**
      * Fetch a UserChannelInstance
-     * 
+     *
      * @return UserChannelInstance Fetched UserChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Update the UserChannelInstance
-     * 
+     *
      * @param string $notificationLevel Push notification level to be assigned to
      *                                  Channel of the User.
      * @return UserChannelInstance Updated UserChannelInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($notificationLevel) {
+    public function update($notificationLevel)
+    {
         return $this->proxy()->update($notificationLevel);
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -129,10 +135,11 @@ class UserChannelInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

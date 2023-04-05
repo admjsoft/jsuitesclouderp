@@ -28,22 +28,22 @@
                 <?php foreach ($catlist as $row) {
                     $cid = $row['id'];
                     switch ($row['val3']) {
-                        case 'yes' :
+                        case 'yes':
                             $t1 = 'Exclusive';
                             break;
-                        case 'inclusive' :
+                        case 'inclusive':
                             $t1 = 'Inclusive';
                             break;
-                        case 'cgst' :
+                        case 'cgst':
                             $t1 = 'CGST+SGST';
                             break;
-                        case 'igst' :
+                        case 'igst':
                             $t1 = 'IGST';
                             break;
                     }
                     echo "<tr><td>" . $row['val1'] . "</td><td>" . $row['val2'] . "%</td><td>" . $t1 . "</td><td><a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='fa fa-trash'></i></a></td></tr>";
                 }
-                ?>
+                        ?>
                 </tbody>
 
             </table>

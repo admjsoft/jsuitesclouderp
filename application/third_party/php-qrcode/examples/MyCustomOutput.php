@@ -16,19 +16,18 @@ use chillerlan\QRCode\Output\QROutputAbstract;
 
 /**
  */
-class MyCustomOutput extends QROutputAbstract{
+class MyCustomOutput extends QROutputAbstract
+{
+    public function dump()
+    {
+        $output = '';
 
-	public function dump(){
+        for ($row = 0; $row < $this->moduleCount; $row++) {
+            for ($col = 0; $col < $this->moduleCount; $col++) {
+                $output .= (int)$this->matrix->check($col, $row);
+            }
+        }
 
-		$output = '';
-
-		for($row = 0; $row < $this->moduleCount; $row++){
-			for($col = 0; $col < $this->moduleCount; $col++){
-				$output .= (int)$this->matrix->check($col, $row);
-			}
-		}
-
-		return $output;
-	}
-
+        return $output;
+    }
 }

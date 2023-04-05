@@ -21,17 +21,19 @@ use Twilio\Version;
  * @property array commands
  * @property array data
  */
-class UsageRecordInstance extends InstanceResource {
+class UsageRecordInstance extends InstanceResource
+{
     /**
      * Initialize the UsageRecordInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $simSid The unique id of the SIM resource that this Usage
      *                       Record is for.
-     * @return \Twilio\Rest\Wireless\V1\Sim\UsageRecordInstance 
+     * @return \Twilio\Rest\Wireless\V1\Sim\UsageRecordInstance
      */
-    public function __construct(Version $version, array $payload, $simSid) {
+    public function __construct(Version $version, array $payload, $simSid)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -48,12 +50,13 @@ class UsageRecordInstance extends InstanceResource {
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -68,10 +71,11 @@ class UsageRecordInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         return '[Twilio.Wireless.V1.UsageRecordInstance]';
     }
 }

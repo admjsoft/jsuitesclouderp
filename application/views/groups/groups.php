@@ -38,20 +38,20 @@
                     </thead>
                     <tbody>
                     <?php $i = 1;
-                    foreach ($group as $row) {
-                        $cid = $row['id'];
-                        $title = $row['title'];
-                        $total = $row['pc'];
+                foreach ($group as $row) {
+                    $cid = $row['id'];
+                    $title = $row['title'];
+                    $total = $row['pc'];
 
-                        echo "<tr>
+                    echo "<tr>
                     <td>$i</td>
                     <td>$title</td>
                     <td>$total</td>
                     
                     <td><a href='" . base_url("clientgroup/groupview?id=$cid") . "' class='btn btn-success btn-xs'><i class='fa fa-eye'></i>  " . $this->lang->line('View') . "</a>&nbsp;<a href='" . base_url("clientgroup/editgroup?id=$cid") . "' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> " . $this->lang->line('Edit') . "</a>&nbsp;<a href='#' data-object-id='" . $cid . "'  class='btn btn-info btn-xs discount-object' title='Apply Discount'><i class='fa fa-bolt'></i> " . $this->lang->line('Discount') . "</a> <a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='fa fa-trash'></i></a></td></tr>";
-                        $i++;
-                    }
-                    ?>
+                    $i++;
+                }
+                ?>
                     </tbody>
                     <tfoot>
                     <tr>

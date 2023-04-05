@@ -128,6 +128,4 @@ class OpenIdAddress extends PayPalModel
     {
         return $this->country;
     }
-
-
 }

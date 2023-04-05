@@ -1,4 +1,5 @@
 <?php
+
 include_once("xlsxwriter.class.php");
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
@@ -17,11 +18,10 @@ $rows = array(
 );
 $writer = new XLSXWriter();
 $writer->setAuthor('Some Author');
-foreach ($rows as $row)
+foreach ($rows as $row) {
     $writer->writeSheetRow('Sheet1', $row);
+}
 $writer->writeToStdOut();
 //$writer->writeToFile('example.xlsx');
 //echo $writer->writeToString();
 exit(0);
-
-

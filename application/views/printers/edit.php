@@ -64,17 +64,19 @@
                     <div class="col-sm-6">
                         <select name="lid" class="form-control">
                             <option value="<?php echo $printer['val4'] ?>">- <?php $loc = location($printer['val4']);
-                                echo $loc['cname']; ?>-
+                               echo $loc['cname']; ?>-
                             </option>
                             <?php
-                            if (!$this->aauth->get_user()->loc) echo "<option value='0'>" . $this->lang->line('Default') . "</option>";
+                            if (!$this->aauth->get_user()->loc) {
+                                echo "<option value='0'>" . $this->lang->line('Default') . "</option>";
+                            }
                             foreach ($locations as $row) {
                                 $cid = $row['id'];
                                 $acn = $row['cname'];
                                 $holder = $row['address'];
                                 echo "<option value='$cid'>$acn - $holder</option>";
                             }
-                            ?>
+                               ?>
                         </select>
 
 
@@ -87,7 +89,9 @@
 
                     <div class="col-sm-6">
                         <select name="pmode" class="form-control">
-                            <?php if ($printer['other']) echo "<option value='1' selected>--Advanced--</option>"; ?>
+                            <?php if ($printer['other']) {
+                                echo "<option value='1' selected>--Advanced--</option>";
+                            } ?>
                             <option value='0'>Basic</option>
                             <option value='1'>Advanced</option>
                         </select>

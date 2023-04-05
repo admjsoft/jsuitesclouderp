@@ -5,11 +5,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Transactions_model extends CI_Model
 {
-    var $table = 'gtg_transactions';
-    var $column_order = array('date', 'acid', 'debit', 'credit', 'payer', 'method');
-    var $column_search = array('id', 'account', 'payer');
-    var $order = array('id' => 'desc');
-    var $opt = '';
+    public $table = 'gtg_transactions';
+    public $column_order = array('date', 'acid', 'debit', 'credit', 'payer', 'method');
+    public $column_search = array('id', 'account', 'payer');
+    public $order = array('id' => 'desc');
+    public $opt = '';
 
     private function _get_datatables_query()
     {
@@ -29,45 +29,43 @@ class Transactions_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->column_search as $item) // loop column
-        {
-            if ($this->input->post('search')['value']) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
+        foreach ($this->column_search as $item) { // loop column
+            if ($this->input->post('search')['value']) { // if datatable send POST for search
+                
+                if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $this->input->post('search')['value']);
                 } else {
                     $this->db->or_like($item, $this->input->post('search')['value']);
                 }
 
-                if (count($this->column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
 
-        if (isset($_POST['order'])) // here order processing
-        {
+        if (isset($_POST['order'])) { // here order processing
             $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function get_datatables($opt = 'all')
+    public function get_datatables($opt = 'all')
     {
         $this->opt = $opt;
         $this->_get_datatables_query();
-        if ($_POST['length'] != -1)
+        if ($_POST['length'] != -1) {
             $this->db->limit($_POST['length'], $_POST['start']);
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function count_filtered()
+    public function count_filtered()
     {
         $this->db->from('gtg_transactions');
         switch ($this->opt) {
@@ -118,7 +116,9 @@ class Transactions_model extends CI_Model
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('loc', 0);
@@ -138,16 +138,16 @@ class Transactions_model extends CI_Model
 
     public function addtrans($payer_id, $payer_name, $pay_acc, $date, $debit, $credit, $pay_type, $pay_cat, $paymethod, $note, $eid, $loc = 0, $ty = 0)
     {
-
         if ($pay_acc > 0) {
-
             $this->db->select('holder');
             $this->db->from('gtg_accounts');
             $this->db->where('id', $pay_acc);
             if ($this->aauth->get_user()->loc) {
                 $this->db->group_start();
                 $this->db->where('loc', $this->aauth->get_user()->loc);
-                if (BDATA) $this->db->or_where('loc', 0);
+                if (BDATA) {
+                    $this->db->or_where('loc', 0);
+                }
                 $this->db->group_end();
             } elseif (!BDATA) {
                 $this->db->where('loc', 0);
@@ -173,7 +173,7 @@ class Transactions_model extends CI_Model
                     'loc' => $loc
                 );
                 $amount = $credit - $debit;
-                $this->db->set('lastbal', "lastbal+$amount", FALSE);
+                $this->db->set('lastbal', "lastbal+$amount", false);
                 $this->db->where('id', $pay_acc);
                 $this->db->update('gtg_accounts');
 
@@ -184,16 +184,16 @@ class Transactions_model extends CI_Model
 
     public function addtransfer($pay_acc, $pay_acc2, $amount, $eid, $loc = 0)
     {
-
         if ($pay_acc > 0) {
-
             $this->db->select('holder');
             $this->db->from('gtg_accounts');
             $this->db->where('id', $pay_acc);
             if ($this->aauth->get_user()->loc) {
                 $this->db->group_start();
                 $this->db->where('loc', $this->aauth->get_user()->loc);
-                if (BDATA) $this->db->or_where('loc', 0);
+                if (BDATA) {
+                    $this->db->or_where('loc', 0);
+                }
                 $this->db->group_end();
             } elseif (!BDATA) {
                 $this->db->where('loc', 0);
@@ -206,7 +206,9 @@ class Transactions_model extends CI_Model
             if ($this->aauth->get_user()->loc) {
                 $this->db->group_start();
                 $this->db->where('loc', $this->aauth->get_user()->loc);
-                if (BDATA) $this->db->or_where('loc', 0);
+                if (BDATA) {
+                    $this->db->or_where('loc', 0);
+                }
                 $this->db->group_end();
             } elseif (!BDATA) {
                 $this->db->where('loc', 0);
@@ -234,7 +236,7 @@ class Transactions_model extends CI_Model
                 $this->db->insert('gtg_transactions', $data);
 
 
-                $this->db->set('lastbal', "lastbal+$amount", FALSE);
+                $this->db->set('lastbal', "lastbal+$amount", false);
                 $this->db->where('id', $pay_acc2);
                 $this->db->update('gtg_accounts');
                 $datec = date('Y-m-d');
@@ -256,7 +258,7 @@ class Transactions_model extends CI_Model
                     'loc' => $loc
                 );
 
-                $this->db->set('lastbal', "lastbal-$amount", FALSE);
+                $this->db->set('lastbal', "lastbal-$amount", false);
                 $this->db->where('id', $pay_acc);
                 $this->db->update('gtg_accounts');
 
@@ -273,7 +275,9 @@ class Transactions_model extends CI_Model
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('loc', 0);
@@ -283,12 +287,14 @@ class Transactions_model extends CI_Model
         $trans = $query->row_array();
 
         $amt = $trans['credit'] - $trans['debit'];
-        $this->db->set('lastbal', "lastbal-$amt", FALSE);
+        $this->db->set('lastbal', "lastbal-$amt", false);
         $this->db->where('id', $trans['acid']);
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('loc', 0);
@@ -297,14 +303,14 @@ class Transactions_model extends CI_Model
 
         if ($trans['tid'] > 0 && $trans['ext'] == 0) {
             $crd = $trans['credit'];
-            $this->db->set('pamnt', "pamnt-$crd", FALSE);
+            $this->db->set('pamnt', "pamnt-$crd", false);
             $this->db->set('status', "partial");
             $this->db->where('id', $trans['tid']);
             $this->db->update('gtg_invoices');
         }
         if ($trans['tid'] > 0 && $trans['ext'] == 1) {
             $crd = $trans['debit'];
-            $this->db->set('pamnt', "pamnt-$crd", FALSE);
+            $this->db->set('pamnt', "pamnt-$crd", false);
             $this->db->set('status', "partial");
             $this->db->where('id', $trans['tid']);
             $this->db->update('gtg_purchase');
@@ -322,7 +328,6 @@ class Transactions_model extends CI_Model
 
     public function view($id)
     {
-
         $this->db->select('*');
         $this->db->from('gtg_transactions');
         $this->db->where('id', $id);
@@ -330,7 +335,9 @@ class Transactions_model extends CI_Model
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('loc', 0);
@@ -341,7 +348,6 @@ class Transactions_model extends CI_Model
 
     public function cview($id, $ext = 0)
     {
-
         if ($ext == 1) {
             $this->db->select('*');
             $this->db->from('gtg_supplier');
@@ -349,7 +355,9 @@ class Transactions_model extends CI_Model
             if ($this->aauth->get_user()->loc) {
                 $this->db->group_start();
                 $this->db->where('loc', $this->aauth->get_user()->loc);
-                if (BDATA) $this->db->or_where('loc', 0);
+                if (BDATA) {
+                    $this->db->or_where('loc', 0);
+                }
                 $this->db->group_end();
             } elseif (!BDATA) {
                 $this->db->where('loc', 0);
@@ -364,7 +372,9 @@ class Transactions_model extends CI_Model
             if ($this->aauth->get_user()->loc) {
                 $this->db->group_start();
                 $this->db->where('loc', $this->aauth->get_user()->loc);
-                if (BDATA) $this->db->or_where('loc', 0);
+                if (BDATA) {
+                    $this->db->or_where('loc', 0);
+                }
                 $this->db->group_end();
             } elseif (!BDATA) {
                 $this->db->where('loc', 0);
@@ -378,7 +388,9 @@ class Transactions_model extends CI_Model
             if ($this->aauth->get_user()->loc) {
                 $this->db->group_start();
                 $this->db->where('loc', $this->aauth->get_user()->loc);
-                if (BDATA) $this->db->or_where('loc', 0);
+                if (BDATA) {
+                    $this->db->or_where('loc', 0);
+                }
                 $this->db->group_end();
             } elseif (!BDATA) {
                 $this->db->where('loc', 0);
@@ -390,7 +402,6 @@ class Transactions_model extends CI_Model
 
     public function cat_details($id)
     {
-
         $this->db->select('*');
         $this->db->from('gtg_trans_cat');
         $this->db->where('id', $id);
@@ -399,7 +410,6 @@ class Transactions_model extends CI_Model
     }
     public function cat_details_name($id)
     {
-
         $this->db->select('*');
         $this->db->from('gtg_trans_cat');
         $this->db->where('name', $id);
@@ -409,7 +419,6 @@ class Transactions_model extends CI_Model
 
     public function cat_update($id, $cat_name)
     {
-
         $data = array(
             'name' => $cat_name
 
@@ -434,7 +443,9 @@ class Transactions_model extends CI_Model
         if ($this->aauth->get_user()->loc) {
             $this->db->group_start();
             $this->db->where('loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $this->db->where('loc', 0);

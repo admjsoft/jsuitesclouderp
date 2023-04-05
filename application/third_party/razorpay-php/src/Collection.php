@@ -10,8 +10,7 @@ class Collection extends Entity implements Countable
     {
         $count = 0;
 
-        if (isset($this->attributes['count']))
-        {
+        if (isset($this->attributes['count'])) {
             return $this->attributes['count'];
         }
 

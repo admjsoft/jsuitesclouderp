@@ -9,7 +9,7 @@
     } else {
         echo "<title>JE POS</title >";
     }
-    ?>
+?>
     <link rel="apple-touch-icon" href="<?= assets_url() ?>app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="<?= assets_url() ?>app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i"
@@ -42,7 +42,9 @@
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="<?= assets_url() ?>assets/css/style.css<?= APPVER ?>">
-    <?php if(LTR=='rtl') echo '<link rel="stylesheet" type="text/css" href="'.assets_url().'assets/css/style-rtl.css'.APPVER.'">'; ?>
+    <?php if (LTR=='rtl') {
+        echo '<link rel="stylesheet" type="text/css" href="'.assets_url().'assets/css/style-rtl.css'.APPVER.'">';
+    } ?>
     <!-- END Custom CSS-->
     <script src="<?= assets_url() ?>app-assets/vendors/js/vendors.min.js"></script>
     <script type="text/javascript" src="<?= assets_url() ?>app-assets/vendors/js/ui/jquery.sticky.js"></script>
@@ -63,7 +65,7 @@
 <?php
 $id = $this->aauth->get_user()->lang;
 $this->lang->load($id, $id);
-$this->lang->load('part',$id);
+$this->lang->load('part', $id);
 if (MENU) {
     include_once('header-va.php');
 } else {

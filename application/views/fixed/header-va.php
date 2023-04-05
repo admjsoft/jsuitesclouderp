@@ -122,7 +122,7 @@ $('.nav-menu-main').removeClass('is-active');
 
                             <li class="dropdown-menu-footer"><span class="dropdown-item text-muted text-center blue"
                                 > <?php $loc = location($this->aauth->get_user()->loc);
-                                    echo $loc['cname']; ?></span>
+      echo $loc['cname']; ?></span>
                             </li>
 
                         </ul>
@@ -575,9 +575,8 @@ $('.nav-menu-main').removeClass('is-active');
                             <li class="scrollable-container media-list">
                                 <?php $list_pm = $this->aauth->list_pms(6, 0, $this->aauth->get_user()->id, false);
 
-                                foreach ($list_pm as $row) {
-
-                                    echo '<a href="' . base_url('messages/view?id=' . $row->pid) . '">
+      foreach ($list_pm as $row) {
+          echo '<a href="' . base_url('messages/view?id=' . $row->pid) . '">
                       <div class="media">
                         <div class="media-left"><span class="avatar avatar-sm  rounded-circle"><img src="' . base_url('userfiles/employee/' . $row->picture) . '" alt="avatar"><i></i></span></div>
                         <div class="media-body">
@@ -586,7 +585,7 @@ $('.nav-menu-main').removeClass('is-active');
                             <time class="media-meta text-muted" datetime="' . $row->{'date_sent'} . '">' . $row->{'date_sent'} . '</time></small>
                         </div>
                       </div></a>';
-                                } ?>    </li>
+      } ?>    </li>
                             <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center"
                                                                 href="<?php echo base_url('messages') ?>"><?php echo $this->lang->line('Read all messages') ?></a>
                             </li>
@@ -595,26 +594,23 @@ $('.nav-menu-main').removeClass('is-active');
                     <?php if ($this->aauth->auto_attend()) { ?>
                         <li class="dropdown dropdown-d nav-item">
 
-
                             <?php if ($this->aauth->clock()) {
-
                                 echo ' <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon spinner icon-clock"></i><span class="badge badge-pill badge-default badge-success badge-default badge-up">' . $this->lang->line('On') . '</span></a>';
-
                             } else {
                                 echo ' <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon icon-clock"></i><span class="badge badge-pill badge-default badge-warning badge-default badge-up">' . $this->lang->line('Off') . '</span></a>';
                             }
-                            ?>
+                        ?>
 
                             <ul class="dropdown-menu dropdown-menu-right border-primary border-lighten-3 text-xs-center">
                                 <br><br>
                                 <?php echo '<span class="p-1 text-bold-300">' . $this->lang->line('Attendance') . ':</span>';
-                                if (!$this->aauth->clock()) {
-                                    echo '<a href="' . base_url() . '/dashboard/clock_in" class="btn btn-outline-success  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-on" aria-hidden="true"></span> ' . $this->lang->line('ClockIn') . ' <i
+                        if (!$this->aauth->clock()) {
+                            echo '<a href="' . base_url() . '/dashboard/clock_in" class="btn btn-outline-success  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-on" aria-hidden="true"></span> ' . $this->lang->line('ClockIn') . ' <i
                                     class="ficon icon-clock spinner"></i></a>';
-                                } else {
-                                    echo '<a href="' . base_url() . '/dashboard/clock_out" class="btn btn-outline-danger  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-off" aria-hidden="true"></span> ' . $this->lang->line('ClockOut') . ' </a>';
-                                }
-                                ?>
+                        } else {
+                            echo '<a href="' . base_url() . '/dashboard/clock_out" class="btn btn-outline-danger  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-off" aria-hidden="true"></span> ' . $this->lang->line('ClockOut') . ' </a>';
+                        }
+                        ?>
 
                                 <br><br>
                             </ul>
@@ -659,14 +655,14 @@ $('.nav-menu-main').removeClass('is-active');
                 <li class="p-1"><select class="form-control"
                                         onchange="javascript:location.href = baseurl+'settings/switch_location?id='+this.value;"> <?php
                         $loc = location($this->aauth->get_user()->loc);
-                        echo ' <option value="' . $loc['id'] . '"> *' . $loc['cname'] . '*</option>';
+                echo ' <option value="' . $loc['id'] . '"> *' . $loc['cname'] . '*</option>';
 
-                        $loc = locations();
-                        foreach ($loc as $row) {
-                            echo ' <option value="' . $row['id'] . '"> ' . $row['cname'] . '</option>';
-                        }
-                        echo ' <option value="0">Master/Default</option>';
-                        ?></select>
+                $loc = locations();
+                foreach ($loc as $row) {
+                    echo ' <option value="' . $row['id'] . '"> ' . $row['cname'] . '</option>';
+                }
+                echo ' <option value="0">Master/Default</option>';
+                ?></select>
                 </li> <?php } ?>
                 <li class="nav-item "><a href="<?= base_url(); ?>dashboard/"><i
                                 class="icon-speedometer"></i><span><?= $this->lang->line('Dashboard') ?></span></a>
@@ -828,25 +824,25 @@ $('.nav-menu-main').removeClass('is-active');
                 } ?>"><a href="#"><i
                                 class="icon-diamond"></i> <span><?php echo $this->lang->line('Jobsheet') ?>Jobsheet</span></span></a>
                     <ul class="menu-content">
-                        <?php if($this->aauth->premission(15)){ ?>
+                        <?php if ($this->aauth->premission(15)) { ?>
                         <li class="menu-item"><a href="#"><i
-                                        class="fa fa-ticket"></i> <?php //echo $this->lang->line('Clients') ?>Task Manager</a>
+                                        class="fa fa-ticket"></i> <?php //echo $this->lang->line('Clients')?>Task Manager</a>
                             <ul class="menu-content">
                                 <li class="menu-item"><a
-                                            href="<?php echo base_url(); ?>jobsheets/create"><?php //echo $this->lang->line('New Client') ?>Create Task</a>
+                                            href="<?php echo base_url(); ?>jobsheets/create"><?php //echo $this->lang->line('New Client')?>Create Task</a>
                                 </li>
                                 <li class="menu-item"><a
-                                            href="<?php echo base_url(); ?>jobsheets"><?php //= $this->lang->line('Manage Clients'); ?>View Task</a>
+                                            href="<?php echo base_url(); ?>jobsheets"><?php //= $this->lang->line('Manage Clients');?>View Task</a>
                                 </li>
                             </ul>
                         </li>
                         <?php } ?>
-                        <?php if($this->aauth->premission(16)){ ?>
+                        <?php if ($this->aauth->premission(16)) { ?>
                         <li class="menu-item"><a href="#"><i
-                                        class="fa fa-ticket"></i> <?php //echo $this->lang->line('Clients') ?>My Task</a>
+                                        class="fa fa-ticket"></i> <?php //echo $this->lang->line('Clients')?>My Task</a>
                             <ul class="menu-content">
                                 <li class="menu-item"><a
-                                            href="<?php echo base_url(); ?>jobsheets/myjobs"><?php //echo $this->lang->line('New Client') ?>Task List</a>
+                                            href="<?php echo base_url(); ?>jobsheets/myjobs"><?php //echo $this->lang->line('New Client')?>Task List</a>
                                 </li>
                             </ul>
                         </li>
@@ -1186,7 +1182,14 @@ $('.nav-menu-main').removeClass('is-active');
                                     class="icon-notebook"></i> <?php echo $this->lang->line('Payroll'); ?></a>
                     </li>
                     <?php } ?>
-
+                    <li class="menu-item"><a href="#"><i
+                                    class="icon-wallet"></i> <?php echo $this->lang->line('Payroll') ?> Module</a>
+                        <ul class="menu-content">
+                            <li class="menu-item"><a
+                                        href="<?php echo base_url(); ?>payroll/payslip_form">Payslip</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 </li>
             <?php }

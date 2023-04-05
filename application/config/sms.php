@@ -1,6 +1,6 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 //$config['enable_sms'] = TRUE; No applicable - for future development purpose
 //$config['enable_sms'] = TRUE;

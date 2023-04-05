@@ -14,14 +14,12 @@ class Units extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if ($this->aauth->get_user()->roleid < 4) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
     }
 
     public function index()
     {
-
         $head['title'] = "Measurement Units";
         $data['units'] = $this->units->units_list();
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -39,8 +37,6 @@ class Units extends CI_Controller
 
             $this->units->create($name, $code);
         } else {
-
-
             $head['title'] = "Add Unit";
             $head['usernm'] = $this->aauth->get_user()->username;
             $this->load->view('fixed/header', $head);
@@ -57,8 +53,6 @@ class Units extends CI_Controller
             $code = $this->input->post('code', true);
             $this->units->edit($id, $name, $code);
         } else {
-
-
             $head['title'] = "Edit Unit";
             $head['usernm'] = $this->aauth->get_user()->username;
             $data = $this->units->view($this->input->get('id'));
@@ -73,7 +67,6 @@ class Units extends CI_Controller
     {
         $id = $this->input->post('deleteid');
         if ($id) {
-
             $this->db->delete('gtg_units', array('id' => $id));
 
 
@@ -86,7 +79,6 @@ class Units extends CI_Controller
     //variations
     public function variations()
     {
-
         $head['title'] = "Variations Units";
         $data['units'] = $this->units->variations_list();
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -103,8 +95,6 @@ class Units extends CI_Controller
 
             $this->units->create_va($name, 1);
         } else {
-
-
             $head['title'] = "Add variation";
             $head['usernm'] = $this->aauth->get_user()->username;
             $this->load->view('fixed/header', $head);
@@ -121,8 +111,6 @@ class Units extends CI_Controller
 
             $this->units->edit_va($id, $name);
         } else {
-
-
             $head['title'] = "Edit variation";
             $head['usernm'] = $this->aauth->get_user()->username;
             $data = $this->units->view($this->input->get('id'));
@@ -137,7 +125,6 @@ class Units extends CI_Controller
     {
         $id = $this->input->post('deleteid');
         if ($id) {
-
             $this->db->delete('gtg_units', array('id' => $id));
 
 
@@ -150,7 +137,6 @@ class Units extends CI_Controller
     //varriables
     public function variables()
     {
-
         $head['title'] = "Variations variables";
         $data['units'] = $this->units->variables_list();
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -168,8 +154,6 @@ class Units extends CI_Controller
 
             $this->units->create_vb($name, $var_id);
         } else {
-
-
             $head['title'] = "Add variation variable";
             $head['usernm'] = $this->aauth->get_user()->username;
             $data['variations'] = $this->units->variations_list();
@@ -188,8 +172,6 @@ class Units extends CI_Controller
 
             $this->units->edit_vb($id, $name, $var_id);
         } else {
-
-
             $head['title'] = "Edit variation variable";
             $head['usernm'] = $this->aauth->get_user()->username;
             $data = $this->units->view($this->input->get('id'));
@@ -204,7 +186,6 @@ class Units extends CI_Controller
     {
         $id = $this->input->post('deleteid');
         if ($id) {
-
             $this->db->delete('gtg_units', array('id' => $id));
 
 

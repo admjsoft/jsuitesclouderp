@@ -19,8 +19,10 @@
             </barcode><br><br>
 
             <?php
-            if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
-            ?>
+            if ($lab['expiry']) {
+                echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+            }
+        ?>
             <h3> &nbsp; &nbsp;
                 &nbsp; <?= amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) ?></h3>
         </td>
@@ -34,8 +36,10 @@
             </barcode><br><br>
 
             <?php
-            if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
-            ?>
+        if ($lab['expiry']) {
+            echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+        }
+        ?>
             <h3> &nbsp; &nbsp;
                 &nbsp; <?= amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) ?></h3>
         </td>
@@ -49,8 +53,10 @@
             </barcode><br><br>
 
             <?php
-            if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
-            ?>
+        if ($lab['expiry']) {
+            echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+        }
+        ?>
             <h3> &nbsp; &nbsp;
                 &nbsp; <?= amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) ?></h3>
         </td>
@@ -64,8 +70,10 @@
             </barcode><br><br>
 
             <?php
-            if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
-            ?>
+        if ($lab['expiry']) {
+            echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+        }
+        ?>
             <h3> &nbsp; &nbsp;
                 &nbsp; <?= amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) ?></h3>
         </td>
@@ -79,8 +87,10 @@
             </barcode><br><br>
 
             <?php
-            if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
-            ?>
+        if ($lab['expiry']) {
+            echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+        }
+        ?>
             <h3> &nbsp; &nbsp;
                 &nbsp; <?= amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) ?></h3>
         </td>
@@ -94,8 +104,10 @@
             </barcode><br><br>
 
             <?php
-            if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
-            ?>
+        if ($lab['expiry']) {
+            echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+        }
+        ?>
             <h3> &nbsp; &nbsp;
                 &nbsp; <?= amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) ?></h3>
         </td>
@@ -109,8 +121,10 @@
             </barcode><br><br>
 
             <?php
-            if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
-            ?>
+        if ($lab['expiry']) {
+            echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+        }
+        ?>
             <h3> &nbsp; &nbsp;
                 &nbsp; <?= amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) ?></h3>
         </td>
@@ -124,8 +138,10 @@
             </barcode><br><br>
 
             <?php
-            if ($lab['expiry']) echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
-            ?>
+        if ($lab['expiry']) {
+            echo $this->lang->line('Expiry Date') . ' ' . dateformat($lab['expiry']) . '<br><br>';
+        }
+        ?>
             <h3> &nbsp; &nbsp;
                 &nbsp; <?= amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) ?></h3>
         </td>

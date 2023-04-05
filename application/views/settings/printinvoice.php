@@ -19,13 +19,12 @@
                 <div class="col-sm-6"><select name="pstyle" class="form-control">
 
                         <?php switch (INVV) {
-                            case '1' :
+                            case '1':
                                 echo '<option value="1">** Standard Version **</option>';
                                 break;
-                            case '2' :
+                            case '2':
                                 echo '<option value="2">** Compact Version**</option>';
                                 break;
-
                         } ?>
                         <option value="1">Standard Version</option>
                         <option value="2">Compact Version</option>

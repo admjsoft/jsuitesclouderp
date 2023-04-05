@@ -191,8 +191,8 @@
                                 </thead>
                                 <tbody>
                                 <?php $i = 0;
-                                foreach ($products as $row) {
-                                    echo '<tr >
+                                            foreach ($products as $row) {
+                                                echo '<tr >
                         <td><input type="text" class="form-control" name="product_name[]" placeholder="Enter Product name or Code"  value="' . $row['product'] . '">
                         </td>
                         <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-' . $i . '"
@@ -219,8 +219,8 @@
                         <input type="hidden" class="pdIn" name="pid[]" id="pid-' . $i . '" value="' . $row['pid'] . '">
                          <input type="hidden" name="unit[]" id="unit-' . $i . '" value="' . $row['unit'] . '">   <input type="hidden" name="hsn[]" id="unit-' . $i . '" value="' . $row['code'] . '">
                     </tr><tr class="desc_p"><td colspan="8"><textarea id="dpid-' . $i . '" class="form-control" name="product_description[]" placeholder="Enter Product description" autocomplete="off">' . $row['product_des'] . '</textarea><br></td></tr>';
-                                    $i++;
-                                } ?>
+                                                $i++;
+                                            } ?>
                                 <tr class="last-item-row sub_c">
                                     <td class="add-row">
                                         <button type="button" class="btn btn-success" id="addproduct">
@@ -264,24 +264,23 @@
                                                                         value="<?php if ($invoice['ship_tax_type'] == 'excl') {
                                                                             $invoice['shipping'] = $invoice['shipping'] - $invoice['ship_tax'];
                                                                         }
-                                                                        echo amountExchange_s($invoice['shipping'], $invoice['multi'], $this->aauth->get_user()->loc); ?>">( <?= $this->lang->line('Tax') ?> <?= $this->config->item('currency'); ?>
+                                                                                    echo amountExchange_s($invoice['shipping'], $invoice['multi'], $this->aauth->get_user()->loc); ?>">( <?= $this->lang->line('Tax') ?> <?= $this->config->item('currency'); ?>
                                         <span id="ship_final"><?= edit_amountExchange_s($invoice['ship_tax'], $invoice['multi'], $this->aauth->get_user()->loc) ?> </span>
                                         )
                                     </td>
                                 </tr>
 
                                 <tr class="sub_c" style="display: table-row;">
-                                    <td colspan="2"><?php if ($exchange['active'] == 1){
+                                    <td colspan="2"><?php if ($exchange['active'] == 1) {
                                         echo $this->lang->line('Payment Currency client') . ' <small>' . $this->lang->line('based on live market') ?></small>
                                         <select name="mcurrency"
                                                 class="selectpicker form-control">
 
                                             <?php
                                             echo '<option value="' . $invoice['multi'] . '">Do not change</option><option value="0">None</option>';
-                                            foreach ($currency as $row) {
-
-                                                echo '<option value="' . $row['id'] . '">' . $row['symbol'] . ' (' . $row['code'] . ')</option>';
-                                            } ?>
+                                        foreach ($currency as $row) {
+                                            echo '<option value="' . $row['id'] . '">' . $row['symbol'] . ' (' . $row['code'] . ')</option>';
+                                        } ?>
 
                                         </select><?php } ?></td>
                                     <td colspan="4" align="right"><strong><?php echo $this->lang->line('Grand Total') ?>
@@ -355,9 +354,13 @@
                         <input type="hidden" value="<?php
                         $tt = 0;
 
-                        if($invoice['shipping']==0)  $invoice['shipping']=1;
-                        if ($invoice['ship_tax_type'] == 'incl') $tt = @number_format(($invoice['shipping'] - $invoice['ship_tax']) / $invoice['shipping'], 2, '.', '');
-                        echo amountFormat_general(number_format((($invoice['ship_tax'] / $invoice['shipping']) * 100) + $tt, 3, '.', '')); ?>"
+                                            if ($invoice['shipping']==0) {
+                                                $invoice['shipping']=1;
+                                            }
+                                            if ($invoice['ship_tax_type'] == 'incl') {
+                                                $tt = @number_format(($invoice['shipping'] - $invoice['ship_tax']) / $invoice['shipping'], 2, '.', '');
+                                            }
+                                            echo amountFormat_general(number_format((($invoice['ship_tax'] / $invoice['shipping']) * 100) + $tt, 3, '.', '')); ?>"
                                name="shipRate" id="ship_rate">
                         <input type="hidden" value="<?= $invoice['ship_tax_type']; ?>" name="ship_taxtype"
                                id="ship_taxtype">

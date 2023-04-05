@@ -22,13 +22,12 @@
                 <div class="col-sm-6"><select name="debug" class="form-control">
 
                         <?php switch (ENVIRONMENT) {
-                            case 'production' :
+                            case 'production':
                                 echo '<option value="production">** Production Version ** - Recommended</option>';
                                 break;
-                            case 'development' :
+                            case 'development':
                                 echo '<option value="development">** Development Mode**</option>';
                                 break;
-
                         } ?>
                         <option value="production"> Production Version - Recommended</option>
                         <option value="development">Development Mode</option>
@@ -50,53 +49,53 @@
                 </div>
             </div> <?php
             $php_version_success = false;
-            $mysql_success = false;
-            $curl_success = false;
-            $gd_success = false;
-            $allow_url_fopen_success = false;
-            $timezone_success = true;
-            $mbstring = false;
-            $php_version_required = "7.4";
-            $current_php_version = PHP_VERSION;
+                        $mysql_success = false;
+                        $curl_success = false;
+                        $gd_success = false;
+                        $allow_url_fopen_success = false;
+                        $timezone_success = true;
+                        $mbstring = false;
+                        $php_version_required = "7.4";
+                        $current_php_version = PHP_VERSION;
 
-            //check required php version
-            if (version_compare($current_php_version, $php_version_required) >= 0) {
-                $php_version_success = true;
-            }
+                        //check required php version
+                        if (version_compare($current_php_version, $php_version_required) >= 0) {
+                            $php_version_success = true;
+                        }
 
-            //check mySql
-            if (function_exists("mysqli_connect")) {
-                $mysql_success = true;
-            }
+                        //check mySql
+                        if (function_exists("mysqli_connect")) {
+                            $mysql_success = true;
+                        }
 
-            //check curl
-            if (function_exists("curl_version")) {
-                $curl_success = true;
-            }
+                        //check curl
+                        if (function_exists("curl_version")) {
+                            $curl_success = true;
+                        }
 
-            //check gd
-            if (extension_loaded('gd') && function_exists('gd_info')) {
-                $gd_success = true;
-            }
+                        //check gd
+                        if (extension_loaded('gd') && function_exists('gd_info')) {
+                            $gd_success = true;
+                        }
 
 
-            //check allow_url_fopen
-            if (ini_get('allow_url_fopen')) {
-                $allow_url_fopen_success = true;
-            }
+                        //check allow_url_fopen
+                        if (ini_get('allow_url_fopen')) {
+                            $allow_url_fopen_success = true;
+                        }
 
-            //check allow_url_fopen
-            $timezone_settings = ini_get('date.timezone');
-            if ($timezone_settings) {
-                $timezone_success = true;
-            }
+                        //check allow_url_fopen
+                        $timezone_settings = ini_get('date.timezone');
+                        if ($timezone_settings) {
+                            $timezone_success = true;
+                        }
 
-            //check gd
-            if (extension_loaded('mbstring')) {
-                $mbstring = true;
-            }
+                        //check gd
+                        if (extension_loaded('mbstring')) {
+                            $mbstring = true;
+                        }
 
-            ?>
+                        ?>
             <p class="text-right"><a href="<?= base_url('settings/server') ?>" class="btn btn-blue"><i
                             class="ft-eye"></i>
                     <small>Server PHP Info</small>
@@ -156,7 +155,7 @@
                         <tr>
                             <td>MySQLi</td>
                             <td> <?php if ($mysql_success) {
-                                    $all_requirement_success = true; ?>
+                                $all_requirement_success = true; ?>
                                     On
                                 <?php } else {
                                     $all_requirement_success = false; ?>
@@ -177,7 +176,7 @@
                         <tr>
                             <td>GD</td>
                             <td> <?php if ($gd_success) {
-                                    $all_requirement_success = true; ?>
+                                $all_requirement_success = true; ?>
                                     On
                                 <?php } else { ?>
                                     Off
@@ -197,7 +196,7 @@
                         <tr>
                             <td>cURL</td>
                             <td> <?php if ($curl_success) {
-                                    $all_requirement_success = true; ?>
+                                $all_requirement_success = true; ?>
                                     On
                                 <?php } else {
                                     $all_requirement_success = false; ?>
@@ -240,10 +239,10 @@
                         <tr>
                             <td>Server timezone</td>
                             <td> <?php if ($timezone_success) {
-                                    echo $timezone_settings;
-                                } else {
-                                    echo "Null";
-                                } ?>
+                                echo $timezone_settings;
+                            } else {
+                                echo "Null";
+                            } ?>
                             </td>
                             <td>-</td>
                             <td class="text-center">

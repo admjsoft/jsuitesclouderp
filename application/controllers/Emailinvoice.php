@@ -15,14 +15,12 @@ class Emailinvoice extends CI_Controller
             redirect('/user/', 'refresh');
         }
         $this->load->library('parser');
-
     }
 
     //todo section
 
     public function template()
     {
-
         $id = $this->input->post('invoiceid');
         $ttype = $this->input->post('ttype');
         $itype = $this->input->post('itype');
@@ -46,7 +44,7 @@ class Emailinvoice extends CI_Controller
                 $validtoken = hash_hmac('ripemd160', 's' . $id, $this->config->item('encryption_key'));
                 $link = base_url('billing/stockreturn?id=' . $id . '&token=' . $validtoken);
                 break;
-            default :
+            default:
                 $this->load->model('invoices_model', 'invoices');
                 $invoice = $this->invoices->invoice_details($id);
                 $validtoken = hash_hmac('ripemd160', $id, $this->config->item('encryption_key'));
@@ -88,7 +86,7 @@ class Emailinvoice extends CI_Controller
             'Company' => $this->config->item('ctitle'),
             'BillNumber' => $invoice['tid']
         );
-        $subject = $this->parser->parse_string($template['key1'], $data, TRUE);
+        $subject = $this->parser->parse_string($template['key1'], $data, true);
 
 
         $data = array(
@@ -102,13 +100,9 @@ class Emailinvoice extends CI_Controller
             'DueDate' => dateformat($invoice['invoiceduedate']),
             'Amount' => amountExchange($invoice['total'], $invoice['multi'], $invoice['loc'])
         );
-        $message = $this->parser->parse_string($template['other'], $data, TRUE);
+        $message = $this->parser->parse_string($template['other'], $data, true);
 
 
         echo json_encode(array('subject' => $subject, 'message' => $message));
     }
-
-
 }
-
-

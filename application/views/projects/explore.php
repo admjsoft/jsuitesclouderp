@@ -82,17 +82,16 @@
                 foreach ($emp as $row) {
                     echo '<span class="avatar"><img src="' . base_url() . '/userfiles/employee/thumbnail/' . $row['picture'] . '" title="' . $row['name'] . '" alt="' . $row['name'] . '"></span> &nbsp; ';
                 }
-                ?>         <hr> <?php echo '<span class="p-1 text-bold-300">' . $this->lang->line('Clock') . ':</span>';
+                                ?>         <hr> <?php echo '<span class="p-1 text-bold-300">' . $this->lang->line('Clock') . ':</span>';
                                 if (!$clock['key3']) {
-
-                                      echo '<span class="badge badge-danger">' . $this->lang->line('Off') . '</span><a href="' . base_url() . '/projects/clock_in?id='.$project['id'].'" class="btn btn-outline-success  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-on" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('In') . ' <i
+                                    echo '<span class="badge badge-danger">' . $this->lang->line('Off') . '</span><a href="' . base_url() . '/projects/clock_in?id='.$project['id'].'" class="btn btn-outline-success  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-on" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('In') . ' <i
                                     class="ficon icon-clock "></i></a>';
                                 } else {
-                                           echo '<span class="badge badge-success">' . $this->lang->line('On') . '</span> <a href="' . base_url() . '/projects/clock_out?id='.$project['id'].'" class="btn btn-outline-danger  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-off" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('Out') . ' <i
+                                    echo '<span class="badge badge-success">' . $this->lang->line('On') . '</span> <a href="' . base_url() . '/projects/clock_out?id='.$project['id'].'" class="btn btn-outline-danger  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-off" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('Out') . ' <i
                                     class="ficon icon-clock spinner"></i></a>';
                                 }
                                 echo round(@$clock['key4'] / 3600, 2);
-                                 echo ' '.$this->lang->line('Hours') ;  ?></p> <hr>
+                                echo ' '.$this->lang->line('Hours') ;  ?></p> <hr>
             <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
             <div class="heading-elements">
                 <ul class="list-inline mb-0">
@@ -266,19 +265,19 @@
                                     <th scope="row">Communication</th>
                                     <td>
                                         <p><?php switch ($project['ptype']) {
-                                                case 0 :
-                                                    echo 'None';
-                                                    break;
-                                                case 1 :
-                                                    echo 'Emails to team';
-                                                    break;
+                                            case 0:
+                                                echo 'None';
+                                                break;
+                                            case 1:
+                                                echo 'Emails to team';
+                                                break;
 
-                                                case 2 :
-                                                    echo 'Emails to team &  customer';
-                                                    break;
-                                            }
+                                            case 2:
+                                                echo 'Emails to team &  customer';
+                                                break;
+                                        }
 
-                                            ?></p>
+                                ?></p>
 
                                     </td>
 
@@ -319,11 +318,9 @@
 
                         <ul class="timeline">
                             <?php $flag = true;
-                            $total = count($thread_list);
-                            foreach ($thread_list as $row) {
-
-
-                                ?>
+                                $total = count($thread_list);
+                                foreach ($thread_list as $row) {
+                                    ?>
                                 <li class="<?php if (!$flag) {
                                     echo 'timeline-inverted';
                                 } ?>">
@@ -343,8 +340,8 @@
                                     </div>
                                 </li>
                                 <?php $flag = !$flag;
-                                $total--;
-                            } ?>
+                                    $total--;
+                                } ?>
 
 
                         </ul>
@@ -362,11 +359,9 @@
 
                         <ul class="timeline">
                             <?php $flag = true;
-                            $total = count($milestones);
-                            foreach ($milestones as $row) {
-
-
-                                ?>
+                                $total = count($milestones);
+                                foreach ($milestones as $row) {
+                                    ?>
                                 <li data-block="sec" class="<?php if (!$flag) {
                                     echo 'timeline-inverted';
                                 } ?>">
@@ -382,14 +377,16 @@
                                         </div>
                                         <div class="timeline-body">
                                             <p><?php echo $row['exp'];
-                                                if ($row['task']) echo '</p><p><strong>[Task]</strong> ' . $row['task']; ?></p>
+                                    if ($row['task']) {
+                                        echo '</p><p><strong>[Task]</strong> ' . $row['task'];
+                                    } ?></p>
 
                                         </div>
                                     </div>
                                 </li>
                                 <?php $flag = !$flag;
-                                $total--;
-                            } ?>
+                                    $total--;
+                                } ?>
 
 
                         </ul>
@@ -412,10 +409,10 @@
                                 <div class="col-sm-10">
                                     <?php
 
-                                    echo '- ' . $row['value'] . '<br><br>';
+                                        echo '- ' . $row['value'] . '<br><br>';
 
 
-                                    ?>
+                            ?>
                                 </div>
                             </div>
                         <?php }
@@ -437,9 +434,9 @@
 
 
                                             echo '<a class="" href="' . base_url('userfiles/project/' . $row['value']) . '">' . $row['value'] . '</a> &nbsp; &nbsp; <a href="#" class=" danger delete-custom" data-did="1" data-object-id="' . $row['meta_data'] . '"><i class="fa fa-trash"></i></a> ';
-                                            echo '<br>';
+                                echo '<br>';
 
-                                            ?></div>
+                                ?></div>
                                     </div>
                                 </section>
                             <?php } ?>
@@ -554,18 +551,20 @@
                         </form>
                         <ul class="timeline">
                             <?php $flag = true;
-                            $total = count($comments_list);
-                            foreach ($comments_list as $row) {
-
-
-                                ?>
+                                $total = count($comments_list);
+                                foreach ($comments_list as $row) {
+                                    ?>
                                 <li class="<?php if (!$flag) {
                                     echo 'timeline-inverted';
                                 } ?>">
                                     <div class="timeline-badge info"><?php echo $total ?></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <h4 class="timeline-title"><?php if ($row['key3']) echo $row['customer'] . ' Reply <small>(Customer)</small>'; else echo $row['employee'] . ' Reply <small>(Employee)</small>'; ?></h4>
+                                            <h4 class="timeline-title"><?php if ($row['key3']) {
+                                                echo $row['customer'] . ' Reply <small>(Customer)</small>';
+                                            } else {
+                                                echo $row['employee'] . ' Reply <small>(Employee)</small>';
+                                            } ?></h4>
 
                                         </div>
                                         <div class="timeline-body">
@@ -574,8 +573,8 @@
                                     </div>
                                 </li>
                                 <?php $flag = !$flag;
-                                $total--;
-                            } ?>
+                                    $total--;
+                                } ?>
 
 
                         </ul>
@@ -592,11 +591,11 @@
                                 <tbody>
 
                                 <?php
-                                $f_hour=0;
-                                                foreach ($emp_time as $row) {
-           $thour=round(@$row['key4'] / 3600, 2);
-$f_hour+=$thour;
-                    echo '  <tr>
+                                    $f_hour=0;
+                                foreach ($emp_time as $row) {
+                                    $thour=round(@$row['key4'] / 3600, 2);
+                                    $f_hour+=$thour;
+                                    echo '  <tr>
                                     <th scope="row"><span class="avatar"><img src="' . base_url() . '/userfiles/employee/thumbnail/' . $row['picture'] . '" title="' . $row['name'] . '" alt="' . $row['name'] . '"></span> &nbsp; ' . $row['name'] . '</th>
                                     <td>
                                         <p>'.$thour .' '.$this->lang->line('Hours').'</p>
@@ -604,8 +603,8 @@ $f_hour+=$thour;
                                     </td>
 
                                 </tr>';
-                }
-                                                  echo '  <tr>
+                                }
+                                echo '  <tr>
                                     <th scope="row"><br> '.$this->lang->line('Total').'</th>
                                     <td>
                                         <p><br>'.$f_hour .' '.$this->lang->line('Hours').'</p>
@@ -613,7 +612,7 @@ $f_hour+=$thour;
                                     </td>
 
                                 </tr>';
-                                                ?>
+                                ?>
 
 
  </tbody> </table>

@@ -41,7 +41,7 @@
                                                 $holder = $row['holder'];
                                                 echo "<option value='$cid'>$acn - $holder</option>";
                                             }
-                                            ?>
+            ?>
 
                                         </select>
 
@@ -116,7 +116,7 @@
                                     $title = $row['name'];
                                     echo "<option value='$title'>$title</option>";
                                 }
-                                ?>
+            ?>
                             </select>
 
 
@@ -333,7 +333,7 @@
                                 $title = $row['name'];
                                 echo "<option value='$cid'>$title</option>";
                             }
-                            ?>
+            ?>
                                         </select>
 
 

@@ -45,10 +45,10 @@
                     <tbody>
                     <?php $i = 1;
 
-                    foreach ($history as $row) {
-                        $diff = $row['val1'] - $row['val2'];
-                        $diffp = $diff / $row['val2'] * 100;
-                        echo '<tr> <td>' . $i . '</td>
+                foreach ($history as $row) {
+                    $diff = $row['val1'] - $row['val2'];
+                    $diffp = $diff / $row['val2'] * 100;
+                    echo '<tr> <td>' . $i . '</td>
                   
                     <td>' . $row['val3'] . '</td>
                       <td>' . amountExchange($row['val1'], 0, $employee['loc']) . '</td>
@@ -57,9 +57,9 @@
                 
                  
                     </tr>';
-                        $i++;
-                    }
-                    ?>
+                    $i++;
+                }
+                ?>
                     </tbody>
                     <tfoot>
                     <tr>

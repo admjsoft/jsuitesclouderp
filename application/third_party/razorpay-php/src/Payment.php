@@ -38,7 +38,7 @@ class Payment extends Entity
      */
     public function refund($attributes = array())
     {
-        $refund = new Refund;
+        $refund = new Refund();
 
         $attributes = array_merge($attributes, array('payment_id' => $this->id));
 
@@ -64,7 +64,7 @@ class Payment extends Entity
 
     public function refunds()
     {
-        $refund = new Refund;
+        $refund = new Refund();
 
         $options = array('payment_id' => $this->id);
 

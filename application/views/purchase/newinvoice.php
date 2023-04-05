@@ -72,9 +72,9 @@
                                     <hr><?php echo $this->lang->line('Warehouse') ?> <select id="s_warehouses"
                                                                                              class="selectpicker form-control">
                                         <?php echo $this->common->default_warehouse();
-                                        echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
-                                            echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                                        } ?>
+                                            echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
+                                                echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                                            } ?>
 
                                     </select>
                                 </div>
@@ -274,7 +274,7 @@
                             </tr>
 
                             <tr class="sub_c" style="display: table-row;">
-                                <td colspan="2"><?php if ($exchange['active'] == 1){
+                                <td colspan="2"><?php if ($exchange['active'] == 1) {
                                     echo $this->lang->line('Payment Currency client') . ' <small>' . $this->lang->line('based on live market') ?></small>
                                     <select name="mcurrency"
                                             class="selectpicker form-control">
@@ -296,8 +296,8 @@
                             <tr class="sub_c" style="display: table-row;">
                                 <td colspan="2"><?php echo $this->lang->line('Payment Terms') ?> <select name="pterms"
                                                                                                          class="selectpicker form-control"><?php foreach ($terms as $row) {
-                                            echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                                        } ?>
+                                                                                                             echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                                                                                                         } ?>
 
                                     </select></td>
                                 <td colspan="2">

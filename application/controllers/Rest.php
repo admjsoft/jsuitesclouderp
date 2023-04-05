@@ -13,8 +13,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 
 class Rest extends REST_Controller
 {
-
-    function __construct()
+    public function __construct()
     {
         // Construct the parent class
         parent::__construct();
@@ -29,7 +28,7 @@ class Rest extends REST_Controller
     public function clients_get()
     {
         $id = $this->get('id');
-        if ($id === NULL) {
+        if ($id === null) {
             $list = $this->restservice->customers();
             if ($list) {
                 // Set the response and exit
@@ -37,7 +36,7 @@ class Rest extends REST_Controller
             } else {
                 // Set the response and exit
                 $this->response([
-                    'status' => FALSE,
+                    'status' => false,
                     'message' => 'No Client were found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             }
@@ -47,7 +46,7 @@ class Rest extends REST_Controller
         // Validate the id.
         if ($id <= 0) {
             // Invalid id, set the response and exit.
-            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+            $this->response(null, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
         // Get the user from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
@@ -56,7 +55,7 @@ class Rest extends REST_Controller
             $this->set_response($list[0], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         } else {
             $this->set_response([
-                'status' => FALSE,
+                'status' => false,
                 'message' => 'Client could not be found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
@@ -65,7 +64,7 @@ class Rest extends REST_Controller
     public function clients_post()
     {
         $id = $this->post('id');
-        if ($id === NULL) {
+        if ($id === null) {
             $list = $this->restservice->customers();
             // Check if the users data store contains users (in case the database result returns NULL)
             if ($list) {
@@ -74,7 +73,7 @@ class Rest extends REST_Controller
             } else {
                 // Set the response and exit
                 $this->response([
-                    'status' => FALSE,
+                    'status' => false,
                     'message' => 'No Client were found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             }
@@ -84,7 +83,7 @@ class Rest extends REST_Controller
         // Validate the id.
         if ($id <= 0) {
             // Invalid id, set the response and exit.
-            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+            $this->response(null, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
         // Get the user from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
@@ -93,7 +92,7 @@ class Rest extends REST_Controller
             $this->set_response($list[0], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         } else {
             $this->set_response([
-                'status' => FALSE,
+                'status' => false,
                 'message' => 'Client could not be found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
@@ -106,7 +105,7 @@ class Rest extends REST_Controller
         // Validate the id.
         if ($id <= 0) {
             // Set the response and exit
-            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+            $this->response(null, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
 
         if ($this->restservice->delete_customers($id)) {
@@ -122,7 +121,7 @@ class Rest extends REST_Controller
     public function products_post()
     {
         $id = $this->post('id');
-        if ($id === NULL) {
+        if ($id === null) {
             $list = $this->restservice->products();
             // Check if the users data store contains users (in case the database result returns NULL)
             if ($list) {
@@ -131,7 +130,7 @@ class Rest extends REST_Controller
             } else {
                 // Set the response and exit
                 $this->response([
-                    'status' => FALSE,
+                    'status' => false,
                     'message' => 'No Products were found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             }
@@ -141,7 +140,7 @@ class Rest extends REST_Controller
         // Validate the id.
         if ($id <= 0) {
             // Invalid id, set the response and exit.
-            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+            $this->response(null, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
         // Get the user from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
@@ -150,7 +149,7 @@ class Rest extends REST_Controller
             $this->set_response($list[0], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         } else {
             $this->set_response([
-                'status' => FALSE,
+                'status' => false,
                 'message' => 'Products could not be found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
@@ -160,7 +159,7 @@ class Rest extends REST_Controller
     {
         $id = $this->get('id');
 
-        if ($id === NULL) {
+        if ($id === null) {
             $list = $this->restservice->invoice($id);
             // Check if the users data store contains users (in case the database result returns NULL)
             if ($list) {
@@ -169,7 +168,7 @@ class Rest extends REST_Controller
             } else {
                 // Set the response and exit
                 $this->response([
-                    'status' => FALSE,
+                    'status' => false,
                     'message' => 'No Products were found'
                 ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
             }
@@ -179,7 +178,7 @@ class Rest extends REST_Controller
         // Validate the id.
         if ($id <= 0) {
             // Invalid id, set the response and exit.
-            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+            $this->response(null, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
         // Get the user from the array, using the id as key for retrieval.
         // Usually a model is to be used for this.
@@ -188,7 +187,7 @@ class Rest extends REST_Controller
             $this->set_response($list[0], REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
         } else {
             $this->set_response([
-                'status' => FALSE,
+                'status' => false,
                 'message' => 'Invoice could not be found'
             ], REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
@@ -212,7 +211,7 @@ class Rest extends REST_Controller
 
         if (!$run) {
             $this->set_response([
-                'status' => FALSE,
+                'status' => false,
                 'message' => 'Invoice could not be found'
             ], REST_Controller::HTTP_NOT_FOUND);
         }
@@ -227,8 +226,12 @@ class Rest extends REST_Controller
         $data['id'] = $tid;
         $data['title'] = "Invoice $tid";
         $data['invoice'] = $this->invocies->invoice_details($tid);
-        if ($data['invoice']) $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        if ($data['invoice']) {
+            $data['products'] = $this->invocies->invoice_products($tid);
+        }
+        if ($data['invoice']) {
+            $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        }
 
 
         $this->load->model('billing_model', 'billing');
@@ -275,7 +278,7 @@ class Rest extends REST_Controller
         $pdf->Output('userfiles/pos_temp/' . $file_name . '.pdf', 'F');
         if (!extension_loaded('imagick')) {
             $this->set_response([
-                'status' => FALSE,
+                'status' => false,
                 'message' => 'Imagick extension not installed!'
             ], REST_Controller::HTTP_OK);
         }

@@ -15,14 +15,16 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-abstract class SyncListOptions {
+abstract class SyncListOptions
+{
     /**
      * @param string $uniqueName Human-readable name for this list
      * @param integer $ttl Time-to-live of this List in seconds, defaults to no
      *                     expiration.
      * @return CreateSyncListOptions Options builder
      */
-    public static function create($uniqueName = Values::NONE, $ttl = Values::NONE) {
+    public static function create($uniqueName = Values::NONE, $ttl = Values::NONE)
+    {
         return new CreateSyncListOptions($uniqueName, $ttl);
     }
 
@@ -31,51 +33,57 @@ abstract class SyncListOptions {
      *                     expiration.
      * @return UpdateSyncListOptions Options builder
      */
-    public static function update($ttl = Values::NONE) {
+    public static function update($ttl = Values::NONE)
+    {
         return new UpdateSyncListOptions($ttl);
     }
 }
 
-class CreateSyncListOptions extends Options {
+class CreateSyncListOptions extends Options
+{
     /**
      * @param string $uniqueName Human-readable name for this list
      * @param integer $ttl Time-to-live of this List in seconds, defaults to no
      *                     expiration.
      */
-    public function __construct($uniqueName = Values::NONE, $ttl = Values::NONE) {
+    public function __construct($uniqueName = Values::NONE, $ttl = Values::NONE)
+    {
         $this->options['uniqueName'] = $uniqueName;
         $this->options['ttl'] = $ttl;
     }
 
     /**
      * Human-readable name for this list
-     * 
+     *
      * @param string $uniqueName Human-readable name for this list
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName) {
+    public function setUniqueName($uniqueName)
+    {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
 
     /**
      * Time-to-live of this List in seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
-     * 
+     *
      * @param integer $ttl Time-to-live of this List in seconds, defaults to no
      *                     expiration.
      * @return $this Fluent Builder
      */
-    public function setTtl($ttl) {
+    public function setTtl($ttl)
+    {
         $this->options['ttl'] = $ttl;
         return $this;
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -86,33 +94,37 @@ class CreateSyncListOptions extends Options {
     }
 }
 
-class UpdateSyncListOptions extends Options {
+class UpdateSyncListOptions extends Options
+{
     /**
      * @param integer $ttl Time-to-live of this List in seconds, defaults to no
      *                     expiration.
      */
-    public function __construct($ttl = Values::NONE) {
+    public function __construct($ttl = Values::NONE)
+    {
         $this->options['ttl'] = $ttl;
     }
 
     /**
      * Time-to-live of this List in seconds, defaults to no expiration. In the range [1, 31 536 000 (1 year)], or 0 for infinity.
-     * 
+     *
      * @param integer $ttl Time-to-live of this List in seconds, defaults to no
      *                     expiration.
      * @return $this Fluent Builder
      */
-    public function setTtl($ttl) {
+    public function setTtl($ttl)
+    {
         $this->options['ttl'] = $ttl;
         return $this;
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

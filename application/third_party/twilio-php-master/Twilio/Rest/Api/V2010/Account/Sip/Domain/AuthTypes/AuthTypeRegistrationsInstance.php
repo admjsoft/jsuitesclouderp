@@ -11,20 +11,21 @@ namespace Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypes;
 
 use Twilio\Exceptions\TwilioException;
 use Twilio\InstanceResource;
-use Twilio\Values;
 use Twilio\Version;
 
-class AuthTypeRegistrationsInstance extends InstanceResource {
+class AuthTypeRegistrationsInstance extends InstanceResource
+{
     /**
      * Initialize the AuthTypeRegistrationsInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $accountSid The unique id of the account that sent the call
      * @param string $domainSid A string that uniquely identifies the SIP Domain
-     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypes\AuthTypeRegistrationsInstance 
+     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypes\AuthTypeRegistrationsInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $domainSid) {
+    public function __construct(Version $version, array $payload, $accountSid, $domainSid)
+    {
         parent::__construct($version);
 
         $this->solution = array('accountSid' => $accountSid, 'domainSid' => $domainSid, );
@@ -32,12 +33,13 @@ class AuthTypeRegistrationsInstance extends InstanceResource {
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -52,10 +54,11 @@ class AuthTypeRegistrationsInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         return '[Twilio.Api.V2010.AuthTypeRegistrationsInstance]';
     }
 }

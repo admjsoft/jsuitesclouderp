@@ -162,5 +162,4 @@ class Payout extends PayPalResourceModel
         $ret->fromJson($json);
         return $ret;
     }
-
 }

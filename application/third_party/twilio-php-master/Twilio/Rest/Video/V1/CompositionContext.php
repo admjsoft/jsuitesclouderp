@@ -16,16 +16,18 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class CompositionContext extends InstanceContext {
+class CompositionContext extends InstanceContext
+{
     /**
      * Initialize the CompositionContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $sid The Composition Sid that uniquely identifies the
      *                    Composition to fetch.
-     * @return \Twilio\Rest\Video\V1\CompositionContext 
+     * @return \Twilio\Rest\Video\V1\CompositionContext
      */
-    public function __construct(Version $version, $sid) {
+    public function __construct(Version $version, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -36,11 +38,12 @@ class CompositionContext extends InstanceContext {
 
     /**
      * Fetch a CompositionInstance
-     * 
+     *
      * @return CompositionInstance Fetched CompositionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -54,20 +57,22 @@ class CompositionContext extends InstanceContext {
 
     /**
      * Deletes the CompositionInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

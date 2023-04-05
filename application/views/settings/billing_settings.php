@@ -19,16 +19,15 @@
                     <div class="col-sm-6"><select name="serial" class="form-control">
 
                             <?php switch ($billing_settings['key1']) {
-                                case '0' :
+                                case '0':
                                     echo '<option value="0">** ' . $this->lang->line('search_default') . ' **</option>';
                                     break;
-                                case '1' :
+                                case '1':
                                     echo '<option value="1">**' . $this->lang->line('search_serial_with') . '**</option>';
                                     break;
-                                    case '2' :
+                                case '2':
                                     echo '<option value="2">**' . $this->lang->line('search_serial_only') . '**</option>';
                                     break;
-
                             } ?>
                             <option value="0"><?php echo $this->lang->line('search_default') ?></option>
                             <option value="1"><?php echo $this->lang->line('search_serial_with') ?></option>
@@ -55,13 +54,12 @@
                     <div class="col-sm-6"><select name="stock" class="form-control">
 
                             <?php switch ($zero_stock['key1']) {
-                                case '0' :
+                                case '0':
                                     echo '<option value="0">** ' . $this->lang->line('Yes') . ' **</option>';
                                     break;
-                                case '1' :
+                                case '1':
                                     echo '<option value="1">**' . $this->lang->line('No') . '**</option>';
                                     break;
-
                             } ?>
                             <option value="0"><?php echo $this->lang->line('Yes') ?></option>
                             <option value="1"><?php echo $this->lang->line('No') ?></option>
@@ -83,13 +81,12 @@
                     <div class="col-sm-6"><select name="expired" class="form-control">
 
                             <?php switch ($billing_settings['key2']) {
-                                case '0' :
+                                case '0':
                                     echo '<option value="0">** ' . $this->lang->line('No') . ' **</option>';
                                     break;
-                                case '1' :
+                                case '1':
                                     echo '<option value="1">**' . $this->lang->line('Yes') . '**</option>';
                                     break;
-
                             } ?>
                             <option value="0"><?php echo $this->lang->line('No') ?></option>
                             <option value="1"><?php echo $this->lang->line('Yes') ?></option>

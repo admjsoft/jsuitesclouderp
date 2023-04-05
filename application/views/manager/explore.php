@@ -16,20 +16,18 @@
                             Assigned to</p>
                         <p><?php
                             foreach ($emp as $row) {
-
                                 echo '<span class="avatar"><img src="' . base_url() . '/userfiles/employee/thumbnail/' . $row['picture'] . '" title="' . $row['name'] . '" alt="' . $row['name'] . '"></span> &nbsp; ';
                             }
                             ?> <hr><?php echo '<span class="p-1 text-bold-300">' . $this->lang->line('Clock') . ':</span>';
-                                if (!$clock['key3']) {
-
-                                      echo '<span class="badge badge-danger">' . $this->lang->line('Off') . '</span><a href="' . base_url() . '/manager/clock_in?id='.$project['id'].'" class="btn btn-outline-success  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-on" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('In') . ' <i
+                            if (!$clock['key3']) {
+                                echo '<span class="badge badge-danger">' . $this->lang->line('Off') . '</span><a href="' . base_url() . '/manager/clock_in?id='.$project['id'].'" class="btn btn-outline-success  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-on" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('In') . ' <i
                                     class="ficon icon-clock "></i></a>';
-                                } else {
-                                           echo '<span class="badge badge-success">' . $this->lang->line('On') . '</span> <a href="' . base_url() . '/manager/clock_out?id='.$project['id'].'" class="btn btn-outline-danger  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-off" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('Out') . ' <i
+                            } else {
+                                echo '<span class="badge badge-success">' . $this->lang->line('On') . '</span> <a href="' . base_url() . '/manager/clock_out?id='.$project['id'].'" class="btn btn-outline-danger  btn-outline-white btn-md ml-1 mr-1" ><span class="icon-toggle-off" aria-hidden="true"></span> ' . $this->lang->line('Clock') . ' ' . $this->lang->line('Out') . ' <i
                                     class="ficon icon-clock spinner"></i></a>';
-                                }
-                                echo round(@$clock['key4'] / 3600, 2);
-                                 echo ' '.$this->lang->line('Hours') ;  ?> <hr></p></p></div>
+                            }
+                            echo round(@$clock['key4'] / 3600, 2);
+                            echo ' '.$this->lang->line('Hours') ;  ?> <hr></p></p></div>
                     <p>&nbsp;</p>
                       <div class="row">
         <div class="col-xl-3 col-lg-6 col-12">
@@ -234,19 +232,19 @@
                                                 <th scope="row">Communication</th>
                                                 <td>
                                                     <p><?php switch ($project['ptype']) {
-                                                            case 0 :
-                                                                echo 'None';
-                                                                break;
-                                                            case 1 :
-                                                                echo 'Emails to team';
-                                                                break;
+                                                        case 0:
+                                                            echo 'None';
+                                                            break;
+                                                        case 1:
+                                                            echo 'Emails to team';
+                                                            break;
 
-                                                            case 2 :
-                                                                echo 'Emails to team &  customer';
-                                                                break;
-                                                        }
+                                                        case 2:
+                                                            echo 'Emails to team &  customer';
+                                                            break;
+                                                    }
 
-                                                        ?></p>
+                            ?></p>
 
                                                 </td>
 
@@ -283,11 +281,9 @@
 
                                     <ul class="timeline">
                                         <?php $flag = true;
-                                        $total = count($thread_list);
-                                        foreach ($thread_list as $row) {
-
-
-                                            ?>
+                            $total = count($thread_list);
+                            foreach ($thread_list as $row) {
+                                ?>
                                             <li class="<?php if (!$flag) {
                                                 echo 'timeline-inverted';
                                             } ?>">
@@ -307,8 +303,8 @@
                                                 </div>
                                             </li>
                                             <?php $flag = !$flag;
-                                            $total--;
-                                        } ?>
+                                $total--;
+                            } ?>
 
 
                                     </ul>
@@ -326,11 +322,9 @@
 
                                     <ul class="timeline">
                                         <?php $flag = true;
-                                        $total = count($milestones);
-                                        foreach ($milestones as $row) {
-
-
-                                            ?>
+                            $total = count($milestones);
+                            foreach ($milestones as $row) {
+                                ?>
                                             <li data-block="sec" class="<?php if (!$flag) {
                                                 echo 'timeline-inverted';
                                             } ?>">
@@ -346,14 +340,16 @@
                                                     </div>
                                                     <div class="timeline-body">
                                                         <p><?php echo $row['exp'];
-                                                            if ($row['task']) echo '</p><p><strong>[Task]</strong> ' . $row['task']; ?></p>
+                                if ($row['task']) {
+                                    echo '</p><p><strong>[Task]</strong> ' . $row['task'];
+                                } ?></p>
 
                                                     </div>
                                                 </div>
                                             </li>
                                             <?php $flag = !$flag;
-                                            $total--;
-                                        } ?>
+                                $total--;
+                            } ?>
 
 
                                     </ul>
@@ -376,10 +372,10 @@
                                             <div class="col-sm-10">
                                                 <?php
 
-                                                echo '- ' . $row['value'] . '<br><br>';
+                                    echo '- ' . $row['value'] . '<br><br>';
 
 
-                                                ?>
+                                        ?>
                                             </div>
                                         </div>
                                     <?php }
@@ -402,8 +398,8 @@
 
                                                         echo '<a href="' . base_url('userfiles/project/' . $row['value']) . '">' . $row['value'] . '</a><a href="#" class="btn btn-danger float-xs-right delete-custom" data-did="1" data-object-id="' . $row['meta_data'] . '"><i class="icon-trash-b"></i></a> ';
 
-                                                        echo '<br><br>';
-                                                        ?></div>
+                                            echo '<br><br>';
+                                            ?></div>
                                                 </div>
                                             </section>
                                         <?php } ?>
@@ -459,18 +455,20 @@
                                     </form>
                                     <ul class="timeline">
                                         <?php $flag = true;
-                                        $total = count($comments_list);
-                                        foreach ($comments_list as $row) {
-
-
-                                            ?>
+                            $total = count($comments_list);
+                            foreach ($comments_list as $row) {
+                                ?>
                                             <li class="<?php if (!$flag) {
                                                 echo 'timeline-inverted';
                                             } ?>">
                                                 <div class="timeline-badge info"><?php echo $total ?></div>
                                                 <div class="timeline-panel">
                                                     <div class="timeline-heading">
-                                                        <h4 class="timeline-title"><?php if ($row['key3']) echo $row['customer'] . ' Reply <small>(Customer)</small>'; else echo $row['employee'] . ' Reply <small>(Employee)</small>'; ?></h4>
+                                                        <h4 class="timeline-title"><?php if ($row['key3']) {
+                                                            echo $row['customer'] . ' Reply <small>(Customer)</small>';
+                                                        } else {
+                                                            echo $row['employee'] . ' Reply <small>(Employee)</small>';
+                                                        } ?></h4>
 
                                                     </div>
                                                     <div class="timeline-body">
@@ -479,8 +477,8 @@
                                                 </div>
                                             </li>
                                             <?php $flag = !$flag;
-                                            $total--;
-                                        } ?>
+                                $total--;
+                            } ?>
 
 
                                     </ul>

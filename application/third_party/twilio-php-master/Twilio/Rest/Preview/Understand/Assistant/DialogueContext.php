@@ -16,16 +16,18 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class DialogueContext extends InstanceContext {
+class DialogueContext extends InstanceContext
+{
     /**
      * Initialize the DialogueContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $assistantSid The assistant_sid
      * @param string $sid The sid
-     * @return \Twilio\Rest\Preview\Understand\Assistant\DialogueContext 
+     * @return \Twilio\Rest\Preview\Understand\Assistant\DialogueContext
      */
-    public function __construct(Version $version, $assistantSid, $sid) {
+    public function __construct(Version $version, $assistantSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -36,11 +38,12 @@ class DialogueContext extends InstanceContext {
 
     /**
      * Fetch a DialogueInstance
-     * 
+     *
      * @return DialogueInstance Fetched DialogueInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -59,10 +62,11 @@ class DialogueContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -5,31 +5,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Customers_model extends CI_Model
 {
-
-    var $table = 'gtg_customers';
-    var $column_order = array(null, 'gtg_customers.name', 'gtg_customers.address', 'gtg_customers.email', 'gtg_customers.phone', null);
-    var $column_search = array('gtg_customers.name', 'gtg_customers.phone', 'gtg_customers.address', 'gtg_customers.city', 'gtg_customers.email', 'gtg_customers.docid');
-    var $trans_column_order = array('date', 'debit', 'credit', 'account', null);
-    var $trans_column_search = array('id', 'date');
-    var $inv_column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
-    var $inv_column_search = array('tid', 'name', 'invoicedate', 'total');
-    var $order = array('id' => 'desc');
-    var $inv_order = array('gtg_invoices.tid' => 'desc');
-    var $qto_order = array('gtg_quotes.tid' => 'desc');
-    var $notecolumn_order = array(null, 'title', 'cdate', null);
-    var $notecolumn_search = array('id', 'title', 'cdate');
-    var $pcolumn_order = array('gtg_projects.status', 'gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.worth', null);
-    var $pcolumn_search = array('gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.status');
-    var $ptcolumn_order = array('status', 'name', 'duedate', 'start', null, null);
-    var $ptcolumn_search = array('name', 'edate', 'status');
-    var $porder = array('id' => 'desc');
+    public $table = 'gtg_customers';
+    public $column_order = array(null, 'gtg_customers.name', 'gtg_customers.address', 'gtg_customers.email', 'gtg_customers.phone', null);
+    public $column_search = array('gtg_customers.name', 'gtg_customers.phone', 'gtg_customers.address', 'gtg_customers.city', 'gtg_customers.email', 'gtg_customers.docid');
+    public $trans_column_order = array('date', 'debit', 'credit', 'account', null);
+    public $trans_column_search = array('id', 'date');
+    public $inv_column_order = array(null, 'tid', 'name', 'invoicedate', 'total', 'status', null);
+    public $inv_column_search = array('tid', 'name', 'invoicedate', 'total');
+    public $order = array('id' => 'desc');
+    public $inv_order = array('gtg_invoices.tid' => 'desc');
+    public $qto_order = array('gtg_quotes.tid' => 'desc');
+    public $notecolumn_order = array(null, 'title', 'cdate', null);
+    public $notecolumn_search = array('id', 'title', 'cdate');
+    public $pcolumn_order = array('gtg_projects.status', 'gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.worth', null);
+    public $pcolumn_search = array('gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.status');
+    public $ptcolumn_order = array('status', 'name', 'duedate', 'start', null, null);
+    public $ptcolumn_search = array('name', 'edate', 'status');
+    public $porder = array('id' => 'desc');
 
 
     private function _get_datatables_query($id = '')
     {
         $due = $this->input->post('due');
         if ($due) {
-
             $this->db->select('gtg_customers.*,SUM(gtg_invoices.total) AS total,SUM(gtg_invoices.pamnt) AS pamnt');
             $this->db->from('gtg_invoices');
             $this->db->where('gtg_invoices.status!=', 'paid');
@@ -57,49 +55,47 @@ class Customers_model extends CI_Model
         }
         $i = 0;
 
-        foreach ($this->column_search as $item) // loop column
-        {
+        foreach ($this->column_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
-            if ($value) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
+            if ($value) { // if datatable send POST for search
+                
+                if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $value);
                 } else {
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
-        if ($search) // here order processing
-        {
+        if ($search) { // here order processing
             $this->db->order_by($this->column_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function get_datatables($id = '')
+    public function get_datatables($id = '')
     {
         $this->_get_datatables_query($id);
         if ($this->aauth->get_user()->loc) {
             // $this->db->where('loc', $this->aauth->get_user()->loc);
         }
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function count_filtered($id = '')
+    public function count_filtered($id = '')
     {
         $this->_get_datatables_query();
         $query = $this->db->get();
@@ -144,7 +140,6 @@ class Customers_model extends CI_Model
 
     public function money_details($custid)
     {
-
         $this->db->select('SUM(debit) AS debit,SUM(credit) AS credit');
         $this->db->from('gtg_transactions');
         $this->db->where('payerid', $custid);
@@ -155,7 +150,6 @@ class Customers_model extends CI_Model
 
     public function due_details($custid)
     {
-
         $this->db->select('SUM(total) AS total,SUM(pamnt) AS pamnt,SUM(discount) AS discount,');
         $this->db->from('gtg_invoices');
         $this->db->where('csd', $custid);
@@ -172,8 +166,6 @@ class Customers_model extends CI_Model
         $query = $this->db->get();
         $valid = $query->row_array();
         if (!$valid['email']) {
-
-
             if (!$discount) {
                 $this->db->select('disc_rate');
                 $this->db->from('gtg_cust_group');
@@ -219,13 +211,12 @@ class Customers_model extends CI_Model
                 $p_string = '';
                 $temp_password = '';
                 if ($create_login) {
-
                     if ($password) {
                         $temp_password = $password;
                     } else {
                         $temp_password = rand(200000, 999999);
                     }
-                    file_put_contents("pass.log",$temp_password);
+                    file_put_contents("pass.log", $temp_password);
 
                     $pass = password_hash($temp_password, PASSWORD_DEFAULT);
                     $data = array(
@@ -330,7 +321,7 @@ class Customers_model extends CI_Model
 
     public function changepassword($id, $password)
     {
- file_put_contents("pass.log",$password);
+        file_put_contents("pass.log", $password);
         $pass = password_hash($password, PASSWORD_DEFAULT);
         $data = array(
             'password' => $pass
@@ -372,7 +363,6 @@ class Customers_model extends CI_Model
             $this->db->where('loc', 0);
         }
         if ($this->db->update('gtg_customers') and $result['picture'] != 'example.png') {
-
             unlink(FCPATH . 'userfiles/customers/' . $result['picture']);
             unlink(FCPATH . 'userfiles/customers/thumbnail/' . $result['picture']);
         }
@@ -383,7 +373,9 @@ class Customers_model extends CI_Model
         $whr = "";
         if ($this->aauth->get_user()->loc) {
             $whr = "WHERE (gtg_customers.loc=" . $this->aauth->get_user()->loc . " ) ";
-            if (BDATA) $whr = "WHERE (gtg_customers.loc=" . $this->aauth->get_user()->loc . " OR gtg_customers.loc=0 ) ";
+            if (BDATA) {
+                $whr = "WHERE (gtg_customers.loc=" . $this->aauth->get_user()->loc . " OR gtg_customers.loc=0 ) ";
+            }
         } elseif (!BDATA) {
             $whr = "WHERE  gtg_customers.loc=0  ";
         }
@@ -394,8 +386,6 @@ class Customers_model extends CI_Model
 
     public function delete($id)
     {
-
-
         if ($this->aauth->get_user()->loc) {
             $this->db->delete('gtg_customers', array('id' => $id, 'loc' => $this->aauth->get_user()->loc));
         } elseif (!BDATA) {
@@ -419,7 +409,6 @@ class Customers_model extends CI_Model
                 @unlink(FCPATH . 'userfiles/documents/' . $result['filename']);
                 $this->aauth->applog("[Client Doc Deleted]  DocId $id CID " . $id, $this->aauth->get_user()->username);
                 //docs
-
             }
             return true;
         }
@@ -428,11 +417,12 @@ class Customers_model extends CI_Model
 
     //transtables
 
-    function trans_table($id)
+    public function trans_table($id)
     {
         $this->_get_trans_table_query($id);
-        if ($_POST['length'] != -1)
+        if ($_POST['length'] != -1) {
             $this->db->limit($_POST['length'], $_POST['start']);
+        }
         $query = $this->db->get();
         return $query->result();
     }
@@ -440,7 +430,6 @@ class Customers_model extends CI_Model
 
     private function _get_trans_table_query($id)
     {
-
         $this->db->from('gtg_transactions');
         $this->db->where('payerid', $id);
         $this->db->where('ext', 0);
@@ -450,37 +439,34 @@ class Customers_model extends CI_Model
             $this->db->where('loc', 0);
         }
         $i = 0;
-        foreach ($this->trans_column_search as $item) // loop column
-        {
+        foreach ($this->trans_column_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
-            if ($value) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
+            if ($value) { // if datatable send POST for search
+                
+                if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $value);
                 } else {
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->trans_column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->trans_column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
-        if ($search) // here order processing
-        {
+        if ($search) { // here order processing
             $this->db->order_by($this->trans_column_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function trans_count_filtered($id = '')
+    public function trans_count_filtered($id = '')
     {
         $this->_get_trans_table_query($id);
         $query = $this->db->get();
@@ -510,50 +496,50 @@ class Customers_model extends CI_Model
             $this->db->where('gtg_invoices.loc', 0);
         }
 
-        if ($tyd) $this->db->where('gtg_invoices.i_class>', 1);
+        if ($tyd) {
+            $this->db->where('gtg_invoices.i_class>', 1);
+        }
         $this->db->join('gtg_customers', 'gtg_invoices.csd=gtg_customers.id', 'left');
 
         $i = 0;
 
-        foreach ($this->inv_column_search as $item) // loop column
-        {
-            if ($this->input->post('search')['value']) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
+        foreach ($this->inv_column_search as $item) { // loop column
+            if ($this->input->post('search')['value']) { // if datatable send POST for search
+                
+                if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $this->input->post('search')['value']);
                 } else {
                     $this->db->or_like($item, $this->input->post('search')['value']);
                 }
 
-                if (count($this->inv_column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->inv_column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
 
-        if (isset($_POST['order'])) // here order processing
-        {
+        if (isset($_POST['order'])) { // here order processing
             $this->db->order_by($this->inv_column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        } else if (isset($this->inv_order)) {
+        } elseif (isset($this->inv_order)) {
             $order = $this->inv_order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function inv_datatables($id, $tyd = 0)
+    public function inv_datatables($id, $tyd = 0)
     {
         $this->_inv_datatables_query($id, $tyd);
 
-        if ($_POST['length'] != -1)
+        if ($_POST['length'] != -1) {
             $this->db->limit($_POST['length'], $_POST['start']);
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function inv_count_filtered($id)
+    public function inv_count_filtered($id)
     {
         $this->_inv_datatables_query($id);
         $query = $this->db->get();
@@ -582,44 +568,42 @@ class Customers_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->inv_column_search as $item) // loop column
-        {
-            if ($this->input->post('search')['value']) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
+        foreach ($this->inv_column_search as $item) { // loop column
+            if ($this->input->post('search')['value']) { // if datatable send POST for search
+                
+                if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $this->input->post('search')['value']);
                 } else {
                     $this->db->or_like($item, $this->input->post('search')['value']);
                 }
 
-                if (count($this->inv_column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->inv_column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
 
-        if (isset($_POST['order'])) // here order processing
-        {
+        if (isset($_POST['order'])) { // here order processing
             $this->db->order_by($this->qto_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        } else if (isset($this->qto_order)) {
+        } elseif (isset($this->qto_order)) {
             $order = $this->qto_order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function qto_datatables($id, $tyd = 0)
+    public function qto_datatables($id, $tyd = 0)
     {
         $this->_qto_datatables_query($id);
-        if ($_POST['length'] != -1)
+        if ($_POST['length'] != -1) {
             $this->db->limit($_POST['length'], $_POST['start']);
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function qto_count_filtered($id)
+    public function qto_count_filtered($id)
     {
         $this->_qto_datatables_query($id);
         $query = $this->db->get();
@@ -635,7 +619,6 @@ class Customers_model extends CI_Model
 
     public function group_info($id)
     {
-
         $this->db->from('gtg_cust_group');
         $this->db->where('id', $id);
         $query = $this->db->get();
@@ -654,8 +637,7 @@ class Customers_model extends CI_Model
 
     public function recharge($id, $amount)
     {
-
-        $this->db->set('balance', "balance+$amount", FALSE);
+        $this->db->set('balance', "balance+$amount", false);
         $this->db->where('id', $id);
 
         $this->db->update('gtg_customers');
@@ -688,12 +670,10 @@ class Customers_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->pcolumn_search as $item) // loop column
-        {
+        foreach ($this->pcolumn_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
             if ($value) {
-
                 if ($i === 0) {
                     $this->db->group_start();
                     $this->db->like($item, $value);
@@ -701,33 +681,33 @@ class Customers_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->pcolumn_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->pcolumn_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->column_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->porder)) {
+        } elseif (isset($this->porder)) {
             $order = $this->porder;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function project_datatables($cday = '')
+    public function project_datatables($cday = '')
     {
-
-
         $this->_project_datatables_query($cday);
 
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function project_count_filtered($cday = '')
+    public function project_count_filtered($cday = '')
     {
         $this->_project_datatables_query($cday);
         $query = $this->db->get();
@@ -745,18 +725,15 @@ class Customers_model extends CI_Model
 
     private function _notes_datatables_query($id)
     {
-
         $this->db->from('gtg_notes');
         $this->db->where('fid', $id);
         $this->db->where('ntype', 1);
         $i = 0;
 
-        foreach ($this->notecolumn_search as $item) // loop column
-        {
+        foreach ($this->notecolumn_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
             if ($value) {
-
                 if ($i === 0) {
                     $this->db->group_start();
                     $this->db->like($item, $value);
@@ -764,30 +741,32 @@ class Customers_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->notecolumn_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function notes_datatables($id)
+    public function notes_datatables($id)
     {
         $this->_notes_datatables_query($id);
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function notes_count_filtered($id)
+    public function notes_count_filtered($id)
     {
         $this->_notes_datatables_query($id);
         $query = $this->db->get();
@@ -803,7 +782,6 @@ class Customers_model extends CI_Model
 
     public function editnote($id, $title, $content, $cid)
     {
-
         $data = array('title' => $title, 'content' => $content, 'last_edit' => date('Y-m-d H:i:s'));
 
 
@@ -830,14 +808,14 @@ class Customers_model extends CI_Model
         return $query->row_array();
     }
 
-    function addnote($title, $content, $cid)
+    public function addnote($title, $content, $cid)
     {
         $this->aauth->applog("[Client Note Added]  NoteId $title CID " . $cid, $this->aauth->get_user()->username);
         $data = array('title' => $title, 'content' => $content, 'cdate' => date('Y-m-d'), 'last_edit' => date('Y-m-d H:i:s'), 'cid' => $this->aauth->get_user()->id, 'fid' => $cid, 'rid' => 1, 'ntype' => 1);
         return $this->db->insert('gtg_notes', $data);
     }
 
-    function deletenote($id, $cid)
+    public function deletenote($id, $cid)
     {
         $this->aauth->applog("[Client Note Deleted]  NoteId $id CID " . $cid, $this->aauth->get_user()->username);
         return $this->db->delete('gtg_notes', array('id' => $id, 'fid' => $cid, 'rid' => 1));
@@ -845,8 +823,8 @@ class Customers_model extends CI_Model
 
     //documents list
 
-    var $doccolumn_order = array(null, 'title', 'cdate', null);
-    var $doccolumn_search = array('title', 'cdate');
+    public $doccolumn_order = array(null, 'title', 'cdate', null);
+    public $doccolumn_search = array('title', 'cdate');
 
     public function documentlist($cid)
     {
@@ -858,14 +836,14 @@ class Customers_model extends CI_Model
         return $query->result_array();
     }
 
-    function adddocument($title, $filename, $cid)
+    public function adddocument($title, $filename, $cid)
     {
         $this->aauth->applog("[Client Doc Added]  DocId $title CID " . $cid, $this->aauth->get_user()->username);
         $data = array('title' => $title, 'filename' => $filename, 'cdate' => date('Y-m-d'), 'cid' => $this->aauth->get_user()->id, 'fid' => $cid, 'rid' => 1);
         return $this->db->insert('gtg_documents', $data);
     }
 
-    function deletedocument($id, $cid)
+    public function deletedocument($id, $cid)
     {
         $this->db->select('filename');
         $this->db->from('gtg_documents');
@@ -888,29 +866,27 @@ class Customers_model extends CI_Model
     }
 
 
-    function document_datatables($cid)
+    public function document_datatables($cid)
     {
         $this->document_datatables_query($cid);
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
     private function document_datatables_query($cid)
     {
-
         $this->db->from('gtg_documents');
         $this->db->where('fid', $cid);
         $this->db->where('rid', 1);
         $i = 0;
 
-        foreach ($this->doccolumn_search as $item) // loop column
-        {
+        foreach ($this->doccolumn_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
             if ($value) {
-
                 if ($i === 0) {
                     $this->db->group_start();
                     $this->db->like($item, $value);
@@ -918,21 +894,22 @@ class Customers_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->doccolumn_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->doccolumn_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->doccolumn_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function document_count_filtered($cid)
+    public function document_count_filtered($cid)
     {
         $this->document_datatables_query($cid);
         $query = $this->db->get();
@@ -956,7 +933,7 @@ class Customers_model extends CI_Model
             'Company' => $this->config->item('ctitle'),
             'NAME' => $name
         );
-        $subject = $this->parser->parse_string($template['key1'], $data, TRUE);
+        $subject = $this->parser->parse_string($template['key1'], $data, true);
 
         $data = array(
             'Company' => $this->config->item('ctitle'),
@@ -970,7 +947,7 @@ class Customers_model extends CI_Model
 
 
         );
-        $message = $this->parser->parse_string($template['other'], $data, TRUE);
+        $message = $this->parser->parse_string($template['other'], $data, true);
 
 
         return array('subject' => $subject, 'message' => $message);
@@ -979,7 +956,6 @@ class Customers_model extends CI_Model
 
     public function recipients($ids)
     {
-
         $this->db->select('id,name,email,phone');
         $this->db->from('gtg_customers');
         $this->db->where_in('id', $ids);
@@ -1029,11 +1005,11 @@ class Customers_model extends CI_Model
                     $due = $row['total'] - $row['pamnt'];
                     if ($amount_custom >= $due) {
                         $this->db->set('status', 'paid');
-                        $this->db->set('pamnt', "pamnt+$due", FALSE);
+                        $this->db->set('pamnt', "pamnt+$due", false);
                         $amount_custom = $amount_custom - $due;
                     } elseif ($amount_custom > 0 and $amount_custom < $due) {
                         $this->db->set('status', 'partial');
-                        $this->db->set('pamnt', "pamnt+$amount_custom", FALSE);
+                        $this->db->set('pamnt', "pamnt+$amount_custom", false);
                         $amount_custom = 0;
                     }
 
@@ -1041,7 +1017,9 @@ class Customers_model extends CI_Model
                     $this->db->where('id', $row['id']);
                     $this->db->update('gtg_invoices');
 
-                    if ($amount_custom == 0) break;
+                    if ($amount_custom == 0) {
+                        break;
+                    }
                 }
                 $this->db->select('id,holder');
                 $this->db->from('gtg_accounts');
@@ -1067,7 +1045,7 @@ class Customers_model extends CI_Model
 
                 $this->db->insert('gtg_transactions', $data);
                 $tttid = $this->db->insert_id();
-                $this->db->set('lastbal', "lastbal+$amount", FALSE);
+                $this->db->set('lastbal', "lastbal+$amount", false);
                 $this->db->where('id', $account['id']);
                 $this->db->update('gtg_accounts');
             }

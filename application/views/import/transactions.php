@@ -28,7 +28,7 @@
                                             $holder = $row['holder'];
                                             echo "<option value='$cid'>$acn - $holder</option>";
                                         }
-                                        ?>
+            ?>
                                         <option value='All'><?php echo $this->lang->line('All Accounts') ?></option>
                                     </select>
 

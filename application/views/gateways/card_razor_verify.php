@@ -46,7 +46,6 @@ if ($success === true) {
     if (number_format($amount_t, 2, '.', '')) {
         $amount = number_format($amount_o, 2, '.', '');
         if ($this->billing->paynow($customer['iid'], $amount, $note, $pmethod, $customer['loc'])) {
-
             redirect(base_url('billing/view?id=' . $tid . '&token=' . $validtoken));
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 set_include_path(get_include_path() . PATH_SEPARATOR . "..");
 include_once("xlsxwriter.class.php");
 
@@ -54,8 +55,3 @@ $writer->writeToFile('xlsx-formats.xlsx');
 
 echo '#' . floor((memory_get_peak_usage()) / 1024 / 1024) . "MB" . "\n";
 exit(0);
-
-
-
-
-

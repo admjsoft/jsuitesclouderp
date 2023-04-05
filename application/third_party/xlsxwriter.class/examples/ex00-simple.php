@@ -1,4 +1,5 @@
 <?php
+
 set_include_path(get_include_path() . PATH_SEPARATOR . "..");
 include_once("xlsxwriter.class.php");
 
@@ -24,12 +25,12 @@ $rows = array(
 $writer = new XLSXWriter();
 
 $writer->writeSheetHeader('Sheet1', $header);
-foreach ($rows as $row)
+foreach ($rows as $row) {
     $writer->writeSheetRow('Sheet1', $row);
+}
 
 //$writer->writeSheet($rows,'Sheet1', $header);//or write the whole sheet in 1 call
 
 $writer->writeToFile('xlsx-simple.xlsx');
 //$writer->writeToStdOut();
 //echo $writer->writeToString();
-

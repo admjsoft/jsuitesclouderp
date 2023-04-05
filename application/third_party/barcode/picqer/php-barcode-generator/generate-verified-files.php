@@ -2,7 +2,8 @@
 
 require('vendor/autoload.php');
 
-function getSaveFilename($value) {
+function getSaveFilename($value)
+{
     return preg_replace('/[^a-zA-Z0-9_ \-+]/s', '-', $value);
 }
 

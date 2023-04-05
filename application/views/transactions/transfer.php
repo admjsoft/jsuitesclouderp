@@ -31,7 +31,7 @@
                                     $holder = $row['holder'];
                                     echo "<option value='$cid'>$acn - $holder</option>";
                                 }
-                                ?>
+            ?>
                             </select>
 
 
@@ -46,13 +46,13 @@
                         <div class="col-sm-6">
                             <select name="pay_acc2" class="form-control">
                                 <?php
-                                foreach ($accounts as $row) {
-                                    $cid = $row['id'];
-                                    $acn = $row['acn'];
-                                    $holder = $row['holder'];
-                                    echo "<option value='$cid'>$acn - $holder</option>";
-                                }
-                                ?>
+            foreach ($accounts as $row) {
+                $cid = $row['id'];
+                $acn = $row['acn'];
+                $holder = $row['holder'];
+                echo "<option value='$cid'>$acn - $holder</option>";
+            }
+            ?>
                             </select>
 
 

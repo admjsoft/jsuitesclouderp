@@ -15,13 +15,10 @@ class Purchase extends CI_Controller
         }
 
         if (!$this->aauth->premission(2)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->li_a = 'stock';
         //exit('Under Dev Mode');
-
-
     }
 
     //create invoice
@@ -48,7 +45,6 @@ class Purchase extends CI_Controller
     //edit invoice
     public function edit()
     {
-
         $tid = $this->input->get('id');
         $data['id'] = $tid;
         $data['title'] = "Purchase Order $tid";
@@ -56,7 +52,8 @@ class Purchase extends CI_Controller
         $data['customergrouplist'] = $this->customers->group_list();
         $data['terms'] = $this->purchase->billingterms();
         $data['invoice'] = $this->purchase->purchase_details($tid);
-        $data['products'] = $this->purchase->purchase_products($tid);;
+        $data['products'] = $this->purchase->purchase_products($tid);
+        ;
         $head['title'] = "Edit Invoice #$tid";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->purchase->warehouses();
@@ -94,7 +91,9 @@ class Purchase extends CI_Controller
         $shipping = rev_amountExchange_s($this->input->post('shipping'), $currency, $this->aauth->get_user()->loc);
         $shipping_tax = rev_amountExchange_s($this->input->post('ship_tax'), $currency, $this->aauth->get_user()->loc);
         $ship_taxtype = $this->input->post('ship_taxtype');
-        if ($ship_taxtype == 'incl') @$shipping = $shipping - $shipping_tax;
+        if ($ship_taxtype == 'incl') {
+            @$shipping = $shipping - $shipping_tax;
+        }
         $refer = $this->input->post('refer', true);
         $total = rev_amountExchange_s($this->input->post('total'), $currency, $this->aauth->get_user()->loc);
         $total_tax = 0;
@@ -173,8 +172,7 @@ class Purchase extends CI_Controller
 
                 if ($product_id[$key] > 0) {
                     if ($this->input->post('update_stock') == 'yes' and $this->aauth->premission(14)) {
-
-                        $this->db->set('qty', "qty+$amt", FALSE);
+                        $this->db->set('qty', "qty+$amt", false);
                         $this->db->where('pid', $product_id[$key]);
                         $this->db->update('gtg_products');
                     }
@@ -210,7 +208,6 @@ class Purchase extends CI_Controller
 
     public function ajax_list()
     {
-
         $list = $this->purchase->get_datatables();
         $data = array();
 
@@ -254,14 +251,15 @@ class Purchase extends CI_Controller
         $data['employee'] = $this->purchase->employee($data['invoice']['eid']);
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
-        if ($data['invoice']['tid']) $this->load->view('purchase/view', $data);
+        if ($data['invoice']['tid']) {
+            $this->load->view('purchase/view', $data);
+        }
         $this->load->view('fixed/footer');
     }
 
 
     public function printinvoice()
     {
-
         $tid = $this->input->get('id');
 
         $data['id'] = $tid;
@@ -297,7 +295,6 @@ class Purchase extends CI_Controller
         $pdf->WriteHTML($html);
 
         if ($this->input->get('d')) {
-
             $pdf->Output('Purchase_#' . $data['invoice']['tid'] . '.pdf', 'D');
         } else {
             $pdf->Output('Purchase_#' . $data['invoice']['tid'] . '.pdf', 'I');
@@ -312,7 +309,6 @@ class Purchase extends CI_Controller
             echo json_encode(array('status' => 'Success', 'message' =>
             "Purchase Order #$id has been deleted successfully!"));
         } else {
-
             echo json_encode(array('status' => 'Error', 'message' =>
             "There is an error! Purchase has not deleted."));
         }
@@ -337,7 +333,9 @@ class Purchase extends CI_Controller
         $subtotal = rev_amountExchange_s($this->input->post('subtotal'), $currency, $this->aauth->get_user()->loc);
         $shipping = rev_amountExchange_s($this->input->post('shipping'), $currency, $this->aauth->get_user()->loc);
         $shipping_tax = rev_amountExchange_s($this->input->post('ship_tax'), $currency, $this->aauth->get_user()->loc);
-        if ($ship_taxtype == 'incl') $shipping = $shipping - $shipping_tax;
+        if ($ship_taxtype == 'incl') {
+            $shipping = $shipping - $shipping_tax;
+        }
 
         $itc = 0;
         if ($discountFormat == '0') {
@@ -368,7 +366,9 @@ class Purchase extends CI_Controller
         $product_name1 = $this->input->post('product_name', true);
         $product_qty = $this->input->post('product_qty');
         $old_product_qty = $this->input->post('old_product_qty');
-        if ($old_product_qty == '') $old_product_qty = 0;
+        if ($old_product_qty == '') {
+            $old_product_qty = 0;
+        }
         $product_price = $this->input->post('product_price');
         $product_tax = $this->input->post('product_tax');
         $product_discount = $this->input->post('product_discount');
@@ -407,7 +407,7 @@ class Purchase extends CI_Controller
 
             if ($this->input->post('update_stock') == 'yes') {
                 $amt = numberClean(@$product_qty[$key]) - numberClean(@$old_product_qty[$key]);
-                $this->db->set('qty', "qty+$amt", FALSE);
+                $this->db->set('qty', "qty+$amt", false);
                 $this->db->where('pid', $product_id[$key]);
                 $this->db->update('gtg_products');
             }
@@ -424,7 +424,6 @@ class Purchase extends CI_Controller
         $this->db->where('id', $invocieno);
 
         if ($flag) {
-
             if ($this->db->update('gtg_purchase', $data)) {
                 $this->db->insert_batch('gtg_purchase_items', $productlist);
                 echo json_encode(array('status' => 'Success', 'message' =>
@@ -447,8 +446,7 @@ class Purchase extends CI_Controller
                     $prid = $myArray[0];
                     $dqty = numberClean($myArray[1]);
                     if ($prid > 0) {
-
-                        $this->db->set('qty', "qty-$dqty", FALSE);
+                        $this->db->set('qty', "qty-$dqty", false);
                         $this->db->where('pid', $prid);
                         $this->db->update('gtg_products');
                     }
@@ -493,7 +491,6 @@ class Purchase extends CI_Controller
             ));
             $files = (string)$this->uploadhandler_generic->filenaam();
             if ($files != '') {
-
                 $this->purchase->meta_insert($id, 4, $files);
             }
         }

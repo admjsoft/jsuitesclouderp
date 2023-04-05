@@ -30,22 +30,22 @@
                                         <label for="cardNumber"><?php echo $this->lang->line('Payment Gateways') ?></label>
                                         <select class="form-control" name="gateway"><?php
                                             $rming = $invoice['total'] - $invoice['pamnt'];
-                                            if ($itype == 'rinv' && $invoice['status'] == 'due') {
-                                                $rming = $invoice['total'];
-                                            }
-                                            $surcharge_t = false;
-                                            foreach ($gateway as $row) {
-                                                $cid = $row['id'];
-                                                $title = $row['name'];
-                                                if ($row['surcharge'] > 0) {
-                                                    $surcharge_t = true;
-                                                    $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
-                                                } else {
-                                                    $fee = '';
-                                                }
-                                                echo "<option value='$cid'>$title $fee</option>";
-                                            }
-                                            ?>
+                if ($itype == 'rinv' && $invoice['status'] == 'due') {
+                    $rming = $invoice['total'];
+                }
+                $surcharge_t = false;
+                foreach ($gateway as $row) {
+                    $cid = $row['id'];
+                    $title = $row['name'];
+                    if ($row['surcharge'] > 0) {
+                        $surcharge_t = true;
+                        $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
+                    } else {
+                        $fee = '';
+                    }
+                    echo "<option value='$cid'>$title $fee</option>";
+                }
+                ?>
                                         </select>
 
                                     </div>
@@ -66,7 +66,7 @@
                                         <label for="cardNumber"><?php echo $this->lang->line('Due Amount') ?></label>
                                         <input name="total_amount"
                                                value="<?php
-                                               echo amountExchange($rming, $invoice['multi'], $invoice['loc']); ?>"
+                   echo amountExchange($rming, $invoice['multi'], $invoice['loc']); ?>"
                                                type="text"
                                                class="form-control"
 
@@ -141,7 +141,11 @@
                                         <label for="amount"><?php echo $this->lang->line('Amount') ?>
                                         </label>
                                         <input type="number" class="form-control" name="amount"
-                                               value="<?php if ($rming > 0) echo $rming; else echo '0.00'; ?>"
+                                               value="<?php if ($rming > 0) {
+                                                   echo $rming;
+                                               } else {
+                                                   echo '0.00';
+                                               } ?>"
                                                required/>
                                     </div>
                                 </div>
@@ -154,7 +158,9 @@
                             </div>
                             <div class="form-group">
 
-                                <?php if ($surcharge_t) echo '<br>' . $this->lang->line('Note: Payment Processing'); ?>
+                                <?php if ($surcharge_t) {
+                                    echo '<br>' . $this->lang->line('Note: Payment Processing');
+                                } ?>
 
                             </div>
                             <div class="row" style="display:none;">
@@ -199,7 +205,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-    ?>
+                ?>
     <!-- Vendor libraries -->
     <script type="text/javascript">
         var $form = $('#payment-form');

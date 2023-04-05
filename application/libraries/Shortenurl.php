@@ -3,21 +3,19 @@
 // Declare the class
 class Shortenurl
 {
-
     // Constructor
-    function __construct()
+    public function __construct()
     {
         $this->key = '';
     }
 
-    function setkey($key)
+    public function setkey($key)
     {
-
         $this->key = $key;
     }
 
     // Shorten a URL
-    function shorten($url)
+    public function shorten($url)
     {
         // Send information along
         $url_c= $url;
@@ -29,14 +27,15 @@ class Shortenurl
 
         $result = json_decode($this->bitly_get_curl($url), true);
 
-     //   print_r($result);
+        //   print_r($result);
 
         return (string)$result['data']['link_save']['link'];
     }
 
 
 
-    function bitly_get_curl($uri) {
+    public function bitly_get_curl($uri)
+    {
         $output = "";
         try {
             $ch = curl_init($uri);
@@ -45,11 +44,10 @@ class Shortenurl
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             $output = curl_exec($ch);
         } catch (Exception $e) {
         }
         return $output;
     }
-
 }

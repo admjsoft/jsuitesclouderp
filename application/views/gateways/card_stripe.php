@@ -6,27 +6,24 @@
 
 <?php
 $rming = $invoice['total'] - $invoice['pamnt'];
-if ($itype == 'rinv' && $invoice['status'] == 'due') {
-    $rming = $invoice['total'];
-}
-$surcharge_t = false;
+      if ($itype == 'rinv' && $invoice['status'] == 'due') {
+          $rming = $invoice['total'];
+      }
+      $surcharge_t = false;
 
-$row = $gateway;
+      $row = $gateway;
 
-$cid = $row['id'];
-$title = $row['name'];
-if ($row['surcharge'] > 0) {
-    $surcharge_t = true;
-    $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
-} else {
-    $fee = '';
-
-
-}
-?>
+      $cid = $row['id'];
+      $title = $row['name'];
+      if ($row['surcharge'] > 0) {
+          $surcharge_t = true;
+          $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
+      } else {
+          $fee = '';
+      }
+      ?>
 <script src="https://js.stripe.com/v3/"></script>
 <?php if ($this->aauth->is_loggedin()) {
-
     echo '<a class="btn btn-warning  mr-1"
                                                     href = "' . base_url('invoices/view?id=' . $invoice['iid']) . '" role = "button" ><i
                                                         class="fa fa-backward" ></i > </a >';
@@ -60,7 +57,7 @@ if ($row['surcharge'] > 0) {
                         echo '<a class="btn btn-info btn-block"
                                                     href = "' . base_url('billing/view?id=' . $invoice['iid']) . '&token=' . $token . '" role = "button" ><i
                                                         class="fa fa-backward" ></i > </a >';
-                        ?>
+      ?>
                     </p>
                     <pre>
             <code></code>
@@ -85,7 +82,11 @@ if ($row['surcharge'] > 0) {
         id: '<?=$invoice['iid']?>',
         itype: 'inv',
         gateway: 1,
-        amount: '<?php if ($rming > 0) echo numberClean(amountExchange_s($rming, $invoice['multi'], $invoice['loc'])) * 100; else echo '0.00'; ?>',
+        amount: '<?php if ($rming > 0) {
+            echo numberClean(amountExchange_s($rming, $invoice['multi'], $invoice['loc'])) * 100;
+        } else {
+            echo '0.00';
+        } ?>',
         token: '<?=$token ?>'
     };
 
@@ -152,7 +153,11 @@ if ($row['surcharge'] > 0) {
                     id: '<?=$invoice['iid']?>',
                     itype: 'inv',
                     gateway: 1,
-                    amount: '<?php if ($rming > 0) echo numberClean(amountExchange_s($rming, $invoice['multi'], $invoice['loc'])) * 100; else echo '0.00'; ?>',
+                    amount: '<?php if ($rming > 0) {
+                        echo numberClean(amountExchange_s($rming, $invoice['multi'], $invoice['loc'])) * 100;
+                    } else {
+                        echo '0.00';
+                    } ?>',
                     token: '<?=$token ?>',
                     paymentIntentId: data.paymentIntent.id
                 };

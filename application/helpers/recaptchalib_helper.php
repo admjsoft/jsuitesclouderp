@@ -90,8 +90,8 @@ class ReCaptcha
      */
     private function _submitHTTPGet($path, $data)
     {
-         $req = $this->_encodeQS($data);
-         if( ini_get('allow_url_fopen') ) {
+        $req = $this->_encodeQS($data);
+        if (ini_get('allow_url_fopen')) {
             $response = file_get_contents($path . $req);
         } else {
             $ch = curl_init();
@@ -147,5 +147,3 @@ class ReCaptcha
         return $recaptchaResponse;
     }
 }
-
-?>

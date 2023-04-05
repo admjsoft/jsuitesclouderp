@@ -141,7 +141,9 @@
         .top_logo {
             max-height: 180px;
             max-width: 250px;
-        <?php if(LTR=='rtl') echo 'margin-left: 200px;' ?>
+        <?php if (LTR=='rtl') {
+            echo 'margin-left: 200px;';
+        } ?>
 
         }
 
@@ -165,33 +167,39 @@
 <table class="header_table">
     <tr>
         <td class="company"><?php $loc = location($invoice['loc']);
-            echo $this->lang->line('From') . '<br>';
-            echo '<strong>' . $loc['cname']; ?></strong><br>
+    echo $this->lang->line('From') . '<br>';
+    echo '<strong>' . $loc['cname']; ?></strong><br>
             <?php echo
-                $loc['address'] . '<br>' . $loc['city'] . ', ' . $loc['region'] . '<br>' . $loc['country'] . ' -  ' . $loc['postbox'] . '<br>' . $this->lang->line('Phone') . ': ' . $loc['phone'] . '<br> ' . $this->lang->line('Email') . ': ' . $loc['email'];
-            if ($loc['taxid']) echo '<br>' . $this->lang->line('GSTIN') . ' : ' . $loc['taxid'];
-            ?></td>
+        $loc['address'] . '<br>' . $loc['city'] . ', ' . $loc['region'] . '<br>' . $loc['country'] . ' -  ' . $loc['postbox'] . '<br>' . $this->lang->line('Phone') . ': ' . $loc['phone'] . '<br> ' . $this->lang->line('Email') . ': ' . $loc['email'];
+    if ($loc['taxid']) {
+        echo '<br>' . $this->lang->line('GSTIN') . ' : ' . $loc['taxid'];
+    }
+    ?></td>
         <td>
 
 
             <img id="image" src="<?php $loc = location($invoice['loc']);
-            echo FCPATH . 'userfiles/company/' . $loc['logo'] ?>" alt="logo" class="top_logo"/>
+    echo FCPATH . 'userfiles/company/' . $loc['logo'] ?>" alt="logo" class="top_logo"/>
         </td>
     </tr>
     <tr>
         <td class="company"> <?php echo $this->lang->line('To') . '<br>';
-            echo '<strong>' . $invoice['name'] . '</strong><br>';
-            if ($invoice['company']) echo $invoice['company'] . '<br>';
-            echo $invoice['address'] . '<br>' . $invoice['city'] . ', ' . $invoice['region'] . '<br>' . $invoice['country'] . '-' . $invoice['postbox'] . '<br>' . $this->lang->line('Phone') . ': ' . $invoice['phone'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
-            if ($invoice['taxid']) echo '<br>' . $this->lang->line('GSTIN') . ' : ' . $invoice['taxid'];
-            if (isset($c_custom_fields)) {
-                echo '<br>';
-                foreach ($c_custom_fields as $row) {
-                    echo $row['name'] . ': ' . $row['data'] . '<br>';
-                }
-            }
-            echo '<br><br>';
-            ?> </td>
+    echo '<strong>' . $invoice['name'] . '</strong><br>';
+    if ($invoice['company']) {
+        echo $invoice['company'] . '<br>';
+    }
+    echo $invoice['address'] . '<br>' . $invoice['city'] . ', ' . $invoice['region'] . '<br>' . $invoice['country'] . '-' . $invoice['postbox'] . '<br>' . $this->lang->line('Phone') . ': ' . $invoice['phone'] . '<br>' . $this->lang->line('Email') . ' : ' . $invoice['email'];
+    if ($invoice['taxid']) {
+        echo '<br>' . $this->lang->line('GSTIN') . ' : ' . $invoice['taxid'];
+    }
+    if (isset($c_custom_fields)) {
+        echo '<br>';
+        foreach ($c_custom_fields as $row) {
+            echo $row['name'] . ': ' . $row['data'] . '<br>';
+        }
+    }
+    echo '<br><br>';
+    ?> </td>
         <td>
             <table id="meta">
                 <tr>
@@ -221,8 +229,8 @@
         <th><?php echo $this->lang->line('Price') ?></th>
         <th><?php echo $this->lang->line('Qty') ?></th>
         <?php $tcols = 1;
-        if ($invoice['taxstatus'] == 'cgst') {
-            $tcols += 2; ?>
+    if ($invoice['taxstatus'] == 'cgst') {
+        $tcols += 2; ?>
             <td>
                 <?php echo $this->lang->line('CGST') ?>
             </td>
@@ -237,7 +245,7 @@
             </td>
             <?php
         }
-        ?>
+    ?>
         <th><?php echo $this->lang->line('Amount') ?></th>
     </tr>
 
@@ -257,14 +265,12 @@
         if ($invoice['taxstatus'] == 'cgst') {
             echo '<td style="width:16%;">' . amountExchange($gst, $invoice['multi'], $invoice['loc']) . ' <span class="tax">(' . amountFormat_s($rate) . '%)</span></td>';
             echo '<td style="width:16%;">' . amountExchange($gst, $invoice['multi'], $invoice['loc']) . ' <span class="tax">(' . amountFormat_s($rate) . '%)</span></td>';
-        } else if ($invoice['taxstatus'] == 'igst') {
+        } elseif ($invoice['taxstatus'] == 'igst') {
             echo '<td style="width:16%;">' . amountExchange($row['totaltax'], $invoice['multi'], $invoice['loc']) . ' <span class="tax">(' . amountFormat_s($row['tax']) . '%)</span></td>';
         }
         echo '     <td>' . amountExchange($row['subtotal'], $invoice['multi'], $invoice['loc']) . '</td>
 
 	 </tr>';
-
-
     }
     ?>
 
@@ -283,7 +289,6 @@
             class="total-value"><?php echo amountExchange($sub_t, $invoice['multi'], $invoice['loc']); ?></td>
     </tr>
     <?php if ($invoice['taxstatus'] == 'cgst') {
-
         echo ' <tr>  <td colspan="' . $tcols . '" class="blank"> </td>
 
             <td colspan="2"  class="total-line">Total CGST + SGST</td>
@@ -323,7 +328,6 @@
     $rming = $invoice['total'] - $invoice['pamnt'];
     if ($rming < 0) {
         $rming = 0;
-
     }
     echo '<tr>
 
@@ -335,7 +339,9 @@
 
 
 </table>
-<?php if ($invoice['notes']) echo $this->lang->line('Note') . ': ' . $invoice['notes'] . '<br>'; ?>
+<?php if ($invoice['notes']) {
+    echo $this->lang->line('Note') . ': ' . $invoice['notes'] . '<br>';
+} ?>
 <div id="terms">
     <h5><?= $invoice['termtit'] ?></h5>
     <?= $invoice['terms'] ?>

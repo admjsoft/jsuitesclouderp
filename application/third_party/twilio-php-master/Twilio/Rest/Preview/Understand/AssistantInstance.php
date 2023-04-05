@@ -18,7 +18,7 @@ use Twilio\Version;
 
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
- * 
+ *
  * @property string accountSid
  * @property \DateTime dateCreated
  * @property \DateTime dateUpdated
@@ -32,7 +32,8 @@ use Twilio\Version;
  * @property string callbackUrl
  * @property string callbackEvents
  */
-class AssistantInstance extends InstanceResource {
+class AssistantInstance extends InstanceResource
+{
     protected $_fieldTypes = null;
     protected $_intents = null;
     protected $_modelBuilds = null;
@@ -43,13 +44,14 @@ class AssistantInstance extends InstanceResource {
 
     /**
      * Initialize the AssistantInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $sid The sid
-     * @return \Twilio\Rest\Preview\Understand\AssistantInstance 
+     * @return \Twilio\Rest\Preview\Understand\AssistantInstance
      */
-    public function __construct(Version $version, array $payload, $sid = null) {
+    public function __construct(Version $version, array $payload, $sid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -74,11 +76,12 @@ class AssistantInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Preview\Understand\AssistantContext Context for this
      *                                                          AssistantInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new AssistantContext($this->version, $this->solution['sid']);
         }
@@ -88,106 +91,117 @@ class AssistantInstance extends InstanceResource {
 
     /**
      * Fetch a AssistantInstance
-     * 
+     *
      * @return AssistantInstance Fetched AssistantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Update the AssistantInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return AssistantInstance Updated AssistantInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         return $this->proxy()->update($options);
     }
 
     /**
      * Deletes the AssistantInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->proxy()->delete();
     }
 
     /**
      * Access the fieldTypes
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\FieldTypeList 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\FieldTypeList
      */
-    protected function getFieldTypes() {
+    protected function getFieldTypes()
+    {
         return $this->proxy()->fieldTypes;
     }
 
     /**
      * Access the intents
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\IntentList 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\IntentList
      */
-    protected function getIntents() {
+    protected function getIntents()
+    {
         return $this->proxy()->intents;
     }
 
     /**
      * Access the modelBuilds
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\ModelBuildList 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\ModelBuildList
      */
-    protected function getModelBuilds() {
+    protected function getModelBuilds()
+    {
         return $this->proxy()->modelBuilds;
     }
 
     /**
      * Access the queries
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\QueryList 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\QueryList
      */
-    protected function getQueries() {
+    protected function getQueries()
+    {
         return $this->proxy()->queries;
     }
 
     /**
      * Access the assistantFallbackActions
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\AssistantFallbackActionsList 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\AssistantFallbackActionsList
      */
-    protected function getAssistantFallbackActions() {
+    protected function getAssistantFallbackActions()
+    {
         return $this->proxy()->assistantFallbackActions;
     }
 
     /**
      * Access the assistantInitiationActions
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\AssistantInitiationActionsList 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\AssistantInitiationActionsList
      */
-    protected function getAssistantInitiationActions() {
+    protected function getAssistantInitiationActions()
+    {
         return $this->proxy()->assistantInitiationActions;
     }
 
     /**
      * Access the dialogues
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\DialogueList 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\DialogueList
      */
-    protected function getDialogues() {
+    protected function getDialogues()
+    {
         return $this->proxy()->dialogues;
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -202,10 +216,11 @@ class AssistantInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

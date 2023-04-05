@@ -17,18 +17,17 @@ namespace Stripe;
  */
 class Capability extends ApiResource
 {
-    const OBJECT_NAME = 'capability';
-
     use ApiOperations\Update;
+    public const OBJECT_NAME = 'capability';
 
     /**
      * Possible string representations of a capability's status.
      * @link https://stripe.com/docs/api/capabilities/object#capability_object-status
      */
-    const STATUS_ACTIVE      = 'active';
-    const STATUS_INACTIVE    = 'inactive';
-    const STATUS_PENDING     = 'pending';
-    const STATUS_UNREQUESTED = 'unrequested';
+    public const STATUS_ACTIVE      = 'active';
+    public const STATUS_INACTIVE    = 'inactive';
+    public const STATUS_PENDING     = 'pending';
+    public const STATUS_UNREQUESTED = 'unrequested';
 
     /**
      * @return string The API URL for this Stripe account reversal.

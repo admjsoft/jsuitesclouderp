@@ -1,12 +1,10 @@
 <?php
 
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Templates_model extends CI_Model
 {
-
-
     /*Read the data from DB */
     public function get_template($start, $end)
     {
@@ -44,6 +42,4 @@ class Templates_model extends CI_Model
                 $this->lang->line('ERROR')));
         }
     }
-
-
 }

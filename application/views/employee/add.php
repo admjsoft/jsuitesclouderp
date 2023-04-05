@@ -80,11 +80,11 @@
                         <option value="0"><?php echo $this->lang->line('Default') ?></option>
                         <?php $loc = locations();
 
-                        foreach ($loc as $row) {
-                            echo ' <option value="' . $row['id'] . '"> ' . $row['cname'] . '</option>';
-                        }
+            foreach ($loc as $row) {
+                echo ' <option value="' . $row['id'] . '"> ' . $row['cname'] . '</option>';
+            }
 
-                        ?>
+            ?>
                     </select>
                 </div>
             </div>
@@ -166,6 +166,19 @@
             <div class="form-group row">
 
                 <label class="col-sm-2 col-form-label"
+                       for="salary_type">Salary Type</label>
+
+                <div class="col-sm-5">
+                    <select name="salary_type" class="form-control margin-bottom">
+                        <option value="0">Monthly</option>
+                        <option value="1">Daily</option>
+                        <option value="2">Hourly</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label class="col-sm-2 col-form-label"
                        for="phone"><?php echo $this->lang->line('Salary') ?></label>
 
                 <div class="col-sm-5">
@@ -192,6 +205,31 @@
             <div class="form-group row">
 
                 <label class="col-sm-2 col-form-label"
+                       for="epf_enabled">Enable EPF?</label>
+
+                <div class="col-sm-5">
+                    <select name="epf_enabled" class="form-control margin-bottom">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <label class="col-sm-2 col-form-label"
+                       for="hrdf_enabled">Enable HRDF?</label>
+
+                <div class="col-sm-5">
+                    <select name="hrdf_enabled" class="form-control margin-bottom">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <label class="col-sm-2 col-form-label"
                        for="name"><?php echo $this->lang->line('Department') ?></label>
 
                 <div class="col-sm-5">
@@ -200,11 +238,11 @@
                         <option value="0"><?php echo $this->lang->line('Default') . ' - ' . $this->lang->line('No') ?></option>
                         <?php
 
-                        foreach ($dept as $row) {
-                            echo ' <option value="' . $row['id'] . '"> ' . $row['val1'] . '</option>';
-                        }
+            foreach ($dept as $row) {
+                echo ' <option value="' . $row['id'] . '"> ' . $row['val1'] . '</option>';
+            }
 
-                        ?>
+            ?>
                     </select>
                 </div>
             </div>

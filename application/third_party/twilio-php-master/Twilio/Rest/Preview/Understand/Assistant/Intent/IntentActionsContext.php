@@ -18,16 +18,18 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class IntentActionsContext extends InstanceContext {
+class IntentActionsContext extends InstanceContext
+{
     /**
      * Initialize the IntentActionsContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $assistantSid The unique ID of the parent Assistant.
      * @param string $intentSid The unique ID of the Intent.
-     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentActionsContext 
+     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentActionsContext
      */
-    public function __construct(Version $version, $assistantSid, $intentSid) {
+    public function __construct(Version $version, $assistantSid, $intentSid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -38,11 +40,12 @@ class IntentActionsContext extends InstanceContext {
 
     /**
      * Fetch a IntentActionsInstance
-     * 
+     *
      * @return IntentActionsInstance Fetched IntentActionsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -61,12 +64,13 @@ class IntentActionsContext extends InstanceContext {
 
     /**
      * Update the IntentActionsInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return IntentActionsInstance Updated IntentActionsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array('Actions' => Serialize::jsonObject($options['actions']), ));
@@ -88,10 +92,11 @@ class IntentActionsContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

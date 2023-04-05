@@ -1,5 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Myapp extends CI_Controller
 {
@@ -43,7 +44,5 @@ class Myapp extends CI_Controller
                 $this->config->set_item('dformat2', "yy-mm-dd");
                 break;
         }
-
-
     }
 }

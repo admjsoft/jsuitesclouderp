@@ -13,7 +13,6 @@ class Barcode extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if ($this->aauth->get_user()->roleid < 4) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->load->model('barcode_model');

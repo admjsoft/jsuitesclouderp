@@ -1,4 +1,5 @@
 <?php
+
 include_once("../xlsxwriter.class.php");
 
 $header = array(
@@ -21,6 +22,3 @@ $writer->setAuthor('Some Author');
 $writer->writeSheet($data1, 'Sheet1', $header);
 $writer->writeSheet($data2, 'Sheet2');
 $writer->writeToFile('test.xlsx');
-
-
-

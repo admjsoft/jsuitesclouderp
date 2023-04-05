@@ -19,7 +19,7 @@ class WebhookEventTypeList extends PayPalModel
      * A list of webhook events.
      *
      * @param \PayPal\Api\WebhookEventType[] $event_types
-     * 
+     *
      * @return $this
      */
     public function setEventTypes($event_types)
@@ -67,5 +67,4 @@ class WebhookEventTypeList extends PayPalModel
             array_diff($this->getEventTypes(), array($webhookEventType))
         );
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 set_include_path(get_include_path() . PATH_SEPARATOR . "..");
 include_once("xlsxwriter.class.php");
 
@@ -15,8 +16,9 @@ $rows = array(
     array(110, 210, 310, 410, 510),
 );
 $writer->writeSheetHeader($sheet1, $header, $col_options = ['suppress_row' => true]);
-foreach ($rows as $row)
+foreach ($rows as $row) {
     $writer->writeSheetRow($sheet1, $row);
+}
 $writer->markMergedCell($sheet1, $start_row = 0, $start_col = 0, $end_row = 0, $end_col = 4);
 
 //----
@@ -43,5 +45,3 @@ $writer->writeSheetRow($sheet4, array(101, 'this text will wrap'), $row_options 
 $writer->writeSheetRow($sheet4, array(201, 'this text is hidden'), $row_options = array('height' => 30, 'hidden' => true));
 $writer->writeSheetRow($sheet4, array(301, 'this text will not wrap'), $row_options = array('height' => 30, 'collapsed' => true));
 $writer->writeToFile('xlsx-advanced.xlsx');
-
-

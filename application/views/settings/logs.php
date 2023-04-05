@@ -21,10 +21,9 @@
             </thead>
             <tbody>
             <?php foreach ($acts as $row) {
-
                 echo "<tr><td>" . $row['note'] . "</td><td>" . $row['created'] . "</td><td>" . $row['user'] . "</td></tr>";
             }
-            ?>
+                ?>
             </tbody>
 
         </table>

@@ -34,7 +34,7 @@
                             <?php
                             echo '<option value="' . $currency['key1'] . '">' . $currency['key1'] . '</option>';
 
-                            ?>
+                ?>
                             <option value=",">, (Comma)</option>
                             <option value=".">. (Dot)</option>
                             <option value="">None</option>
@@ -49,7 +49,7 @@
                     <div class="col-sm-6">
                         <select name="thous_sep" class="form-control">
                             <?php
-                            echo '<option value="' . $currency['key2'] . '">' . $currency['key2'] . '</option>'; ?>
+                echo '<option value="' . $currency['key2'] . '">' . $currency['key2'] . '</option>'; ?>
                             <option value=",">, (Comma)</option>
                             <option value=".">. (Dot)</option>
                             <option value="">None</option>
@@ -65,7 +65,7 @@
                     <div class="col-sm-6">
                         <select name="decimal" class="form-control">
                             <?php
-                            echo '<option value="' . $currency['url'] . '">' . $currency['url'] . '</option>'; ?>
+                echo '<option value="' . $currency['url'] . '">' . $currency['url'] . '</option>'; ?>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -83,8 +83,12 @@
                     <div class="col-sm-6">
                         <select name="spos" class="form-control">
                             <?php
-                            if ($currency['method'] == 'l') $method = '**Left**'; else $method = '**Right**';
-                            echo '<option value="' . $currency['method'] . '">' . $method . '</option>'; ?>
+                if ($currency['method'] == 'l') {
+                    $method = '**Left**';
+                } else {
+                    $method = '**Right**';
+                }
+                echo '<option value="' . $currency['method'] . '">' . $method . '</option>'; ?>
                             <option value="l">Left</option>
                             <option value="r">Right</option>
                         </select>
@@ -97,14 +101,14 @@
                     <div class="col-sm-6">
                         <select name="roundoff" class="form-control">
                             <?php
-                            if ($currency['other'] == 'PHP_ROUND_HALF_UP') {
-                                $method = '**ROUND_HALF_UP**';
-                            } elseif ($currency['other'] == 'PHP_ROUND_HALF_DOWN') {
-                                $method = '**ROUND_HALF_DOWN**';
-                            } else {
-                                $method = '**Off**';
-                            }
-                            echo '<option value="' . $currency['other'] . '">' . $method . '</option>'; ?>
+                if ($currency['other'] == 'PHP_ROUND_HALF_UP') {
+                    $method = '**ROUND_HALF_UP**';
+                } elseif ($currency['other'] == 'PHP_ROUND_HALF_DOWN') {
+                    $method = '**ROUND_HALF_DOWN**';
+                } else {
+                    $method = '**Off**';
+                }
+                echo '<option value="' . $currency['other'] . '">' . $method . '</option>'; ?>
                             <option value="">Off</option>
                             <option value="PHP_ROUND_HALF_UP">ROUND_HALF_UP</option>
                             <option value="PHP_ROUND_HALF_DOWN">ROUND_HALF_DOWN</option>
@@ -118,7 +122,7 @@
                     <div class="col-sm-6">
                         <select name="r_precision" class="form-control">
                             <?php
-                            echo '<option value="' . $currency['active'] . '">' . $currency['active'] . '</option>'; ?>
+                echo '<option value="' . $currency['active'] . '">' . $currency['active'] . '</option>'; ?>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>

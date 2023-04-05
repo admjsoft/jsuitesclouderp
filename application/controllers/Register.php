@@ -7,7 +7,6 @@ class Register extends CI_Controller
 {
     public function __construct()
     {
-
         parent::__construct();
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
@@ -23,7 +22,6 @@ class Register extends CI_Controller
     public function index()
     {
         if (!$this->aauth->premission(10)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
@@ -40,7 +38,6 @@ class Register extends CI_Controller
     public function view()
     {
         if (!$this->aauth->premission(10)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $status = $this->registerlog->view($this->input->post('rid'));
@@ -52,7 +49,6 @@ class Register extends CI_Controller
 
     public function status()
     {
-
         $status = $this->registerlog->check($this->aauth->get_user()->id);
         if ($status) {
             echo json_encode(array('cash' => $status['cash'], 'card' => $status['card'], 'bank' => $status['bank'], 'change' => $status['r_change'], 'date' => $status['o_date']));
@@ -62,7 +58,6 @@ class Register extends CI_Controller
 
     public function close()
     {
-
         $this->registerlog->close($this->aauth->get_user()->id);
         redirect('dashboard');
     }
@@ -70,7 +65,6 @@ class Register extends CI_Controller
 
     public function create()
     {
-
         if (!$this->aauth->premission(1)) {
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
@@ -84,14 +78,11 @@ class Register extends CI_Controller
             $cheque = (float)$this->input->post('cheque');
 
             if ($this->registerlog->create($this->aauth->get_user()->id, $cash, $card, $bank, $cheque)) {
-
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('ADDED') . " <a href='" . base_url() . "pos_invoices/create' class='btn btn-info btn-lg'><span class='icon-plus-circle' aria-hidden='true'></span> " . $this->lang->line('POS') . "  </a>"));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
             }
         } else {
-
-
             $head['title'] = "Add Register";
             $head['usernm'] = $this->aauth->get_user()->username;
             $this->load->view('fixed/header', $head);
@@ -104,13 +95,11 @@ class Register extends CI_Controller
     public function delete_i()
     {
         if (!$this->aauth->premission(10)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
         $id = $this->input->post('deleteid');
         if ($id) {
-
             $this->db->delete('gtg_register', array('id' => $id));
 
 
@@ -123,7 +112,6 @@ class Register extends CI_Controller
     public function load_list()
     {
         if (!$this->aauth->premission(10)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $list = $this->register->get_datatables();

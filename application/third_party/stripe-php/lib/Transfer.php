@@ -27,24 +27,23 @@ namespace Stripe;
  */
 class Transfer extends ApiResource
 {
-    const OBJECT_NAME = 'transfer';
-
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\NestedResource;
     use ApiOperations\Retrieve;
     use ApiOperations\Update;
+    public const OBJECT_NAME = 'transfer';
 
-    const PATH_REVERSALS = '/reversals';
+    public const PATH_REVERSALS = '/reversals';
 
     /**
      * Possible string representations of the source type of the transfer.
      * @link https://stripe.com/docs/api/transfers/object#transfer_object-source_type
      */
-    const SOURCE_TYPE_ALIPAY_ACCOUNT = 'alipay_account';
-    const SOURCE_TYPE_BANK_ACCOUNT   = 'bank_account';
-    const SOURCE_TYPE_CARD           = 'card';
-    const SOURCE_TYPE_FINANCING      = 'financing';
+    public const SOURCE_TYPE_ALIPAY_ACCOUNT = 'alipay_account';
+    public const SOURCE_TYPE_BANK_ACCOUNT   = 'bank_account';
+    public const SOURCE_TYPE_CARD           = 'card';
+    public const SOURCE_TYPE_FINANCING      = 'financing';
 
     /**
      * @param array|null $params

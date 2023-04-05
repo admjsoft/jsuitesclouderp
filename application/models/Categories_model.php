@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Categories_model extends CI_Model
 {
-
     public function category_list($type = 0, $rel = 0)
     {
         $query = $this->db->query("SELECT id,title
@@ -19,10 +18,14 @@ ORDER BY id DESC");
         $where = '';
 
 
-        if (!BDATA) $where = "WHERE  (loc=0) ";
+        if (!BDATA) {
+            $where = "WHERE  (loc=0) ";
+        }
         if ($this->aauth->get_user()->loc) {
             $where = "WHERE  (loc=" . $this->aauth->get_user()->loc . " ) ";
-            if (BDATA) $where = "WHERE  (loc=" . $this->aauth->get_user()->loc . " OR gtg_warehouse.loc=0) ";
+            if (BDATA) {
+                $where = "WHERE  (loc=" . $this->aauth->get_user()->loc . " OR gtg_warehouse.loc=0) ";
+            }
         }
 
 
@@ -36,10 +39,14 @@ ORDER BY id DESC");
     public function category_stock()
     {
         $whr = '';
-        if (!BDATA) $whr = "WHERE  (gtg_warehouse.loc=0) ";
+        if (!BDATA) {
+            $whr = "WHERE  (gtg_warehouse.loc=0) ";
+        }
         if ($this->aauth->get_user()->loc) {
             $whr = "WHERE  (gtg_warehouse.loc=" . $this->aauth->get_user()->loc . " ) ";
-            if (BDATA) $whr = "WHERE  (gtg_warehouse.loc=" . $this->aauth->get_user()->loc . " OR gtg_warehouse.loc=0) ";
+            if (BDATA) {
+                $whr = "WHERE  (gtg_warehouse.loc=" . $this->aauth->get_user()->loc . " OR gtg_warehouse.loc=0) ";
+            }
         }
 
         $query = $this->db->query("SELECT c.*,p.pc,p.salessum,p.worthsum,p.qty FROM gtg_product_cat AS c LEFT JOIN ( SELECT gtg_products.pcat,COUNT(gtg_products.pid) AS pc,SUM(gtg_products.product_price*gtg_products.qty) AS salessum, SUM(gtg_products.fproduct_price*gtg_products.qty) AS worthsum,SUM(gtg_products.qty) AS qty FROM gtg_products LEFT JOIN gtg_warehouse ON gtg_products.warehouse=gtg_warehouse.id  $whr GROUP BY gtg_products.pcat ) AS p ON c.id=p.pcat WHERE c.c_type=0");
@@ -49,10 +56,14 @@ ORDER BY id DESC");
     public function category_sub_stock($id = 0)
     {
         $whr = '';
-        if (!BDATA) $whr = "WHERE  (gtg_warehouse.loc=0) ";
+        if (!BDATA) {
+            $whr = "WHERE  (gtg_warehouse.loc=0) ";
+        }
         if ($this->aauth->get_user()->loc) {
             $whr = "WHERE  (gtg_warehouse.loc=" . $this->aauth->get_user()->loc . " ) ";
-            if (BDATA) $whr = "WHERE  (gtg_warehouse.loc=" . $this->aauth->get_user()->loc . " OR gtg_warehouse.loc=0) ";
+            if (BDATA) {
+                $whr = "WHERE  (gtg_warehouse.loc=" . $this->aauth->get_user()->loc . " OR gtg_warehouse.loc=0) ";
+            }
         }
 
         $whr2 = '';
@@ -67,7 +78,9 @@ ORDER BY id DESC");
         if ($this->aauth->get_user()->loc) {
             $where = ' WHERE c.loc=' . $this->aauth->get_user()->loc;
 
-            if (BDATA) $where = ' WHERE c.loc=' . $this->aauth->get_user()->loc . ' OR c.loc=0';
+            if (BDATA) {
+                $where = ' WHERE c.loc=' . $this->aauth->get_user()->loc . ' OR c.loc=0';
+            }
         } elseif (!BDATA) {
             $where = ' WHERE  c.loc=0';
         }
@@ -78,7 +91,9 @@ ORDER BY id DESC");
     public function cat_ware($id, $loc = 0)
     {
         $qj = '';
-        if ($loc) $qj = "AND w.loc='$loc'";
+        if ($loc) {
+            $qj = "AND w.loc='$loc'";
+        }
         $query = $this->db->query("SELECT c.id AS cid, w.id AS wid,c.title AS catt,w.title AS watt FROM gtg_products AS p LEFT JOIN gtg_product_cat AS c ON p.pcat=c.id LEFT JOIN gtg_warehouse AS w ON p.warehouse=w.id WHERE
 p.pid='$id' $qj ");
         return $query->row_array();
@@ -87,8 +102,12 @@ p.pid='$id' $qj ");
 
     public function addnew($cat_name, $cat_desc, $cat_type = 0, $cat_rel = 0)
     {
-        if (!$cat_type) $cat_type = 0;
-        if (!$cat_rel) $cat_rel = 0;
+        if (!$cat_type) {
+            $cat_type = 0;
+        }
+        if (!$cat_rel) {
+            $cat_rel = 0;
+        }
         $data = array(
             'title' => $cat_name,
             'extra' => $cat_desc,
@@ -133,7 +152,9 @@ p.pid='$id' $qj ");
 
     public function edit($catid, $product_cat_name, $product_cat_desc, $cat_type, $cat_rel, $old_cat_type)
     {
-        if (!$cat_rel) $cat_rel = 0;
+        if (!$cat_rel) {
+            $cat_rel = 0;
+        }
         $data = array(
             'title' => $product_cat_name,
             'extra' => $product_cat_desc,

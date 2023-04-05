@@ -16,18 +16,20 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
-class MessageInteractionContext extends InstanceContext {
+class MessageInteractionContext extends InstanceContext
+{
     /**
      * Initialize the MessageInteractionContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $serviceSid The service_sid
      * @param string $sessionSid The session_sid
      * @param string $participantSid The participant_sid
      * @param string $sid The sid
-     * @return \Twilio\Rest\Proxy\V1\Service\Session\Participant\MessageInteractionContext 
+     * @return \Twilio\Rest\Proxy\V1\Service\Session\Participant\MessageInteractionContext
      */
-    public function __construct(Version $version, $serviceSid, $sessionSid, $participantSid, $sid) {
+    public function __construct(Version $version, $serviceSid, $sessionSid, $participantSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -43,11 +45,12 @@ class MessageInteractionContext extends InstanceContext {
 
     /**
      * Fetch a MessageInteractionInstance
-     * 
+     *
      * @return MessageInteractionInstance Fetched MessageInteractionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -68,10 +71,11 @@ class MessageInteractionContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

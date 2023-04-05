@@ -19,7 +19,6 @@ class Projects extends CI_Controller
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->li_a = 'project';
-
     }
 
     //todo section
@@ -33,7 +32,6 @@ class Projects extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('projects/index', $data);
         $this->load->view('fixed/footer');
-
     }
 
     public function explore()
@@ -61,14 +59,11 @@ class Projects extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('projects/explore', $data);
         $this->load->view('fixed/footer');
-
     }
 
     public function addproject()
     {
-
         if ($this->input->post()) {
-
             $name = $this->input->post('name', true);
             $status = $this->input->post('status', true);
             $priority = $this->input->post('priority', true);
@@ -94,7 +89,6 @@ class Projects extends CI_Controller
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
             }
-
         } else {
             $this->load->model('employee_model', 'employee');
             $head['usernm'] = $this->aauth->get_user()->username;
@@ -104,15 +98,12 @@ class Projects extends CI_Controller
             $this->load->view('projects/addproject', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     //edit project
 
     public function edit()
     {
-
-
         if ($this->input->post()) {
             $pid = $this->input->post('p_id');
             $name = $this->input->post('name', true);
@@ -139,7 +130,6 @@ class Projects extends CI_Controller
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
             }
-
         } else {
             $id = $this->input->get('id');
             $this->load->model('employee_model', 'employee');
@@ -152,7 +142,6 @@ class Projects extends CI_Controller
             $this->load->view('projects/editproject', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
 
@@ -170,13 +159,11 @@ class Projects extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('projects/addtask', $data);
         $this->load->view('fixed/footer');
-
     }
 
 
     public function addmilestone()
     {
-
         if ($this->input->post()) {
             $name = $this->input->post('name');
             $stdate = $this->input->post('staskdate');
@@ -192,9 +179,7 @@ class Projects extends CI_Controller
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
             }
-
         } else {
-
             $this->load->model('employee_model', 'employee');
             $head['usernm'] = $this->aauth->get_user()->username;
             $data['emp'] = $this->employee->list_employee();
@@ -205,12 +190,10 @@ class Projects extends CI_Controller
             $this->load->view('projects/addmilestone', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function addactivity()
     {
-
         if ($this->input->post()) {
             $name = $this->input->post('name');
             $prid = $this->input->post('project');
@@ -220,9 +203,7 @@ class Projects extends CI_Controller
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
             }
-
         } else {
-
             $this->load->model('employee_model', 'employee');
             $head['usernm'] = $this->aauth->get_user()->username;
             $data['emp'] = $this->employee->list_employee();
@@ -233,7 +214,6 @@ class Projects extends CI_Controller
             $this->load->view('projects/addactivity', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function edittask()
@@ -251,14 +231,12 @@ class Projects extends CI_Controller
             $tdate = datefordatabase($tdate);
 
             if ($this->projects->edittask($id, $name, $status, $priority, $stdate, $tdate, $employee, $content)) {
-
                 $prid = @$this->session->userdata('pr_id');
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('UPDATED') . '&nbsp; Return to project <a href="' . base_url("projects/explore?id=" . $prid) . '" class="btn btn-primary btn-xs"><i class="icon-eye"></i> ' . $this->lang->line('Yes') . '</a>'));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
             }
         } else {
-
             $this->load->model('employee_model', 'employee');
 
             $head['usernm'] = $this->aauth->get_user()->username;
@@ -269,14 +247,12 @@ class Projects extends CI_Controller
             $data['task'] = $this->projects->viewtask($id);
             $data['emp'] = $this->employee->list_project_employee($id);
 
-            if ($data['task'])
-
-
+            if ($data['task']) {
                 $this->load->view('fixed/header', $head);
+            }
             $this->load->view('projects/edittask', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function save_addtask()
@@ -296,13 +272,10 @@ class Projects extends CI_Controller
         // $out=$this->projects->addtask($name, $status, $priority, $stdate, $tdate, $employee, $assign, $content, $prid, $milestone);
         // print_r($out);
         if ($this->projects->addtask($name, $status, $priority, $stdate, $tdate, $employee, $assign, $content, $prid, $milestone)) {
-
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('New Task Added') . '&nbsp; Return to project <a href="' . base_url("projects/explore?id=" . $prid) . '" class="btn btn-primary btn-xs"><i class="icon-eye"></i> ' . $this->lang->line('Yes') . '</a>'));
-
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
         }
-
     }
 
     public function set_task()
@@ -311,8 +284,6 @@ class Projects extends CI_Controller
         $stat = $this->input->post('stat');
         $this->tools->settask($id, $stat);
         echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('UPDATED'), 'pstatus' => 'Success'));
-
-
     }
 
     public function view_task()
@@ -326,12 +297,9 @@ class Projects extends CI_Controller
 
     public function projects_stats()
     {
-
         $project = $this->input->get('id');
         //echo $project;
         $this->projects->project_stats($project);
-
-
     }
 
     public function delete_i()
@@ -390,8 +358,6 @@ class Projects extends CI_Controller
         $tlist = '';
         $tc = 0;
         foreach ($tasks as $row) {
-
-
             $tlist .= '<a href="javascript:void(0)" class="list-group-item">
                       <div class="media">
                         <div class="media-left valign-middle"><i class="icon-bullhorn2 icon-bg-circle bg-cyan"></i></div>
@@ -405,8 +371,6 @@ class Projects extends CI_Controller
         }
 
         echo json_encode(array('tasks' => $tlist, 'tcount' => $tc));
-
-
     }
 
     //tasks
@@ -458,8 +422,6 @@ class Projects extends CI_Controller
             $fid = rand(100, 9999);
             $this->projects->meta_insert($id, 9, $fid, $files);
         }
-
-
     }
 
     public function set_note()
@@ -468,8 +430,6 @@ class Projects extends CI_Controller
         $stat = $this->input->post('content');
         $this->projects->setnote($id, $stat);
         echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('UPDATED'), 'pstatus' => 'Success'));
-
-
     }
 
     public function delete_file()
@@ -478,8 +438,6 @@ class Projects extends CI_Controller
         $pid = $this->input->post('project_id');
         $this->projects->deletefile($pid, $fileid);
         echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
-
-
     }
 
     public function delete_milestone()
@@ -490,8 +448,6 @@ class Projects extends CI_Controller
 
 
         echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
-
-
     }
 
 
@@ -507,12 +463,8 @@ class Projects extends CI_Controller
         if ($this->projects->add_comment($comment, $pid, $this->aauth->get_user()->id)) {
             echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('ADDED')));
         } else {
-
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
-
         }
-
-
     }
 
     public function progress()
@@ -520,7 +472,6 @@ class Projects extends CI_Controller
         $pid = $this->input->post('pid');
         $val = $this->input->post('val');
         $this->projects->progress($pid, $val);
-
     }
 
     public function task_stats()
@@ -545,6 +496,4 @@ class Projects extends CI_Controller
         $this->projects->clockout($id, $eid);
         redirect('projects/explore?id=' . $id);
     }
-
-
 }

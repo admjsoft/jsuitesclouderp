@@ -159,12 +159,12 @@
                                 <select name="customergroup" class="form-control">
                                     <?php
                                     echo '<option value="' . $customergroup['id'] . '">' . $customergroup['title'] . ' (S)</option>';
-                                    foreach ($customergrouplist as $row) {
-                                        $cid = $row['id'];
-                                        $title = $row['title'];
-                                        echo "<option value='$cid'>$title</option>";
-                                    }
-                                    ?>
+            foreach ($customergrouplist as $row) {
+                $cid = $row['id'];
+                $title = $row['title'];
+                echo "<option value='$cid'>$title</option>";
+            }
+            ?>
                                 </select>
 
 
@@ -177,9 +177,9 @@
                             <div class="col-sm-6">
                                 <select name="language" class="form-control b_input">
                                     <?php
-                                    echo '<option value="' . $customer['lang'] . '">-' . ucfirst($customer['lang']) . '-</option>';
-                                    echo $langs;
-                                    ?>
+            echo '<option value="' . $customer['lang'] . '">-' . ucfirst($customer['lang']) . '-</option>';
+            echo $langs;
+            ?>
                                 </select>
                             </div>
                         </div>
@@ -210,10 +210,8 @@
 
 
                             <?php }
-
-
-                        }
-                        ?>
+                            }
+            ?>
                     </div>
 
                     <div class="col-md-6">

@@ -11,8 +11,8 @@ class XLSXWriter
     //http://officeopenxml.com/SSstyles.php
     //------------------------------------------------------------------
     //http://office.microsoft.com/en-us/excel-help/excel-specifications-and-limits-HP010073849.aspx
-    const EXCEL_2007_MAX_ROW = 1048576;
-    const EXCEL_2007_MAX_COL = 16384;
+    public const EXCEL_2007_MAX_ROW = 1048576;
+    public const EXCEL_2007_MAX_COL = 16384;
     //------------------------------------------------------------------
     protected $author = 'Doc Author';
     protected $sheets = array();
@@ -123,8 +123,9 @@ class XLSXWriter
     protected function initializeSheet($sheet_name, $col_widths = array())
     {
         //if already initialized
-        if ($this->current_sheet == $sheet_name || isset($this->sheets[$sheet_name]))
+        if ($this->current_sheet == $sheet_name || isset($this->sheets[$sheet_name])) {
             return;
+        }
 
         $sheet_filename = $this->tempFilename();
         $sheet_xmlname = 'sheet' . (count($this->sheets) + 1) . ".xml";
@@ -194,8 +195,9 @@ class XLSXWriter
 
     public function writeSheetHeader($sheet_name, array $header_types, $col_options = null)
     {
-        if (empty($sheet_name) || empty($header_types) || !empty($this->sheets[$sheet_name]))
+        if (empty($sheet_name) || empty($header_types) || !empty($this->sheets[$sheet_name])) {
             return;
+        }
 
         $suppress_row = isset($col_options['suppress_row']) ? intval($col_options['suppress_row']) : false;
         if (is_bool($col_options)) {
@@ -224,8 +226,9 @@ class XLSXWriter
 
     public function writeSheetRow($sheet_name, array $row, $row_options = null)
     {
-        if (empty($sheet_name))
+        if (empty($sheet_name)) {
             return;
+        }
 
         self::initializeSheet($sheet_name);
         $sheet = &$this->sheets[$sheet_name];
@@ -266,8 +269,9 @@ class XLSXWriter
 
     protected function finalizeSheet($sheet_name)
     {
-        if (empty($sheet_name) || $this->sheets[$sheet_name]->finalized)
+        if (empty($sheet_name) || $this->sheets[$sheet_name]->finalized) {
             return;
+        }
 
         $sheet = &$this->sheets[$sheet_name];
 
@@ -301,8 +305,9 @@ class XLSXWriter
 
     public function markMergedCell($sheet_name, $start_cell_row, $start_cell_column, $end_cell_row, $end_cell_column)
     {
-        if (empty($sheet_name) || $this->sheets[$sheet_name]->finalized)
+        if (empty($sheet_name) || $this->sheets[$sheet_name]->finalized) {
             return;
+        }
 
         self::initializeSheet($sheet_name);
         $sheet = &$this->sheets[$sheet_name];
@@ -723,17 +728,39 @@ class XLSXWriter
     private static function determineNumberFormatType($num_format)
     {
         $num_format = preg_replace("/\[(Black|Blue|Cyan|Green|Magenta|Red|White|Yellow)\]/i", "", $num_format);
-        if ($num_format == 'GENERAL') return 'n_auto';
-        if ($num_format == '@') return 'n_string';
-        if ($num_format == '0') return 'n_numeric';
-        if (preg_match("/[H]{1,2}:[M]{1,2}/", $num_format)) return 'n_datetime';
-        if (preg_match("/[M]{1,2}:[S]{1,2}/", $num_format)) return 'n_datetime';
-        if (preg_match("/[YY]{2,4}/", $num_format)) return 'n_date';
-        if (preg_match("/[D]{1,2}/", $num_format)) return 'n_date';
-        if (preg_match("/[M]{1,2}/", $num_format)) return 'n_date';
-        if (preg_match("/$/", $num_format)) return 'n_numeric';
-        if (preg_match("/%/", $num_format)) return 'n_numeric';
-        if (preg_match("/0/", $num_format)) return 'n_numeric';
+        if ($num_format == 'GENERAL') {
+            return 'n_auto';
+        }
+        if ($num_format == '@') {
+            return 'n_string';
+        }
+        if ($num_format == '0') {
+            return 'n_numeric';
+        }
+        if (preg_match("/[H]{1,2}:[M]{1,2}/", $num_format)) {
+            return 'n_datetime';
+        }
+        if (preg_match("/[M]{1,2}:[S]{1,2}/", $num_format)) {
+            return 'n_datetime';
+        }
+        if (preg_match("/[YY]{2,4}/", $num_format)) {
+            return 'n_date';
+        }
+        if (preg_match("/[D]{1,2}/", $num_format)) {
+            return 'n_date';
+        }
+        if (preg_match("/[M]{1,2}/", $num_format)) {
+            return 'n_date';
+        }
+        if (preg_match("/$/", $num_format)) {
+            return 'n_numeric';
+        }
+        if (preg_match("/%/", $num_format)) {
+            return 'n_numeric';
+        }
+        if (preg_match("/0/", $num_format)) {
+            return 'n_numeric';
+        }
         return 'n_auto';
     }
 
@@ -747,27 +774,37 @@ class XLSXWriter
             $num_format = 'integer';
         }
 
-        if ($num_format == 'string') $num_format = '@';
-        else if ($num_format == 'integer') $num_format = '0';
-        else if ($num_format == 'date') $num_format = 'YYYY-MM-DD';
-        else if ($num_format == 'datetime') $num_format = 'YYYY-MM-DD HH:MM:SS';
-        else if ($num_format == 'price') $num_format = '#,##0.00';
-        else if ($num_format == 'dollar') $num_format = '[$$-1009]#,##0.00;[RED]-[$$-1009]#,##0.00';
-        else if ($num_format == 'euro') $num_format = '#,##0.00 [$€-407];[RED]-#,##0.00 [$€-407]';
+        if ($num_format == 'string') {
+            $num_format = '@';
+        } elseif ($num_format == 'integer') {
+            $num_format = '0';
+        } elseif ($num_format == 'date') {
+            $num_format = 'YYYY-MM-DD';
+        } elseif ($num_format == 'datetime') {
+            $num_format = 'YYYY-MM-DD HH:MM:SS';
+        } elseif ($num_format == 'price') {
+            $num_format = '#,##0.00';
+        } elseif ($num_format == 'dollar') {
+            $num_format = '[$$-1009]#,##0.00;[RED]-[$$-1009]#,##0.00';
+        } elseif ($num_format == 'euro') {
+            $num_format = '#,##0.00 [$€-407];[RED]-#,##0.00 [$€-407]';
+        }
         $ignore_until = '';
         $escaped = '';
         for ($i = 0, $ix = strlen($num_format); $i < $ix; $i++) {
             $c = $num_format[$i];
-            if ($ignore_until == '' && $c == '[')
+            if ($ignore_until == '' && $c == '[') {
                 $ignore_until = ']';
-            else if ($ignore_until == '' && $c == '"')
+            } elseif ($ignore_until == '' && $c == '"') {
                 $ignore_until = '"';
-            else if ($ignore_until == $c)
+            } elseif ($ignore_until == $c) {
                 $ignore_until = '';
-            if ($ignore_until == '' && ($c == ' ' || $c == '-' || $c == '(' || $c == ')') && ($i == 0 || $num_format[$i - 1] != '_'))
+            }
+            if ($ignore_until == '' && ($c == ' ' || $c == '-' || $c == '(' || $c == ')') && ($i == 0 || $num_format[$i - 1] != '_')) {
                 $escaped .= "\\" . $c;
-            else
+            } else {
                 $escaped .= $c;
+            }
         }
         return $escaped;
     }
@@ -803,9 +840,15 @@ class XLSXWriter
         //using 1900 as epoch, not 1904, ignoring 1904 special case
 
         # Special cases for Excel.
-        if ("$year-$month-$day" == '1899-12-31') return $seconds;    # Excel 1900 epoch
-        if ("$year-$month-$day" == '1900-01-00') return $seconds;    # Excel 1900 epoch
-        if ("$year-$month-$day" == '1900-02-29') return 60 + $seconds;    # Excel false leapday
+        if ("$year-$month-$day" == '1899-12-31') {
+            return $seconds;
+        }    # Excel 1900 epoch
+        if ("$year-$month-$day" == '1900-01-00') {
+            return $seconds;
+        }    # Excel 1900 epoch
+        if ("$year-$month-$day" == '1900-02-29') {
+            return 60 + $seconds;
+        }    # Excel false leapday
 
         # We calculate the date by calculating the number of days since the epoch
         # and adjust for the number of leap days. We calculate the number of leap
@@ -821,9 +864,15 @@ class XLSXWriter
         $mdays = array(31, ($leap ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
         # Some boundary checks
-        if ($year < $epoch || $year > 9999) return 0;
-        if ($month < 1 || $month > 12) return 0;
-        if ($day < 1 || $day > $mdays[$month - 1]) return 0;
+        if ($year < $epoch || $year > 9999) {
+            return 0;
+        }
+        if ($month < 1 || $month > 12) {
+            return 0;
+        }
+        if ($day < 1 || $day > $mdays[$month - 1]) {
+            return 0;
+        }
 
         # Accumulate the number of days since the epoch.
         $days = $day;    # Add days for current month

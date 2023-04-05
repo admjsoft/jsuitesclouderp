@@ -14,9 +14,7 @@ class Customers extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if (!$this->aauth->premission(3)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $this->load->library("Custom");
         $this->li_a = 'crm';
@@ -59,7 +57,9 @@ class Customers extends CI_Controller
         $data['custom_fields'] = $this->custom->view_fields_data($custid, 1);
         $head['title'] = 'View Customer';
         $this->load->view('fixed/header', $head);
-        if ($data['details']['id']) $this->load->view('customers/view', $data);
+        if ($data['details']['id']) {
+            $this->load->view('customers/view', $data);
+        }
         $this->load->view('fixed/footer');
     }
 
@@ -156,11 +156,9 @@ class Customers extends CI_Controller
         $custom = $this->input->post('c_field', true);
         $discount = $this->input->post('discount', true);
         $this->customers->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language, $create_login, $password, $docid, $custom, $discount);
-
-
     }
 
-    function sendSelected()
+    public function sendSelected()
     {
         if (!$this->aauth->premission(8)) {
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
@@ -179,7 +177,7 @@ class Customers extends CI_Controller
         }
     }
 
-    function sendSmsSelected()
+    public function sendSmsSelected()
     {
         if (!$this->aauth->premission(8)) {
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
@@ -192,9 +190,7 @@ class Customers extends CI_Controller
             $this->config->load('sms');
             $this->load->model('sms_model');
             foreach ($recipients as $row) {
-
                 $this->sms_model->send_sms($row['phone'], $message);
-
             }
         }
     }
@@ -268,7 +264,7 @@ class Customers extends CI_Controller
                 } else {
                     echo json_encode(array('status' => 'Error', 'message' => 'Error!'));
                 }
-            } else if ($this->input->post('cust')) {
+            } elseif ($this->input->post('cust')) {
                 $customers = $this->input->post('cust');
                 foreach ($customers as $row) {
                     $this->customers->delete($row);
@@ -586,7 +582,6 @@ class Customers extends CI_Controller
             $this->load->view('customers/editnote', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function addnote()
@@ -595,7 +590,6 @@ class Customers extends CI_Controller
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         if ($this->input->post('title')) {
-
             $title = $this->input->post('title', true);
             $cid = $this->input->post('id');
             $content = $this->input->post('content');
@@ -613,7 +607,6 @@ class Customers extends CI_Controller
             $this->load->view('customers/addnote', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function delete_note()
@@ -627,11 +620,9 @@ class Customers extends CI_Controller
         }
     }
 
-    function statement()
+    public function statement()
     {
-
         if ($this->input->post()) {
-
             $this->load->model('reports_model');
 
 
@@ -671,7 +662,6 @@ class Customers extends CI_Controller
             $this->load->view('customers/statement', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
 
@@ -731,14 +721,13 @@ class Customers extends CI_Controller
             $cid = $this->input->post('id');
             $config['upload_path'] = './userfiles/documents';
             $config['allowed_types'] = 'docx|docs|txt|pdf|xls';
-            $config['encrypt_name'] = TRUE;
+            $config['encrypt_name'] = true;
             $config['max_size'] = 3000;
             $this->load->library('upload', $config);
 
             if (!$this->upload->do_upload('userfile')) {
                 $data['response'] = 0;
                 $data['responsetext'] = 'File Upload Error';
-
             } else {
                 $data['response'] = 1;
                 $data['responsetext'] = 'Document Uploaded Successfully. <a href="documents?id=' . $cid . '"
@@ -751,15 +740,9 @@ class Customers extends CI_Controller
 
             $this->load->view('customers/adddocument', $data);
         } else {
-
-
             $this->load->view('customers/adddocument', $data);
-
-
         }
         $this->load->view('fixed/footer');
-
-
     }
 
 
@@ -784,7 +767,7 @@ class Customers extends CI_Controller
         $data['details'] = $this->customers->details($data['id']);
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->model('accounts_model');
-        $data['acclist'] = $this->accounts_model->accountslist((integer)$this->aauth->get_user()->loc);
+        $data['acclist'] = $this->accounts_model->accountslist((int)$this->aauth->get_user()->loc);
         $this->session->set_userdata("cid", $data['id']);
         $head['title'] = 'Bulk Payment Invoices';
         $this->load->view('fixed/header', $head);
@@ -826,5 +809,4 @@ class Customers extends CI_Controller
         $due = 0;
         echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Paid') . ' ' . amountExchange($amount), 'due' => amountExchange_s($due)));
     }
-
 }

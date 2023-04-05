@@ -16,7 +16,6 @@ class Settings extends CI_Controller
         }
 
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
@@ -40,7 +39,6 @@ class Settings extends CI_Controller
             $foundation = datefordatabase($this->input->post('foundation', true));
             $this->settings->update_company(1, $name, $phone, $email, $address, $city, $region, $country, $postbox, $taxid, $data_share, $foundation);
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'Company Settings';
             $data['company'] = $this->settings->company_details(1);
@@ -65,7 +63,6 @@ class Settings extends CI_Controller
 
             $this->settings->update_currency(1, $currency, $thous_sep, $deci_sep, $decimal, $spost, $roundoff, $r_precision);
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'Currency Settings';
             $data['currency'] = $this->settings->currency();
@@ -85,7 +82,6 @@ class Settings extends CI_Controller
             $dateformat = $this->input->post('dateformat');
             $this->settings->update_dtformat(1, $tzone, $dateformat);
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'Date Time Settings';
             $data['company'] = $this->settings->company_details(1);
@@ -134,7 +130,6 @@ class Settings extends CI_Controller
                 '<br>Your SMTP settings are invalid. If you think it is a correct configuration, please try with different ports like 465, 587.<br> Still not working please contact to your hosting provider. <br> Free SMTP services are generally blocked by many hosting providers.<br>Please do not send support request to Krish Support Team, we can not help in this matter because in the application email system is working perfectly.'));
             }
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'SMTP Config';
             $data['email'] = $this->settings->email_smtp();
@@ -210,13 +205,11 @@ class Settings extends CI_Controller
 
     public function delete_terms()
     {
-
         if ($this->input->post()) {
             $id = $this->input->post('deleteid');
 
 
             if ($this->settings->delete_terms($id)) {
-
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
@@ -324,7 +317,6 @@ class Settings extends CI_Controller
             $pos_prefix = $this->input->post('pos_prefix', true);
             $this->settings->update_prefix($invoiceprefix, $q_prefix, $p_prefix, $r_prefix, $s_prefix, $t_prefix, $o_prefix, $pos_prefix);
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'Prefix Settings';
             $data['company'] = $this->settings->company_details(1);
@@ -340,12 +332,10 @@ class Settings extends CI_Controller
         $this->li_a = 'localisation';
         $this->load->library("Common");
         if ($this->input->post()) {
-
             $lang = $this->input->post('language', true);
 
             $this->settings->update_language(1, $lang);
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'Billing & TAX Settings';
             $data['company'] = $this->settings->company_details(1);
@@ -365,7 +355,6 @@ class Settings extends CI_Controller
             $sms = $this->input->post('sms');
             $this->settings->update_automail($email, $sms);
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $head['title'] = 'Auto Email SMS Settings';
             $data['auto'] = $this->settings->automail();
@@ -396,7 +385,6 @@ class Settings extends CI_Controller
             $ttype2 = $this->input->post('ttype2');
             $this->settings->add_slab($tname, $trate, $ttype, $ttype2);
         } else {
-
             $data['catlist'] = $this->settings->slabs();
             $head['title'] = "TAX Slabs";
             $head['usernm'] = $this->aauth->get_user()->username;
@@ -408,13 +396,11 @@ class Settings extends CI_Controller
 
     public function taxslabs_delete()
     {
-
         if ($this->input->post()) {
             $id = $this->input->post('deleteid');
 
 
             if ($this->settings->delete_slab($id)) {
-
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
@@ -443,7 +429,6 @@ class Settings extends CI_Controller
 
             $this->plugins->update_api(60, $wid, '', 1, '', '');
         } else {
-
             $this->db->select('*');
             $this->db->from('gtg_warehouse');
 
@@ -476,8 +461,6 @@ class Settings extends CI_Controller
             $shiptax_type = $this->input->post('shiptax_type');
             $shiptax_rate = $this->input->post('shiptax_rate');
             switch ($discstatus) {
-
-
                 case 'flat':
                     $discstatus_name = $this->lang->line('Flat Discount') . ' ' . $this->lang->line('After TAX');
                     break;
@@ -770,6 +753,12 @@ FROM gtg_invoices AS i LEFT JOIN gtg_customers AS c ON i.csd=c.id GROUP BY  i.cs
             $data = $this->input->post('data');
             $data['standard_working_hours'] = (int)$data['standard_working_hours'];
             $data['report_show_zero'] = (bool)$data['report_show_zero'];
+            $data['ordinary_rate_pay_month'] = (float)$data['ordinary_rate_pay_month'];
+            $data['ordinary_rate_pay_day'] = (float)$data['ordinary_rate_pay_day'];
+            $data['ordinary_rate_pay_hour'] = (float)$data['ordinary_rate_pay_hour'];
+            $data['working_days'] = (int)$data['working_days'];
+            $data['wage_type'] = (int)$data['wage_type'];
+            $data['compensation_rounding'] = (int)$data['compensation_rounding'];
             $this->general_settings->update_settings('general-payroll', $data);
         } else {
             $head['usernm'] = $this->aauth->get_user()->username;
@@ -779,6 +768,50 @@ FROM gtg_invoices AS i LEFT JOIN gtg_customers AS c ON i.csd=c.id GROUP BY  i.cs
 
             $this->load->view('fixed/header', $head);
             $this->load->view('settings/payroll', $data);
+            $this->load->view('fixed/footer');
+        }
+    }
+
+    public function epf_settings()
+    {
+        $this->load->model('general_settings_model', 'general_settings');
+        $this->li_a = 'payment';
+        if ($this->input->post()) {
+            $data = $this->input->post('data');
+            $data['employer_rate'] = (float)$data['employer_rate'];
+            $data['employer_addon_percentage'] = (float)$data['employer_addon_percentage'];
+            $data['non_malaysian_epf'] = (bool)$data['non_malaysian_epf'];
+            $this->general_settings->update_settings('epf-settings', $data);
+        } else {
+            $head['usernm'] = $this->aauth->get_user()->username;
+            $head['title'] = 'EPF Settings';
+            $data['data'] = $this->general_settings->get_settings('epf-settings')[0];
+            $data['data']['data'] = json_decode($data['data']['data_json'], true);
+
+            $this->load->view('fixed/header', $head);
+            $this->load->view('settings/epf', $data);
+            $this->load->view('fixed/footer');
+        }
+    }
+
+    public function overtime_settings()
+    {
+        $this->load->model('general_settings_model', 'general_settings');
+        $this->li_a = 'payment';
+        if ($this->input->post()) {
+            $data = $this->input->post('data');
+            $data['normal_rate'] = (float)$data['normal_rate'];
+            $data['public_holiday_rate'] = (float)$data['public_holiday_rate'];
+            $data['extra_rate'] = (float)$data['extra_rate'];
+            $this->general_settings->update_settings('overtime-settings', $data);
+        } else {
+            $head['usernm'] = $this->aauth->get_user()->username;
+            $head['title'] = 'Overtime Settings';
+            $data['data'] = $this->general_settings->get_settings('overtime-settings')[0];
+            $data['data']['data'] = json_decode($data['data']['data_json'], true);
+
+            $this->load->view('fixed/header', $head);
+            $this->load->view('settings/overtime', $data);
             $this->load->view('fixed/footer');
         }
     }

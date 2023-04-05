@@ -1,4 +1,5 @@
 <?php
+
 $lang['Date'] = "日付";
 $lang['Edit'] = "編集する";
 $lang['employee_login_panel'] = "従業員ログインパネル";

@@ -18,17 +18,15 @@ class Billing extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->config->set_item('csrf_protection', FALSE);
+        $this->config->set_item('csrf_protection', false);
         $this->load->model('invoices_model', 'invocies');
         $this->load->model('billing_model', 'billing');
         $this->load->library("Aauth");
         $this->load->library("Custom");
-
     }
 
     public function view()
     {
-
         if (!$this->input->get()) {
             exit();
         }
@@ -39,7 +37,6 @@ class Billing extends CI_Controller
         $validtoken = hash_hmac('ripemd160', $tid, $this->config->item('encryption_key'));
 
         if (hash_equals($token, $validtoken)) {
-
             $this->load->model('accounts_model');
 
 
@@ -52,7 +49,9 @@ class Billing extends CI_Controller
             $data['products'] = $this->invocies->invoice_products($tid);
             $data['activity'] = $this->invocies->invoice_transactions($tid);
             $data['attach'] = $this->invocies->attach($tid);
-            if (CUSTOM) $data['c_custom_fields'] = $this->custom->view_fields_data($data['invoice']['cid'], 1, 1);
+            if (CUSTOM) {
+                $data['c_custom_fields'] = $this->custom->view_fields_data($data['invoice']['cid'], 1, 1);
+            }
             $data['gateway'] = $this->billing->gateway_list('Yes');
 
 
@@ -64,7 +63,6 @@ class Billing extends CI_Controller
             $this->load->view('billing/view', $data);
             $this->load->view('billing/footer');
         }
-
     }
 
 
@@ -93,7 +91,6 @@ class Billing extends CI_Controller
             $this->load->view('billing/quoteview', $data);
             $this->load->view('billing/footer');
         }
-
     }
 
     public function purchase()
@@ -167,7 +164,7 @@ class Billing extends CI_Controller
         $validtoken = hash_hmac('ripemd160', $tid, $this->config->item('encryption_key'));
         if (hash_equals($token, $validtoken)) {
             switch ($pay_gateway) {
-                case 1 :
+                case 1:
                     $this->card();
                     break;
             }
@@ -277,16 +274,11 @@ class Billing extends CI_Controller
             $pdf->WriteHTML($html);
 
             if ($this->input->get('d')) {
-
                 $pdf->Output('Quote_#' . $tid . '.pdf', 'D');
             } else {
                 $pdf->Output('Quote_#' . $tid . '.pdf', 'I');
             }
-
-
         }
-
-
     }
 
 
@@ -332,17 +324,13 @@ class Billing extends CI_Controller
             $pdf->WriteHTML($html);
 
             if ($this->input->get('d')) {
-
                 $pdf->Output('Purchase_#' . $tid . '.pdf', 'D');
             } else {
                 $pdf->Output('Purchase_#' . $tid . '.pdf', 'I');
             }
-
-
         }
-
     }
- 
+
     public function printstockreturn()
     {
         if (!$this->input->get()) {
@@ -454,7 +442,7 @@ class Billing extends CI_Controller
             case 9:
                 $fname = 'ipay88';
                 break;
-            default :
+            default:
                 $fname = 'stripe';
                 break;
         }
@@ -462,11 +450,8 @@ class Billing extends CI_Controller
         $pay_settings = $this->billing->pay_settings();
         $data['pay_setting']=$pay_settings;
 
-        if(isset($_GET)){
-
-        }
-        elseif(isset($_POST)){
-
+        if (isset($_GET)) {
+        } elseif (isset($_POST)) {
         }
         $data['gateway'] = $this->billing->gateway($data['gid']);
         if ($online_pay['enable'] == 1) {
@@ -548,7 +533,6 @@ class Billing extends CI_Controller
 
             if ($gateway > 1) {
                 if ($response->isSuccessful()) {
-
                     $amount_o = rev_amountExchange_s($amount_o, $customer['multi'], $customer['loc']);
                     if ($this->billing->paynow($tid, $amount_o, $note, $pmethod, $customer['loc'])) {
                         header('Content-Type: application/json');
@@ -569,13 +553,11 @@ class Billing extends CI_Controller
                     header('Content-Type: application/json');
                     echo json_encode(array('status' => 'Success', 'clientSecret' => $response['clientSecret'], 'message' =>
                         $this->lang->line('Thank you for the payment') . " <a href='" . base_url('billing/view?id=' . $tid . '&token=' . $hash) . "' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> " . $this->lang->line('View') . "</a>"));
-
                 }
             } elseif ($gateway == 1 and @$response['status'] == 'error') {
                 header('Content-Type: application/json');
                 echo json_encode(array('error' => $response['message']));
             }
-
         }
     }
 
@@ -604,8 +586,8 @@ class Billing extends CI_Controller
                         return array('status' => 'succeeded', 'paid_amount' => $intent->amount, 'clientSecret' => $intent->client_secret);
                         break;
                 }
-                // After create, if the PaymentIntent's status is succeeded, fulfill the order.
-            } else if ($token_id) {
+            // After create, if the PaymentIntent's status is succeeded, fulfill the order.
+            } elseif ($token_id) {
                 // Confirm the PaymentIntent to finalize payment after handling a required action
                 // on the client.
 
@@ -618,7 +600,6 @@ class Billing extends CI_Controller
                         return array('status' => 'succeeded', 'paid_amount' => $intent->amount, 'clientSecret' => $intent->client_secret);
                         break;
                 }
-
             }
 
             $output = $this->generateResponse($intent);
@@ -626,9 +607,7 @@ class Billing extends CI_Controller
             echo json_encode($output);
         } catch (Stripe\Exception\CardException $e) {
             return array('status' => 'error', 'paid_amount' => 0, 'message' => $e->getMessage());
-
         }
-
     }
 
 
@@ -702,14 +681,11 @@ class Billing extends CI_Controller
             'card' => $card,
         ));
         return $transaction->send();
-
     }
 
 
     private function securepay($cardNumber, $nmonth, $nyear, $cardCVC, $amount, $tid, $gateway_data)
     {
-
-
         $gateway = \Omnipay\Omnipay::create('SecurePay_SecureXML');
         $gateway->setMerchantId($gateway_data['key1']);
         $gateway->setTransactionPassword($gateway_data['key2']);
@@ -738,8 +714,6 @@ class Billing extends CI_Controller
 
     private function twocheckout($auth_token, $amount, $tid, $gateway_data, $customer)
     {
-
-
         $gateway = Omnipay::create('TwoCheckoutPlus_Token');
         $gateway->setAccountNumber($gateway_data['extra']);
         $gateway->setTestMode($gateway_data['dev_mode']);
@@ -766,14 +740,11 @@ class Billing extends CI_Controller
             'amount' => $amount,
         );
         return $gateway->purchase($purchase_request_data)->send();
-
-
     }
 
 
     private function paypal($cardNumber, $nmonth, $nyear, $cardCVC, $amount, $tid, $gateway_data, $customer)
     {
-
         $gateway = Omnipay::create('PayPal_Rest');
         // Initialise the gateway
         $gateway->initialize(array(
@@ -818,13 +789,11 @@ class Billing extends CI_Controller
             $this->load->view('payment/public_bank_view', $data);
             $this->load->view('billing/footer');
         }
-
     }
 
 
     public function recharge()
     {
-
         if (!$this->input->get()) {
             exit();
         }
@@ -864,7 +833,7 @@ class Billing extends CI_Controller
             case 8:
                 $fname = 'razor';
                 break;
-            default :
+            default:
                 $fname = 'stripe';
                 break;
         }
@@ -877,7 +846,6 @@ class Billing extends CI_Controller
         } else {
             echo '<h3>' . $this->lang->line('Online Payment Service') . '</h3>';
         }
-
     }
 
     public function process_recharge()
@@ -913,7 +881,6 @@ class Billing extends CI_Controller
 
 
         switch ($gateway) {
-
             case 1:
                 //       $response = $this->stripe($this->input->post('stripeToken', true), $amount, $gateway_data, $tid, $customer);
 
@@ -935,26 +902,20 @@ class Billing extends CI_Controller
             case 6:
                 $response = $this->twocheckout($this->input->post('auth_token', true), $amount, $tid, $gateway_data, $customer);
                 break;
-
         }
 
         // Process response
         if ($gateway > 1) {
             if ($response->isSuccessful()) {
-
                 if ($this->billing->recharge_done($tid, $amount_o)) {
                     header('Content-Type: application/json');
                     echo json_encode(array('status' => 'Success', 'message' =>
                         $this->lang->line('Thank you for the payment') . " <a href='" . base_url('crm/payments/recharge') . "' class='btn btn-info btn-lg'><span class='icon-file-text2' aria-hidden='true'></span> " . $this->lang->line('View') . "</a>"));
                 }
-
             } elseif ($response->isRedirect()) {
-
                 // Redirect to offsite payment gateway
                 $response->redirect();
-
             } else {
-
                 // Payment failed
                 echo json_encode(array('status' => 'Error', 'message' =>
                     $this->lang->line('Payment failed')));
@@ -970,13 +931,10 @@ class Billing extends CI_Controller
             header('Content-Type: application/json');
             echo json_encode(array('error' => $response['message']));
         }
-
-
     }
 
     public function secureprocess()
     {
-
         $gid = $this->input->get('g', true);
         //payu
         if ($gid == 7) {
@@ -991,7 +949,7 @@ class Billing extends CI_Controller
             $gateway_data = $this->billing->gateway($gid);
             $salt = $gateway_data['key2'];
 
-// Salt should be same Post Request
+            // Salt should be same Post Request
 
             if ($this->input->post('additionalCharges', true)) {
                 $additionalCharges = $this->input->post("additionalCharges", true);
@@ -1002,8 +960,7 @@ class Billing extends CI_Controller
             $hash = hash("sha512", $retHashSeq);
             if ($hash != $posted_hash) {
                 echo "Invalid Transaction. Please try again";
-            } elseif($status=='success') {
-
+            } elseif ($status=='success') {
                 //tt
                 $tid = $this->input->get('inv', true);
                 $customer = $this->invocies->invoice_details($tid);
@@ -1016,18 +973,15 @@ class Billing extends CI_Controller
                 if (number_format($amount_t, 2, '.', '') == $amount) {
                     $amount = number_format($amount_o, 2, '.', '');
                     if ($this->billing->paynow($customer['iid'], $amount, $note, $pmethod, $customer['loc'])) {
-
                         redirect(base_url('billing/view?id=' . $tid . '&token=' . $validtoken));
                     }
                 }
             } else {
-                   $tid = $this->input->get('inv', true);
-                   $validtoken = hash_hmac('ripemd160', $tid, $this->config->item('encryption_key'));
+                $tid = $this->input->get('inv', true);
+                $validtoken = hash_hmac('ripemd160', $tid, $this->config->item('encryption_key'));
                 echo "Invalid Transaction. Please try again";
-                    redirect(base_url('billing/view?id=' . $tid . '&token=' . $validtoken));
+                redirect(base_url('billing/view?id=' . $tid . '&token=' . $validtoken));
             }
-
-
         } else {
             $data['gateway_data'] = $this->billing->gateway($gid);
             $data['tid'] = $this->input->get('inv', true);
@@ -1059,7 +1013,7 @@ class Billing extends CI_Controller
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');
 
-// Set some example data for the payment.
+        // Set some example data for the payment.
         $customer = $this->invocies->invoice_details($invoice);
         if (!$customer['tid']) {
             exit();
@@ -1069,13 +1023,11 @@ class Billing extends CI_Controller
             $multi_currency = $this->invocies->currency_d($customer['multi']);
             //    $amount =  $amount;
             $gateway_data['currency'] = $multi_currency['code'];
-
         }
         if ($customer['loc'] > 0) {
             $multi_currency = $this->invocies->currency_d($customer['multi'], $customer['loc']);
             //        $amount =  $amount;
             $gateway_data['currency'] = $multi_currency['code'];
-
         }
         $validtoken = hash_hmac('ripemd160', $invoice, $this->config->item('encryption_key'));
         $surcharge = ($amount * $gateway_data['surcharge']) / 100;
@@ -1083,7 +1035,6 @@ class Billing extends CI_Controller
         $amount = number_format($amount_t, 2, '.', '');
 
         if (hash_equals($token, $validtoken)) {
-
             $amountPayable = $amount;
             $invoiceNumber = $invoice;
 
@@ -1116,8 +1067,6 @@ class Billing extends CI_Controller
             header('location:' . $payment->getApprovalLink());
             exit(1);
         }
-
-
     }
 
     public function gateway_response()
@@ -1165,7 +1114,6 @@ class Billing extends CI_Controller
                         $note .= ' (Currency Conversion Applied)';
                     }
                     if ($customer['loc'] > 0) {
-
                         $note .= ' (Currency Conversion Applied)';
                     }
                     $amount = $amount_o / (($gateway_data['surcharge'] / 100) + 1);
@@ -1201,12 +1149,11 @@ class Billing extends CI_Controller
 
     public function stripe_api_response()
     {
-
         $data['gateway'] = $this->billing->gateway(1);
         echo json_encode(['publishableKey' => $data['gateway']['key2']]);
     }
 
-    function generateResponse($intent)
+    public function generateResponse($intent)
     {
         switch ($intent->status) {
             case "requires_action":
@@ -1229,5 +1176,4 @@ class Billing extends CI_Controller
                 return ['clientSecret' => $intent->client_secret];
         }
     }
-
 }

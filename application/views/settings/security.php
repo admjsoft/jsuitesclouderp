@@ -50,13 +50,12 @@
                         <select name="captcha" class="form-control">
 
                             <?php switch ($captcha['captcha']) {
-                                case 1 :
+                                case 1:
                                     echo '<option value="1">--Yes--</option>';
                                     break;
-                                case 0 :
+                                case 0:
                                     echo '<option value="0">--No--</option>';
                                     break;
-
                             } ?>
                             <option value="1">Yes</option>
                             <option value="0">No</option>

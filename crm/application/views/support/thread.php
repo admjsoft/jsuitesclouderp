@@ -6,7 +6,7 @@
 
             <div class="message">' . $responsetext . '</div>
         </div>';
-        } else if ($response == 0) {
+        } elseif ($response == 0) {
             echo '<div id="notify" class="alert alert-danger">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
 
@@ -18,13 +18,12 @@
 
             <div class="message"></div>
         </div>';
-
         } ?>
         <div class="grid_3 grid_4"><h4><?php echo $thread_info['subject'] ?></h4>
             <p class="card card-block"><?php echo '<strong>Created on</strong> ' . $thread_info['created'];
-                echo '<br><strong>Customer</strong> ' . $thread_info['name'];
-                echo '<br><strong>Status</strong> <span id="pstatus">' . $thread_info['status']
-                ?></span></p>
+        echo '<br><strong>Customer</strong> ' . $thread_info['name'];
+        echo '<br><strong>Status</strong> <span id="pstatus">' . $thread_info['status']
+        ?></span></p>
             <?php foreach ($thread_list as $row) { ?>
 
 
@@ -33,19 +32,25 @@
 
                     <div class="col-sm-10">
                         <div class="card card-block"><?php
-                            if ($row['custo']) echo 'Customer <strong>' . $row['custo'] . '</strong> Replied<br><br>';
+                    if ($row['custo']) {
+                        echo 'Customer <strong>' . $row['custo'] . '</strong> Replied<br><br>';
+                    }
 
-                            if ($row['emp']) echo 'Employee <strong>' . $row['emp'] . '</strong> Replied<br><br>';
+                    if ($row['emp']) {
+                        echo 'Employee <strong>' . $row['emp'] . '</strong> Replied<br><br>';
+                    }
 
-                            echo $row['message'] . '';
+                    echo $row['message'] . '';
 
-                            if ($row['attach']) echo '<br><br><strong>Attachment: </strong><a href="' . substr_replace(base_url(), '', -4) . 'userfiles/support/' . $row['attach'] . '">' . $row['attach'] . '</a><br><br>';
-                            ?></div>
+                if ($row['attach']) {
+                    echo '<br><br><strong>Attachment: </strong><a href="' . substr_replace(base_url(), '', -4) . 'userfiles/support/' . $row['attach'] . '">' . $row['attach'] . '</a><br><br>';
+                }
+                ?></div>
                     </div>
                 </div>
             <?php }
 
-           {
+            {
                 echo form_open_multipart('tickets/thread?id=' . $thread_info['id']); ?>
 
                 <h5><?php echo $this->lang->line('Your Response') ?></h5>

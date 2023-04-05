@@ -15,38 +15,39 @@ namespace chillerlan\QRCodeTest\Output;
 use chillerlan\QRCode\Output\QRImage;
 use chillerlan\QRCode\QRCode;
 
-class QRImageTest extends QROutputTestAbstract{
+class QRImageTest extends QROutputTestAbstract
+{
+    protected $FQCN = QRImage::class;
 
-	protected $FQCN = QRImage::class;
+    public function types()
+    {
+        return [
+            [QRCode::OUTPUT_IMAGE_PNG],
+            [QRCode::OUTPUT_IMAGE_GIF],
+            [QRCode::OUTPUT_IMAGE_JPG],
+        ];
+    }
 
-	public function types(){
-		return [
-			[QRCode::OUTPUT_IMAGE_PNG],
-			[QRCode::OUTPUT_IMAGE_GIF],
-			[QRCode::OUTPUT_IMAGE_JPG],
-		];
-	}
+    /**
+     * @dataProvider types
+     * @param $type
+     */
+    public function testImageOutput($type)
+    {
+        $this->options->outputType = $type;
+        $this->options->cachefile  = $this::cachefile.$type;
+        $this->setOutputInterface();
+        $this->outputInterface->dump();
 
-	/**
-	 * @dataProvider types
-	 * @param $type
-	 */
-	public function testImageOutput($type){
-		$this->options->outputType = $type;
-		$this->options->cachefile  = $this::cachefile.$type;
-		$this->setOutputInterface();
-		$this->outputInterface->dump();
+        $this->options->cachefile = null;
+        $this->options->imageBase64 = false;
+        $this->setOutputInterface();
+        $img = $this->outputInterface->dump();
 
-		$this->options->cachefile = null;
-		$this->options->imageBase64 = false;
-		$this->setOutputInterface();
-		$img = $this->outputInterface->dump();
+        if ($type === QRCode::OUTPUT_IMAGE_JPG) { // jpeg encoding may cause different results
+            $this->markAsRisky();
+        }
 
-		if($type === QRCode::OUTPUT_IMAGE_JPG){ // jpeg encoding may cause different results
-			$this->markAsRisky();
-		}
-
-		$this->assertSame($img, file_get_contents($this::cachefile.$type));
-	}
-
+        $this->assertSame($img, file_get_contents($this::cachefile.$type));
+    }
 }

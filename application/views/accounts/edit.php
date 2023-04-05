@@ -20,8 +20,8 @@
             <div class="card-body">
                 <?php
                 $attributes = array('class' => 'form-horizontal', 'id' => 'data_form');
-                echo form_open('', $attributes);
-                ?>
+            echo form_open('', $attributes);
+            ?>
 
 
                 <input type="hidden" name="acid" value="<?php echo $account['id'] ?>">
@@ -78,14 +78,16 @@
                             <option value='<?php echo $account['loc'] ?>'><?php echo $this->lang->line('Do not change') ?></option>
 
                             <?php
-                            if (!$this->aauth->get_user()->loc) echo "<option value='0'>" . $this->lang->line('All') . "</option>";
-                            foreach ($locations as $row) {
-                                $cid = $row['id'];
-                                $acn = $row['cname'];
-                                $holder = $row['address'];
-                                echo "<option value='$cid'>$acn - $holder</option>";
-                            }
-                            ?>
+                        if (!$this->aauth->get_user()->loc) {
+                            echo "<option value='0'>" . $this->lang->line('All') . "</option>";
+                        }
+                        foreach ($locations as $row) {
+                            $cid = $row['id'];
+                            $acn = $row['cname'];
+                            $holder = $row['address'];
+                            echo "<option value='$cid'>$acn - $holder</option>";
+                        }
+            ?>
                         </select>
 
 

@@ -20,8 +20,8 @@
             <div class="card-body">
                 <?php
                 $attributes = array('class' => 'form-horizontal form-simple', 'id' => 'login_form');
-                echo form_open('products/standard_label');
-                ?>
+            echo form_open('products/standard_label');
+            ?>
                 <input type="hidden" name="act" value="add_product">
                 <div class="form-group row">
 
@@ -31,12 +31,12 @@
                         <select id="wfrom" name="from_warehouse" class="form-control">
                             <option value='0'>Select</option>
                             <?php
-                            foreach ($warehouse as $row) {
-                                $cid = $row['id'];
-                                $title = $row['title'];
-                                echo "<option value='$cid'>$title</option>";
-                            }
-                            ?>
+                        foreach ($warehouse as $row) {
+                            $cid = $row['id'];
+                            $title = $row['title'];
+                            echo "<option value='$cid'>$title</option>";
+                        }
+            ?>
                         </select>
 
 

@@ -6,16 +6,16 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit969ee90fb9bdfa97998d6960352c467c
 {
-    public static $prefixLengthsPsr4 = array (
-        'P' => 
-        array (
+    public static $prefixLengthsPsr4 = array(
+        'P' =>
+        array(
             'Picqer\\Barcode\\' => 15,
         ),
     );
 
-    public static $prefixDirsPsr4 = array (
-        'Picqer\\Barcode\\' => 
-        array (
+    public static $prefixDirsPsr4 = array(
+        'Picqer\\Barcode\\' =>
+        array(
             0 => __DIR__ . '/..' . '/picqer/php-barcode-generator/src',
         ),
     );
@@ -25,7 +25,6 @@ class ComposerStaticInit969ee90fb9bdfa97998d6960352c467c
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit969ee90fb9bdfa97998d6960352c467c::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit969ee90fb9bdfa97998d6960352c467c::$prefixDirsPsr4;
-
         }, null, ClassLoader::class);
     }
 }

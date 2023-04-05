@@ -4,7 +4,6 @@ namespace PayPal\Api;
 
 use PayPal\Common\PayPalResourceModel;
 use PayPal\Validation\ArgumentValidator;
-use PayPal\Api\WebhookEventTypeList;
 use PayPal\Rest\ApiContext;
 
 /**
@@ -24,7 +23,7 @@ class WebhookEventType extends PayPalResourceModel
      * The unique event name.
      *
      * @param string $name
-     * 
+     *
      * @return $this
      */
     public function setName($name)
@@ -47,7 +46,7 @@ class WebhookEventType extends PayPalResourceModel
      * A human-readable description of the event.
      *
      * @param string $description
-     * 
+     *
      * @return $this
      */
     public function setDescription($description)
@@ -70,7 +69,7 @@ class WebhookEventType extends PayPalResourceModel
      * The status of a webhook event.
      *
      * @param string $status
-     * 
+     *
      * @return $this
      */
     public function setStatus($status)
@@ -136,5 +135,4 @@ class WebhookEventType extends PayPalResourceModel
         $ret->fromJson($json);
         return $ret;
     }
-
 }

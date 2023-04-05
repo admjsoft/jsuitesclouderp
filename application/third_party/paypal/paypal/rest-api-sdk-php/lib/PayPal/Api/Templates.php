@@ -5,7 +5,6 @@ namespace PayPal\Api;
 use PayPal\Common\PayPalResourceModel;
 use PayPal\Transport\PayPalRestCall;
 use PayPal\Validation\ArgumentValidator;
-use PayPal\Api\Template;
 use PayPal\Rest\ApiContext;
 
 /**
@@ -27,7 +26,7 @@ class Templates extends PayPalResourceModel
      * List of addresses in merchant's profile.
      *
      * @param \PayPal\Api\Address[] $addresses
-     * 
+     *
      * @return $this
      */
     public function setAddresses($addresses)
@@ -80,7 +79,7 @@ class Templates extends PayPalResourceModel
      * List of emails in merchant's profile.
      *
      * @param string[] $emails
-     * 
+     *
      * @return $this
      */
     public function setEmails($emails)
@@ -133,7 +132,7 @@ class Templates extends PayPalResourceModel
      * List of phone numbers in merchant's profile.
      *
      * @param \PayPal\Api\Phone[] $phones
-     * 
+     *
      * @return $this
      */
     public function setPhones($phones)
@@ -186,7 +185,7 @@ class Templates extends PayPalResourceModel
      * Array of templates.
      *
      * @param \PayPal\Api\Template[] $templates
-     * 
+     *
      * @return $this
      */
     public function setTemplates($templates)

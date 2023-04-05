@@ -27,35 +27,34 @@ namespace Stripe;
  */
 class Refund extends ApiResource
 {
-    const OBJECT_NAME = 'refund';
-
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Retrieve;
     use ApiOperations\Update;
+    public const OBJECT_NAME = 'refund';
 
     /**
      * Possible string representations of the failure reason.
      * @link https://stripe.com/docs/api/refunds/object#refund_object-failure_reason
      */
-    const FAILURE_REASON                     = 'expired_or_canceled_card';
-    const FAILURE_REASON_LOST_OR_STOLEN_CARD = 'lost_or_stolen_card';
-    const FAILURE_REASON_UNKNOWN             = 'unknown';
+    public const FAILURE_REASON                     = 'expired_or_canceled_card';
+    public const FAILURE_REASON_LOST_OR_STOLEN_CARD = 'lost_or_stolen_card';
+    public const FAILURE_REASON_UNKNOWN             = 'unknown';
 
     /**
      * Possible string representations of the refund reason.
      * @link https://stripe.com/docs/api/refunds/object#refund_object-reason
      */
-    const REASON_DUPLICATE             = 'duplicate';
-    const REASON_FRAUDULENT            = 'fraudulent';
-    const REASON_REQUESTED_BY_CUSTOMER = 'requested_by_customer';
+    public const REASON_DUPLICATE             = 'duplicate';
+    public const REASON_FRAUDULENT            = 'fraudulent';
+    public const REASON_REQUESTED_BY_CUSTOMER = 'requested_by_customer';
 
     /**
      * Possible string representations of the refund status.
      * @link https://stripe.com/docs/api/refunds/object#refund_object-status
      */
-    const STATUS_CANCELED  = 'canceled';
-    const STATUS_FAILED    = 'failed';
-    const STATUS_PENDING   = 'pending';
-    const STATUS_SUCCEEDED = 'succeeded';
+    public const STATUS_CANCELED  = 'canceled';
+    public const STATUS_FAILED    = 'failed';
+    public const STATUS_PENDING   = 'pending';
+    public const STATUS_SUCCEEDED = 'succeeded';
 }

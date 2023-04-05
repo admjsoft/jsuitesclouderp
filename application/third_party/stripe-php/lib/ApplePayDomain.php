@@ -15,12 +15,11 @@ namespace Stripe;
  */
 class ApplePayDomain extends ApiResource
 {
-    const OBJECT_NAME = 'apple_pay_domain';
-
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Delete;
     use ApiOperations\Retrieve;
+    public const OBJECT_NAME = 'apple_pay_domain';
 
     /**
      * @return string The class URL for this resource. It needs to be special

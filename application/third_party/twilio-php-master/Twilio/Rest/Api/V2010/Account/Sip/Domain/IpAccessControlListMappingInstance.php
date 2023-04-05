@@ -24,19 +24,21 @@ use Twilio\Version;
  * @property string uri
  * @property array subresourceUris
  */
-class IpAccessControlListMappingInstance extends InstanceResource {
+class IpAccessControlListMappingInstance extends InstanceResource
+{
     /**
      * Initialize the IpAccessControlListMappingInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $accountSid The unique id of the Account that responsible for
      *                           this resource.
      * @param string $domainSid A string that uniquely identifies the SIP Domain
      * @param string $sid The sid
-     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\IpAccessControlListMappingInstance 
+     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\IpAccessControlListMappingInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $domainSid, $sid = null) {
+    public function __construct(Version $version, array $payload, $accountSid, $domainSid, $sid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -60,11 +62,12 @@ class IpAccessControlListMappingInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\IpAccessControlListMappingContext Context for this
      *                                                                                     IpAccessControlListMappingInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new IpAccessControlListMappingContext(
                 $this->version,
@@ -79,33 +82,36 @@ class IpAccessControlListMappingInstance extends InstanceResource {
 
     /**
      * Fetch a IpAccessControlListMappingInstance
-     * 
+     *
      * @return IpAccessControlListMappingInstance Fetched
      *                                            IpAccessControlListMappingInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Deletes the IpAccessControlListMappingInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->proxy()->delete();
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -120,10 +126,11 @@ class IpAccessControlListMappingInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

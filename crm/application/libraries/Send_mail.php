@@ -1,11 +1,15 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /**
  * Send_mail class is initiating phpmailer
  */
 class Send_mail
 {
-    function __construct()
+    public function __construct()
     {
         require './application/libraries/phpmailer/class.phpmailer.php';
     }
@@ -18,7 +22,7 @@ class Send_mail
      * @Param : $email - To email address
      * @Param : $smtp - smtp setting array
      */
-    function email($sub, $body, $email, $smtp)
+    public function email($sub, $body, $email, $smtp)
     {
         $SMTP_EMAIL = isset($smtp['SMTP_EMAIL']) ? $smtp['SMTP_EMAIL'] : '';
         $HOST = isset($smtp['HOST']) ? $smtp['HOST'] : '';
@@ -26,7 +30,7 @@ class Send_mail
         $SMTP_SECURE = isset($smtp['SMTP_SECURE']) ? $smtp['SMTP_SECURE'] : '';
         $SMTP_PASSWORD = isset($smtp['SMTP_PASSWORD']) ? $smtp['SMTP_PASSWORD'] : '';
         $EmailFromName = isset($smtp['company_name']) ? $smtp['company_name'] : '';
-        $mail = new PHPMailer;
+        $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->SMTPDebug = 1;
         $mail->Debugoutput = 'text';
@@ -49,5 +53,3 @@ class Send_mail
         }
     }
 }
-
-?>

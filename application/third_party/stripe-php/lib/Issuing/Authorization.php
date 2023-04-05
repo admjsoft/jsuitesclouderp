@@ -33,11 +33,10 @@ namespace Stripe\Issuing;
  */
 class Authorization extends \Stripe\ApiResource
 {
-    const OBJECT_NAME = 'issuing.authorization';
-
     use \Stripe\ApiOperations\All;
     use \Stripe\ApiOperations\Retrieve;
     use \Stripe\ApiOperations\Update;
+    public const OBJECT_NAME = 'issuing.authorization';
 
     /**
      * @param array|null $params

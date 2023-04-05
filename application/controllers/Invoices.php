@@ -3,8 +3,6 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use Mike42\Escpos\PrintConnectors\FilePrintConnector;
-use Mike42\Escpos\Printer;
 
 class Invoices extends CI_Controller
 {
@@ -34,7 +32,6 @@ class Invoices extends CI_Controller
     //create invoice
     public function create()
     {
-
         $data['emp'] = $this->plugins->universal_api(69);
         if ($data['emp']['key1']) {
             $this->load->model('employee_model', 'employee');
@@ -77,7 +74,9 @@ class Invoices extends CI_Controller
         $data['terms'] = $this->invocies->billingterms();
         $data['currency'] = $this->invocies->currencies();
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']['id']) $data['products'] = $this->invocies->items_with_product($tid);
+        if ($data['invoice']['id']) {
+            $data['products'] = $this->invocies->items_with_product($tid);
+        }
         $head['title'] = "Edit Invoice #$tid";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['warehouse'] = $this->invocies->warehouses();
@@ -95,7 +94,9 @@ class Invoices extends CI_Controller
 
 
         $this->load->view('fixed/header', $head);
-        if ($data['invoice']['id']) $this->load->view('invoices/edit', $data);
+        if ($data['invoice']['id']) {
+            $this->load->view('invoices/edit', $data);
+        }
         $this->load->view('fixed/footer');
     }
 
@@ -124,7 +125,9 @@ class Invoices extends CI_Controller
         $subtotal = rev_amountExchange_s($this->input->post('subtotal'), $currency, $this->aauth->get_user()->loc);
         $shipping = rev_amountExchange_s($this->input->post('shipping'), $currency, $this->aauth->get_user()->loc);
         $shipping_tax = rev_amountExchange_s($this->input->post('ship_tax'), $currency, $this->aauth->get_user()->loc);
-        if ($ship_taxtype == 'incl') $shipping = $shipping - $shipping_tax;
+        if ($ship_taxtype == 'incl') {
+            $shipping = $shipping - $shipping_tax;
+        }
         $refer = $this->input->post('refer', true);
         $total = rev_amountExchange_s($this->input->post('total'), $currency, $this->aauth->get_user()->loc);
         $project = $this->input->post('prjid');
@@ -225,7 +228,7 @@ class Invoices extends CI_Controller
                 $prodindex++;
                 $amt = numberClean($product_qty[$key]);
                 if ($product_id[$key] > 0) {
-                    $this->db->set('qty', "qty-$amt", FALSE);
+                    $this->db->set('qty', "qty-$amt", false);
                     $this->db->where('pid', $product_id[$key]);
                     $this->db->update('gtg_products');
                     if ((numberClean($product_alert[$key]) - $amt) < 0 and $st_c == 0 and $this->common->zero_stock()) {
@@ -280,7 +283,7 @@ class Invoices extends CI_Controller
 
                 $this->db->insert('gtg_transactions', $t_data);
                 //account update
-                $this->db->set('lastbal', "lastbal-$total", FALSE);
+                $this->db->set('lastbal', "lastbal-$total", false);
                 $this->db->where('id', $dual['key2']);
                 $this->db->update('gtg_accounts');
             }
@@ -398,7 +401,9 @@ class Invoices extends CI_Controller
         $head['title'] = "Invoice " . $data['invoice']['tid'];
         $this->load->view('fixed/header', $head);
         $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']['id']) $data['activity'] = $this->invocies->invoice_transactions($tid);
+        if ($data['invoice']['id']) {
+            $data['activity'] = $this->invocies->invoice_transactions($tid);
+        }
         $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
         $data['custom_fields'] = $this->custom->view_fields_data($tid, 2);
         if ($data['invoice']['id']) {
@@ -410,18 +415,23 @@ class Invoices extends CI_Controller
 
     public function printinvoice()
     {
-
         $tid = $this->input->get('id');
         $data['id'] = $tid;
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']['id']) $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']['id']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        if ($data['invoice']['id']) {
+            $data['products'] = $this->invocies->invoice_products($tid);
+        }
+        if ($data['invoice']['id']) {
+            $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        }
         if ($data['invoice']['i_class'] == 1) {
             $pref = prefix(7);
         } else {
             $pref = $this->config->item('prefix');
         }
-        if (CUSTOM) $data['c_custom_fields'] = $this->custom->view_fields_data($data['invoice']['cid'], 1, 1);
+        if (CUSTOM) {
+            $data['c_custom_fields'] = $this->custom->view_fields_data($data['invoice']['cid'], 1, 1);
+        }
         $data['general'] = array('title' => $this->lang->line('Invoice'), 'person' => $this->lang->line('Customer'), 'prefix' => $pref, 't_type' => 0);
         ini_set('memory_limit', '64M');
         if ($data['invoice']['taxstatus'] == 'cgst' || $data['invoice']['taxstatus'] == 'igst') {
@@ -487,7 +497,9 @@ class Invoices extends CI_Controller
         $subtotal = rev_amountExchange_s($this->input->post('subtotal'), $currency, $this->aauth->get_user()->loc);
         $shipping = rev_amountExchange_s($this->input->post('shipping'), $currency, $this->aauth->get_user()->loc);
         $shipping_tax = rev_amountExchange_s($this->input->post('ship_tax'), $currency, $this->aauth->get_user()->loc);
-        if ($ship_taxtype == 'incl') $shipping = $shipping - $shipping_tax;
+        if ($ship_taxtype == 'incl') {
+            $shipping = $shipping - $shipping_tax;
+        }
         $refer = $this->input->post('refer', true);
         $total = rev_amountExchange_s($this->input->post('total'), $currency, $this->aauth->get_user()->loc);
         $disc_val = numberClean($this->input->post('disc_val'));
@@ -495,7 +507,9 @@ class Invoices extends CI_Controller
         $i = 0;
         if ($this->limited) {
             $employee = $this->invocies->invoice_details($iid, $this->limited);
-            if ($this->aauth->get_user()->id != $employee['eid']) exit();
+            if ($this->aauth->get_user()->id != $employee['eid']) {
+                exit();
+            }
         }
         if ($discountFormat == '0') {
             $discstatus = 0;
@@ -544,7 +558,6 @@ class Invoices extends CI_Controller
             $product_alert = $this->input->post('alert');
 
             foreach ($pid as $key => $value) {
-
                 $total_discount += numberClean(@$ptotal_disc[$key]);
                 $total_tax += numberClean($ptotal_tax[$key]);
 
@@ -570,7 +583,7 @@ class Invoices extends CI_Controller
 
                 $amt = numberClean(@$product_qty[$key]) - numberClean(@$old_product_qty[$key]);
                 if ($product_id[$key] > 0 and $amt) {
-                    $this->db->set('qty', "qty-$amt", FALSE);
+                    $this->db->set('qty', "qty-$amt", false);
                     $this->db->where('pid', $product_id[$key]);
                     $this->db->update('gtg_products');
 
@@ -593,7 +606,9 @@ class Invoices extends CI_Controller
                 $this->db->set(array('discount' => rev_amountExchange_s(amountFormat_general($total_discount), $currency, $this->aauth->get_user()->loc), 'tax' => rev_amountExchange_s(amountFormat_general($total_tax), $currency, $this->aauth->get_user()->loc), 'items' => $itc));
                 $this->db->where('id', $iid);
                 $this->db->update('gtg_invoices');
-                if ($transok)    echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Invoice has  been updated') . " <a href='view?id=$iid' class='btn btn-info btn-lg'><span class='fa fa-eye' aria-hidden='true'></span> " . $this->lang->line('View') . " </a> "));
+                if ($transok) {
+                    echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Invoice has  been updated') . " <a href='view?id=$iid' class='btn btn-info btn-lg'><span class='fa fa-eye' aria-hidden='true'></span> " . $this->lang->line('View') . " </a> "));
+                }
             } else {
                 echo json_encode(array('status' => 'Error', 'message' =>
                 $this->lang->line('ERROR')));
@@ -606,15 +621,17 @@ class Invoices extends CI_Controller
                     $prid = $myArray[0];
                     $dqty = numberClean($myArray[1]);
                     if ($prid > 0) {
-                        $this->db->set('qty', "qty+$dqty", FALSE);
+                        $this->db->set('qty', "qty+$dqty", false);
                         $this->db->where('pid', $prid);
                         $this->db->update('gtg_products');
                     }
                 }
             }
         } else {
-            if ($transok)   echo json_encode(array('status' => 'Error', 'message' =>
-            "Please add at least one product in invoice"));
+            if ($transok) {
+                echo json_encode(array('status' => 'Error', 'message' =>
+                "Please add at least one product in invoice"));
+            }
             $transok = false;
         }
 
@@ -702,7 +719,6 @@ class Invoices extends CI_Controller
             ));
             $files = (string)$this->uploadhandler_generic->filenaam();
             if ($files != '') {
-
                 $this->invocies->meta_insert($id, 1, $files);
             }
         }
@@ -710,14 +726,17 @@ class Invoices extends CI_Controller
 
     public function delivery()
     {
-
         $tid = $this->input->get('id');
 
         $data['id'] = $tid;
         $data['title'] = "Invoice $tid";
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']['id']) $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']['id']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        if ($data['invoice']['id']) {
+            $data['products'] = $this->invocies->invoice_products($tid);
+        }
+        if ($data['invoice']['id']) {
+            $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        }
 
         ini_set('memory_limit', '64M');
 
@@ -733,7 +752,6 @@ class Invoices extends CI_Controller
         $pdf->WriteHTML($html);
 
         if ($this->input->get('d')) {
-
             $pdf->Output('DO_#' . $data['invoice']['tid'] . '.pdf', 'D');
         } else {
             $pdf->Output('DO_#' . $data['invoice']['tid'] . '.pdf', 'I');
@@ -742,14 +760,17 @@ class Invoices extends CI_Controller
 
     public function proforma()
     {
-
         $tid = $this->input->get('id');
 
         $data['id'] = $tid;
         $data['title'] = "Invoice $tid";
         $data['invoice'] = $this->invocies->invoice_details($tid, $this->limited);
-        if ($data['invoice']['id']) $data['products'] = $this->invocies->invoice_products($tid);
-        if ($data['invoice']['id']) $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        if ($data['invoice']['id']) {
+            $data['products'] = $this->invocies->invoice_products($tid);
+        }
+        if ($data['invoice']['id']) {
+            $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
+        }
         ini_set('memory_limit', '64M');
         $html = $this->load->view('invoices/proforma', $data, true);
         //PDF Rendering
@@ -775,7 +796,7 @@ class Invoices extends CI_Controller
             'Company' => $this->config->item('ctitle'),
             'BillNumber' => $invocieno2
         );
-        $subject = $this->parser->parse_string($template['key1'], $data, TRUE);
+        $subject = $this->parser->parse_string($template['key1'], $data, true);
         $validtoken = hash_hmac('ripemd160', $invocieno, $this->config->item('encryption_key'));
         $link = base_url('billing/view?id=' . $invocieno . '&token=' . $validtoken);
 
@@ -790,7 +811,7 @@ class Invoices extends CI_Controller
             'DueDate' => dateformat($idate),
             'Amount' => amountExchange($total, $multi)
         );
-        $message = $this->parser->parse_string($template['other'], $data, TRUE);
+        $message = $this->parser->parse_string($template['other'], $data, true);
         return array('subject' => $subject, 'message' => $message);
     }
 
@@ -814,7 +835,7 @@ class Invoices extends CI_Controller
             'DueDate' => dateformat($idate),
             'Amount' => amountExchange($total, $multi)
         );
-        $message = $this->parser->parse_string($template['other'], $data, TRUE);
+        $message = $this->parser->parse_string($template['other'], $data, true);
         return array('message' => $message);
     }
 
@@ -823,7 +844,9 @@ class Invoices extends CI_Controller
         $id = $this->input->get('id');
         $inv = $this->input->get('inv');
         $data['invoice'] = $this->invocies->invoice_details($inv, $this->limited);
-        if (!$data['invoice']['id']) exit('Limited Permissions!');
+        if (!$data['invoice']['id']) {
+            exit('Limited Permissions!');
+        }
 
         $this->load->model('transactions_model', 'transactions');
         $head['title'] = "View Transaction";
@@ -850,7 +873,6 @@ class Invoices extends CI_Controller
         $pdf->WriteHTML($html);
 
         if ($this->input->get('d')) {
-
             $pdf->Output('Trans_#' . $id . '.pdf', 'D');
         } else {
             $pdf->Output('Trans_#' . $id . '.pdf', 'I');

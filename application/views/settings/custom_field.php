@@ -13,7 +13,9 @@
         </h5>
         <div class="m-1">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" <?php if (CUSTOM) echo 'checked=""'; ?>
+                <input type="checkbox" class="custom-control-input" <?php if (CUSTOM) {
+                    echo 'checked=""';
+                } ?>
                        name="customCheck" id="customCheck">
                 <label class="custom-control-label"
                        for="customCheck"> <?php echo $this->lang->line('Enable') ?><?php echo $this->lang->line('Custom') ?><?php echo $this->lang->line('Fields') ?></label>
@@ -36,25 +38,22 @@
             </thead>
             <tbody>
             <?php $i = 1;
-            foreach ($customfields as $row) {
+        foreach ($customfields as $row) {
+            switch ($row['f_module']) {
+                case 2 :
+                    $m = 'Standard Invoices';
+                    break;
+                case 3 :
+                    $m = 'Subscriptions';
+                    break;
+                case 4 :
+                    $m = 'Products';
+                    break;
+                default:
+                    $m = 'Customer';
+            }
 
-                switch ($row['f_module']) {
-
-                    case 2 :
-                        $m = 'Standard Invoices';
-                        break;
-                    case 3 :
-                        $m = 'Subscriptions';
-                        break;
-                    case 4 :
-                        $m = 'Products';
-                        break;
-                    default:
-                        $m = 'Customer';
-
-                }
-
-                echo "<tr>
+            echo "<tr>
                     <td>$i</td>
                     <td>" . $row['name'] . "</td>
                     <td>" . $row['f_type'] . "</td>
@@ -63,9 +62,9 @@
                     <td><a href='" . base_url("settings/edit_custom_field?id=" . $row['id']) . "' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> " . $this->lang->line('Edit') . "</a>&nbsp;<a href='#' data-object-id='" . $row['id'] . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='fa fa-trash'></i></a></td></tr>";
 
 
-                $i++;
-            }
-            ?>
+            $i++;
+        }
+        ?>
             </tbody>
             <tfoot>
             <tr>

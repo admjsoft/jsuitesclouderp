@@ -19,33 +19,32 @@ namespace Stripe;
  */
 class TaxId extends ApiResource
 {
-    const OBJECT_NAME = 'tax_id';
-
     use ApiOperations\Delete;
+    public const OBJECT_NAME = 'tax_id';
 
     /**
      * Possible string representations of a tax id's type.
      * @link https://stripe.com/docs/api/customer_tax_ids/object#tax_id_object-type
      */
-    const TYPE_AU_ABN  = 'au_abn';
-    const TYPE_CH_VAT  = 'ch_vat';
-    const TYPE_EU_VAT  = 'eu_vat';
-    const TYPE_IN_GST  = 'in_gst';
-    const TYPE_MX_RFC  = 'mx_rfc';
-    const TYPE_NO_VAT  = 'no_vat';
-    const TYPE_NZ_GST  = 'nz_gst';
-    const TYPE_SG_UEN  = 'sg_uen';
-    const TYPE_UNKNOWN = 'unknown';
-    const TYPE_ZA_VAT  = 'za_vat';
+    public const TYPE_AU_ABN  = 'au_abn';
+    public const TYPE_CH_VAT  = 'ch_vat';
+    public const TYPE_EU_VAT  = 'eu_vat';
+    public const TYPE_IN_GST  = 'in_gst';
+    public const TYPE_MX_RFC  = 'mx_rfc';
+    public const TYPE_NO_VAT  = 'no_vat';
+    public const TYPE_NZ_GST  = 'nz_gst';
+    public const TYPE_SG_UEN  = 'sg_uen';
+    public const TYPE_UNKNOWN = 'unknown';
+    public const TYPE_ZA_VAT  = 'za_vat';
 
     /**
      * Possible string representations of the verification status.
      * @link https://stripe.com/docs/api/customer_tax_ids/object#tax_id_object-verification
      */
-    const VERIFICATION_STATUS_PENDING     = 'pending';
-    const VERIFICATION_STATUS_UNAVAILABLE = 'unavailable';
-    const VERIFICATION_STATUS_UNVERIFIED  = 'unverified';
-    const VERIFICATION_STATUS_VERIFIED    = 'verified';
+    public const VERIFICATION_STATUS_PENDING     = 'pending';
+    public const VERIFICATION_STATUS_UNAVAILABLE = 'unavailable';
+    public const VERIFICATION_STATUS_UNVERIFIED  = 'unverified';
+    public const VERIFICATION_STATUS_VERIFIED    = 'verified';
 
     /**
      * @return string The API URL for this tax id.

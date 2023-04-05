@@ -35,22 +35,24 @@ use Twilio\Version;
  * @property array subresourceUris
  * @property boolean sipRegistration
  */
-class DomainInstance extends InstanceResource {
+class DomainInstance extends InstanceResource
+{
     protected $_ipAccessControlListMappings = null;
     protected $_credentialListMappings = null;
     protected $_auth = null;
 
     /**
      * Initialize the DomainInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $accountSid A 34 character string that uniquely identifies
      *                           this resource.
      * @param string $sid Fetch by unique Domain Sid
-     * @return \Twilio\Rest\Api\V2010\Account\Sip\DomainInstance 
+     * @return \Twilio\Rest\Api\V2010\Account\Sip\DomainInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $sid = null) {
+    public function __construct(Version $version, array $payload, $accountSid, $sid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -80,11 +82,12 @@ class DomainInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Api\V2010\Account\Sip\DomainContext Context for this
      *                                                          DomainInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new DomainContext(
                 $this->version,
@@ -98,70 +101,77 @@ class DomainInstance extends InstanceResource {
 
     /**
      * Fetch a DomainInstance
-     * 
+     *
      * @return DomainInstance Fetched DomainInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Update the DomainInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return DomainInstance Updated DomainInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         return $this->proxy()->update($options);
     }
 
     /**
      * Deletes the DomainInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->proxy()->delete();
     }
 
     /**
      * Access the ipAccessControlListMappings
-     * 
-     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\IpAccessControlListMappingList 
+     *
+     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\IpAccessControlListMappingList
      */
-    protected function getIpAccessControlListMappings() {
+    protected function getIpAccessControlListMappings()
+    {
         return $this->proxy()->ipAccessControlListMappings;
     }
 
     /**
      * Access the credentialListMappings
-     * 
-     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\CredentialListMappingList 
+     *
+     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\CredentialListMappingList
      */
-    protected function getCredentialListMappings() {
+    protected function getCredentialListMappings()
+    {
         return $this->proxy()->credentialListMappings;
     }
 
     /**
      * Access the auth
-     * 
-     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypesList 
+     *
+     * @return \Twilio\Rest\Api\V2010\Account\Sip\Domain\AuthTypesList
      */
-    protected function getAuth() {
+    protected function getAuth()
+    {
         return $this->proxy()->auth;
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -176,10 +186,11 @@ class DomainInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

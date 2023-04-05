@@ -13,16 +13,18 @@ use Twilio\InstanceContext;
 use Twilio\Values;
 use Twilio\Version;
 
-class TranscriptionContext extends InstanceContext {
+class TranscriptionContext extends InstanceContext
+{
     /**
      * Initialize the TranscriptionContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $accountSid The account_sid
      * @param string $sid Fetch by unique transcription SID
-     * @return \Twilio\Rest\Api\V2010\Account\TranscriptionContext 
+     * @return \Twilio\Rest\Api\V2010\Account\TranscriptionContext
      */
-    public function __construct(Version $version, $accountSid, $sid) {
+    public function __construct(Version $version, $accountSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -33,11 +35,12 @@ class TranscriptionContext extends InstanceContext {
 
     /**
      * Fetch a TranscriptionInstance
-     * 
+     *
      * @return TranscriptionInstance Fetched TranscriptionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -56,20 +59,22 @@ class TranscriptionContext extends InstanceContext {
 
     /**
      * Deletes the TranscriptionInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

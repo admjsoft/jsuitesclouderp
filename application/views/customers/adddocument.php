@@ -6,7 +6,7 @@
 
             <div class="message">' . $responsetext . '</div>
         </div>';
-        } else if ($response == 0) {
+        } elseif ($response == 0) {
             echo '<div id="notify" class="alert alert-danger">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
 

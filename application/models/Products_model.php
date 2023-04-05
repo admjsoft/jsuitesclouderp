@@ -5,10 +5,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Products_model extends CI_Model
 {
-    var $table = 'gtg_products';
-    var $column_order = array(null, 'gtg_products.product_name', 'gtg_products.qty', 'gtg_products.product_code', 'gtg_product_cat.title', 'gtg_products.product_price', null); //set column field database for datatable orderable
-    var $column_search = array('gtg_products.product_name', 'gtg_products.product_code', 'gtg_product_cat.title', 'gtg_warehouse.title'); //set column field database for datatable searchable
-    var $order = array('gtg_products.pid' => 'desc'); // default order
+    public $table = 'gtg_products';
+    public $column_order = array(null, 'gtg_products.product_name', 'gtg_products.qty', 'gtg_products.product_code', 'gtg_product_cat.title', 'gtg_products.product_price', null); //set column field database for datatable orderable
+    public $column_search = array('gtg_products.product_name', 'gtg_products.product_code', 'gtg_product_cat.title', 'gtg_warehouse.title'); //set column field database for datatable searchable
+    public $order = array('gtg_products.pid' => 'desc'); // default order
 
     public function __construct()
     {
@@ -24,11 +24,15 @@ class Products_model extends CI_Model
         if ($sub) {
             $this->db->join('gtg_product_cat', 'gtg_product_cat.id = gtg_products.sub_id');
 
-            if ($this->input->post('group') != 'yes') $this->db->where('gtg_products.merge', 0);
+            if ($this->input->post('group') != 'yes') {
+                $this->db->where('gtg_products.merge', 0);
+            }
             if ($this->aauth->get_user()->loc) {
                 $this->db->group_start();
                 $this->db->where('gtg_warehouse.loc', $this->aauth->get_user()->loc);
-                if (BDATA) $this->db->or_where('gtg_warehouse.loc', 0);
+                if (BDATA) {
+                    $this->db->or_where('gtg_warehouse.loc', 0);
+                }
                 $this->db->group_end();
             } elseif (!BDATA) {
                 $this->db->where('gtg_warehouse.loc', 0);
@@ -39,7 +43,6 @@ class Products_model extends CI_Model
             $this->db->join('gtg_product_cat', 'gtg_product_cat.id = gtg_products.pcat');
 
             if ($w) {
-
                 if ($id > 0) {
                     $this->db->where("gtg_warehouse.id = $id");
                     // $this->db->where('gtg_products.sub_id', 0);
@@ -48,18 +51,23 @@ class Products_model extends CI_Model
                     $this->db->group_start();
                     $this->db->where('gtg_warehouse.loc', $this->aauth->get_user()->loc);
 
-                    if (BDATA) $this->db->or_where('gtg_warehouse.loc', 0);
+                    if (BDATA) {
+                        $this->db->or_where('gtg_warehouse.loc', 0);
+                    }
                     $this->db->group_end();
                 } elseif (!BDATA) {
                     $this->db->where('gtg_warehouse.loc', 0);
                 }
             } else {
-
-                if ($this->input->post('group') != 'yes') $this->db->where('gtg_products.merge', 0);
+                if ($this->input->post('group') != 'yes') {
+                    $this->db->where('gtg_products.merge', 0);
+                }
                 if ($this->aauth->get_user()->loc) {
                     $this->db->group_start();
                     $this->db->where('gtg_warehouse.loc', $this->aauth->get_user()->loc);
-                    if (BDATA) $this->db->or_where('gtg_warehouse.loc', 0);
+                    if (BDATA) {
+                        $this->db->or_where('gtg_warehouse.loc', 0);
+                    }
                     $this->db->group_end();
                 } elseif (!BDATA) {
                     $this->db->where('gtg_warehouse.loc', 0);
@@ -73,50 +81,48 @@ class Products_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->column_search as $item) // loop column
-        {
+        foreach ($this->column_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
-            if ($value) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
+            if ($value) { // if datatable send POST for search
+                
+                if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $value);
                 } else {
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
-        if ($search) // here order processing
-        {
+        if ($search) { // here order processing
             $this->db->order_by($this->column_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function get_datatables($id = '', $w = '', $sub = '')
+    public function get_datatables($id = '', $w = '', $sub = '')
     {
         if ($id > 0) {
             $this->_get_datatables_query($id, $w, $sub);
         } else {
             $this->_get_datatables_query();
         }
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function count_filtered($id, $w = '', $sub = '')
+    public function count_filtered($id, $w = '', $sub = '')
     {
         if ($id > 0) {
             $this->_get_datatables_query($id, $w, $sub);
@@ -133,9 +139,10 @@ class Products_model extends CI_Model
         $this->db->from($this->table);
         $this->db->join('gtg_warehouse', 'gtg_warehouse.id = gtg_products.warehouse');
         if ($this->aauth->get_user()->loc) {
-
             $this->db->where('gtg_warehouse.loc', $this->aauth->get_user()->loc);
-            if (BDATA) $this->db->or_where('gtg_warehouse.loc', 0);
+            if (BDATA) {
+                $this->db->or_where('gtg_warehouse.loc', 0);
+            }
         } elseif (!BDATA) {
             $this->db->where('gtg_warehouse.loc', 0);
         }
@@ -145,8 +152,12 @@ class Products_model extends CI_Model
     public function addnew($catid, $warehouse, $product_name, $product_code, $product_price, $factoryprice, $taxrate, $disrate, $product_qty, $product_qty_alert, $product_desc, $image, $unit, $barcode, $v_type, $v_stock, $v_alert, $wdate, $code_type, $w_type = '', $w_stock = '', $w_alert = '', $sub_cat = '', $b_id = '', $serial = '')
     {
         $ware_valid = $this->valid_warehouse($warehouse);
-        if (!$sub_cat) $sub_cat = 0;
-        if (!$b_id) $b_id = 0;
+        if (!$sub_cat) {
+            $sub_cat = 0;
+        }
+        if (!$b_id) {
+            $b_id = 0;
+        }
         $datetime1 = new DateTime(date('Y-m-d'));
 
         $datetime2 = new DateTime($wdate);
@@ -180,7 +191,6 @@ class Products_model extends CI_Model
                         'b_id' => $b_id
                     );
                 } else {
-
                     $barcode = rand(100, 999) . rand(0, 9) . rand(1000000, 9999999) . rand(0, 9);
 
                     $data = array(
@@ -218,7 +228,9 @@ class Products_model extends CI_Model
                 if ($serial) {
                     $serial_group = array();
                     foreach ($serial as $key => $value) {
-                        if ($value) $serial_group[] = array('product_id' => $pid, 'serial' => $value);
+                        if ($value) {
+                            $serial_group[] = array('product_id' => $pid, 'serial' => $value);
+                        }
                     }
                     $this->db->insert_batch('gtg_product_serials', $serial_group);
                 }
@@ -324,7 +336,9 @@ class Products_model extends CI_Model
             if ($serial) {
                 $serial_group = array();
                 foreach ($serial as $key => $value) {
-                    if ($value)  $serial_group[] = array('product_id' => $pid, 'serial' => $value);
+                    if ($value) {
+                        $serial_group[] = array('product_id' => $pid, 'serial' => $value);
+                    }
                 }
                 $this->db->insert_batch('gtg_product_serials', $serial_group);
             }
@@ -353,7 +367,6 @@ class Products_model extends CI_Model
             if ($w_type) {
                 foreach ($w_type as $key => $value) {
                     if ($w_type[$key] && numberClean($w_stock[$key]) > 0.00 && $w_type[$key] != $warehouse) {
-
                         $data['product_name'] = $product_name;
                         $data['warehouse'] = $w_type[$key];
                         $data['qty'] = numberClean($w_stock[$key]);
@@ -463,14 +476,18 @@ class Products_model extends CI_Model
             $this->db->delete('gtg_product_serials', array('product_id' => $pid, 'status' => 0));
             $serial_group = array();
             foreach ($serial['old'] as $key => $value) {
-                if ($value) $serial_group[] = array('product_id' => $pid, 'serial' => $value);
+                if ($value) {
+                    $serial_group[] = array('product_id' => $pid, 'serial' => $value);
+                }
             }
             $this->db->insert_batch('gtg_product_serials', $serial_group);
         }
         if (isset($serial['new'])) {
             $serial_group = array();
             foreach ($serial['new'] as $key => $value) {
-                if ($value)  $serial_group[] = array('product_id' => $pid, 'serial' => $value, 'status' => 0);
+                if ($value) {
+                    $serial_group[] = array('product_id' => $pid, 'serial' => $value, 'status' => 0);
+                }
             }
 
             $this->db->insert_batch('gtg_product_serials', $serial_group);
@@ -528,11 +545,12 @@ class Products_model extends CI_Model
 
     public function prd_stats()
     {
-
         $whr = '';
         if ($this->aauth->get_user()->loc) {
             $whr = ' LEFT JOIN  gtg_warehouse on gtg_warehouse.id = gtg_products.warehouse WHERE gtg_warehouse.loc=' . $this->aauth->get_user()->loc;
-            if (BDATA) $whr = ' LEFT JOIN  gtg_warehouse on gtg_warehouse.id = gtg_products.warehouse WHERE gtg_warehouse.loc=0 OR gtg_warehouse.loc=' . $this->aauth->get_user()->loc;
+            if (BDATA) {
+                $whr = ' LEFT JOIN  gtg_warehouse on gtg_warehouse.id = gtg_products.warehouse WHERE gtg_warehouse.loc=0 OR gtg_warehouse.loc=' . $this->aauth->get_user()->loc;
+            }
         } elseif (!BDATA) {
             $whr = ' LEFT JOIN  gtg_warehouse on gtg_warehouse.id = gtg_products.warehouse WHERE gtg_warehouse.loc=0';
         }
@@ -598,7 +616,9 @@ FROM gtg_products $whr");
         $i = 0;
         foreach ($products_l as $row) {
             $qty = 0;
-            if (array_key_exists($i, $qtyArray)) $qty = $qtyArray[$i];
+            if (array_key_exists($i, $qtyArray)) {
+                $qty = $qtyArray[$i];
+            }
 
             $this->db->select('*');
             $this->db->from('gtg_products');
@@ -609,10 +629,7 @@ FROM gtg_products $whr");
             $c_qty = $pr['qty'];
             if ($c_qty - $qty < 0) {
             } elseif ($c_qty - $qty == 0) {
-
-
                 if ($pr['merge'] == 2) {
-
                     $this->db->select('pid,product_name');
                     $this->db->from('gtg_products');
                     $this->db->where('pid', $pr['sub']);
@@ -634,8 +651,7 @@ FROM gtg_products $whr");
                 $product_name = $pr['product_name'];
 
                 if ($c_pid) {
-
-                    $this->db->set('qty', "qty+$qty", FALSE);
+                    $this->db->set('qty', "qty+$qty", false);
                     $this->db->where('pid', $c_pid);
                     $this->db->update('gtg_products');
                     $this->aauth->applog("[Product Transfer] -$product_name  -Qty-$qty ID " . $c_pid, $this->aauth->get_user()->username);
@@ -694,8 +710,7 @@ FROM gtg_products $whr");
                 $product_name = $pr2['product_name'];
 
                 if ($c_pid) {
-
-                    $this->db->set('qty', "qty+$qty", FALSE);
+                    $this->db->set('qty', "qty+$qty", false);
                     $this->db->where('pid', $c_pid);
                     $this->db->update('gtg_products');
 
@@ -708,7 +723,7 @@ FROM gtg_products $whr");
                     $this->aauth->applog("[Product Transfer] -$product_name  -Qty-$qty  W $to_warehouse_name ID " . $pr2['pid'], $this->aauth->get_user()->username);
                 }
 
-                $this->db->set('qty', "qty-$qty", FALSE);
+                $this->db->set('qty', "qty-$qty", false);
                 $this->db->where('pid', $row);
                 $this->db->update('gtg_products');
                 $this->movers(1, $row, -$qty, 0, 'Stock Transferred WID ' . $to_warehouse_name);

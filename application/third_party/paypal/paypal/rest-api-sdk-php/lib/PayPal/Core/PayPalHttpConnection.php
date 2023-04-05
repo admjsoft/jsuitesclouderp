@@ -12,7 +12,6 @@ use PayPal\Exception\PayPalConnectionException;
  */
 class PayPalHttpConnection
 {
-
     /**
      * @var PayPalHttpConfig
      */
@@ -72,7 +71,8 @@ class PayPalHttpConnection
      * @param string $data
      * @return int
      */
-    protected function parseResponseHeaders($ch, $data) {
+    protected function parseResponseHeaders($ch, $data)
+    {
         if (!$this->skippedHttpStatusLine) {
             $this->skippedHttpStatusLine = true;
             return strlen($data);
@@ -87,7 +87,7 @@ class PayPalHttpConnection
         if (strpos($trimmedData, ":") == false) {
             return strlen($data);
         }
-        
+
         list($key, $value) = explode(":", $trimmedData, 2);
 
         $key = trim($key);
@@ -112,9 +112,10 @@ class PayPalHttpConnection
      * @param array $arr
      * @return string
      */
-    protected function implodeArray($arr) {
+    protected function implodeArray($arr)
+    {
         $retStr = '';
-        foreach($arr as $key => $value) {
+        foreach ($arr as $key => $value) {
             $retStr .= $key . ': ' . $value . ', ';
         }
         rtrim($retStr, ', ');

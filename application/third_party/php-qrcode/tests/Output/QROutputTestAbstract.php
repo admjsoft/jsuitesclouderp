@@ -19,49 +19,52 @@ use chillerlan\QRCodeTest\QRTestAbstract;
 
 /**
  */
-abstract class QROutputTestAbstract extends QRTestAbstract{
+abstract class QROutputTestAbstract extends QRTestAbstract
+{
+    public const cachefile = __DIR__.'/output_test.';
 
-	const cachefile = __DIR__.'/output_test.';
+    /**
+     * @var \chillerlan\QRCode\Output\QROutputInterface
+     */
+    protected $outputInterface;
 
-	/**
-	 * @var \chillerlan\QRCode\Output\QROutputInterface
-	 */
-	protected $outputInterface;
+    /**
+     * @var \chillerlan\QRCode\QROptions
+     */
+    protected $options;
 
-	/**
-	 * @var \chillerlan\QRCode\QROptions
-	 */
-	protected $options;
+    /**
+     * @var \chillerlan\QRCode\Data\QRMatrix
+     */
+    protected $matrix;
 
-	/**
-	 * @var \chillerlan\QRCode\Data\QRMatrix
-	 */
-	protected $matrix;
+    protected function setUp()
+    {
+        parent::setUp();
 
-	protected function setUp(){
-		parent::setUp();
+        $this->options         = new QROptions();
+        $this->setOutputInterface();
+    }
 
-		$this->options         = new QROptions;
-		$this->setOutputInterface();
-	}
+    protected function setOutputInterface()
+    {
+        $this->outputInterface = $this->reflection->newInstanceArgs([$this->options, (new Byte($this->options, 'testdata'))->initMatrix(0)]);
+        return $this->outputInterface;
+    }
 
-	protected function setOutputInterface(){
-		$this->outputInterface = $this->reflection->newInstanceArgs([$this->options, (new Byte($this->options, 'testdata'))->initMatrix(0)]);
-		return $this->outputInterface;
-	}
+    public function testInstance()
+    {
+        $this->assertInstanceOf(QROutputInterface::class, $this->outputInterface);
+    }
 
-	public function testInstance(){
-		$this->assertInstanceOf(QROutputInterface::class, $this->outputInterface);
-	}
-
-	/**
-	 * @expectedException \chillerlan\QRCode\Output\QRCodeOutputException
-	 * @expectedExceptionMessage Could not write data to cache file: /foo
-	 */
-	public function testSaveException(){
-		$this->options->cachefile = '/foo';
-		$this->setOutputInterface();
-		$this->outputInterface->dump();
-	}
-
+    /**
+     * @expectedException \chillerlan\QRCode\Output\QRCodeOutputException
+     * @expectedExceptionMessage Could not write data to cache file: /foo
+     */
+    public function testSaveException()
+    {
+        $this->options->cachefile = '/foo';
+        $this->setOutputInterface();
+        $this->outputInterface->dump();
+    }
 }

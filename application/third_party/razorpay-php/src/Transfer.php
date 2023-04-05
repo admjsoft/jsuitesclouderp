@@ -1,4 +1,5 @@
 <?php
+
 namespace Razorpay\Api;
 
 class Transfer extends Entity
@@ -13,8 +14,7 @@ class Transfer extends Entity
 
     public function all($options = array())
     {
-        if (isset($this->payment_id) === true)
-        {
+        if (isset($this->payment_id) === true) {
             $relativeUrl = 'payments/' . $this->payment_id. '/transfers';
 
             return $this->request('GET', $relativeUrl, $options);

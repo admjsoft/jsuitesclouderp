@@ -5,7 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Paymentgateways extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -16,14 +15,12 @@ class Paymentgateways extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
     }
 
     public function index()
     {
-
         $data['gateway'] = $this->billing->gateway_list();
         $this->load->view('fixed/header');
         $this->load->view('payment/list', $data);
@@ -34,7 +31,6 @@ class Paymentgateways extends CI_Controller
     public function edit()
     {
         if ($this->input->post()) {
-
             $gid = $this->input->post('gid');
             $currency = $this->input->post('currency');
             $key1 = $this->input->post('key1');
@@ -49,7 +45,6 @@ class Paymentgateways extends CI_Controller
 
             $this->billing->gateway_update($gid, $currency, $key1, $key2, $enable, $devmode, $p_fee);
         } else {
-
             $id = intval($this->input->get('id'));
             $data['gateway'] = $this->billing->gateway($id);
             $this->load->view('fixed/header');
@@ -63,7 +58,6 @@ class Paymentgateways extends CI_Controller
     {
         $this->load->model('plugins_model', 'plugins');
         if ($this->input->post()) {
-
             $id = $this->input->post('account');
             $enable = $this->input->post('enable');
             $bank_enable = $this->input->post('bank');
@@ -81,7 +75,6 @@ class Paymentgateways extends CI_Controller
                 file_put_contents($config_file_path, $config_file);
             }
         } else {
-
             $data['current'] = $this->plugins->universal_api(69);
             $this->load->model('accounts_model');
             $data['acclist'] = $this->accounts_model->accountslist();
@@ -92,9 +85,8 @@ class Paymentgateways extends CI_Controller
         }
     }
 
-    function bank_accounts()
+    public function bank_accounts()
     {
-
         $data['bank_accounts'] = $this->billing->bank_accounts();
         $this->load->view('fixed/header');
         $this->load->view('payment/bank_list', $data);
@@ -105,8 +97,6 @@ class Paymentgateways extends CI_Controller
     public function add_bank_ac()
     {
         if ($this->input->post()) {
-
-
             $name = $this->input->post('name', true);
             $acn = $this->input->post('acn', true);
             $code = $this->input->post('code', true);
@@ -117,7 +107,6 @@ class Paymentgateways extends CI_Controller
 
             $this->billing->bank_ac_add($name, $acn, $code, $enable, $bank, $branch, $address);
         } else {
-
             $head['title'] = "Add Bank Account";
             $this->load->view('fixed/header', $head);
             $this->load->view('payment/bank-add');
@@ -129,7 +118,6 @@ class Paymentgateways extends CI_Controller
     public function edit_bank_ac()
     {
         if ($this->input->post()) {
-
             $gid = $this->input->post('gid');
             $name = $this->input->post('name', true);
             $acn = $this->input->post('acn', true);
@@ -141,7 +129,6 @@ class Paymentgateways extends CI_Controller
 
             $this->billing->bank_ac_update($gid, $name, $acn, $code, $enable, $bank, $branch, $address);
         } else {
-
             $id = intval($this->input->get('id'));
             $head['title'] = "Edit Bank Account";
             $data['bank_account'] = $this->billing->bank_account_info($id);
@@ -164,9 +151,8 @@ class Paymentgateways extends CI_Controller
     }
 
 
-    function currencies()
+    public function currencies()
     {
-
         $data['currency_list'] = $this->invoices->currencies();
         $this->load->view('fixed/header');
         $this->load->view('payment/currency_list', $data);
@@ -176,8 +162,6 @@ class Paymentgateways extends CI_Controller
     public function add_currency()
     {
         if ($this->input->post()) {
-
-
             $code = $this->input->post('code', true);
             $symbol = $this->input->post('symbol', true);
             $spos = $this->input->post('spos');
@@ -188,7 +172,6 @@ class Paymentgateways extends CI_Controller
 
             $this->billing->add_currency($code, $symbol, $spos, $rate, $decimal, $thous_sep, $deci_sep);
         } else {
-
             $head['title'] = "Add Currency";
             $this->load->view('fixed/header', $head);
             $this->load->view('payment/add_currency');
@@ -200,7 +183,6 @@ class Paymentgateways extends CI_Controller
     public function edit_currency()
     {
         if ($this->input->post()) {
-
             $gid = $this->input->post('gid');
             $code = $this->input->post('code', true);
             $symbol = $this->input->post('symbol', true);
@@ -212,7 +194,6 @@ class Paymentgateways extends CI_Controller
 
             $this->billing->edit_currency($gid, $code, $symbol, $spos, $rate, $decimal, $thous_sep, $deci_sep);
         } else {
-
             $id = intval($this->input->get('id'));
             $head['title'] = "Edit Currency";
             $data['currency_d'] = $this->invoices->currency_d($id);
@@ -234,10 +215,9 @@ class Paymentgateways extends CI_Controller
     }
 
 
-    function exchange()
+    public function exchange()
     {
         if ($this->input->post()) {
-
             $currency = $this->input->post('currency', true);
             $key1 = $this->input->post('key1', true);
             $key2 = $this->input->post('key2', true);
@@ -247,7 +227,6 @@ class Paymentgateways extends CI_Controller
 
             $this->billing->exchange($currency, $key1, $key2, $enable, $reverse);
         } else {
-
             $this->load->model('plugins_model', 'plugins');
             $data['exchange'] = $this->plugins->universal_api(5);
             $this->load->view('fixed/header');

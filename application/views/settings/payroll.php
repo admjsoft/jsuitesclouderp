@@ -35,6 +35,52 @@
                     </div>
                 </div>
 
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="data['working_days']">Ordinary rate pay</label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-12 mb-2">
+                            <input name="data[ordinary_rate_pay_month]" type="number" min="1" step="1" class="form-control form-number" value="<?php echo $data['data']['ordinary_rate_pay_month']; ?>"/>
+                            <small>of monthly salary</small>
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            <input name="data[ordinary_rate_pay_day]" type="number" min="1" step="1" class="form-control form-number" value="<?php echo $data['data']['ordinary_rate_pay_day']; ?>"/>
+                            <small>of daily salary</small>
+                        </div>
+                        <div class="col-sm-12 mb-2">
+                            <input name="data[ordinary_rate_pay_hour]" type="number" min="1" step="1" class="form-control form-number" value="<?php echo $data['data']['ordinary_rate_pay_hour']; ?>"/>
+                            <small>of hourly salary</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="data['working_days']">Working days in a month</label>
+                    <div class="col-sm-6">
+                        <input name="data[working_days]" type="number" max="30" min="1" step="1" class="form-control form-number" value="<?php echo $data['data']['working_days']; ?>"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="data['wage_type']">Wages</label>
+                    <div class="col-sm-6">
+                        <select name="data[wage_type]" class="form-control">
+                            <option value="0" <?php echo ! $data['data']['wage_type'] ? 'selected' : '' ?> >Basic Salary + Allowance</option>
+                            <option value="1" <?php echo $data['data']['wage_type'] ? 'selected' : '' ?>>Basic Salary Only</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="data['compensation_rounding']">Compensation rounding</label>
+                    <div class="col-sm-6">
+                        <select name="data[compensation_rounding]" class="form-control">
+                            <option value="0" <?php echo $data['data']['compensation_rounding'] === 0 ? 'selected' : '' ?>>Round Up</option>
+                            <option value="1" <?php echo $data['data']['compensation_rounding'] === 1 ? 'selected' : '' ?>>No Rounding</option>
+                            <option value="2" <?php echo $data['data']['compensation_rounding'] === 2 ? 'selected' : '' ?>>Round Down</option>
+                        </select>
+                    </div>
+                </div>
+
 
 
                 <div class="form-group row">

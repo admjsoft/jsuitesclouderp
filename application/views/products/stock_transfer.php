@@ -33,7 +33,7 @@
                                     $title = $row['title'];
                                     echo "<option value='$cid'>$title</option>";
                                 }
-                                ?>
+            ?>
                             </select>
 
 
@@ -74,12 +74,12 @@
                         <div class="col-sm-6">
                             <select name="to_warehouse" class="form-control">
                                 <?php
-                                foreach ($warehouse as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['title'];
-                                    echo "<option value='$cid'>$title</option>";
-                                }
-                                ?>
+            foreach ($warehouse as $row) {
+                $cid = $row['id'];
+                $title = $row['title'];
+                echo "<option value='$cid'>$title</option>";
+            }
+            ?>
                             </select>
 
 

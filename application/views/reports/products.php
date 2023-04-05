@@ -64,7 +64,7 @@
                                             $holder = $row['address'];
                                             echo "<option value='$cid'>$acn - $holder</option>";
                                         }
-                                        ?>
+        ?>
                                     </select>
 
 
@@ -130,12 +130,12 @@
                                     <select name="pay_acc" class="form-control">
                                         <option value='0'><?php echo $this->lang->line('All') ?></option>
                                         <?php
-                                        foreach ($cat as $row) {
-                                            $cid = $row['id'];
-                                            $title = $row['title'];
-                                            echo "<option value='$cid'>$title</option>";
-                                        }
-                                        ?>
+        foreach ($cat as $row) {
+            $cid = $row['id'];
+            $title = $row['title'];
+            echo "<option value='$cid'>$title</option>";
+        }
+        ?>
                                     </select>
 
 

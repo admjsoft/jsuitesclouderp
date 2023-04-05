@@ -37,13 +37,13 @@
     <tr>
         <td>
             <?php $loc = location($trans['loc']);
-            echo '<strong>' . $loc['cname'] . '</strong><br>' .
-                $loc['address'] . '<br>' . $loc['city'] . ', ' . $loc['region'] . '<br>' . $loc['country'] . ' -  ' . $loc['postbox'] . '<br> ' . $this->lang->line('Phone') . ': ' . $loc['phone'] . '<br>  ' . $this->lang->line('Email') . ': ' . $loc['email'];
-            ?>
+    echo '<strong>' . $loc['cname'] . '</strong><br>' .
+        $loc['address'] . '<br>' . $loc['city'] . ', ' . $loc['region'] . '<br>' . $loc['country'] . ' -  ' . $loc['postbox'] . '<br> ' . $this->lang->line('Phone') . ': ' . $loc['phone'] . '<br>  ' . $this->lang->line('Email') . ': ' . $loc['email'];
+    ?>
 
         </td>
         <td> <?php echo '<strong>' . $trans['payer'] . '</strong><br>' .
-                $cdata['address'] . '<br>' . $cdata['city'] . '<br>' . $this->lang->line('Phone') . ': ' . $cdata['phone'] . '<br> ' . $this->lang->line('Email') . ': ' . $cdata['email']; ?></td>
+        $cdata['address'] . '<br>' . $cdata['city'] . '<br>' . $this->lang->line('Phone') . ': ' . $cdata['phone'] . '<br> ' . $this->lang->line('Email') . ': ' . $cdata['email']; ?></td>
         <td> <?php echo '<div class="col-xs-6 col-sm-6 col-md-6">
                     <p>' . $this->lang->line('Amount') . ' ' . $this->lang->line('Credit') . ' : ' . amountExchange($trans['debit'], 0, $trans['loc']) . ' </p><p>' . $this->lang->line('Amount') . ' ' . $this->lang->line('Debit') . ' : ' . amountExchange($trans['credit'], 0, $trans['loc']) . ' </p>'; ?></td>
     </tr>

@@ -1,13 +1,13 @@
 <?php
 
 
-if (!defined('BASEPATH'))
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
 
 class User extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -29,9 +29,9 @@ class User extends CI_Controller
         if ($this->input->get('e')) {
             $data['response'] = 'Invalid username or password!';
         }
-       // $this->load->view('user/header');
+        // $this->load->view('user/header');
         $this->load->view('user/index', $data);
-       // $this->load->view('user/footer');
+        // $this->load->view('user/footer');
     }
 
     public function checklogin()
@@ -44,10 +44,16 @@ class User extends CI_Controller
             $rem = true;
         }
         if ($this->aauth->login($user, $password, $rem, $this->captcha)) {
+            $this->load->model('employee_model', 'employee');
+            $emp = [$this->aauth->get_user()->id];
+            $adate = datefordatabase(null);
+            $from = timefordatabase(null);
+            $note = 1;
+
+            $this->employee->addattendance($emp, $adate, $from, null, $note);
             $this->aauth->applog("[Logged In] $user");
             redirect('/dashboard/', 'refresh');
         } else {
-
             redirect('/user/?e=eyxde', 'refresh');
         }
     }
@@ -166,7 +172,6 @@ class User extends CI_Controller
 
     public function displaypic()
     {
-
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
         }
@@ -203,7 +208,6 @@ class User extends CI_Controller
 
     public function updatepassword()
     {
-
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
         }
@@ -215,7 +219,7 @@ class User extends CI_Controller
         if ($this->input->post()) {
             $this->form_validation->set_rules('newpassword', 'Password', 'required');
             $this->form_validation->set_rules('renewpassword', 'Confirm Password', 'required|matches[newpassword]');
-            if ($this->form_validation->run() == FALSE) {
+            if ($this->form_validation->run() == false) {
                 echo json_encode(array('status' => 'Error', 'message' => '<br>Rules<br> Password length should  be at least 6 [a-z-0-9] allowed!<br>New Password & Re New Password should be same!'));
             } else {
                 $cpassword = $this->input->post('cpassword');
@@ -322,8 +326,11 @@ class User extends CI_Controller
         if (strlen($password) > 5) {
             $out = $this->aauth->reset_password($email, $code, $password);
             //   print_r($out);
-            if ($out) echo json_encode(array('status' => 'Success', 'message' => "Password Changed Successfully!  <a href='" . base_url() . "' class='btn btn-indigo btn-md'><span class='icon-home' aria-hidden='true'></span> " . $this->lang->line('Login') . "  </a>"));
-            else echo json_encode(array('status' => 'Error', 'message' => "Code Expired! <a href='" . base_url() . "' class='btn btn-blue btn-md'><span class='fa fa-home' aria-hidden='true'></span> " . $this->lang->line('Login') . "  </a>"));
+            if ($out) {
+                echo json_encode(array('status' => 'Success', 'message' => "Password Changed Successfully!  <a href='" . base_url() . "' class='btn btn-indigo btn-md'><span class='icon-home' aria-hidden='true'></span> " . $this->lang->line('Login') . "  </a>"));
+            } else {
+                echo json_encode(array('status' => 'Error', 'message' => "Code Expired! <a href='" . base_url() . "' class='btn btn-blue btn-md'><span class='fa fa-home' aria-hidden='true'></span> " . $this->lang->line('Login') . "  </a>"));
+            }
         }
 
 
@@ -335,6 +342,12 @@ class User extends CI_Controller
 
     public function logout()
     {
+        $this->load->model('employee_model', 'employee');
+        $emp = [$this->aauth->get_user()->id];
+        $to = timefordatabase(null);
+        $note = 1;
+
+        $this->employee->clockout($emp, $to, $note);
         $this->aauth->applog('[Logged Out] ' . $this->aauth->get_user()->username);
         $this->aauth->logout();
 

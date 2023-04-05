@@ -154,7 +154,9 @@
     </style>
 </head>
 
-<body <?php if (LTR == 'rtl') echo 'dir="rtl"'; ?>>
+<body <?php if (LTR == 'rtl') {
+    echo 'dir="rtl"';
+} ?>>
 <div class="invoice-box">
     <table>
         <tr>
@@ -167,7 +169,7 @@
             </td>
             <td class="myw">
                 <?php echo $this->lang->line('Account Statement');
-                $balance = 0; ?>
+$balance = 0; ?>
             </td>
             walk
         </tr>
@@ -185,7 +187,7 @@
         <tr>
             <td><h3><?php echo $this->config->item('ctitle'); ?></h3>
                 <?php echo
-                    $this->config->item('address') . '<br>' . $this->config->item('city') . ',' . $this->config->item('country') . '<br>Phone: ' . $this->config->item('phone') . '<br> Email: ' . $this->config->item('email'); ?>
+    $this->config->item('address') . '<br>' . $this->config->item('city') . ',' . $this->config->item('country') . '<br>Phone: ' . $this->config->item('phone') . '<br> Email: ' . $this->config->item('email'); ?>
             </td>
 
             <td>
@@ -212,18 +214,18 @@
 
         <?php
         $fill = false;
-        $q = 0;
-        foreach ($list as $row) {
-            if ($fill == true) {
-                $flag = ' mfill';
-            } else {
-                $flag = '';
-            }
-            $q += $row['qty'];
-            echo '<tr class="item' . $flag . '"><td>' . $row['invoicedate'] . '</td><td>' . $row['qty'] . '</td><td>' . $row['product'] . '</td><td>' . $row['inv'] . '</td><td>' . amountExchange($row['subtotal'], 0, $this->aauth->get_user()->loc) . '</td></tr>';
-            $fill = !$fill;
-        }
-        ?>
+$q = 0;
+foreach ($list as $row) {
+    if ($fill == true) {
+        $flag = ' mfill';
+    } else {
+        $flag = '';
+    }
+    $q += $row['qty'];
+    echo '<tr class="item' . $flag . '"><td>' . $row['invoicedate'] . '</td><td>' . $row['qty'] . '</td><td>' . $row['product'] . '</td><td>' . $row['inv'] . '</td><td>' . amountExchange($row['subtotal'], 0, $this->aauth->get_user()->loc) . '</td></tr>';
+    $fill = !$fill;
+}
+?>
     </table>
 
 

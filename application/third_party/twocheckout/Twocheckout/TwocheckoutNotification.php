@@ -2,7 +2,6 @@
 
 class Twocheckout_Notification extends Twocheckout
 {
-
     public static function check($insMessage=array(), $secretWord)
     {
         $hashSid = $insMessage['vendor_id'];
@@ -16,5 +15,4 @@ class Twocheckout_Notification extends Twocheckout
         }
         return Twocheckout_Util::returnResponse($result);
     }
-
 }

@@ -7,41 +7,32 @@ class Chart extends CI_Controller
 {
     public function __construct()
     {
-
         parent::__construct();
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
         }
         if (!$this->aauth->premission(10)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
 
 
         $this->load->model('chart_model', 'chart');
         $this->li_a = 'data';
-
-
     }
 
     public function index()
     {
-
-
         $head['title'] = "Register";
         $data = $this->registerlog->lists();
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->view('fixed/header', $head);
         $this->load->view('register/index', $data);
         $this->load->view('fixed/footer');
-
     }
 
     public function product_cat()
     {
-
         $head['title'] = "Product Categories";
         $type = $this->input->get('p');
         $data['chart'] = $this->chart->productcat($type);
@@ -49,8 +40,6 @@ class Chart extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('chart/productcat', $data);
         $this->load->view('fixed/footer');
-
-
     }
 
     public function product_update()
@@ -65,12 +54,10 @@ class Chart extends CI_Controller
             $chart_array[] = array('label' => $item['title'] . ' | ' . +$item['qty'], 'value' => $item['subtotal']);
         }
         echo json_encode($chart_array);
-
     }
 
     public function trending_products()
     {
-
         $head['title'] = "Trending Products";
         $type = $this->input->get('p');
         $data['chart'] = $this->chart->trendingproducts($type);
@@ -78,8 +65,6 @@ class Chart extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('chart/trending', $data);
         $this->load->view('fixed/footer');
-
-
     }
 
     public function trending_products_update()
@@ -94,12 +79,10 @@ class Chart extends CI_Controller
             $chart_array[] = array('y' => $item['product_name'], 'a' => $item['qty']);
         }
         echo json_encode($chart_array);
-
     }
 
     public function profit()
     {
-
         $head['title'] = "Profit Reports";
         $type = $this->input->get('p');
         $data['chart'] = $this->chart->profitchart($type);
@@ -107,8 +90,6 @@ class Chart extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('chart/profit', $data);
         $this->load->view('fixed/footer');
-
-
     }
 
     public function profit_update()
@@ -123,12 +104,10 @@ class Chart extends CI_Controller
             $chart_array[] = array('y' => $item['d_date'], 'a' => $item['col1']);
         }
         echo json_encode($chart_array);
-
     }
 
     public function topcustomers()
     {
-
         $head['title'] = "Customer Reports";
         $type = $this->input->get('p');
         $data['chart'] = $this->chart->customerchart($type);
@@ -136,8 +115,6 @@ class Chart extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('chart/customer', $data);
         $this->load->view('fixed/footer');
-
-
     }
 
 
@@ -153,12 +130,10 @@ class Chart extends CI_Controller
             $chart_array[] = array('y' => $item['name'], 'a' => $item['total']);
         }
         echo json_encode($chart_array);
-
     }
 
     public function income()
     {
-
         $head['title'] = "Income Reports";
         $type = $this->input->get('p');
         $data['chart'] = $this->chart->incomechart($type);
@@ -166,8 +141,6 @@ class Chart extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('chart/income', $data);
         $this->load->view('fixed/footer');
-
-
     }
 
     public function income_update()
@@ -182,12 +155,10 @@ class Chart extends CI_Controller
             $chart_array[] = array('y' => $item['date'], 'a' => $item['credit']);
         }
         echo json_encode($chart_array);
-
     }
 
     public function expenses()
     {
-
         $head['title'] = "Expenses Reports";
         $type = $this->input->get('p');
         $data['chart'] = $this->chart->expenseschart($type);
@@ -195,8 +166,6 @@ class Chart extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('chart/expenses', $data);
         $this->load->view('fixed/footer');
-
-
     }
 
     public function expenses_update()
@@ -211,12 +180,10 @@ class Chart extends CI_Controller
             $chart_array[] = array('y' => $item['date'], 'a' => $item['debit']);
         }
         echo json_encode($chart_array);
-
     }
 
     public function incvsexp()
     {
-
         $head['title'] = "Income vs Expense";
         $type = $this->input->get('p');
         $data['chart'] = $this->chart->incexp($type);
@@ -224,8 +191,6 @@ class Chart extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('chart/incvsexp', $data);
         $this->load->view('fixed/footer');
-
-
     }
 
     public function incvsexp_update()
@@ -242,11 +207,7 @@ class Chart extends CI_Controller
             } elseif ($item['type'] == 'Expense') {
                 $chart_array[] = array('label' => $item['type'], 'value' => $item['debit']);
             }
-
         }
         echo json_encode($chart_array);
-
     }
-
-
 }

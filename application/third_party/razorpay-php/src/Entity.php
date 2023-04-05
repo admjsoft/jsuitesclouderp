@@ -2,8 +2,6 @@
 
 namespace Razorpay\Api;
 
-use Razorpay\Api\Errors;
-
 class Entity extends Resource implements ArrayableInterface
 {
     protected $attributes = array();
@@ -28,8 +26,7 @@ class Entity extends Resource implements ArrayableInterface
 
     protected function validateIdPresence($id)
     {
-        if ($id !== null)
-        {
+        if ($id !== null) {
             return;
         }
 
@@ -86,14 +83,11 @@ class Entity extends Resource implements ArrayableInterface
         $response = $request->request($method, $relativeUrl, $data);
 
         if ((isset($response['entity'])) and
-            ($response['entity'] == $this->getEntity()))
-        {
+            ($response['entity'] == $this->getEntity())) {
             $this->fill($response);
 
             return $this;
-        }
-        else
-        {
+        } else {
             return static::buildEntity($response);
         }
     }
@@ -110,21 +104,15 @@ class Entity extends Resource implements ArrayableInterface
     {
         $entities = static::getDefinedEntitiesArray();
 
-        if (isset($data['entity']))
-        {
-            if (in_array($data['entity'], $entities))
-            {
+        if (isset($data['entity'])) {
+            if (in_array($data['entity'], $entities)) {
                 $class = static::getEntityClass($data['entity']);
-                $entity = new $class;
+                $entity = new $class();
+            } else {
+                $entity = new static();
             }
-            else
-            {
-                $entity = new static;
-            }
-        }
-        else
-        {
-            $entity = new static;
+        } else {
+            $entity = new static();
         }
 
         $entity->fill($data);
@@ -162,31 +150,22 @@ class Entity extends Resource implements ArrayableInterface
     {
         $attributes = array();
 
-        foreach ($data as $key => $value)
-        {
-            if (is_array($value))
-            {
-                if  (static::isAssocArray($value) === false)
-                {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                if (static::isAssocArray($value) === false) {
                     $collection = array();
 
-                    foreach ($value as $v)
-                    {
-                        if (is_array($v))
-                        {
+                    foreach ($value as $v) {
+                        if (is_array($v)) {
                             $entity = static::buildEntity($v);
                             array_push($collection, $entity);
-                        }
-                        else
-                        {
+                        } else {
                             array_push($collection, $v);
                         }
                     }
 
                     $value = $collection;
-                }
-                else
-                {
+                } else {
                     $value = static::buildEntity($value);
                 }
             }
@@ -211,14 +190,10 @@ class Entity extends Resource implements ArrayableInterface
     {
         $array = $attributes;
 
-        foreach ($attributes as $key => $value)
-        {
-            if (is_object($value))
-            {
+        foreach ($attributes as $key => $value) {
+            if (is_object($value)) {
                 $array[$key] = $value->toArray();
-            }
-            else if (is_array($value) and self::isAssocArray($value) == false)
-            {
+            } elseif (is_array($value) and self::isAssocArray($value) == false) {
                 $array[$key] = $this->convertToArray($value);
             }
         }

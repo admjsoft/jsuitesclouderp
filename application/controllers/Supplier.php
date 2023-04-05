@@ -5,7 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Supplier extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -15,16 +14,13 @@ class Supplier extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if (!$this->aauth->premission(2)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $this->li_a = 'stock';
     }
 
     public function index()
     {
-
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Supplier';
         $this->load->view('fixed/header', $head);
@@ -51,7 +47,9 @@ class Supplier extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'View Supplier';
         $this->load->view('fixed/header', $head);
-        if ($data['details']['id']) $this->load->view('supplier/view', $data);
+        if ($data['details']['id']) {
+            $this->load->view('supplier/view', $data);
+        }
         $this->load->view('fixed/footer');
     }
 
@@ -98,7 +96,6 @@ class Supplier extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('supplier/edit', $data);
         $this->load->view('fixed/footer');
-
     }
 
     public function addsupplier()
@@ -115,7 +112,6 @@ class Supplier extends CI_Controller
         $taxid = $this->input->post('taxid', true);
 
         $this->supplier->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $taxid);
-
     }
 
     public function editsupplier()
@@ -159,8 +155,6 @@ class Supplier extends CI_Controller
         if ($img != '') {
             $this->supplier->editpicture($id, $img);
         }
-
-
     }
 
 
@@ -225,7 +219,6 @@ class Supplier extends CI_Controller
         );
         //output to json format
         echo json_encode($output);
-
     }
 
 
@@ -263,7 +256,7 @@ class Supplier extends CI_Controller
         $data['details'] = $this->supplier->details($data['id']);
         $head['usernm'] = $this->aauth->get_user()->username;
         $this->load->model('accounts_model');
-        $data['acclist'] = $this->accounts_model->accountslist((integer)$this->aauth->get_user()->loc);
+        $data['acclist'] = $this->accounts_model->accountslist((int)$this->aauth->get_user()->loc);
         $this->session->set_userdata("cid", $data['id']);
         $head['title'] = 'Bulk Payment Invoices';
         $this->load->view('fixed/header', $head);
@@ -305,6 +298,4 @@ class Supplier extends CI_Controller
         $due = 0;
         echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Paid') . ' ' . amountExchange($amount), 'due' => amountExchange_s($due)));
     }
-
-
 }

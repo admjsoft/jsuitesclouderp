@@ -11,7 +11,6 @@ use PayPal\Exception\PayPalConfigurationException;
  */
 class ReflectionUtil
 {
-
     /**
      * Reflection Methods
      *
@@ -117,7 +116,8 @@ class ReflectionUtil
             '~\@([^\s@\(]+)[\t ]*(?:\(?([^\n@]+)\)?)?~i',
             $refl->getDocComment(),
             $annots,
-            PREG_PATTERN_ORDER)) {
+            PREG_PATTERN_ORDER
+        )) {
             return null;
         }
         foreach ($annots[1] as $i => $annot) {

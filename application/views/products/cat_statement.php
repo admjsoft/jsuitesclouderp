@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header">
             <h4><?php echo $product['title'] . ' ';
-                echo $this->lang->line('Statements') ?></h4>
+            echo $this->lang->line('Statements') ?></h4>
             <hr>
             <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
             <div class="heading-elements">

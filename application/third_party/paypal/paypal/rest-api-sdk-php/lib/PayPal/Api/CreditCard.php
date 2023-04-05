@@ -556,5 +556,4 @@ class CreditCard extends PayPalResourceModel
         $ret->fromJson($json);
         return $ret;
     }
-
 }

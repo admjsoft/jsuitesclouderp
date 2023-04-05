@@ -1,4 +1,5 @@
 <?php
+
 $lang['Date'] = "Date";
 $lang['Edit'] = "Edit";
 $lang['employee_login_panel'] = "Employee Login Panel";

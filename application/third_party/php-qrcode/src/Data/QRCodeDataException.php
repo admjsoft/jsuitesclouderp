@@ -17,6 +17,6 @@ use Exception;
 /**
  * Placeholder
  */
-class QRCodeDataException extends Exception{
-
+class QRCodeDataException extends Exception
+{
 }

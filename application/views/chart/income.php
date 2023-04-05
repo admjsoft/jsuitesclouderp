@@ -89,9 +89,9 @@
         $(document).ready(function () {
             var cat_data = [
                 <?php foreach ($chart as $item) {
-                echo '{y: "' . $item['date'] . '", a: ' . $item['credit'] . ' },';
-            }
-                ?>
+                    echo '{y: "' . $item['date'] . '", a: ' . $item['credit'] . ' },';
+                }
+            ?>
             ];
             draw_c(cat_data);
         });

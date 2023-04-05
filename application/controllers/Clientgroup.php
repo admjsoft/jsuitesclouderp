@@ -15,7 +15,6 @@ class Clientgroup extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if (!$this->aauth->premission(3)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->li_a = 'crm';
@@ -46,9 +45,7 @@ class Clientgroup extends CI_Controller
 
     //datatable
     public function grouplist()
-
     {
-
         $id = $this->input->get('id');
         $list = $this->customers->get_datatables($id);
         $data = array();
@@ -129,7 +126,7 @@ class Clientgroup extends CI_Controller
                 $this->db->where('gid', $id);
                 $this->db->update('gtg_customers');
                 echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('DELETED')));
-            } else if ($id == 1) {
+            } elseif ($id == 1) {
                 echo json_encode(array('status' => 'Error', 'message' => 'You can not delete the default group!'));
             } else {
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
@@ -140,7 +137,7 @@ class Clientgroup extends CI_Controller
         }
     }
 
-    function sendGroup()
+    public function sendGroup()
     {
         $id = $this->input->post('gid');
         $subject = $this->input->post('subject', true);

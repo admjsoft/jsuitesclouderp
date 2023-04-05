@@ -58,9 +58,9 @@
                                             id="s_warehouses"
                                             class="selectpicker form-control">
                                         <?php echo $this->common->default_warehouse();
-                                        echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
-                                            echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                                        } ?>
+                                            echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
+                                                echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                                            } ?>
 
                                     </select>
                                 </div>
@@ -252,9 +252,9 @@
                                     <strong><?php echo $this->lang->line('Total Discount') ?></strong></td>
                                 <td align="left" colspan="2"><span
                                             class="currenty lightMode"><?php echo $this->config->item('currency');
-                                        if (isset($_GET['project'])) {
-                                            echo '<input type="hidden" value="' . intval($_GET['project']) . '" name="prjid">';
-                                        } ?></span>
+                                            if (isset($_GET['project'])) {
+                                                echo '<input type="hidden" value="' . intval($_GET['project']) . '" name="prjid">';
+                                            } ?></span>
                                     <span id="discs" class="lightMode">0</span></td>
                             </tr>
 
@@ -272,7 +272,7 @@
                             </tr>
 
                             <tr class="sub_c" style="display: table-row;">
-                                <td colspan="2"><?php if ($exchange['active'] == 1){
+                                <td colspan="2"><?php if ($exchange['active'] == 1) {
                                     echo $this->lang->line('Payment Currency client') . ' <small>' . $this->lang->line('based on live market') ?></small>
                                     <select name="mcurrency"
                                             class="selectpicker form-control">
@@ -294,8 +294,8 @@
                             <tr class="sub_c" style="display: table-row;">
                                 <td colspan="2"><?php echo $this->lang->line('Payment Terms') ?> <select name="pterms"
                                                                                                          class="selectpicker form-control"><?php foreach ($terms as $row) {
-                                            echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                                        } ?>
+                                                                                                             echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                                                                                                         } ?>
 
                                     </select></td>
                                 <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn"
@@ -448,12 +448,12 @@
                                 <div class="col-sm-10">
                                     <select name="customergroup" class="form-control">
                                         <?php
-                                        foreach ($customergrouplist as $row) {
-                                            $cid = $row['id'];
-                                            $title = $row['title'];
-                                            echo "<option value='$cid'>$title</option>";
-                                        }
-                                        ?>
+                                                                                                         foreach ($customergrouplist as $row) {
+                                                                                                             $cid = $row['id'];
+                                                                                                             $title = $row['title'];
+                                                                                                             echo "<option value='$cid'>$title</option>";
+                                                                                                         }
+                                            ?>
                                     </select>
 
 

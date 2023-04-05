@@ -17,16 +17,16 @@
                             <?php
                             $validtoken = hash_hmac('ripemd160', $invoice['tid'], $this->config->item('encryption_key'));
 
-                            $link = '../../billing/view?id=' . $invoice['tid'] . '&token=' . $validtoken;
-                            $linkp = '../../billing/printinvoice?id=' . $invoice['tid'] . '&token=' . $validtoken;
-                            if ($invoice['status'] != 'canceled') {
-                                echo ' <div class="title-action"><a href="' . $link . '"  class="btn btn-large btn-success" title="Partial Payment"
+            $link = '../../billing/view?id=' . $invoice['tid'] . '&token=' . $validtoken;
+            $linkp = '../../billing/printinvoice?id=' . $invoice['tid'] . '&token=' . $validtoken;
+            if ($invoice['status'] != 'canceled') {
+                echo ' <div class="title-action"><a href="' . $link . '"  class="btn btn-large btn-success" title="Partial Payment"
                                 ><span class="fa fa-money"></span> Make Payment </a>
                                 <a href="' . $linkp . '"  class="btn btn-large btn-info" title="Partial Payment"
                                 ><span class="fa fa-print"></span> Print </a>   </div>';
-                            } else {
-                                echo '<h2 class="btn btn-oval btn-danger">Cancelled</h2>';
-                            } ?>
+            } else {
+                echo '<h2 class="btn btn-oval btn-danger">Cancelled</h2>';
+            } ?>
                         </div>
                     </div>
 
@@ -40,7 +40,7 @@
 
                             <ul class="px-0 list-unstyled">
                                 <?php echo '<li class="text-bold-800">' . $this->config->item('ctitle') . '</li><li>' .
-                                    $this->config->item('address') . '</li><li>' . $this->config->item('city') . '</li><li>Phone: ' . $this->config->item('phone') . '</li><li> Email: ' . $this->config->item('email'); ?>
+                    $this->config->item('address') . '</li><li>' . $this->config->item('city') . '</li><li>Phone: ' . $this->config->item('phone') . '</li><li> Email: ' . $this->config->item('email'); ?>
                                 </li>
                             </ul>
                         </div>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="offset-md-5 col-md-3 col-sm-12 text-xs-center text-md-left">
                             <?php echo '<p><span class="text-muted">Invoice Date :</span> ' . $invoice['invoicedate'] . '</p> <p><span class="text-muted">Due Date :</span> ' . $invoice['invoiceduedate'] . '</p>  <p><span class="text-muted">Terms :</span> ' . $invoice['termtit'] . '</p>';
-                            ?>
+            ?>
                         </div>
                     </div>
                     <!--/ Invoice Customer Details -->
@@ -97,9 +97,8 @@
                                     </thead>
                                     <tbody>
                                     <?php $c = 1;
-                                    foreach ($products as $row) {
-
-                                        echo '<tr>
+            foreach ($products as $row) {
+                echo '<tr>
 <th scope="row">' . $c . '</th>
                             <td>' . $row['product'] . '</td>
                            
@@ -109,8 +108,8 @@
                             <td>' . amountFormat($row['totaldiscount']) . ' (' . amountFormat($row['discount']) . '' . $invoice['format_discount'] . ')</td>
                             <td>' . $this->config->item('currency') . ' ' . amountFormat($row['subtotal']) . '</td>
                         </tr>';
-                                        $c++;
-                                    } ?>
+                $c++;
+            } ?>
 
                                     </tbody>
                                 </table>
@@ -165,12 +164,11 @@
                                         <tr class="bg-grey bg-lighten-4">
                                             <td class="text-bold-800">Balance Due</td>
                                             <td class="text-bold-800 text-xs-right"> <?php $myp = '';
-                                                $rming = $invoice['total'] - $invoice['pamnt'];
-                                                if ($rming < 0) {
-                                                    $rming = 0;
-
-                                                }
-                                                echo $this->config->item('currency') . ' <span id="paydue">' . amountFormat($rming) . '</span></strong>'; ?></td>
+            $rming = $invoice['total'] - $invoice['pamnt'];
+            if ($rming < 0) {
+                $rming = 0;
+            }
+            echo $this->config->item('currency') . ' <span id="paydue">' . amountFormat($rming) . '</span></strong>'; ?></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -201,7 +199,6 @@
                             </thead>
                             <tbody id="activity">
                             <?php foreach ($activity as $row) {
-
                                 echo '<tr>
                             <td>' . $row['date'] . '</td>
                             <td>' . $row['method'] . '</td>
@@ -221,7 +218,7 @@
                                 <p> <?php
 
                                     echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
-                                    ?></p>
+            ?></p>
                             </div>
 
                         </div>

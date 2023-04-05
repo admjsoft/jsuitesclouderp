@@ -108,8 +108,7 @@
                 <td><b><?php echo amountExchange($gst, $invoice['multi'], $invoice['loc']) ?></b> (<?= $rate ?>%)</td>
             </tr>
 
-        <?php } else if ($invoice['taxstatus'] == 'igst') {
-
+        <?php } elseif ($invoice['taxstatus'] == 'igst') {
             ?>
             <tr>
                 <td><b><?php echo $this->lang->line('IGST') ?></b></td>

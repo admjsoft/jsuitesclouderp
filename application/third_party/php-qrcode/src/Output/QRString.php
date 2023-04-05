@@ -17,43 +17,44 @@ use chillerlan\QRCode\QRCode;
 /**
  * Converts the matrix data into string types
  */
-class QRString extends QROutputAbstract{
+class QRString extends QROutputAbstract
+{
+    protected $defaultMode = QRCode::OUTPUT_STRING_TEXT;
 
-	protected $defaultMode = QRCode::OUTPUT_STRING_TEXT;
+    /**
+     * @return string
+     */
+    protected function text(): string
+    {
+        $str = [];
 
-	/**
-	 * @return string
-	 */
-	protected function text():string{
-		$str = [];
+        foreach ($this->matrix->matrix() as $row) {
+            $r = [];
 
-		foreach($this->matrix->matrix() as $row){
-			$r = [];
+            foreach ($row as $col) {
+                $col = $this->options->moduleValues[$col];
 
-			foreach($row as $col){
-				$col = $this->options->moduleValues[$col];
+                // fallback
+                if (is_bool($col) || !is_string($col)) {
+                    $col = $col
+                        ? $this->options->textDark
+                        : $this->options->textLight;
+                }
 
-				// fallback
-				if(is_bool($col) || !is_string($col)){
-					$col = $col
-						? $this->options->textDark
-						: $this->options->textLight;
-				}
+                $r[] = $col;
+            }
 
-				$r[] = $col;
-			}
+            $str[] = implode('', $r);
+        }
 
-			$str[] = implode('', $r);
-		}
+        return implode($this->options->eol, $str);
+    }
 
-		return implode($this->options->eol, $str);
-	}
-
-	/**
-	 * @return string
-	 */
-	protected function json():string{
-		return json_encode($this->matrix->matrix());
-	}
-
+    /**
+     * @return string
+     */
+    protected function json(): string
+    {
+        return json_encode($this->matrix->matrix());
+    }
 }

@@ -6,21 +6,19 @@
 <?php
 $rming = $amount;
 
-$surcharge_t = false;
+      $surcharge_t = false;
 
-$row = $gateway;
+      $row = $gateway;
 
-$cid = $row['id'];
-$title = $row['name'];
-if ($row['surcharge'] > 0) {
-    $surcharge_t = true;
-    $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
-} else {
-    $fee = '';
-
-
-}
-?>
+      $cid = $row['id'];
+      $title = $row['name'];
+      if ($row['surcharge'] > 0) {
+          $surcharge_t = true;
+          $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
+      } else {
+          $fee = '';
+      }
+      ?>
 
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 <div class="app-content content container-fluid">
@@ -72,10 +70,10 @@ if ($row['surcharge'] > 0) {
                     <p>Payment completed<br/>
                         <?php
 
-                        echo '<a class="btn btn-info btn-block"
+                              echo '<a class="btn btn-info btn-block"
                                                     href = "' . base_url('crm/payments/recharge/?') . 'token=t" role = "button" ><i
                                                         class="fa fa-backward" ></i > </a >';
-                        ?>
+      ?>
                     </p>
                     <pre>
             <code></code>
@@ -109,7 +107,11 @@ if ($row['surcharge'] > 0) {
         id: '<?=$id?>',
         itype: 'inv',
         gateway: 1,
-        amount: '<?php if ($rming > 0) echo numberClean(amountExchange_s($rming, 0, 0)) * 100; else echo '0.00'; ?>',
+        amount: '<?php if ($rming > 0) {
+            echo numberClean(amountExchange_s($rming, 0, 0)) * 100;
+        } else {
+            echo '0.00';
+        } ?>',
         token: '<?=$token ?>'
     };
 
@@ -176,7 +178,11 @@ if ($row['surcharge'] > 0) {
                     id: '<?=$id?>',
                     itype: 'inv',
                     gateway: 1,
-                    amount: '<?php if ($rming > 0) echo numberClean(amountExchange_s($rming,0, 0)) * 100; else echo '0.00'; ?>',
+                    amount: '<?php if ($rming > 0) {
+                        echo numberClean(amountExchange_s($rming, 0, 0)) * 100;
+                    } else {
+                        echo '0.00';
+                    } ?>',
                     token: '<?=$token ?>',
                     paymentIntentId: data.paymentIntent.id
                 };

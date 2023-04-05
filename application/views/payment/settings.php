@@ -60,10 +60,10 @@
                         <?php
                         echo '<option value="' . $online_pay['default_acid'] . '">--' . $online_pay['holder'] . ' / ' . $online_pay['acn'] . '--</option>';
 
-                        foreach ($acclist as $row) {
-                            echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
-                        }
-                        ?>
+            foreach ($acclist as $row) {
+                echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
+            }
+            ?>
                     </select>
                 </div>
             </div>

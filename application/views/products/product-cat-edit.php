@@ -65,12 +65,12 @@
                                     <?php
                                     echo "<option value='" . $productcat['rel_id'] . "'>--" . $this->lang->line('Do not change') . "--</option>";
 
-                                    foreach ($cat as $row) {
-                                        $cid = $row['id'];
-                                        $title = $row['title'];
-                                        echo "<option value='$cid'>$title</option>";
-                                    }
-                                    ?>
+                        foreach ($cat as $row) {
+                            $cid = $row['id'];
+                            $title = $row['title'];
+                            echo "<option value='$cid'>$title</option>";
+                        }
+                        ?>
                                 </select>
 
 

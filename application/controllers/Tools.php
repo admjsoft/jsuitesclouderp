@@ -15,7 +15,6 @@ class Tools extends CI_Controller
 
         $this->load->model('tools_model', 'tools');
         $this->li_a = 'misc';
-
     }
 
     //todo section
@@ -24,9 +23,7 @@ class Tools extends CI_Controller
     {
         $this->li_a = 'project';
         if (!$this->aauth->premission(4)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'ToDo List';
@@ -35,16 +32,13 @@ class Tools extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('todo/index', $data);
         $this->load->view('fixed/footer');
-
     }
 
     public function addtask()
     {
         $this->li_a = 'project';
         if (!$this->aauth->premission(4)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $this->load->model('employee_model', 'employee');
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -54,16 +48,13 @@ class Tools extends CI_Controller
         $this->load->view('fixed/header', $head);
         $this->load->view('todo/addtask', $data);
         $this->load->view('fixed/footer');
-
     }
 
     public function edittask()
     {
         $this->li_a = 'project';
         if (!$this->aauth->premission(4)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         if ($this->input->post()) {
             $id = $this->input->post('id');
@@ -83,7 +74,6 @@ class Tools extends CI_Controller
                 echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
             }
         } else {
-
             $this->load->model('employee_model', 'employee');
 
             $head['usernm'] = $this->aauth->get_user()->username;
@@ -97,15 +87,12 @@ class Tools extends CI_Controller
             $this->load->view('todo/edittask', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function save_addtask()
     {
         if (!$this->aauth->premission(4)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $name = $this->input->post('name', true);
         $status = $this->input->post('status');
@@ -123,30 +110,23 @@ class Tools extends CI_Controller
         } else {
             echo json_encode(array('status' => 'Error', 'message' => $this->lang->line('ERROR')));
         }
-
     }
 
     public function set_task()
     {
         if (!$this->aauth->premission(4)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $id = $this->input->post('tid');
         $stat = $this->input->post('stat');
         $this->tools->settask($id, $stat);
         echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('UPDATED'), 'pstatus' => 'Success'));
-
-
     }
 
     public function view_task()
     {
         if (!$this->aauth->premission(4)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $id = $this->input->post('tid');
 
@@ -158,21 +138,15 @@ class Tools extends CI_Controller
     public function task_stats()
     {
         if (!$this->aauth->premission(4)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $this->tools->task_stats();
-
-
     }
 
     public function delete_i()
     {
         if (!$this->aauth->premission(4)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $id = $this->input->post('deleteid');
 
@@ -187,9 +161,7 @@ class Tools extends CI_Controller
     public function todo_load_list()
     {
         if (!$this->aauth->premission(4)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $cday = $this->input->get('cday');
         $list = $this->tools->task_datatables($cday);
@@ -230,13 +202,10 @@ class Tools extends CI_Controller
     public function setgoals()
     {
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $this->li_a = 'company';
         if ($this->input->post('income')) {
-
             $income = (float)$this->input->post('income');
             $expense = (float)$this->input->post('expense');
             $sales = (float)$this->input->post('sales');
@@ -257,7 +226,6 @@ class Tools extends CI_Controller
             $this->load->view('goals/index', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
     //notes
@@ -265,9 +233,7 @@ class Tools extends CI_Controller
     public function notes()
     {
         if (!$this->aauth->premission(6)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Notes';
@@ -280,9 +246,7 @@ class Tools extends CI_Controller
     public function notes_load_list()
     {
         if (!$this->aauth->premission(6)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $list = $this->tools->notes_datatables();
         $data = array();
@@ -310,12 +274,9 @@ class Tools extends CI_Controller
     public function addnote()
     {
         if (!$this->aauth->premission(6)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         if ($this->input->post('title')) {
-
             $title = $this->input->post('title', true);
             $content = $this->input->post('content');
 
@@ -331,15 +292,12 @@ class Tools extends CI_Controller
             $this->load->view('notes/addnote');
             $this->load->view('fixed/footer');
         }
-
     }
 
     public function editnote()
     {
         if (!$this->aauth->premission(6)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         if ($this->input->post('title')) {
             $id = $this->input->post('id');
@@ -360,16 +318,13 @@ class Tools extends CI_Controller
             $this->load->view('notes/editnote', $data);
             $this->load->view('fixed/footer');
         }
-
     }
 
 
     public function delete_note()
     {
         if (!$this->aauth->premission(6)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $id = $this->input->post('deleteid');
 
@@ -387,25 +342,19 @@ class Tools extends CI_Controller
     public function documents()
     {
         if (!$this->aauth->premission(6)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Documents';
         $this->load->view('fixed/header', $head);
         $this->load->view('notes/documents');
         $this->load->view('fixed/footer');
-
-
     }
 
     public function document_load_list()
     {
         if (!$this->aauth->premission(6)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $list = $this->tools->document_datatables();
         $data = array();
@@ -436,9 +385,7 @@ class Tools extends CI_Controller
     public function adddocument()
     {
         if (!$this->aauth->premission(6)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $this->load->helper(array('form'));
         $data['response'] = 3;
@@ -451,14 +398,13 @@ class Tools extends CI_Controller
             $title = $this->input->post('title', true);
             $config['upload_path'] = './userfiles/documents';
             $config['allowed_types'] = 'docx|docs|txt|pdf|xls|csv|ods';
-            $config['encrypt_name'] = TRUE;
+            $config['encrypt_name'] = true;
             $config['max_size'] = 3000;
             $this->load->library('upload', $config);
 
             if (!$this->upload->do_upload('userfile')) {
                 $data['response'] = 0;
                 $data['responsetext'] = 'File Upload Error';
-
             } else {
                 $data['response'] = 1;
                 $data['responsetext'] = 'Document Uploaded Successfully. <a href="documents"
@@ -471,24 +417,16 @@ class Tools extends CI_Controller
 
             $this->load->view('notes/adddocument', $data);
         } else {
-
-
             $this->load->view('notes/adddocument', $data);
-
-
         }
         $this->load->view('fixed/footer');
-
-
     }
 
 
     public function delete_document()
     {
         if (!$this->aauth->premission(6)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $id = $this->input->post('deleteid');
 
@@ -503,17 +441,13 @@ class Tools extends CI_Controller
     public function pendingtasks()
     {
         if (!$this->aauth->premission(6)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $tasks = $this->tools->pending_tasks();
 
         $tlist = '';
         $tc = 0;
         foreach ($tasks as $row) {
-
-
             $tlist .= '<a href="javascript:void(0)" class="list-group-item">
                       <div class="media">
                         <div class="media-left valign-middle"><i class="icon-bullhorn2 icon-bg-circle bg-cyan"></i></div>
@@ -527,9 +461,5 @@ class Tools extends CI_Controller
         }
 
         echo json_encode(array('tasks' => $tlist, 'tcount' => $tc));
-
-
     }
-
-
 }

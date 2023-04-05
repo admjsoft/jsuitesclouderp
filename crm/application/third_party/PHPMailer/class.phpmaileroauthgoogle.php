@@ -42,8 +42,7 @@ class PHPMailerOAuthGoogle
         $ClientSecret,
         $ClientId,
         $RefreshToken
-    )
-    {
+    ) {
         $this->oauthClientId = $ClientId;
         $this->oauthClientSecret = $ClientSecret;
         $this->oauthRefreshToken = $RefreshToken;

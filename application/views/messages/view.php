@@ -35,15 +35,15 @@
                         <h4 class="card-title"><?php
                             //print_r($employee);
                             echo $employee['name'];
-                            ?></h4>
+            ?></h4>
                     </div>
                     <div class="card-body">
                         <div class="card-block">
                             <div class="card-text">
                                 <p><img alt="image" class="img-circle " src="<?php
 
-                                    echo base_url('userfiles/employee/' . $employee['picture']);
-                                    ?>"></p>
+                    echo base_url('userfiles/employee/' . $employee['picture']);
+            ?>"></p>
 
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                     //print_r($employee);
                     $pms = $this->aauth->get_pm($pmid, $this->aauth->get_user()->id);
 
-                    echo '<div class="card-header">
+            echo '<div class="card-header">
                         <h4 class="card-title">' . $pms->title . '</h4>
                     </div>
                     <div class="card-body">' . $pms->date_sent . '

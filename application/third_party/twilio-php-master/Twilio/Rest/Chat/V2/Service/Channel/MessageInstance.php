@@ -34,19 +34,21 @@ use Twilio\Version;
  * @property array media
  * @property string url
  */
-class MessageInstance extends InstanceResource {
+class MessageInstance extends InstanceResource
+{
     /**
      * Initialize the MessageInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $serviceSid The unique id of the Service this message belongs
      *                           to.
      * @param string $channelSid The channel_sid
      * @param string $sid Key that uniquely defines the message to fetch.
-     * @return \Twilio\Rest\Chat\V2\Service\Channel\MessageInstance 
+     * @return \Twilio\Rest\Chat\V2\Service\Channel\MessageInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $channelSid, $sid = null) {
+    public function __construct(Version $version, array $payload, $serviceSid, $channelSid, $sid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -79,11 +81,12 @@ class MessageInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Chat\V2\Service\Channel\MessageContext Context for this
      *                                                             MessageInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new MessageContext(
                 $this->version,
@@ -98,43 +101,47 @@ class MessageInstance extends InstanceResource {
 
     /**
      * Fetch a MessageInstance
-     * 
+     *
      * @return MessageInstance Fetched MessageInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Deletes the MessageInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->proxy()->delete();
     }
 
     /**
      * Update the MessageInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return MessageInstance Updated MessageInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         return $this->proxy()->update($options);
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -149,10 +156,11 @@ class MessageInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

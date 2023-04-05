@@ -44,10 +44,10 @@
                         <div class="col-sm-4">
                             <select name="status" class="form-control">
                                 <?php echo '<option value="' . $task['status'] . '">--' . $this->lang->line($task['status']) . '--</option>';
-                                echo "<option value='Due'>" . $this->lang->line('Due') . "</option>
+            echo "<option value='Due'>" . $this->lang->line('Due') . "</option>
                             <option value='Done'>" . $this->lang->line('Done') . "</option>
                             <option value='Progress'>" . $this->lang->line('Progress') . "</option>";
-                                ?>
+            ?>
 
                             </select>
                         </div>
@@ -104,13 +104,13 @@
 
                             <select name="employee" class="form-control select-box">
                                 <?php
-                                echo '<option value="' . $task['eid'] . '">--' . $task['emp'] . '--</option>';
-                                foreach ($emp as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['name'];
-                                    echo "<option value='$cid'>$title</option>";
-                                }
-                                ?>
+            echo '<option value="' . $task['eid'] . '">--' . $task['emp'] . '--</option>';
+            foreach ($emp as $row) {
+                $cid = $row['id'];
+                $title = $row['name'];
+                echo "<option value='$cid'>$title</option>";
+            }
+            ?>
                             </select>
 
 

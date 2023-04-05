@@ -5,7 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Billing_model extends CI_Model
 {
-
     public function paynow($tid, $amount, $note, $pmethod, $loc = false, $bill_date = null, $account_d = 0)
     {
         $account['id'] = false;
@@ -34,9 +33,13 @@ class Billing_model extends CI_Model
             $this->db->where('id', $account_d);
             if ($this->aauth->get_user()->loc) {
                 $this->db->where('loc', $this->aauth->get_user()->loc);
-                if (BDATA) $this->db->or_where('loc', 0);
+                if (BDATA) {
+                    $this->db->or_where('loc', 0);
+                }
             } else {
-                if (!BDATA) $this->db->where('loc', 0);
+                if (!BDATA) {
+                    $this->db->where('loc', 0);
+                }
             }
             $query = $this->db->get();
             $account = $query->row_array();
@@ -53,7 +56,9 @@ class Billing_model extends CI_Model
 
         // print_r($invoice);
 
-        if (!$bill_date) $bill_date = date('Y-m-d');
+        if (!$bill_date) {
+            $bill_date = date('Y-m-d');
+        }
 
 
         $data = array(
@@ -80,7 +85,7 @@ class Billing_model extends CI_Model
 
         if ($totalrm > $amount) {
             $this->db->set('pmethod', $pmethod);
-            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+            $this->db->set('pamnt', "pamnt+$amount", false);
 
             $this->db->set('status', 'partial');
             $this->db->where('id', $tid);
@@ -88,23 +93,22 @@ class Billing_model extends CI_Model
 
 
             //account update
-            $this->db->set('lastbal', "lastbal+$amount", FALSE);
+            $this->db->set('lastbal', "lastbal+$amount", false);
             $this->db->where('id', $account['id']);
             $this->db->update('gtg_accounts');
         } else {
             $this->db->set('pmethod', $pmethod);
-            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+            $this->db->set('pamnt', "pamnt+$amount", false);
             $this->db->set('status', 'paid');
             $this->db->where('id', $tid);
             $this->db->update('gtg_invoices');
             //acount update
-            $this->db->set('lastbal', "lastbal+$amount", FALSE);
+            $this->db->set('lastbal', "lastbal+$amount", false);
             $this->db->where('id', $account['id']);
             $this->db->update('gtg_accounts');
         }
         $dual = $this->custom->api_config(65);
         if ($dual['key1']) {
-
             $this->db->select('holder');
             $this->db->from('gtg_accounts');
             $this->db->where('id', $dual['key2']);
@@ -121,7 +125,7 @@ class Billing_model extends CI_Model
             $this->db->insert('gtg_transactions', $data);
 
             //account update
-            $this->db->set('lastbal', "lastbal-$amount", FALSE);
+            $this->db->set('lastbal', "lastbal-$amount", false);
             $this->db->where('id', $dual['key2']);
             $this->db->update('gtg_accounts');
         }
@@ -135,7 +139,6 @@ class Billing_model extends CI_Model
 
     public function gateway($id)
     {
-
         $this->db->from('gtg_gateways');
         $this->db->where('id', $id);
         $query = $this->db->get();
@@ -145,7 +148,6 @@ class Billing_model extends CI_Model
 
     public function gateway_list($enable = '')
     {
-
         $this->db->from('gtg_gateways');
         if ($enable == 'Yes') {
             $this->db->where('enable', 'Yes');
@@ -156,7 +158,6 @@ class Billing_model extends CI_Model
 
     public function bank_accounts($enable = '')
     {
-
         $this->db->from('gtg_bank_ac');
         if ($enable == 'Yes') {
             $this->db->where('enable', 'Yes');
@@ -167,7 +168,6 @@ class Billing_model extends CI_Model
 
     public function bank_account_info($id)
     {
-
         $this->db->from('gtg_bank_ac');
         $this->db->where('id', $id);
         $query = $this->db->get();
@@ -201,7 +201,6 @@ class Billing_model extends CI_Model
 
     public function online_pay_settings()
     {
-
         $this->db->select('univarsal_api.key1 AS default_acid,univarsal_api.key2 AS currency_code,univarsal_api.url AS enable,univarsal_api.method AS bank, gtg_accounts.*');
         $this->db->from('univarsal_api');
         $this->db->where('univarsal_api.id', 54);
@@ -214,7 +213,6 @@ class Billing_model extends CI_Model
 
     public function pay_settings()
     {
-
         $this->db->select('*');
         $this->db->from('gtg_system');
         $this->db->where('id', 1);
@@ -363,8 +361,7 @@ class Billing_model extends CI_Model
 
     public function recharge_done($id, $amount)
     {
-
-        $this->db->set('balance', "balance+$amount", FALSE);
+        $this->db->set('balance', "balance+$amount", false);
         $this->db->where('id', $id);
 
         $this->db->update('gtg_customers');
@@ -387,7 +384,6 @@ class Billing_model extends CI_Model
 
     public function pos_paynow($tid, $amount, $note, $pmethod)
     {
-
         $this->db->select('gtg_accounts.id,gtg_accounts.holder,');
         $this->db->from('univarsal_api');
         $this->db->where('univarsal_api.id', 54);
@@ -431,7 +427,7 @@ class Billing_model extends CI_Model
 
         if ($totalrm > $amount) {
             $this->db->set('pmethod', $pmethod);
-            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+            $this->db->set('pamnt', "pamnt+$amount", false);
 
             $this->db->set('status', 'partial');
             $this->db->where('id', $tid);
@@ -439,17 +435,17 @@ class Billing_model extends CI_Model
 
 
             //account update
-            $this->db->set('lastbal', "lastbal+$amount", FALSE);
+            $this->db->set('lastbal', "lastbal+$amount", false);
             $this->db->where('id', $account['id']);
             $this->db->update('gtg_accounts');
         } else {
             $this->db->set('pmethod', $pmethod);
-            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+            $this->db->set('pamnt', "pamnt+$amount", false);
             $this->db->set('status', 'paid');
             $this->db->where('id', $tid);
             $this->db->update('gtg_invoices');
             //acount update
-            $this->db->set('lastbal', "lastbal+$amount", FALSE);
+            $this->db->set('lastbal', "lastbal+$amount", false);
             $this->db->where('id', $account['id']);
             $this->db->update('gtg_accounts');
         }

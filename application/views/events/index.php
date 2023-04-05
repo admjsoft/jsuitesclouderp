@@ -50,7 +50,7 @@
 
                     <div class="col-sm-12 cmp-pnl"><?php
                         echo $cal;
-                        ?>
+                    ?>
                     </div>
                 </div>
             </div>

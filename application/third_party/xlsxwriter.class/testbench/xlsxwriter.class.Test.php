@@ -105,7 +105,7 @@ class XLSXWriterTest extends PHPUnit_Framework_TestCase
                         $difference[$key] = $new_diff;
                     }
                 }
-            } else if (!isset($array2[$key]) || $array2[$key] != $value) {
+            } elseif (!isset($array2[$key]) || $array2[$key] != $value) {
                 $difference[$key] = $value;
             }
         }

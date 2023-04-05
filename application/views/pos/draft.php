@@ -48,11 +48,11 @@
                         </thead>
                         <tbody id="pos_items">
                         <?php $i = 0;
-                        foreach ($products as $row) {
-                            echo '<tr id="ppid-' . $i . '"><td colspan="7"><input type="text" class="form-control text-center" name="product_name[]" placeholder="Enter Product name or Code" id="productname-' . $i . '"  value="' . $row['product'] . '"></td></tr>';
-                            echo '    <tr><td><input type="text" class="form-control p-mobile req amnt" name="product_qty[]" id="amount-' . $i . '" onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off" value="' . amountFormat_general($row['qty']) . '" ><input type="hidden" class="old_amnt" name="old_product_qty[]" value="' . amountFormat_general($row['qty']) . '" ></td> <td><input type="text" class="form-control req prc" name="product_price[]" id="price-' . $i . '" onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off" value="' . amountExchange_s($row['price'], $invoice['multi'], $this->aauth->get_user()->loc) . '"></td><td> <input type="text" class="form-control p-mobile vat" name="product_tax[]" id="vat-' . $i . '" onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off" value="' . amountFormat_general($row['tax']) . '"></td>  <td><input type="text" class="form-control p-mobile discount pos_w" name="product_discount[]" onkeypress="return isNumber(event)" id="discount-' . $i . '" onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off" value="' . amountFormat_general($row['discount']) . '"></td> <td><span class="currenty">' . $this->config->item('currency') . '</span> <strong><span class="ttlText" id="result-' . $i . '">' . amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '</span></strong></td> <td class="text-center"><button type="button" data-rowid="' . $i . '" class="btn btn-danger removeItem" title="Remove"> <i class="fa fa-minus-square"></i> </button> </td><input type="hidden" name="taxa[]" id="taxa-' . $i . '" value="' . amountExchange_s($row['totaltax'], $invoice['multi'], $this->aauth->get_user()->loc) . '"><input type="hidden" name="disca[]" id="disca-' . $i . '" value="' . amountExchange_s($row['totaldiscount'], $invoice['multi'], $this->aauth->get_user()->loc) . '"><input type="hidden" class="ttInput" name="product_subtotal[]" id="total-' . $i . '" value="' . amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '"> <input type="hidden" class="pdIn" name="pid[]" id="pid-' . $i . '" value="' . $row['pid'] . '"> <input type="hidden" name="unit[]" id="unit-' . $i . '" value="' . $row['unit'] . '"> <input type="hidden" name="hsn[]" id="hsn-' . $i . '" value="' . $row['code'] . '"><input type="hidden" id="alert-' . $i . '" value="' . amountFormat_general($row['qty']) . '" name="alert[]"> </tr>';
-                            $i++;
-                        } ?>
+                    foreach ($products as $row) {
+                        echo '<tr id="ppid-' . $i . '"><td colspan="7"><input type="text" class="form-control text-center" name="product_name[]" placeholder="Enter Product name or Code" id="productname-' . $i . '"  value="' . $row['product'] . '"></td></tr>';
+                        echo '    <tr><td><input type="text" class="form-control p-mobile req amnt" name="product_qty[]" id="amount-' . $i . '" onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off" value="' . amountFormat_general($row['qty']) . '" ><input type="hidden" class="old_amnt" name="old_product_qty[]" value="' . amountFormat_general($row['qty']) . '" ></td> <td><input type="text" class="form-control req prc" name="product_price[]" id="price-' . $i . '" onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off" value="' . amountExchange_s($row['price'], $invoice['multi'], $this->aauth->get_user()->loc) . '"></td><td> <input type="text" class="form-control p-mobile vat" name="product_tax[]" id="vat-' . $i . '" onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off" value="' . amountFormat_general($row['tax']) . '"></td>  <td><input type="text" class="form-control p-mobile discount pos_w" name="product_discount[]" onkeypress="return isNumber(event)" id="discount-' . $i . '" onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off" value="' . amountFormat_general($row['discount']) . '"></td> <td><span class="currenty">' . $this->config->item('currency') . '</span> <strong><span class="ttlText" id="result-' . $i . '">' . amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '</span></strong></td> <td class="text-center"><button type="button" data-rowid="' . $i . '" class="btn btn-danger removeItem" title="Remove"> <i class="fa fa-minus-square"></i> </button> </td><input type="hidden" name="taxa[]" id="taxa-' . $i . '" value="' . amountExchange_s($row['totaltax'], $invoice['multi'], $this->aauth->get_user()->loc) . '"><input type="hidden" name="disca[]" id="disca-' . $i . '" value="' . amountExchange_s($row['totaldiscount'], $invoice['multi'], $this->aauth->get_user()->loc) . '"><input type="hidden" class="ttInput" name="product_subtotal[]" id="total-' . $i . '" value="' . amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '"> <input type="hidden" class="pdIn" name="pid[]" id="pid-' . $i . '" value="' . $row['pid'] . '"> <input type="hidden" name="unit[]" id="unit-' . $i . '" value="' . $row['unit'] . '"> <input type="hidden" name="hsn[]" id="hsn-' . $i . '" value="' . $row['code'] . '"><input type="hidden" id="alert-' . $i . '" value="' . amountFormat_general($row['qty']) . '" name="alert[]"> </tr>';
+                        $i++;
+                    } ?>
                         </tbody>
                     </table>
                     <br>
@@ -88,7 +88,7 @@
                                                   value="<?php if ($invoice['ship_tax_type'] == 'excl') {
                                                       $invoice['shipping'] = $invoice['shipping'] - $invoice['ship_tax'];
                                                   }
-                                                  echo amountExchange_s($invoice['shipping'], $invoice['multi'], $this->aauth->get_user()->loc); ?>"
+                                              echo amountExchange_s($invoice['shipping'], $invoice['multi'], $this->aauth->get_user()->loc); ?>"
                                                   class="form-control shipVal"
                                                   onkeypress="return isNumber(event)"
                                                   placeholder="Value"
@@ -124,7 +124,7 @@
                                             $title = $row['name'];
                                             echo "<option value='$cid'>$title</option>";
                                         }
-                                        ?>
+                            ?>
                                     </select></div>
                             </div>
                         <?php } ?>
@@ -252,9 +252,9 @@
                                     class="selectpicker form-control"><?php
 
                                 echo '<option value="' . $invoice['term'] . '">Do not change</option>';
-                                foreach ($terms as $row) {
-                                    echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                                } ?>
+                    foreach ($terms as $row) {
+                        echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                    } ?>
 
                             </select>
                             <?php if ($exchange['active'] == 1) {
@@ -298,9 +298,9 @@
                             id="warehouses"
                             class="selectpicker form-control round teal">
                         <?php echo $this->common->default_warehouse();
-                        echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
-                            echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
-                        } ?>
+                    echo '<option value="0">' . $this->lang->line('All') ?></option><?php foreach ($warehouse as $row) {
+                        echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
+                    } ?>
 
                     </select></div>
                 <div class="col-md-3  grey text-xs-center"><?php echo $this->lang->line('Categories') ?>
@@ -308,12 +308,12 @@
                             id="categories"
                             class="selectpicker form-control round teal">
                         <option value="0"><?php echo $this->lang->line('All') ?></option><?php
-                        foreach ($cat as $row) {
-                            $cid = $row['id'];
-                            $title = $row['title'];
-                            echo "<option value='$cid'>$title</option>";
-                        }
-                        ?>
+                    foreach ($cat as $row) {
+                        $cid = $row['id'];
+                        $title = $row['title'];
+                        echo "<option value='$cid'>$title</option>";
+                    }
+                    ?>
                     </select></div>
                 <div class="col-md-3 grey text-xs-center"><?php echo $this->lang->line('Tax') ?>
                     <select class="form-control round teal"
@@ -368,8 +368,10 @@
 
     <input type="hidden" value="<?php
     $tt = 0;
-    if ($invoice['ship_tax_type'] == 'incl') $tt = @number_format(($invoice['shipping'] - $invoice['ship_tax']) / $invoice['shipping'], 2, '.', '');
-    echo amountFormat_general(number_format((($invoice['ship_tax'] / $invoice['shipping']) * 100) + $tt, 3, '.', '')); ?>"
+                    if ($invoice['ship_tax_type'] == 'incl') {
+                        $tt = @number_format(($invoice['shipping'] - $invoice['ship_tax']) / $invoice['shipping'], 2, '.', '');
+                    }
+                    echo amountFormat_general(number_format((($invoice['ship_tax'] / $invoice['shipping']) * 100) + $tt, 3, '.', '')); ?>"
            name="shipRate" id="ship_rate">
     <input type="hidden" value="<?= $invoice['ship_tax_type']; ?>" name="ship_taxtype"
            id="ship_taxtype">
@@ -452,12 +454,12 @@
                                 <div class="col-sm-10">
                                     <select name="customergroup" class="form-control">
                                         <?php
-                                        foreach ($customergrouplist as $row) {
-                                            $cid = $row['id'];
-                                            $title = $row['title'];
-                                            echo "<option value='$cid'>$title</option>";
-                                        }
-                                        ?>
+                                                        foreach ($customergrouplist as $row) {
+                                                            $cid = $row['id'];
+                                                            $title = $row['title'];
+                                                            echo "<option value='$cid'>$title</option>";
+                                                        }
+                    ?>
                                     </select>
 
 
@@ -503,18 +505,18 @@
                             <label for="cardNumber"><?php echo $this->lang->line('Payment Gateways') ?></label>
                             <select class="form-control" name="gateway"><?php
                                 $surcharge_t = false;
-                                foreach ($gateway as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['name'];
-                                    if ($row['surcharge'] > 0) {
-                                        $surcharge_t = true;
-                                        $fee = '(<span class="gate_total"></span>+' . amountFormat_s($row['surcharge']) . ' %)';
-                                    } else {
-                                        $fee = '';
-                                    }
-                                    echo "<option value='$cid'>$title $fee</option>";
-                                }
-                                ?>
+                    foreach ($gateway as $row) {
+                        $cid = $row['id'];
+                        $title = $row['name'];
+                        if ($row['surcharge'] > 0) {
+                            $surcharge_t = true;
+                            $fee = '(<span class="gate_total"></span>+' . amountFormat_s($row['surcharge']) . ' %)';
+                        } else {
+                            $fee = '';
+                        }
+                        echo "<option value='$cid'>$title $fee</option>";
+                    }
+                    ?>
                             </select>
                         </div>
                         <div class="col-4"><br><img class="img-responsive pull-right"
@@ -535,7 +537,9 @@
                     </div>
                     <div class="form-group">
 
-                        <?php if ($surcharge_t) echo '<br>' . $this->lang->line('Note: Payment Processing'); ?>
+                        <?php if ($surcharge_t) {
+                            echo '<br>' . $this->lang->line('Note: Payment Processing');
+                        } ?>
 
                     </div>
                     <div class="row" style="display:none;">
@@ -851,12 +855,12 @@
         var roundoff = parseFloat(accounting.unformat($('#invoiceyoghtml').val(), accounting.settings.number.decimal)).toFixed(two_fixed);
         <?php
         $round_off = $this->custom->api_config(4);
-        if ($round_off['other'] == 'PHP_ROUND_HALF_UP') {
-            echo ' roundoff=Math.ceil(roundoff);';
-        } elseif ($round_off['other'] == 'PHP_ROUND_HALF_DOWN') {
-            echo ' roundoff=Math.floor(roundoff);';
-        }
-        ?>
+                    if ($round_off['other'] == 'PHP_ROUND_HALF_UP') {
+                        echo ' roundoff=Math.ceil(roundoff);';
+                    } elseif ($round_off['other'] == 'PHP_ROUND_HALF_DOWN') {
+                        echo ' roundoff=Math.floor(roundoff);';
+                    }
+                    ?>
         $('#b_total').html(' <?= $this->config->item('currency'); ?> ' + accounting.formatNumber(roundoff));
         $('#p_amount').val(accounting.formatNumber(roundoff));
 
@@ -952,7 +956,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-?>
+                    ?>
 <!-- Vendor libraries -->
 <script type="text/javascript">
     var $form = $('#payment-form');

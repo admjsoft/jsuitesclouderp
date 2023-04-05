@@ -1,6 +1,6 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class General_model extends CI_Model
 {
@@ -26,5 +26,4 @@ class General_model extends CI_Model
             file_put_contents($file, " ");
         }
     }
-
 }

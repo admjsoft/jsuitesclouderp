@@ -20,23 +20,25 @@ use Twilio\Version;
 
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
- * 
+ *
  * @property \Twilio\Rest\Notify\V1\Service\BindingList bindings
  * @property \Twilio\Rest\Notify\V1\Service\NotificationList notifications
  * @method \Twilio\Rest\Notify\V1\Service\BindingContext bindings(string $sid)
  */
-class ServiceContext extends InstanceContext {
+class ServiceContext extends InstanceContext
+{
     protected $_bindings = null;
     protected $_notifications = null;
 
     /**
      * Initialize the ServiceContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $sid The sid
-     * @return \Twilio\Rest\Notify\V1\ServiceContext 
+     * @return \Twilio\Rest\Notify\V1\ServiceContext
      */
-    public function __construct(Version $version, $sid) {
+    public function __construct(Version $version, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -47,21 +49,23 @@ class ServiceContext extends InstanceContext {
 
     /**
      * Deletes the ServiceInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Fetch a ServiceInstance
-     * 
+     *
      * @return ServiceInstance Fetched ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -75,12 +79,13 @@ class ServiceContext extends InstanceContext {
 
     /**
      * Update the ServiceInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return ServiceInstance Updated ServiceInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -110,10 +115,11 @@ class ServiceContext extends InstanceContext {
 
     /**
      * Access the bindings
-     * 
-     * @return \Twilio\Rest\Notify\V1\Service\BindingList 
+     *
+     * @return \Twilio\Rest\Notify\V1\Service\BindingList
      */
-    protected function getBindings() {
+    protected function getBindings()
+    {
         if (!$this->_bindings) {
             $this->_bindings = new BindingList($this->version, $this->solution['sid']);
         }
@@ -123,10 +129,11 @@ class ServiceContext extends InstanceContext {
 
     /**
      * Access the notifications
-     * 
-     * @return \Twilio\Rest\Notify\V1\Service\NotificationList 
+     *
+     * @return \Twilio\Rest\Notify\V1\Service\NotificationList
      */
-    protected function getNotifications() {
+    protected function getNotifications()
+    {
         if (!$this->_notifications) {
             $this->_notifications = new NotificationList($this->version, $this->solution['sid']);
         }
@@ -136,12 +143,13 @@ class ServiceContext extends InstanceContext {
 
     /**
      * Magic getter to lazy load subresources
-     * 
+     *
      * @param string $name Subresource to return
      * @return \Twilio\ListResource The requested subresource
      * @throws \Twilio\Exceptions\TwilioException For unknown subresources
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (property_exists($this, '_' . $name)) {
             $method = 'get' . ucfirst($name);
             return $this->$method();
@@ -152,13 +160,14 @@ class ServiceContext extends InstanceContext {
 
     /**
      * Magic caller to get resource contexts
-     * 
+     *
      * @param string $name Resource to return
      * @param array $arguments Context parameters
      * @return \Twilio\InstanceContext The requested resource context
      * @throws \Twilio\Exceptions\TwilioException For unknown resource
      */
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         $property = $this->$name;
         if (method_exists($property, 'getContext')) {
             return call_user_func_array(array($property, 'getContext'), $arguments);
@@ -169,10 +178,11 @@ class ServiceContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

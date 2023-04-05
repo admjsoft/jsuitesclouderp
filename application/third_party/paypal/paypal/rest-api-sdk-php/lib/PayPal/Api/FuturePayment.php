@@ -12,7 +12,6 @@ use PayPal\Transport\PayPalRestCall;
  */
 class FuturePayment extends Payment
 {
-
     /**
      * Extends the Payment object to create future payments
      *
@@ -55,5 +54,4 @@ class FuturePayment extends Payment
         $credential = $apiContext->getCredential();
         return $credential->getRefreshToken($apiContext->getConfig(), $authorizationCode);
     }
-
 }

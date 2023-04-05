@@ -12,7 +12,6 @@ class Locations extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->li_a = 'company';
@@ -22,7 +21,6 @@ class Locations extends CI_Controller
 
     public function index()
     {
-
         $head['title'] = "Locations";
         $data['locations'] = $this->locations->locations_list();
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -61,8 +59,6 @@ class Locations extends CI_Controller
             $wid = $this->input->post('wid');
             $this->locations->create($name, $address, $city, $region, $country, $postbox, $phone, $email, $taxid, $image, $cur_id, $ac_id, $wid);
         } else {
-
-
             $head['title'] = "Add Location";
             $data['currency'] = $this->locations->currencies();
             $data['warehouse'] = $this->locations->warehouses();
@@ -93,8 +89,6 @@ class Locations extends CI_Controller
             $wid = $this->input->post('wid');
             $this->locations->edit($id, $name, $address, $city, $region, $country, $postbox, $phone, $email, $taxid, $image, $cur_id, $ac_id, $wid);
         } else {
-
-
             $head['title'] = "Edit Location";
             $head['usernm'] = $this->aauth->get_user()->username;
             $data = $this->locations->view($this->input->get('id'));
@@ -113,7 +107,6 @@ class Locations extends CI_Controller
     {
         $id = $this->input->post('deleteid');
         if ($id) {
-
             $this->db->delete('gtg_locations', array('id' => $id));
 
 
@@ -166,7 +159,6 @@ class Locations extends CI_Controller
 
     public function promo_stats()
     {
-
         $this->promo->promo_stats();
     }
 

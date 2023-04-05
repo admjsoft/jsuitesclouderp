@@ -21,13 +21,12 @@
                     <div class="col-sm-6"><select name="stock" class="form-control">
 
                             <?php switch ($current['key1']) {
-                                case '0' :
+                                case '0':
                                     echo '<option value="0">** ' . $this->lang->line('Yes') . ' **</option>';
                                     break;
-                                case '1' :
+                                case '1':
                                     echo '<option value="1">**' . $this->lang->line('No') . '**</option>';
                                     break;
-
                             } ?>
                             <option value="0"><?php echo $this->lang->line('Yes') ?></option>
                             <option value="1"><?php echo $this->lang->line('No') ?></option>

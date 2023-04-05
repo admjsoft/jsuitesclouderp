@@ -7,8 +7,6 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class Import extends CI_Controller
 {
-
-
     public function __construct()
     {
         parent::__construct();
@@ -20,14 +18,13 @@ class Import extends CI_Controller
         }
 
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('Not Allowed!');
         }
         $this->date = 'backup_' . date('Y_m_d_H_i_s');
     }
 
 
-    function products()
+    public function products()
     {
         $this->load->helper(array('form'));
         $this->load->model('categories_model');
@@ -42,7 +39,6 @@ class Import extends CI_Controller
 
     public function products_upload()
     {
-
         $this->load->helper(array('form'));
         $data['response'] = 3;
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -69,8 +65,6 @@ class Import extends CI_Controller
 
             $this->load->view('import/wizard', $data);
         } else {
-
-
             echo ' error';
         }
         $this->load->view('fixed/footer');
@@ -131,7 +125,7 @@ class Import extends CI_Controller
     //customer
 
 
-    function customers()
+    public function customers()
     {
         $this->load->helper(array('form'));
         $this->load->model('categories_model');
@@ -146,7 +140,6 @@ class Import extends CI_Controller
 
     public function customers_upload()
     {
-
         $this->load->helper(array('form'));
         $data['response'] = 3;
         $head['usernm'] = $this->aauth->get_user()->username;
@@ -207,8 +200,6 @@ class Import extends CI_Controller
         }
 
         foreach ($sheetData as $row) {
-
-
             $data[] = array(
                 'id' => $l_id,
                 'name' => $row[0],

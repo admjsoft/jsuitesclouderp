@@ -294,8 +294,6 @@ if ($row['surcharge'] > 0) {
     $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
 } else {
     $fee = '';
-
-
 }
 ?>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
@@ -361,7 +359,11 @@ if ($row['surcharge'] > 0) {
                                         <input class="field half-width" type="number"
                                                placeholder="<?php echo $this->lang->line('Amount') ?>" required="yes"
                                                autocomplete="off"
-                                               value="<?php if ($rming > 0) echo numberClean(amountExchange_s($rming, $invoice['multi'], $invoice['loc'])); else echo '0.00'; ?>"
+                                               value="<?php if ($rming > 0) {
+                                                   echo numberClean(amountExchange_s($rming, $invoice['multi'], $invoice['loc']));
+                                               } else {
+                                                   echo '0.00';
+                                               } ?>"
                                                name="amount" step="0.01" min="0.01">
                                     </div>
                                 </div>
@@ -401,7 +403,9 @@ if ($row['surcharge'] > 0) {
 
                             <div class="caption  text-center">
                                 <span data-tid="elements_ultimates.caption.no_charge"
-                                      class="no-charge grey"><?php if ($surcharge_t) echo '<br>' . $this->lang->line('Note: Payment Processing'); ?></span>
+                                      class="no-charge grey"><?php if ($surcharge_t) {
+                                          echo '<br>' . $this->lang->line('Note: Payment Processing');
+                                      } ?></span>
 
                             </div>
                         </div>
@@ -443,7 +447,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-    ?>
+?>
     <!-- Vendor libraries -->
     <script type="text/javascript">
         'use strict';

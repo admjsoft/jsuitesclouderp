@@ -14,7 +14,6 @@
 
 class Uploadhandler
 {
-
     protected $options;
     public $filenaamv;
 
@@ -76,12 +75,12 @@ class Uploadhandler
             ),
             // By default, allow redirects to the referer protocol+host:
             'redirect_allow_target' => '/^' . preg_quote(
-                    parse_url($this->get_server_var('HTTP_REFERER'), PHP_URL_SCHEME)
-                    . '://'
-                    . parse_url($this->get_server_var('HTTP_REFERER'), PHP_URL_HOST)
-                    . '/', // Trailing slash to not match subdomains by mistake
-                    '/' // preg_quote delimiter param
-                ) . '/',
+                parse_url($this->get_server_var('HTTP_REFERER'), PHP_URL_SCHEME)
+                . '://'
+                . parse_url($this->get_server_var('HTTP_REFERER'), PHP_URL_HOST)
+                . '/', // Trailing slash to not match subdomains by mistake
+                '/' // preg_quote delimiter param
+            ) . '/',
             // Enable to provide file downloads via GET requests to the PHP script:
             //     1. Set to 1 to download files via readfile method through PHP
             //     2. Set to 2 to send a X-Sendfile header for lighttpd/Apache
@@ -121,8 +120,8 @@ class Uploadhandler
             // for imagick:
             /*
             'imagick_resource_limits' => array(
-                imagick::RESOURCETYPE_MAP => 32,
-                imagick::RESOURCETYPE_MEMORY => 32
+            imagick::RESOURCETYPE_MAP => 32,
+            imagick::RESOURCETYPE_MEMORY => 32
             ),
             */
             // Command or path for to the ImageMagick convert binary:
@@ -144,11 +143,11 @@ class Uploadhandler
                 ),
                 // Uncomment the following to create medium sized images:
                 /*
-                'medium' => array(
-                    'max_width' => 800,
-                    'max_height' => 600
-                ),
-                */
+            'medium' => array(
+                'max_width' => 800,
+                'max_height' => 600
+            ),
+            */
                 'thumbnail' => array(
                     // Uncomment the following to use a defined directory for the thumbnails
                     // instead of a subdirectory based on the version identifier.
@@ -378,8 +377,10 @@ class Uploadhandler
         switch ($last) {
             case 'g':
                 $val *= 1024;
+                // no break
             case 'm':
                 $val *= 1024;
+                // no break
             case 'k':
                 $val *= 1024;
         }
@@ -410,8 +411,9 @@ class Uploadhandler
             $file_size = $content_length;
         }
         if ($this->options['max_file_size'] && (
-                $file_size > $this->options['max_file_size'] ||
-                $file->size > $this->options['max_file_size'])
+            $file_size > $this->options['max_file_size'] ||
+            $file->size > $this->options['max_file_size']
+        )
         ) {
             $file->error = $this->get_error_message('max_file_size');
             return false;
@@ -449,7 +451,6 @@ class Uploadhandler
                 $img_height = $tmp;
                 unset($tmp);
             }
-
         }
         if (!empty($img_width)) {
             if ($max_width && $img_width > $max_width) {
@@ -489,8 +490,15 @@ class Uploadhandler
         );
     }
 
-    protected function get_unique_filename($file_path, $name, $size, $type, $error,
-                                           $index, $content_range)
+    protected function get_unique_filename(
+        $file_path,
+        $name,
+        $size,
+        $type,
+        $error,
+        $index,
+        $content_range
+    )
     {
         while (is_dir($this->get_upload_path($name))) {
             $name = $this->upcount_name($name);
@@ -499,7 +507,8 @@ class Uploadhandler
         $uploaded_bytes = $this->fix_integer_overflow((int)$content_range[1]);
         while (is_file($this->get_upload_path($name))) {
             if ($uploaded_bytes === $this->get_file_size(
-                    $this->get_upload_path($name))) {
+                $this->get_upload_path($name)
+            )) {
                 break;
             }
             $name = $this->upcount_name($name);
@@ -507,8 +516,15 @@ class Uploadhandler
         return $name;
     }
 
-    protected function fix_file_extension($file_path, $name, $size, $type, $error,
-                                          $index, $content_range)
+    protected function fix_file_extension(
+        $file_path,
+        $name,
+        $size,
+        $type,
+        $error,
+        $index,
+        $content_range
+    )
     {
         // Add missing file extension for known image types:
         if (strpos($name, '.') === false &&
@@ -542,8 +558,15 @@ class Uploadhandler
         return $name;
     }
 
-    protected function trim_file_name($file_path, $name, $size, $type, $error,
-                                      $index, $content_range)
+    protected function trim_file_name(
+        $file_path,
+        $name,
+        $size,
+        $type,
+        $error,
+        $index,
+        $content_range
+    )
     {
         // Remove path information and dots around the filename, to prevent uploading
         // into different directories or replacing hidden system files.
@@ -556,20 +579,40 @@ class Uploadhandler
         return $name;
     }
 
-    protected function get_file_name($file_path, $name, $size, $type, $error,
-                                     $index, $content_range)
+    protected function get_file_name(
+        $file_path,
+        $name,
+        $size,
+        $type,
+        $error,
+        $index,
+        $content_range
+    )
     {
-        $name = $this->trim_file_name($file_path, $name, $size, $type, $error,
-            $index, $content_range);
+        $name = $this->trim_file_name(
+            $file_path,
+            $name,
+            $size,
+            $type,
+            $error,
+            $index,
+            $content_range
+        );
 
         if ($this->options['name']) {
-
             return $name;
         } else {
             return $this->get_unique_filename(
                 $file_path,
-                $this->fix_file_extension($file_path, $name, $size, $type, $error,
-                    $index, $content_range),
+                $this->fix_file_extension(
+                    $file_path,
+                    $name,
+                    $size,
+                    $type,
+                    $error,
+                    $index,
+                    $content_range
+                ),
                 $size,
                 $type,
                 $error,
@@ -754,9 +797,9 @@ class Uploadhandler
         );
         $image_oriented = false;
         if (!empty($options['auto_orient']) && $this->gd_orient_image(
-                $file_path,
-                $src_img
-            )) {
+            $file_path,
+            $src_img
+        )) {
             $image_oriented = true;
             $src_img = $this->gd_get_image_object(
                 $file_path,
@@ -807,23 +850,24 @@ class Uploadhandler
             case 'gif':
             case 'png':
                 imagecolortransparent($new_img, imagecolorallocate($new_img, 0, 0, 0));
+                // no break
             case 'png':
                 imagealphablending($new_img, false);
                 imagesavealpha($new_img, true);
                 break;
         }
         $success = imagecopyresampled(
-                $new_img,
-                $src_img,
-                $dst_x,
-                $dst_y,
-                0,
-                0,
-                $new_width,
-                $new_height,
-                $img_width,
-                $img_height
-            ) && $write_func($new_img, $new_file_path, $image_quality);
+            $new_img,
+            $src_img,
+            $dst_x,
+            $dst_y,
+            0,
+            0,
+            $new_width,
+            $new_height,
+            $img_width,
+            $img_height
+        ) && $write_func($new_img, $new_file_path, $image_quality);
         $this->gd_set_image_object($file_path, $new_img);
         return $success;
     }
@@ -1112,14 +1156,28 @@ class Uploadhandler
         $this->destroy_image_object($file_path);
     }
 
-    protected function handle_file_upload($uploaded_file, $name, $size, $type, $error,
-                                          $index = null, $content_range = null)
+    protected function handle_file_upload(
+        $uploaded_file,
+        $name,
+        $size,
+        $type,
+        $error,
+        $index = null,
+        $content_range = null
+    )
     {
         $file = new \stdClass();
 
 
-        $file->name = $this->get_file_name($uploaded_file, $name, $size, $type, $error,
-            $index, $content_range);
+        $file->name = $this->get_file_name(
+            $uploaded_file,
+            $name,
+            $size,
+            $type,
+            $error,
+            $index,
+            $content_range
+        );
 
         $file->size = $this->fix_integer_overflow((int)$size);
         $file->type = $type;
@@ -1345,8 +1403,8 @@ class Uploadhandler
                     $content[$this->options['param_name']] : null;
                 if ($files && is_array($files) && is_object($files[0]) && $files[0]->size) {
                     $this->header('Range: 0-' . (
-                            $this->fix_integer_overflow((int)$files[0]->size) - 1
-                        ));
+                        $this->fix_integer_overflow((int)$files[0]->size) - 1
+                    ));
                 }
             }
             $this->body($json);
@@ -1404,7 +1462,9 @@ class Uploadhandler
                 '',
                 $content_disposition_header
             )) : null;
-        if ($this->options['name']) $file_name = $this->options['name'];
+        if ($this->options['name']) {
+            $file_name = $this->options['name'];
+        }
         // Parse the Content-Range header, which has the following form:
         // Content-Range: bytes 0-524287/2000000
         $content_range_header = $this->get_server_var('HTTP_CONTENT_RANGE');

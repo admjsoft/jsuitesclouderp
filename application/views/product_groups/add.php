@@ -38,7 +38,7 @@
                                 $title = $row['title'];
                                 echo "<option value='$cid'>$title</option>";
                             }
-                            ?>
+            ?>
                         </select>
 
 

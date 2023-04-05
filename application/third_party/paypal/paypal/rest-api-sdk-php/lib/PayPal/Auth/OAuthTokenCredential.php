@@ -18,7 +18,6 @@ use PayPal\Security\Cipher;
  */
 class OAuthTokenCredential extends PayPalResourceModel
 {
-
     public static $CACHE_PATH = '/../../../var/auth.cache';
 
     /**

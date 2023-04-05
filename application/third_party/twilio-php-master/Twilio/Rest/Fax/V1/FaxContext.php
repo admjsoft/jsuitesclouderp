@@ -18,21 +18,23 @@ use Twilio\Version;
 
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
- * 
+ *
  * @property \Twilio\Rest\Fax\V1\Fax\FaxMediaList media
  * @method \Twilio\Rest\Fax\V1\Fax\FaxMediaContext media(string $sid)
  */
-class FaxContext extends InstanceContext {
+class FaxContext extends InstanceContext
+{
     protected $_media = null;
 
     /**
      * Initialize the FaxContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $sid A string that uniquely identifies this fax.
-     * @return \Twilio\Rest\Fax\V1\FaxContext 
+     * @return \Twilio\Rest\Fax\V1\FaxContext
      */
-    public function __construct(Version $version, $sid) {
+    public function __construct(Version $version, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -43,11 +45,12 @@ class FaxContext extends InstanceContext {
 
     /**
      * Fetch a FaxInstance
-     * 
+     *
      * @return FaxInstance Fetched FaxInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -61,12 +64,13 @@ class FaxContext extends InstanceContext {
 
     /**
      * Update the FaxInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return FaxInstance Updated FaxInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array('Status' => $options['status'], ));
@@ -83,20 +87,22 @@ class FaxContext extends InstanceContext {
 
     /**
      * Deletes the FaxInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Access the media
-     * 
-     * @return \Twilio\Rest\Fax\V1\Fax\FaxMediaList 
+     *
+     * @return \Twilio\Rest\Fax\V1\Fax\FaxMediaList
      */
-    protected function getMedia() {
+    protected function getMedia()
+    {
         if (!$this->_media) {
             $this->_media = new FaxMediaList($this->version, $this->solution['sid']);
         }
@@ -106,12 +112,13 @@ class FaxContext extends InstanceContext {
 
     /**
      * Magic getter to lazy load subresources
-     * 
+     *
      * @param string $name Subresource to return
      * @return \Twilio\ListResource The requested subresource
      * @throws \Twilio\Exceptions\TwilioException For unknown subresources
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (property_exists($this, '_' . $name)) {
             $method = 'get' . ucfirst($name);
             return $this->$method();
@@ -122,13 +129,14 @@ class FaxContext extends InstanceContext {
 
     /**
      * Magic caller to get resource contexts
-     * 
+     *
      * @param string $name Resource to return
      * @param array $arguments Context parameters
      * @return \Twilio\InstanceContext The requested resource context
      * @throws \Twilio\Exceptions\TwilioException For unknown resource
      */
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         $property = $this->$name;
         if (method_exists($property, 'getContext')) {
             return call_user_func_array(array($property, 'getContext'), $arguments);
@@ -139,10 +147,11 @@ class FaxContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

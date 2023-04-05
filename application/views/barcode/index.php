@@ -24,7 +24,7 @@
                                 $title = $row['title'];
                                 echo "<option value='$cid'>$title</option>";
                             }
-                            ?>
+            ?>
                         </select>
 
 
@@ -40,12 +40,12 @@
                     <div class="col-sm-4">
                         <select name="product_cat" class="form-control">
                             <?php
-                            foreach ($cat as $row) {
-                                $cid = $row['id'];
-                                $title = $row['title'];
-                                echo "<option value='$cid'>$title</option>";
-                            }
-                            ?>
+            foreach ($cat as $row) {
+                $cid = $row['id'];
+                $title = $row['title'];
+                echo "<option value='$cid'>$title</option>";
+            }
+            ?>
                         </select>
 
 

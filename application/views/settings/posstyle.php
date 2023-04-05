@@ -20,13 +20,12 @@
                     <div class="col-sm-6"><select name="pstyle" class="form-control">
 
                             <?php switch (POSV) {
-                                case '1' :
+                                case '1':
                                     echo '<option value="1">** Standard Version **</option>';
                                     break;
-                                case '2' :
+                                case '2':
                                     echo '<option value="2">** Extended Version**</option>';
                                     break;
-
                             } ?>
                             <option value="1">Standard Version</option>
                             <option value="2">Extended Version</option>
@@ -45,13 +44,12 @@
                     <div class="col-sm-6"><select name="assign" class="form-control">
 
                             <?php switch ($current['key1']) {
-                                case '1' :
+                                case '1':
                                     echo '<option value="1">** '.$this->lang->line('Yes') .' **</option>';
                                     break;
-                                case '0' :
+                                case '0':
                                     echo '<option value="0">**  '.$this->lang->line('No') .'**</option>';
                                     break;
-
                             } ?>
                             <option value="1"><?php echo $this->lang->line('Yes') ?></option>
                             <option value="0"><?php echo $this->lang->line('No') ?></option>

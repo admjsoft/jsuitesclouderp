@@ -16,17 +16,19 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class FieldValueContext extends InstanceContext {
+class FieldValueContext extends InstanceContext
+{
     /**
      * Initialize the FieldValueContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $assistantSid The assistant_sid
      * @param string $fieldTypeSid The field_type_sid
      * @param string $sid The sid
-     * @return \Twilio\Rest\Preview\Understand\Assistant\FieldType\FieldValueContext 
+     * @return \Twilio\Rest\Preview\Understand\Assistant\FieldType\FieldValueContext
      */
-    public function __construct(Version $version, $assistantSid, $fieldTypeSid, $sid) {
+    public function __construct(Version $version, $assistantSid, $fieldTypeSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -41,11 +43,12 @@ class FieldValueContext extends InstanceContext {
 
     /**
      * Fetch a FieldValueInstance
-     * 
+     *
      * @return FieldValueInstance Fetched FieldValueInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -65,20 +68,22 @@ class FieldValueContext extends InstanceContext {
 
     /**
      * Deletes the FieldValueInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

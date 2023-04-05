@@ -162,7 +162,7 @@
             </td>
             <td class="myw">
                 <?php echo $this->lang->line('Product Category') . ' ' . $this->lang->line('Statement');
-                $balance = 0; ?>
+$balance = 0; ?>
             </td>
         </tr>
     </table>
@@ -173,19 +173,18 @@
             <td> <?php echo $this->lang->line('Our Info') ?>:</td>
 
             <td><?php switch ($r_type) {
-                    case 1 :
-                        echo $this->lang->line('Sales');
-                        break;
-                    case 2 :
-                        echo $this->lang->line('Purchase Order');
-                        break;
-                    case 3 :
-                        echo $this->lang->line('Stock');
-                        break;
+                case 1:
+                    echo $this->lang->line('Sales');
+                    break;
+                case 2:
+                    echo $this->lang->line('Purchase Order');
+                    break;
+                case 3:
+                    echo $this->lang->line('Stock');
+                    break;
+            }
 
-                }
-
-                echo ' ' . $this->lang->line('Details') ?>:
+echo ' ' . $this->lang->line('Details') ?>:
             </td>
         </tr>
         </thead>
@@ -193,12 +192,12 @@
         <tr>
             <td><h3><?php echo $this->config->item('ctitle'); ?></h3>
                 <?php echo
-                    $this->config->item('address') . '<br>' . $this->config->item('city') . ',' . $this->config->item('country') . '<br>Phone: ' . $this->config->item('phone') . '<br> Email: ' . $this->config->item('email'); ?>
+                $this->config->item('address') . '<br>' . $this->config->item('city') . ',' . $this->config->item('country') . '<br>Phone: ' . $this->config->item('phone') . '<br> Email: ' . $this->config->item('email'); ?>
             </td>
 
             <td>
                 <?php echo $this->lang->line('Product Category') . ' : ' . $product['title'] . '</strong>';
-                ?>
+?>
             </td>
         </tr>
         </tbody>
@@ -260,11 +259,9 @@
                 echo '<tr class="item' . $flag . '"><td>' . $row['invoicedate'] . '</td><td>' . amountFormat_general($row['qty']) . '</td><td>' . $row['note'] . '</td><td>' . $balance . '</td></tr>';
                 $fill = !$fill;
                 $in++;
-
-
             }
         }
-        ?> </table>
+?> </table>
     <table class="subtotal">
         <thead>
         <tbody>

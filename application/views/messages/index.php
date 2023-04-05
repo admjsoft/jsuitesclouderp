@@ -27,9 +27,8 @@
                 <div class="card card-block">
 
                     <?php $list_pm = $this->aauth->list_pms(50, 0, $this->aauth->get_user()->id, false);
-                    foreach ($list_pm as $row) {
-
-                        echo '<a href="' . base_url('messages/view?id=' . $row->{'pid'}) . '" class="list-group-item">
+            foreach ($list_pm as $row) {
+                echo '<a href="' . base_url('messages/view?id=' . $row->{'pid'}) . '" class="list-group-item">
                 <div class="media">
                     <div class="media-left"><span class="avatar avatar-sm"><img src="' . base_url('userfiles/employee/' . $row->picture) . '"></span></div>
                     <div class="media-body">
@@ -38,7 +37,7 @@
                             <time datetime="2015-06-11T18:29:20+08:00" class="media-meta text-muted">' . $row->date_sent . '</time></small>
                     </div>
                 </div></a>';
-                    } ?>
+            } ?>
                 </div>
 
 

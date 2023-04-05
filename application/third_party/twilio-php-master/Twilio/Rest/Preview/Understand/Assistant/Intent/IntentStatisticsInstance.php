@@ -16,7 +16,7 @@ use Twilio\Version;
 
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
- * 
+ *
  * @property string accountSid
  * @property string assistantSid
  * @property string intentSid
@@ -24,18 +24,20 @@ use Twilio\Version;
  * @property integer fieldsCount
  * @property string url
  */
-class IntentStatisticsInstance extends InstanceResource {
+class IntentStatisticsInstance extends InstanceResource
+{
     /**
      * Initialize the IntentStatisticsInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $assistantSid The unique ID of the parent Assistant.
      * @param string $intentSid The unique ID of the Intent associated with this
      *                          Field.
-     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentStatisticsInstance 
+     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentStatisticsInstance
      */
-    public function __construct(Version $version, array $payload, $assistantSid, $intentSid) {
+    public function __construct(Version $version, array $payload, $assistantSid, $intentSid)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -54,11 +56,12 @@ class IntentStatisticsInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentStatisticsContext Context for this
      *                                                                                  IntentStatisticsInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new IntentStatisticsContext(
                 $this->version,
@@ -72,22 +75,24 @@ class IntentStatisticsInstance extends InstanceResource {
 
     /**
      * Fetch a IntentStatisticsInstance
-     * 
+     *
      * @return IntentStatisticsInstance Fetched IntentStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -102,10 +107,11 @@ class IntentStatisticsInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -4,7 +4,6 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use Twilio\Rest\Client;
 
 class Sms extends CI_Controller
 {
@@ -20,24 +19,19 @@ class Sms extends CI_Controller
         }
         $this->load->library('parser');
         $this->config->load('sms');
-
-
     }
 
     public function index()
     {
-
     }
 
     // section
 
     public function template()
     {
-
         $id = $this->input->post('invoiceid');
         $ttype = $this->input->post('ttype');
         if ($ttype == 'quote') {
-
             $invoice['tid'] = $id;
             $this->load->model('quote_model', 'quote');
             $invoice = $this->quote->quote_details($id);
@@ -65,11 +59,9 @@ class Sms extends CI_Controller
         $sms_service = $this->plugins->universal_api(1);
 
         if ($sms_service['active']) {
-
             $this->load->library("Shortenurl");
             $this->shortenurl->setkey($sms_service['key1']);
             $link = $this->shortenurl->shorten($link);
-
         }
 
         $this->load->model('templates_model', 'templates');
@@ -103,8 +95,6 @@ class Sms extends CI_Controller
             case 'purchase':
                 $template = $this->templates->template_info(36);
                 break;
-
-
         }
 
         $data = array(
@@ -113,7 +103,7 @@ class Sms extends CI_Controller
             'DueDate' => dateformat($invoice['invoiceduedate']),
             'Amount' => amountExchange($invoice['total'], $invoice['multi'])
         );
-        $message = $this->parser->parse_string($template['other'], $data, TRUE);
+        $message = $this->parser->parse_string($template['other'], $data, true);
 
 
         echo json_encode(array('message' => $message));
@@ -126,8 +116,4 @@ class Sms extends CI_Controller
         $text_message = $this->input->post('text_message');
         $this->sms->send_sms($mobile, $text_message);
     }
-
-
 }
-
-

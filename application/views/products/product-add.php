@@ -54,7 +54,7 @@
                                 $title = $row['title'];
                                 echo "<option value='$cid'>$title</option>";
                             }
-                            ?>
+            ?>
                         </select>
                     </div>
 
@@ -77,12 +77,12 @@
                     <div class="col-sm-6">
                         <select name="product_warehouse" class="form-control">
                             <?php
-                            foreach ($warehouse as $row) {
-                                $cid = $row['id'];
-                                $title = $row['title'];
-                                echo "<option value='$cid'>$title</option>";
-                            }
-                            ?>
+            foreach ($warehouse as $row) {
+                $cid = $row['id'];
+                $title = $row['title'];
+                echo "<option value='$cid'>$title</option>";
+            }
+            ?>
                         </select>
 
 
@@ -174,12 +174,12 @@
                         <select name="unit" class="form-control">
                             <option value=''>None</option>
                             <?php
-                            foreach ($units as $row) {
-                                $cid = $row['code'];
-                                $title = $row['name'];
-                                echo "<option value='$cid'>$title - $cid</option>";
-                            }
-                            ?>
+            foreach ($units as $row) {
+                $cid = $row['code'];
+                $title = $row['name'];
+                echo "<option value='$cid'>$title - $cid</option>";
+            }
+            ?>
                         </select>
 
 
@@ -248,8 +248,8 @@
 
 
                     <?php }
-                }
-                ?>
+                    }
+            ?>
                 <hr>
                 <div class="form-group row"><label
                             class="col-sm-2 col-form-label"><?php echo $this->lang->line('Image') ?></label>
@@ -302,14 +302,14 @@
                                     <tr>
                                         <td><select name="v_type[]" class="form-control">
                                                 <?php
-                                                foreach ($variables as $row) {
-                                                    $cid = $row['id'];
-                                                    $title = $row['name'];
-                                                    $title = $row['name'];
-                                                    $variation = $row['variation'];
-                                                    echo "<option value='$cid'>$variation - $title </option>";
-                                                }
-                                                ?>
+                                            foreach ($variables as $row) {
+                                                $cid = $row['id'];
+                                                $title = $row['name'];
+                                                $title = $row['name'];
+                                                $variation = $row['variation'];
+                                                echo "<option value='$cid'>$variation - $title </option>";
+                                            }
+            ?>
                                             </select></td>
                                         <td><input value="" class="form-control" name="v_stock[]"
                                                    placeholder="<?php echo $this->lang->line('Stock Units') ?>*">
@@ -347,12 +347,12 @@
                                         <td>
                                             <select name="w_type[]" class="form-control">
                                                 <?php
-                                                foreach ($warehouse as $row) {
-                                                    $cid = $row['id'];
-                                                    $title = $row['title'];
-                                                    echo "<option value='$cid'>$title</option>";
-                                                }
-                                                ?>
+            foreach ($warehouse as $row) {
+                $cid = $row['id'];
+                $title = $row['title'];
+                echo "<option value='$cid'>$title</option>";
+            }
+            ?>
                                             </select></td>
                                         <td><input value="" class="form-control" name="w_stock[]"
                                                    placeholder="<?php echo $this->lang->line('Stock Units') ?>*">

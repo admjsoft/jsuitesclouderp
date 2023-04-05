@@ -292,7 +292,9 @@
                                                     <strong><?php echo $this->lang->line('Register') ?><?php echo $this->lang->line('Date') ?></strong>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <?php if ($details['reg_date']) echo dateformat($details['reg_date']) ?>
+                                                    <?php if ($details['reg_date']) {
+                                                        echo dateformat($details['reg_date']);
+                                                    } ?>
                                                 </div>
                                             </div>
                                             <hr>
@@ -329,9 +331,8 @@
 
                                                 <?php
 
-
                                             }
-                                            ?>
+            ?>
 
 
                                         </div>
@@ -385,7 +386,6 @@
                                                 </thead>
                                                 <tbody id="activity">
                                                 <?php foreach ($activity as $row) {
-
                                                     echo '<tr>
                             <td>' . amountExchange($row['col1'], 0, $this->aauth->get_user()->loc) . '</td><td>' . $row['col2'] . '</td>
                            

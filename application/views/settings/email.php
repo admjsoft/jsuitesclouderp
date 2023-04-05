@@ -50,7 +50,7 @@
                                 
                             </option>';
                             }
-                            ?>
+                               ?>
                             <option value="true">True
 
                             </option>
@@ -68,11 +68,11 @@
                     <div class="col-sm-6">
                         <select name="auth_type" class="form-control">
                             <?php
-                            echo ' <option value="' . $email['auth_type'] . '">--' . $email['auth_type'] . '--
+                               echo ' <option value="' . $email['auth_type'] . '">--' . $email['auth_type'] . '--
                                 
                             </option>';
 
-                            ?>
+                               ?>
                             <option value="none">None
 
                             </option>

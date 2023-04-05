@@ -44,97 +44,99 @@
                                     <h5><?php
 
                                         $rming = $invoice['total'] - $invoice['pamnt'];
-                                        if ($itype == 'rinv' && $invoice['status'] == 'due') {
-                                            $rming = $invoice['total'];
-                                        }
-                                        $surcharge_t = false;
-                                        $row = $gateway;
+                if ($itype == 'rinv' && $invoice['status'] == 'due') {
+                    $rming = $invoice['total'];
+                }
+                $surcharge_t = false;
+                $row = $gateway;
 
-                                        $cid = $row['id'];
-                                        $title = $row['name'];
-                                        if ($row['surcharge'] > 0) {
-                                            $surcharge_t = true;
-                                            $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
-                                        } else {
-                                            $fee = '';
-                                        }
-                                        $surcharge = ($rming * $gateway['surcharge']) / 100;
-                                        $rming = $rming + $surcharge;
-                                        if ($rming < 1) exit('Invoice already paid!');
-                                        echo $title . ' ' . $fee;
-
-
-                                        $keyId = $gateway['key1'];
-                                        $keySecret = $gateway['key2'];
-                                        $displayCurrency = $gateway['currency'];
-                                        require(APPPATH . 'third_party/razorpay-php/Razorpay.php');
+                $cid = $row['id'];
+                $title = $row['name'];
+                if ($row['surcharge'] > 0) {
+                    $surcharge_t = true;
+                    $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
+                } else {
+                    $fee = '';
+                }
+                $surcharge = ($rming * $gateway['surcharge']) / 100;
+                $rming = $rming + $surcharge;
+                if ($rming < 1) {
+                    exit('Invoice already paid!');
+                }
+                echo $title . ' ' . $fee;
 
 
-                                        use Razorpay\Api\Api;
+                $keyId = $gateway['key1'];
+                $keySecret = $gateway['key2'];
+                $displayCurrency = $gateway['currency'];
+                require(APPPATH . 'third_party/razorpay-php/Razorpay.php');
 
-                                        $api = new Api($keyId, $keySecret);
+
+                use Razorpay\Api\Api;
+
+                $api = new Api($keyId, $keySecret);
 
                                         //
-                                        // We create an razorpay order using orders api
-                                        // Docs: https://docs.razorpay.com/docs/orders
+                // We create an razorpay order using orders api
+                // Docs: https://docs.razorpay.com/docs/orders
                                         //
-                                        $orderData = [
-                                            'receipt' => $invoice['iid'],
-                                            'amount' => number_format($rming * 100, 0, '', ''),
-                                            'currency' => 'INR',
-                                            'payment_capture' => 1 // auto capture
-                                        ];
+                $orderData = [
+                    'receipt' => $invoice['iid'],
+                    'amount' => number_format($rming * 100, 0, '', ''),
+                    'currency' => 'INR',
+                    'payment_capture' => 1 // auto capture
+                ];
 
-                                        $razorpayOrder = $api->order->create($orderData);
+                $razorpayOrder = $api->order->create($orderData);
 
-                                        $razorpayOrderId = $razorpayOrder['id'];
+                $razorpayOrderId = $razorpayOrder['id'];
 
-                                        $_SESSION['razorpay_order_id'] = $razorpayOrderId;
+                $_SESSION['razorpay_order_id'] = $razorpayOrderId;
 
-                                        $displayAmount = $amount = $orderData['amount'];
+                $displayAmount = $amount = $orderData['amount'];
 
-                                        if ($displayCurrency !== 'INR') {
-                                            $url = "https://api.fixer.io/latest?symbols=$displayCurrency&base=INR";
-                                            $exchange = json_decode(file_get_contents($url), true);
+                if ($displayCurrency !== 'INR') {
+                    $url = "https://api.fixer.io/latest?symbols=$displayCurrency&base=INR";
+                    $exchange = json_decode(file_get_contents($url), true);
 
-                                            $displayAmount = $exchange['rates'][$displayCurrency] * $amount / 100;
-                                        }
+                    $displayAmount = $exchange['rates'][$displayCurrency] * $amount / 100;
+                }
 
-                                        $checkout = 'automatic';
+                $checkout = 'automatic';
 
-                                        //if (isset($_GET['checkout']) and in_array($_GET['checkout'], ['automatic', 'manual'], true))
-                                        //{
+                //if (isset($_GET['checkout']) and in_array($_GET['checkout'], ['automatic', 'manual'], true))
+                //{
                                         //    $checkout = $_GET['checkout'];
-                                        //}
+                //}
 
-                                        $data = [
-                                            "key" => $keyId,
-                                            "amount" => $amount,
-                                            "name" => $invoice['name'],
-                                            "description" => "Payment for INV#" . $invoice['tid'],
-                                            "image" => "https://s29.postimg.org/r6dj1g85z/daft_punk.jpg",
-                                            "prefill" => [
-                                                "name" => $invoice['name'],
-                                                "email" => $invoice['email'],
-                                                "contact" => $invoice['phone'],
-                                            ],
-                                            "notes" => [
-                                                "address" => $invoice['address'],
-                                                "merchant_order_id" => 'INV#' . $invoice['tid'],
-                                            ],
-                                            "theme" => [
-                                                "color" => "#F37254"
-                                            ],
-                                            "order_id" => $razorpayOrderId,
-                                        ];
+                $data = [
+                    "key" => $keyId,
+                    "amount" => $amount,
+                    "name" => $invoice['name'],
+                    "description" => "Payment for INV#" . $invoice['tid'],
+                    "image" => "https://s29.postimg.org/r6dj1g85z/daft_punk.jpg",
+                    "prefill" => [
+                        "name" => $invoice['name'],
+                        "email" => $invoice['email'],
+                        "contact" => $invoice['phone'],
+                    ],
+                    "notes" => [
+                        "address" => $invoice['address'],
+                        "merchant_order_id" => 'INV#' . $invoice['tid'],
+                    ],
+                    "theme" => [
+                        "color" => "#F37254"
+                    ],
+                    "order_id" => $razorpayOrderId,
+                ];
 
-                                        if ($displayCurrency !== 'INR') {
-                                            $data['display_currency'] = $displayCurrency;
-                                            $data['display_amount'] = $displayAmount;
-                                        }
+                if ($displayCurrency !== 'INR') {
+                    $data['display_currency'] = $displayCurrency;
+                    $data['display_amount'] = $displayAmount;
+                }
 
-                                        $json = json_encode($data);
-                                        ?></h5>
+                $json = json_encode($data);
+                ?></h5>
 
                                     <img class="bg-white round mt-1" style="max-width:30rem;max-height:10rem"
                                          src="<?= base_url('assets/gateway_logo/' . $gid . '.png') ?>">
@@ -159,7 +161,7 @@
                                         Fee</label>
                                     <input name="total_amount"
                                            value="<?php
-                                           echo amountExchange($rming, $invoice['multi'], $invoice['loc']); ?>"
+                   echo amountExchange($rming, $invoice['multi'], $invoice['loc']); ?>"
                                            type="text"
                                            class="form-control"
 
@@ -200,7 +202,9 @@
 
                         <div class="form-group">
 
-                            <?php if ($surcharge_t) echo '<br>' . $this->lang->line('Note: Payment Processing'); ?>
+                            <?php if ($surcharge_t) {
+                                echo '<br>' . $this->lang->line('Note: Payment Processing');
+                            } ?>
 
                         </div>
                         <div class="row" style="display:none;">

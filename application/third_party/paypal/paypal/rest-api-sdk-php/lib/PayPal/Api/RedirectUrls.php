@@ -64,5 +64,4 @@ class RedirectUrls extends PayPalModel
     {
         return $this->cancel_url;
     }
-
 }

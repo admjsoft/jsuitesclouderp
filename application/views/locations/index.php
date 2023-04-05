@@ -40,21 +40,21 @@
                     </thead>
                     <tbody>
                     <?php $i = 1;
-                    foreach ($locations as $row) {
-                        $cid = $row['id'];
-                        $name = $row['cname'];
-                        $addr = $row['address'] . ', ' . $row['city'];
+            foreach ($locations as $row) {
+                $cid = $row['id'];
+                $name = $row['cname'];
+                $addr = $row['address'] . ', ' . $row['city'];
 
 
-                        echo "<tr>
+                echo "<tr>
                     <td>$i</td>
                     <td>$name</td>
                     <td>$addr</td>
                  
                     <td><a href='" . base_url("locations/edit?id=$cid") . "' class='btn btn-warning btn-xs'><i class='icon-pencil'></i> " . $this->lang->line('Edit') . "</a>&nbsp;<a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='fa fa-trash'></i></a></td></tr>";
-                        $i++;
-                    }
-                    ?>
+                $i++;
+            }
+            ?>
                     </tbody>
                     <tfoot>
                     <tr>

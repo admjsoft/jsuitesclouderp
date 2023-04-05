@@ -5,11 +5,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Clientgroup_model extends CI_Model
 {
-
-
     public function details($id)
     {
-
         $this->db->select('*');
         $this->db->from('gtg_cust_group');
         $this->db->where('id', $id);
@@ -19,7 +16,6 @@ class Clientgroup_model extends CI_Model
 
     public function recipients($id)
     {
-
         $this->db->select('id,name,email');
         $this->db->from('gtg_customers');
         $this->db->where('gid', $id);
@@ -76,7 +72,6 @@ class Clientgroup_model extends CI_Model
         $this->db->where('id', $gid);
 
         if ($this->db->update('gtg_cust_group')) {
-
             $data = array(
                 'discount_c' => $disc_rate
             );

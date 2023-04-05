@@ -13,7 +13,6 @@ class Restapi extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->li_a = 'advance';
@@ -43,10 +42,7 @@ class Restapi extends CI_Controller
 
     public function add()
     {
-
-
         if ($this->restapi->addnew()) {
-
             $data['message'] = true;
 
 

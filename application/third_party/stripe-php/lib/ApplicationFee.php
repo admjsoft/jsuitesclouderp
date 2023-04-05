@@ -24,13 +24,12 @@ namespace Stripe;
  */
 class ApplicationFee extends ApiResource
 {
-    const OBJECT_NAME = 'application_fee';
-
     use ApiOperations\All;
     use ApiOperations\NestedResource;
     use ApiOperations\Retrieve;
+    public const OBJECT_NAME = 'application_fee';
 
-    const PATH_REFUNDS = '/refunds';
+    public const PATH_REFUNDS = '/refunds';
 
     /**
      * @param string $id The ID of the application fee on which to create the fee refund.

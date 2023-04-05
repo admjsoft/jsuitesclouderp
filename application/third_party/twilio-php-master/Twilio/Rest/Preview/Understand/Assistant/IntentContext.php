@@ -22,7 +22,7 @@ use Twilio\Version;
 
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
- * 
+ *
  * @property \Twilio\Rest\Preview\Understand\Assistant\Intent\FieldList fields
  * @property \Twilio\Rest\Preview\Understand\Assistant\Intent\SampleList samples
  * @property \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentActionsList intentActions
@@ -32,7 +32,8 @@ use Twilio\Version;
  * @method \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentActionsContext intentActions()
  * @method \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentStatisticsContext statistics()
  */
-class IntentContext extends InstanceContext {
+class IntentContext extends InstanceContext
+{
     protected $_fields = null;
     protected $_samples = null;
     protected $_intentActions = null;
@@ -40,13 +41,14 @@ class IntentContext extends InstanceContext {
 
     /**
      * Initialize the IntentContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $assistantSid The assistant_sid
      * @param string $sid The sid
-     * @return \Twilio\Rest\Preview\Understand\Assistant\IntentContext 
+     * @return \Twilio\Rest\Preview\Understand\Assistant\IntentContext
      */
-    public function __construct(Version $version, $assistantSid, $sid) {
+    public function __construct(Version $version, $assistantSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -57,11 +59,12 @@ class IntentContext extends InstanceContext {
 
     /**
      * Fetch a IntentInstance
-     * 
+     *
      * @return IntentInstance Fetched IntentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -80,12 +83,13 @@ class IntentContext extends InstanceContext {
 
     /**
      * Update the IntentInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return IntentInstance Updated IntentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array(
@@ -111,20 +115,22 @@ class IntentContext extends InstanceContext {
 
     /**
      * Deletes the IntentInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Access the fields
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\FieldList 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\FieldList
      */
-    protected function getFields() {
+    protected function getFields()
+    {
         if (!$this->_fields) {
             $this->_fields = new FieldList(
                 $this->version,
@@ -138,10 +144,11 @@ class IntentContext extends InstanceContext {
 
     /**
      * Access the samples
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\SampleList 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\SampleList
      */
-    protected function getSamples() {
+    protected function getSamples()
+    {
         if (!$this->_samples) {
             $this->_samples = new SampleList(
                 $this->version,
@@ -155,10 +162,11 @@ class IntentContext extends InstanceContext {
 
     /**
      * Access the intentActions
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentActionsList 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentActionsList
      */
-    protected function getIntentActions() {
+    protected function getIntentActions()
+    {
         if (!$this->_intentActions) {
             $this->_intentActions = new IntentActionsList(
                 $this->version,
@@ -172,10 +180,11 @@ class IntentContext extends InstanceContext {
 
     /**
      * Access the statistics
-     * 
-     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentStatisticsList 
+     *
+     * @return \Twilio\Rest\Preview\Understand\Assistant\Intent\IntentStatisticsList
      */
-    protected function getStatistics() {
+    protected function getStatistics()
+    {
         if (!$this->_statistics) {
             $this->_statistics = new IntentStatisticsList(
                 $this->version,
@@ -189,12 +198,13 @@ class IntentContext extends InstanceContext {
 
     /**
      * Magic getter to lazy load subresources
-     * 
+     *
      * @param string $name Subresource to return
      * @return \Twilio\ListResource The requested subresource
      * @throws \Twilio\Exceptions\TwilioException For unknown subresources
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (property_exists($this, '_' . $name)) {
             $method = 'get' . ucfirst($name);
             return $this->$method();
@@ -205,13 +215,14 @@ class IntentContext extends InstanceContext {
 
     /**
      * Magic caller to get resource contexts
-     * 
+     *
      * @param string $name Resource to return
      * @param array $arguments Context parameters
      * @return \Twilio\InstanceContext The requested resource context
      * @throws \Twilio\Exceptions\TwilioException For unknown resource
      */
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         $property = $this->$name;
         if (method_exists($property, 'getContext')) {
             return call_user_func_array(array($property, 'getContext'), $arguments);
@@ -222,10 +233,11 @@ class IntentContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

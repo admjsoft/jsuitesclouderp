@@ -4,12 +4,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Projects_model extends CI_Model
 {
-
-    var $column_order = array('gtg_projects.status', 'gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.worth', null, null);
-    var $column_search = array('gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.status');
-    var $tcolumn_order = array('status', 'name', 'duedate', 'start', null, null);
-    var $tcolumn_search = array('name', 'edate', 'status');
-    var $order = array('id' => 'desc');
+    public $column_order = array('gtg_projects.status', 'gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.worth', null, null);
+    public $column_search = array('gtg_projects.name', 'gtg_projects.edate', 'gtg_projects.status');
+    public $tcolumn_order = array('status', 'name', 'duedate', 'start', null, null);
+    public $tcolumn_search = array('name', 'edate', 'status');
+    public $order = array('id' => 'desc');
 
 
     public function explore($id)
@@ -69,7 +68,6 @@ class Projects_model extends CI_Model
         $this->db->from('gtg_projects');
         $this->db->join('gtg_customers', 'gtg_projects.cid = gtg_customers.id', 'left');
         if ($eid) {
-
             $this->db->join('gtg_project_meta', 'gtg_projects.id = gtg_project_meta.pid', 'left');
             $this->db->where('gtg_project_meta.meta_key', 19);
             $this->db->where('gtg_project_meta.meta_data', $eid);
@@ -81,8 +79,7 @@ class Projects_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->column_search as $item) // loop column
-        {
+        foreach ($this->column_search as $item) { // loop column
             $search = $this->input->post('search');
 
             if ($search) {
@@ -95,33 +92,33 @@ class Projects_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->column_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function project_datatables($cday = '', $eid = '')
+    public function project_datatables($cday = '', $eid = '')
     {
-
-
         $this->_project_datatables_query($cday, $eid);
 
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $query = $this->db->get();
         return $query->result();
     }
 
-    function project_count_filtered($cday = '', $eid = '')
+    public function project_count_filtered($cday = '', $eid = '')
     {
         $this->_project_datatables_query($cday, $eid);
         $query = $this->db->get();
@@ -147,7 +144,6 @@ class Projects_model extends CI_Model
 
         if ($employee) {
             foreach ($employee as $key => $value) {
-
                 $data = array('pid' => $last, 'meta_key' => 19, 'meta_data' => $value);
                 $this->db->insert('gtg_project_meta', $data);
             }
@@ -202,7 +198,6 @@ class Projects_model extends CI_Model
         if ($employee) {
             $this->db->delete('gtg_project_meta', array('pid' => $id, 'meta_key' => 19));
             foreach ($employee as $key => $value) {
-
                 $data = array('pid' => $id, 'meta_key' => 19, 'meta_data' => $value);
                 $this->db->insert('gtg_project_meta', $data);
             }
@@ -219,10 +214,8 @@ class Projects_model extends CI_Model
 
     public function addtask($name, $status, $priority, $stdate, $tdate, $employee, $assign, $content, $prid, $milestone)
     {
-
         $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $status, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee, 'aid' => $assign, 'related' => 1, 'priority' => $priority, 'rid' => $prid);
         if ($prid) {
-
             $this->db->insert('gtg_todolist', $data);
             $last = $this->db->insert_id();
 
@@ -240,10 +233,8 @@ class Projects_model extends CI_Model
 
     public function add_milestone($name, $stdate, $tdate, $content, $color, $prid)
     {
-
         $data = array('pid' => $prid, 'name' => $name, 'sdate' => $stdate, 'edate' => $tdate, 'color' => $color, 'exp' => $content);
         if ($prid) {
-
             $title = '[Milestone] ' . $name;
             $this->add_activity($title, $prid);
 
@@ -255,7 +246,6 @@ class Projects_model extends CI_Model
 
     public function edittask($id, $name, $status, $priority, $stdate, $tdate, $employee, $content)
     {
-
         $data = array('tdate' => date('Y-m-d H:i:s'), 'name' => $name, 'status' => $status, 'start' => $stdate, 'duedate' => $tdate, 'description' => $content, 'eid' => $employee,  'priority' => $priority);
         $this->db->set($data);
         $this->db->where('id', $id);
@@ -265,7 +255,6 @@ class Projects_model extends CI_Model
 
     public function settask($id, $stat)
     {
-
         $data = array('status' => $stat);
         $this->db->set($data);
         $this->db->where('id', $id);
@@ -274,7 +263,6 @@ class Projects_model extends CI_Model
 
     public function setnote($id, $stat)
     {
-
         $data = array('note' => $stat);
         $this->db->set($data);
         $this->db->where('id', $id);
@@ -283,7 +271,6 @@ class Projects_model extends CI_Model
 
     public function deletetask($id)
     {
-
         return $this->db->delete('gtg_todolist', array('id' => $id));
     }
 
@@ -296,7 +283,6 @@ class Projects_model extends CI_Model
 
     public function viewtask($id)
     {
-
         $this->db->select('gtg_todolist.*,gtg_employees.name AS emp, assi.name AS assign');
         $this->db->from('gtg_todolist');
         $this->db->where('gtg_todolist.id', $id);
@@ -308,7 +294,6 @@ class Projects_model extends CI_Model
 
     public function project_stats($project)
     {
-
         $query = $this->db->query("SELECT
 				COUNT(IF( status = 'Waiting', id, NULL)) AS Waiting,
 				COUNT(IF( status = 'Progress', id, NULL)) AS Progress,
@@ -322,23 +307,19 @@ class Projects_model extends CI_Model
 
     private function _task_datatables_query($cday = '')
     {
-
         $this->db->from('gtg_todolist');
         $this->db->where('related', 1);
         if ($cday) {
-
             $this->db->where('rid=', $cday);
         }
 
 
         $i = 0;
 
-        foreach ($this->tcolumn_search as $item) // loop column
-        {
+        foreach ($this->tcolumn_search as $item) { // loop column
             $search = $this->input->post('search');
             $value = $search['value'];
             if ($value) {
-
                 if ($i === 0) {
                     $this->db->group_start();
                     $this->db->like($item, $value);
@@ -346,35 +327,35 @@ class Projects_model extends CI_Model
                     $this->db->or_like($item, $value);
                 }
 
-                if (count($this->tcolumn_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->tcolumn_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
         $search = $this->input->post('order');
         if ($search) {
             $this->db->order_by($this->tcolumn_order[$search['0']['column']], $search['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function task_datatables($cday = '')
+    public function task_datatables($cday = '')
     {
-
-
         $this->_task_datatables_query($cday);
 
-        if ($this->input->post('length') != -1)
+        if ($this->input->post('length') != -1) {
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        }
         $this->db->where('related', 1);
         $this->db->where('rid=', $cday);
         $query = $this->db->get();
         return $query->result();
     }
 
-    function task_count_filtered($cday = '')
+    public function task_count_filtered($cday = '')
     {
         $this->_task_datatables_query($cday);
         $this->db->where('related', 1);
@@ -397,7 +378,6 @@ class Projects_model extends CI_Model
 
     public function task_thread($id)
     {
-
         $this->db->select('gtg_todolist.*, gtg_employees.name AS emp');
         $this->db->from('gtg_todolist');
         $this->db->where('gtg_todolist.related', 1);
@@ -411,7 +391,6 @@ class Projects_model extends CI_Model
 
     public function milestones($id)
     {
-
         $this->db->select('*');
         $this->db->from('gtg_milestones');
         $this->db->where('pid', $id);
@@ -422,14 +401,12 @@ class Projects_model extends CI_Model
 
     public function milestones_list($id)
     {
-
         $query = $this->db->query('SELECT gtg_milestones.*,gtg_todolist.name as task FROM gtg_milestones LEFT JOIN gtg_project_meta ON gtg_project_meta.meta_data=gtg_milestones.id AND gtg_project_meta.meta_key=8 LEFT JOIN gtg_todolist ON gtg_project_meta.value=gtg_todolist.id WHERE gtg_milestones.pid=' . $id . ' ORDER BY gtg_milestones.id DESC;');
         return $query->result_array();
     }
 
     public function activities($id)
     {
-
         $this->db->select('gtg_project_meta.value');
         $this->db->from('gtg_project_meta');
         $this->db->where('pid', $id);
@@ -440,7 +417,6 @@ class Projects_model extends CI_Model
 
     public function p_files($id)
     {
-
         $this->db->select('*');
         $this->db->from('gtg_project_meta');
         $this->db->where('pid', $id);
@@ -451,7 +427,6 @@ class Projects_model extends CI_Model
 
     public function add_activity($name, $prid)
     {
-
         $data = array('pid' => $prid, 'meta_key' => 12, 'value' => $name . ' @' . date('Y-m-d H:i:s'));
         if ($prid) {
             return $this->db->insert('gtg_project_meta', $data);
@@ -462,7 +437,6 @@ class Projects_model extends CI_Model
 
     public function meta_insert($prid, $meta_key, $meta_data, $value)
     {
-
         $data = array('pid' => $prid, 'meta_key' => $meta_key, 'meta_data' => $meta_data, 'value' => $value);
         if ($prid) {
             return $this->db->insert('gtg_project_meta', $data);
@@ -473,7 +447,6 @@ class Projects_model extends CI_Model
 
     public function deletefile($pid, $mid)
     {
-
         $this->db->select('value');
         $this->db->from('gtg_project_meta');
         $this->db->where('pid', $pid);
@@ -494,7 +467,6 @@ class Projects_model extends CI_Model
 
     public function comments_thread($id)
     {
-
         $this->db->select('gtg_project_meta.value, gtg_project_meta.key3,gtg_employees.name AS employee, gtg_customers.name AS customer');
         $this->db->from('gtg_project_meta');
         $this->db->where('gtg_project_meta.pid', $id);
@@ -508,7 +480,6 @@ class Projects_model extends CI_Model
 
     public function add_comment($comment, $prid, $emp)
     {
-
         $data = array('pid' => $prid, 'meta_key' => 13, 'meta_data' => $emp, 'value' => $comment . '<br><small>@' . date('Y-m-d H:i:s') . '</small>');
         if ($prid) {
             return $this->db->insert('gtg_project_meta', $data);
@@ -519,8 +490,11 @@ class Projects_model extends CI_Model
 
     public function progress($id, $val)
     {
-        if ($val == 100) $stat = 'Finished';
-        else $stat = 'Progress';
+        if ($val == 100) {
+            $stat = 'Finished';
+        } else {
+            $stat = 'Progress';
+        }
         $data = array('status' => $stat, 'progress' => $val);
         $this->db->set($data);
         $this->db->where('id', $id);
@@ -567,7 +541,6 @@ class Projects_model extends CI_Model
 
     private function communication($id, $sub)
     {
-
         $this->db->select('gtg_projects.name as pname,gtg_projects.ptype,gtg_customers.name as cust,gtg_customers.email');
         $this->db->from('gtg_projects');
         $this->db->where('gtg_projects.id', $id);
@@ -588,8 +561,7 @@ class Projects_model extends CI_Model
             foreach ($result_c as $row) {
                 $this->send_email($row['email'], $row['username'], '[Task Added]' . $sub, $message);
             }
-        } else if ($result['ptype'] == '2') {
-
+        } elseif ($result['ptype'] == '2') {
             $this->db->select('gtg_users.email,gtg_users.username');
             $this->db->from('gtg_project_meta');
             $this->db->where('gtg_project_meta.pid', $id);
@@ -621,7 +593,8 @@ class Projects_model extends CI_Model
         $port = $smtpresult['port'];
         $auth_type = $smtpresult['auth_type'];
         $auth = $smtpresult['auth'];
-        $username = $smtpresult['username'];;
+        $username = $smtpresult['username'];
+        ;
         $password = $smtpresult['password'];
         $mailfrom = $smtpresult['sender'];
         $mailfromtilte = $this->config->item('ctitle');
@@ -645,7 +618,7 @@ class Projects_model extends CI_Model
             $this->db->where('id', $emp['id']);
             $this->db->update('gtg_project_meta');
             $this->aauth->applog("[Employee ClockIn]  Project ID $id", $this->aauth->get_user()->username);
-        } else if (!$emp['key3'] and !$emp['pid']) {
+        } elseif (!$emp['key3'] and !$emp['pid']) {
             $total_time = time();
             $data = array(
                 'pid' => $id,
@@ -663,7 +636,6 @@ class Projects_model extends CI_Model
 
     public function clockout($id, $eid)
     {
-
         $this->db->select('*');
         $this->db->where('pid', $id);
         $this->db->where('meta_key', 29);
@@ -673,7 +645,7 @@ class Projects_model extends CI_Model
         $emp = $query->row_array();
         if ($emp['key3'] and $emp['pid']) {
             $total_time = time() - $emp['value'];
-            $this->db->set('key4', "key4+$total_time", FALSE);
+            $this->db->set('key4', "key4+$total_time", false);
             $this->db->set('value', 0);
             $this->db->set('key3', 0);
             $this->db->where('id', $emp['id']);

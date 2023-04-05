@@ -40,8 +40,8 @@
                 <div class="form-group">
                     <label for="">User Type</label>
                     <?php $u_type = isset($userData->user_type) ? $userData->user_type : '';
-                    $user_type = getAllDataByTable('permission');
-                    ?>
+$user_type = getAllDataByTable('permission');
+?>
                     <select name="user_type" class="form-control" required>
                         <?php foreach ($user_type as $option) {
                             $sel = '';
@@ -53,7 +53,7 @@
                                 <option value="<?php echo $option->user_type; ?>" <?php echo $sel; ?> ><?php echo ucfirst($option->user_type); ?> </option>
 
                             <?php }
-                        } ?>
+                            } ?>
                     </select>
                 </div>
             </div>

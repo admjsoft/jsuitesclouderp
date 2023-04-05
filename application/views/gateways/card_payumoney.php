@@ -24,88 +24,90 @@
                                     <h5><?php
 
                                         $rming = $invoice['total'] - $invoice['pamnt'];
-                                        if ($itype == 'rinv' && $invoice['status'] == 'due') {
-                                            $rming = $invoice['total'];
-                                        }
-                                        $surcharge_t = false;
-                                        $row = $gateway;
+                if ($itype == 'rinv' && $invoice['status'] == 'due') {
+                    $rming = $invoice['total'];
+                }
+                $surcharge_t = false;
+                $row = $gateway;
 
-                                        $cid = $row['id'];
-                                        $title = $row['name'];
-                                        if ($row['surcharge'] > 0) {
-                                            $surcharge_t = true;
-                                            $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
-                                        } else {
-                                            $fee = '';
-                                        }
-                                        $surcharge = ($rming * $gateway['surcharge']) / 100;
-                                        $rming = $rming + $surcharge;
+                $cid = $row['id'];
+                $title = $row['name'];
+                if ($row['surcharge'] > 0) {
+                    $surcharge_t = true;
+                    $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
+                } else {
+                    $fee = '';
+                }
+                $surcharge = ($rming * $gateway['surcharge']) / 100;
+                $rming = $rming + $surcharge;
 
-                                        echo $title . ' ' . $fee;
-
-
-                                        $MERCHANT_KEY = $gateway['key1'];
-                                        $SALT = $gateway['key2'];
-                                        // Merchant Key and Salt as provided by Payu.
-
-                                        $PAYU_BASE_URL = "https://sandboxsecure.payu.in";        // For Sandbox Mode
-                                        //$PAYU_BASE_URL = "https://secure.payu.in";			// For Production Mode
-
-                                        $action = '';
-
-                                        $txnid = substr(hash('sha256', mt_rand() . microtime()), 0, 20);
-                                        $hash = '';
-                                        if ($rming < 0) $rming = '0.00';
-
-                                        $posted = array('key' => $MERCHANT_KEY, 'hash' => $hash, 'txnid' => $txnid, 'amount' => $rming, 'firstname' => $invoice['name'], 'email' => $invoice['email'], 'phone' => $invoice['phone'], 'productinfo' => 'Payment for invoice ' . $invoice['tid'],
-                                            'surl' => base_url() . 'billing/secureprocess?inv=' . $invoice['iid'] . '&g=' . $cid,
-
-                                            'furl' => base_url() . 'billing/secureprocess?inv=' . $invoice['iid'] . '&g=' . $cid,
-
-                                            'curl' => base_url() . 'billing//card?id=' . $invoice['iid'] . '&itype=inv&token=' . $token,
-
-                                            'service_provider' => 'payu_paisa', $this->security->get_csrf_token_name() => $this->security->get_csrf_hash());
-
-                                        $formError = 0;
+                echo $title . ' ' . $fee;
 
 
-                                        // Hash Sequence
-                                        $hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
-                                        if (empty($posted['hash']) && sizeof($posted) > 0) {
-                                            if (
-                                                empty($posted['key'])
-                                                || empty($posted['txnid'])
-                                                || empty($posted['amount'])
-                                                || empty($posted['firstname'])
-                                                || empty($posted['email'])
-                                                || empty($posted['phone'])
-                                                || empty($posted['productinfo'])
-                                                || empty($posted['surl'])
-                                                || empty($posted['furl'])
-                                                || empty($posted['service_provider'])
-                                            ) {
-                                                $formError = 1;
-                                            } else {
-                                                //$posted['productinfo'] = json_encode(json_decode('[{"name":"tutionfee","description":"","value":"500","isRequired":"false"},{"name":"developmentfee","description":"monthly tution fee","value":"1500","isRequired":"false"}]'));
-                                                $hashVarsSeq = explode('|', $hashSequence);
-                                                $hash_string = '';
-                                                foreach ($hashVarsSeq as $hash_var) {
-                                                    $hash_string .= isset($posted[$hash_var]) ? $posted[$hash_var] : '';
-                                                    $hash_string .= '|';
-                                                }
+                $MERCHANT_KEY = $gateway['key1'];
+                $SALT = $gateway['key2'];
+                // Merchant Key and Salt as provided by Payu.
 
-                                                $hash_string .= $SALT;
+                $PAYU_BASE_URL = "https://sandboxsecure.payu.in";        // For Sandbox Mode
+                //$PAYU_BASE_URL = "https://secure.payu.in";			// For Production Mode
+
+                $action = '';
+
+                $txnid = substr(hash('sha256', mt_rand() . microtime()), 0, 20);
+                $hash = '';
+                if ($rming < 0) {
+                    $rming = '0.00';
+                }
+
+                $posted = array('key' => $MERCHANT_KEY, 'hash' => $hash, 'txnid' => $txnid, 'amount' => $rming, 'firstname' => $invoice['name'], 'email' => $invoice['email'], 'phone' => $invoice['phone'], 'productinfo' => 'Payment for invoice ' . $invoice['tid'],
+                    'surl' => base_url() . 'billing/secureprocess?inv=' . $invoice['iid'] . '&g=' . $cid,
+
+                    'furl' => base_url() . 'billing/secureprocess?inv=' . $invoice['iid'] . '&g=' . $cid,
+
+                    'curl' => base_url() . 'billing//card?id=' . $invoice['iid'] . '&itype=inv&token=' . $token,
+
+                    'service_provider' => 'payu_paisa', $this->security->get_csrf_token_name() => $this->security->get_csrf_hash());
+
+                $formError = 0;
 
 
-                                                $hash = strtolower(hash('sha512', $hash_string));
-                                                $action = $PAYU_BASE_URL . '/_payment';
-                                            }
-                                        } elseif (!empty($posted['hash'])) {
-                                            $hash = $posted['hash'];
-                                            $action = $PAYU_BASE_URL . '/_payment';
-                                        }
+                // Hash Sequence
+                $hashSequence = "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
+                if (empty($posted['hash']) && sizeof($posted) > 0) {
+                    if (
+                        empty($posted['key'])
+                        || empty($posted['txnid'])
+                        || empty($posted['amount'])
+                        || empty($posted['firstname'])
+                        || empty($posted['email'])
+                        || empty($posted['phone'])
+                        || empty($posted['productinfo'])
+                        || empty($posted['surl'])
+                        || empty($posted['furl'])
+                        || empty($posted['service_provider'])
+                    ) {
+                        $formError = 1;
+                    } else {
+                        //$posted['productinfo'] = json_encode(json_decode('[{"name":"tutionfee","description":"","value":"500","isRequired":"false"},{"name":"developmentfee","description":"monthly tution fee","value":"1500","isRequired":"false"}]'));
+                        $hashVarsSeq = explode('|', $hashSequence);
+                        $hash_string = '';
+                        foreach ($hashVarsSeq as $hash_var) {
+                            $hash_string .= isset($posted[$hash_var]) ? $posted[$hash_var] : '';
+                            $hash_string .= '|';
+                        }
 
-                                        ?></h5>
+                        $hash_string .= $SALT;
+
+
+                        $hash = strtolower(hash('sha512', $hash_string));
+                        $action = $PAYU_BASE_URL . '/_payment';
+                    }
+                } elseif (!empty($posted['hash'])) {
+                    $hash = $posted['hash'];
+                    $action = $PAYU_BASE_URL . '/_payment';
+                }
+
+                ?></h5>
                                     <script>
                                         var hash = '<?php echo $hash ?>';
 
@@ -140,7 +142,7 @@
                                         Fee</label>
                                     <input name="total_amount"
                                            value="<?php
-                                           echo amountExchange($rming, $invoice['multi'], $invoice['loc']); ?>"
+                   echo amountExchange($rming, $invoice['multi'], $invoice['loc']); ?>"
                                            type="text"
                                            class="form-control"
 
@@ -173,7 +175,11 @@
                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
                                        value="<?= $this->security->get_csrf_hash(); ?>"/>
                                 <input type="hidden" name="amount"
-                                       value="<?php if ($rming > 0) echo $rming; else echo '0.00'; ?>"/>
+                                       value="<?php if ($rming > 0) {
+                                           echo $rming;
+                                       } else {
+                                           echo '0.00';
+                                       } ?>"/>
                                 <input type="hidden" name="firstname" id="firstname" value="<?= $invoice['name'] ?>"/>
                                 <input type="hidden" name="email" id="email" value="<?= $invoice['email'] ?>"/>
                                 <input type="hidden" name="productinfo"
@@ -196,7 +202,9 @@
 
                         <div class="form-group">
 
-                            <?php if ($surcharge_t AND !$formError) echo '<br>' . $this->lang->line('Note: Payment Processing'); ?>
+                            <?php if ($surcharge_t and !$formError) {
+                                echo '<br>' . $this->lang->line('Note: Payment Processing');
+                            } ?>
 
                         </div>
                         <div class="row" style="display:none;">

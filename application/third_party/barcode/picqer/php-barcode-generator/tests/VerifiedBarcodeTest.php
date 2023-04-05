@@ -61,7 +61,8 @@ class VerifiedBarcodeTest extends TestCase
         }
     }
 
-    protected function getSaveFilename($value) {
+    protected function getSaveFilename($value)
+    {
         return preg_replace('/[^a-zA-Z0-9_ \-+]/s', '-', $value);
     }
 }

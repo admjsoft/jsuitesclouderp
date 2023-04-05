@@ -14,7 +14,6 @@ class Tickets extends CI_Controller
             redirect('/user/', 'refresh');
         }
         if (!$this->aauth->premission(3)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $this->li_a = 'crm';
@@ -26,7 +25,6 @@ class Tickets extends CI_Controller
 
     public function index()
     {
-
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Support Tickets';
         $data['totalt'] = $this->ticket->ticket_count_all('');
@@ -67,14 +65,12 @@ class Tickets extends CI_Controller
 
     public function ticket_stats()
     {
-
         $this->ticket->ticket_stats();
     }
 
 
     public function thread()
     {
-
         $this->load->helper(array('form'));
         $thread_id = $this->input->get('id');
 
@@ -85,7 +81,6 @@ class Tickets extends CI_Controller
         $this->load->view('fixed/header', $head);
 
         if ($this->input->post('content')) {
-
             $message = $this->input->post('content');
             $attach = $_FILES['userfile']['name'];
             if ($attach) {
@@ -115,7 +110,6 @@ class Tickets extends CI_Controller
 
             $this->load->view('support/thread', $data);
         } else {
-
             $data['thread_info'] = $this->ticket->thread_info($thread_id);
             $data['thread_list'] = $this->ticket->thread_list($thread_id);
 

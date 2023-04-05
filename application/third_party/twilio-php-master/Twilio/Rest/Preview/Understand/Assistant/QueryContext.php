@@ -17,16 +17,18 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-class QueryContext extends InstanceContext {
+class QueryContext extends InstanceContext
+{
     /**
      * Initialize the QueryContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $assistantSid The assistant_sid
      * @param string $sid The sid
-     * @return \Twilio\Rest\Preview\Understand\Assistant\QueryContext 
+     * @return \Twilio\Rest\Preview\Understand\Assistant\QueryContext
      */
-    public function __construct(Version $version, $assistantSid, $sid) {
+    public function __construct(Version $version, $assistantSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -37,11 +39,12 @@ class QueryContext extends InstanceContext {
 
     /**
      * Fetch a QueryInstance
-     * 
+     *
      * @return QueryInstance Fetched QueryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -60,12 +63,13 @@ class QueryContext extends InstanceContext {
 
     /**
      * Update the QueryInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return QueryInstance Updated QueryInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update($options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array('SampleSid' => $options['sampleSid'], 'Status' => $options['status'], ));
@@ -87,20 +91,22 @@ class QueryContext extends InstanceContext {
 
     /**
      * Deletes the QueryInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

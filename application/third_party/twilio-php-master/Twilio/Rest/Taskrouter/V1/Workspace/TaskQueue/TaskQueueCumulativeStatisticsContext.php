@@ -15,16 +15,18 @@ use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
 
-class TaskQueueCumulativeStatisticsContext extends InstanceContext {
+class TaskQueueCumulativeStatisticsContext extends InstanceContext
+{
     /**
      * Initialize the TaskQueueCumulativeStatisticsContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $workspaceSid The workspace_sid
      * @param string $taskQueueSid The task_queue_sid
-     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueCumulativeStatisticsContext 
+     * @return \Twilio\Rest\Taskrouter\V1\Workspace\TaskQueue\TaskQueueCumulativeStatisticsContext
      */
-    public function __construct(Version $version, $workspaceSid, $taskQueueSid) {
+    public function __construct(Version $version, $workspaceSid, $taskQueueSid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -35,13 +37,14 @@ class TaskQueueCumulativeStatisticsContext extends InstanceContext {
 
     /**
      * Fetch a TaskQueueCumulativeStatisticsInstance
-     * 
+     *
      * @param array|Options $options Optional Arguments
      * @return TaskQueueCumulativeStatisticsInstance Fetched
      *                                               TaskQueueCumulativeStatisticsInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch($options = array()) {
+    public function fetch($options = array())
+    {
         $options = new Values($options);
 
         $params = Values::of(array(
@@ -68,10 +71,11 @@ class TaskQueueCumulativeStatisticsContext extends InstanceContext {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

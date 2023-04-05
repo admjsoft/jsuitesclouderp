@@ -37,7 +37,7 @@ class Google extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
-    const ACCESS_TOKEN_RESOURCE_OWNER_ID = 'id';
+    public const ACCESS_TOKEN_RESOURCE_OWNER_ID = 'id';
 
     /**
      * @var string If set, this will be sent to google as the "access_type" parameter.
@@ -145,7 +145,7 @@ if (!isset($_GET['code'])) {
     $_SESSION['oauth2state'] = $provider->getState();
     header('Location: ' . $authUrl);
     exit;
-    // Check given state against previously stored one to mitigate CSRF attack
+// Check given state against previously stored one to mitigate CSRF attack
 } elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
     unset($_SESSION['oauth2state']);
     exit('Invalid state');

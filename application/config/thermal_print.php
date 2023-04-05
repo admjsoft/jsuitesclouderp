@@ -1,6 +1,6 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 //Enable thermal_printer  Value TRUE/FALSE
-$config['thermal_print_enable'] = FALSE;
+$config['thermal_print_enable'] = false;
 
 /*
  |--------------------------------------------------------------------------------------------------
@@ -45,4 +45,3 @@ $config['print_network'] = array("10.x.x.x", 9100);
 
 //Applicable only for For windows
 $config['print_windows'] = 'LPT1';
-

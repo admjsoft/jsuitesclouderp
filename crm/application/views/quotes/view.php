@@ -7,9 +7,9 @@
         </div>
 <?php
 
-if($this->session->flashdata('item')) {
-$message = $this->session->flashdata('item');
-?>
+if ($this->session->flashdata('item')) {
+    $message = $this->session->flashdata('item');
+    ?>
 <div class="alert alert-info"><?php echo $message['message']; ?>
 
 </div>
@@ -27,9 +27,9 @@ $message = $this->session->flashdata('item');
                             $validtoken = hash_hmac('ripemd160', 'q' . $invoice['iid'], $this->config->item('encryption_key'));
 
 
-                            $link = '../../billing/printquote?id=' . $invoice['iid'] . '&token=' . $validtoken;
-                            $linkp = '../../billing/print_rec?id=' . $invoice['iid'] . '&token=' . $validtoken;
-                            ?>
+$link = '../../billing/printquote?id=' . $invoice['iid'] . '&token=' . $validtoken;
+$linkp = '../../billing/print_rec?id=' . $invoice['iid'] . '&token=' . $validtoken;
+?>
                             <div class="title-action">
 
 
@@ -51,13 +51,13 @@ $message = $this->session->flashdata('item');
                                            href="<?php echo $link ?>&d=1"><?php echo $this->lang->line('PDF Download') ?></a>
 
                                     </div>  <?php
-                                    if($invoice['status']=='pending') {
-                                    ?><a class="btn btn-info round ml-1"
+        if ($invoice['status']=='pending') {
+            ?><a class="btn btn-info round ml-1"
                                            href="<?php echo base_url('quote/approve') ?>?&id=<?=$invoice['iid'] ?>" title="Approve"><i
                                                 class="icon-check"></i></a>
                                     <?php
-                                    }
-                                    ?>
+        }
+?>
                                 </div>
 
 
@@ -76,7 +76,7 @@ $message = $this->session->flashdata('item');
 
                             <ul class="px-0 list-unstyled">
                                 <?php echo '<li class="text-bold-800">' . $this->config->item('ctitle') . '</li><li>' .
-                                    $this->config->item('address') . '</li><li>' . $this->config->item('city') . '</li><li>Phone: ' . $this->config->item('phone') . '</li><li> Email: ' . $this->config->item('email'); ?>
+$this->config->item('address') . '</li><li>' . $this->config->item('city') . '</li><li>Phone: ' . $this->config->item('phone') . '</li><li> Email: ' . $this->config->item('email'); ?>
                                 </li>
                             </ul>
                         </div>
@@ -110,7 +110,7 @@ $message = $this->session->flashdata('item');
                         </div>
                         <div class="offset-md-3 col-md-3 col-sm-12 text-xs-center text-md-left">
                             <?php echo '<p><span class="text-muted">' . $this->lang->line('Quote Date') . ' :</span> ' . dateformat($invoice['invoicedate']) . '</p> <p><span class="text-muted">' . $this->lang->line('Due Date') . ' :</span> ' . dateformat($invoice['invoiceduedate']) . '</p>  <p><span class="text-muted">' . $this->lang->line('Terms') . ' :</span> ' . $invoice['termtit'] . '</p>';
-                            ?>
+?>
                         </div>
                     </div>
                     <!--/ Invoice Customer Details -->
@@ -142,10 +142,10 @@ $message = $this->session->flashdata('item');
                                     </thead>
                                     <tbody>
                                     <?php $c = 1;
-                                    $sub_t=0;
-                                    foreach ($products as $row) {
- $sub_t += $row['price'] * $row['qty'];
-                                        echo '<tr>
+$sub_t=0;
+foreach ($products as $row) {
+    $sub_t += $row['price'] * $row['qty'];
+    echo '<tr>
 <th scope="row">' . $c . '</th>
                             <td>' . $row['product'] . '</td>
                            
@@ -155,9 +155,9 @@ $message = $this->session->flashdata('item');
                             <td>' . amountExchange($row['totaldiscount'], $invoice['multi']) . ' (' . amountFormat($row['discount']) . '' . $invoice['format_discount'] . ')</td>
                             <td>' . amountExchange($row['subtotal'], $invoice['multi']) . '</td>
                         </tr>';
-                                        echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
-                                        $c++;
-                                    } ?>
+    echo '<tr><td colspan=5>' . $row['product_des'] . '</td></tr>';
+    $c++;
+} ?>
 
                                     </tbody>
                                 </table>
@@ -208,7 +208,7 @@ $message = $this->session->flashdata('item');
                                             <td class="text-bold-800"><?php echo $this->lang->line('Total') ?></td>
                                             <td class="text-bold-800 text-xs-right"> <?php
 
-                                                echo ' <span id="paydue">' . amountExchange($invoice['total'], $invoice['multi']) . '</span></strong>'; ?></td>
+            echo ' <span id="paydue">' . amountExchange($invoice['total'], $invoice['multi']) . '</span></strong>'; ?></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -235,8 +235,8 @@ $message = $this->session->flashdata('item');
                                 <h6><?php echo $this->lang->line('Terms & Condition') ?></h6>
                                 <p> <?php
 
-                                    echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
-                                    ?></p>
+echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
+?></p>
                             </div>
 
                         </div>

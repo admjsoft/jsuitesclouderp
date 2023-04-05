@@ -45,12 +45,12 @@
                             <select name="product_cat" class="form-control" id="product_cat">
                                 <?php
                                 echo '<option value="' . $cat_ware['cid'] . '">' . $cat_ware['catt'] . ' (S)</option>';
-                                foreach ($cat as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['title'];
-                                    echo "<option value='$cid'>$title</option>";
-                                }
-                                ?>
+            foreach ($cat as $row) {
+                $cid = $row['id'];
+                $title = $row['title'];
+                echo "<option value='$cid'>$title</option>";
+            }
+            ?>
                             </select>
                         </div>
 
@@ -61,12 +61,12 @@
                                 <?= '<option value="' . $cat_sub['id'] . '" selected>' . $cat_sub['title'] . ' (S)</option>';
 
 
-                                foreach ($cat_sub_list as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['title'];
-                                    echo "<option value='$cid'>$title</option>";
-                                }
-                                ?>
+            foreach ($cat_sub_list as $row) {
+                $cid = $row['id'];
+                $title = $row['title'];
+                echo "<option value='$cid'>$title</option>";
+            }
+            ?>
                             </select>
 
 
@@ -81,13 +81,13 @@
                         <div class="col-sm-6">
                             <select name="product_warehouse" class="form-control">
                                 <?php
-                                echo '<option value="' . $cat_ware['wid'] . '">' . $cat_ware['watt'] . ' (S)</option>';
-                                foreach ($warehouse as $row) {
-                                    $cid = $row['id'];
-                                    $title = $row['title'];
-                                    echo "<option value='$cid'>$title</option>";
-                                }
-                                ?>
+            echo '<option value="' . $cat_ware['wid'] . '">' . $cat_ware['watt'] . ' (S)</option>';
+            foreach ($warehouse as $row) {
+                $cid = $row['id'];
+                $title = $row['title'];
+                echo "<option value='$cid'>$title</option>";
+            }
+            ?>
                             </select>
 
 
@@ -112,7 +112,7 @@
                         <div class="col-sm-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><?php echo $this->config->item('currency');
-                                    echo $product['product_price'] ?></span>
+            echo $product['product_price'] ?></span>
                                 <input type="text" name="product_price" class="form-control required"
                                        placeholder="0.00" aria-describedby="sizing-addon"
                                        onkeypress="return isNumber(event)"
@@ -190,12 +190,12 @@
                             <select name="unit" class="form-control">
                                 <?php
                                 echo "<option value='" . $product['unit'] . "'>" . $this->lang->line('Do not change') . "</option><option value=''>None</option>";
-                                foreach ($units as $row) {
-                                    $cid = $row['code'];
-                                    $title = $row['name'];
-                                    echo "<option value='$cid'>$title</option>";
-                                }
-                                ?>
+            foreach ($units as $row) {
+                $cid = $row['code'];
+                $title = $row['name'];
+                echo "<option value='$cid'>$title</option>";
+            }
+            ?>
                             </select>
 
 
@@ -280,10 +280,8 @@
 
 
                         <?php }
-
-
-                    }
-                    ?>
+                        }
+            ?>
                     <hr>
                     <div class="form-group row"><label
                                 class="col-sm-2 col-form-label"><?php echo $this->lang->line('Image') ?></label>
@@ -331,8 +329,8 @@
 <button class="btn btn-pink add_serial btn-sm m-1">   <?php echo $this->lang->line('add_serial') ?></button><div id="added_product"></div>
 
                     <?php
-                    if (is_array(@$serial_list[0])) {
-                        foreach ($serial_list as $item) { ?>
+            if (is_array(@$serial_list[0])) {
+                foreach ($serial_list as $item) { ?>
                             <div class="form-group serial"><label for="field_s"
                                                                   class="col-lg-2 control-label"><?php echo $this->lang->line('serial') ?></label>
                                 <div class="col-lg-10"><input class="form-control box-size"
@@ -342,11 +340,11 @@
                                                               <?= ($item['status'] ? 'readonly=""' : 'name="product_serial_e['.$item['id'].']"'); ?>></div>
                             </div>
                             <?php
-                        }
-                    }
+                }
+            }
 
 
-                    if ($product['merge'] == 0) { ?>
+            if ($product['merge'] == 0) { ?>
                         <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
 
                             <div id="coupon4" class="card-header">
@@ -366,14 +364,14 @@
                                             <tr>
                                                 <td><select name="v_type[]" class="form-control">
                                                         <?php
-                                                        foreach ($variables as $row) {
-                                                            $cid = $row['id'];
-                                                            $title = $row['name'];
-                                                            $title = $row['name'];
-                                                            $variation = $row['variation'];
-                                                            echo "<option value='$cid'>$variation - $title </option>";
-                                                        }
-                                                        ?>
+                                                foreach ($variables as $row) {
+                                                    $cid = $row['id'];
+                                                    $title = $row['name'];
+                                                    $title = $row['name'];
+                                                    $variation = $row['variation'];
+                                                    echo "<option value='$cid'>$variation - $title </option>";
+                                                }
+                ?>
                                                     </select></td>
                                                 <td><input value="" class="form-control" name="v_stock[]"
                                                            placeholder="<?php echo $this->lang->line('Stock Units') ?>*">
@@ -391,7 +389,7 @@
                                                     echo '<tr> <td>' . $p_var['product_name'] . '</td> <td>' . $p_var['qty'] . '<td><td><a href="' . base_url() . 'products/edit?id=' . $p_var['pid'] . '"  class="btn btn-purple btn-sm"><span class="fa fa-edit"></span>' . $this->lang->line('Edit') . '</a><td></tr>';
                                                 }
                                             }
-                                            ?>
+                ?>
                                         </table>
                                     </div>
                                 </div>
@@ -419,12 +417,12 @@
                                                 <td>
                                                     <select name="w_type[]" class="form-control">
                                                         <?php
-                                                        foreach ($warehouse as $row) {
-                                                            $cid = $row['id'];
-                                                            $title = $row['title'];
-                                                            echo "<option value='$cid'>$title</option>";
-                                                        }
-                                                        ?>
+                            foreach ($warehouse as $row) {
+                                $cid = $row['id'];
+                                $title = $row['title'];
+                                echo "<option value='$cid'>$title</option>";
+                            }
+                ?>
                                                     </select></td>
                                                 <td><input value="" class="form-control" name="w_stock[]"
                                                            placeholder="<?php echo $this->lang->line('Stock Units') ?>*">
@@ -442,7 +440,7 @@
                                                     echo '<tr> <td>' . $p_var['product_name'] . '</td> <td>' . $p_var['qty'] . '<td><td><a href="' . base_url() . 'products/edit?id=' . $p_var['pid'] . '"  class="btn btn-purple btn-sm"><span class="fa fa-edit"></span>' . $this->lang->line('Edit') . '</a><td></tr>';
                                                 }
                                             }
-                                            ?>
+                ?>
                                         </table>
                                     </div>
                                 </div>
@@ -450,14 +448,14 @@
 
                         </div>
                         <?php
-                    }
-                    ?>
+            }
+            ?>
                 </form>
             </div>
         </div>
 
         <script src="<?php echo assets_url('assets/myjs/jquery.ui.widget.js');
-        $invoice['tid'] = 0; ?>"></script>
+            $invoice['tid'] = 0; ?>"></script>
         <script src="<?php echo assets_url('assets/myjs/jquery.fileupload.js') ?>"></script>
         <script>
             /*jslint unparam: true */

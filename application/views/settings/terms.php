@@ -42,37 +42,36 @@
                     </thead>
                     <tbody>
                     <?php $i = 1;
-                    foreach ($terms as $row) {
-                        $cid = $row['id'];
-                        $title = $row['title'];
+            foreach ($terms as $row) {
+                $cid = $row['id'];
+                $title = $row['title'];
 
-                        switch ($row['type']) {
-                            case 0:
-                                $type = 'All';
-                                break;
-                            case 1:
-                                $type = 'Invoice';
-                                break;
-                            case 2:
-                                $type = 'Quote';
-                                break;
-                            case 3:
-                                $type = 'Recurring';
-                                break;
-                            case 4:
-                                $type = 'Purchase Order';
-                                break;
-
-                        }
-                        echo "<tr>
+                switch ($row['type']) {
+                    case 0:
+                        $type = 'All';
+                        break;
+                    case 1:
+                        $type = 'Invoice';
+                        break;
+                    case 2:
+                        $type = 'Quote';
+                        break;
+                    case 3:
+                        $type = 'Recurring';
+                        break;
+                    case 4:
+                        $type = 'Purchase Order';
+                        break;
+                }
+                echo "<tr>
                     <td>$i</td>
                     <td>$title</td>
                     <td>" . $this->lang->line($type) . "</td>
                    
                     <td><a href='" . base_url("settings/edit_term?id=$cid") . "' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> " . $this->lang->line('Edit') . "</a>&nbsp;<a href='#' data-object-id='" . $cid . "' class='btn btn-danger btn-xs delete-object' title='Delete'><i class='fa fa-trash'></i></a></td></tr>";
-                        $i++;
-                    }
-                    ?>
+                $i++;
+            }
+            ?>
                     </tbody>
                     <tfoot>
                     <tr>

@@ -136,12 +136,15 @@
     Morris.Bar({
         element: 'invoices-sales-chart',
         data: [
-            <?php $i = 0;foreach (array_reverse($stat) as $row) {
-            if ($i > 11) exit;
-            $num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '" . $row['year'] . '-' . sprintf("%02d", $row['month']) . "-$num', y: " . intval($row['income']) . ", z: " . intval($row['expense']) . "},";
-            $i++;
-        } ?>
+            <?php $i = 0;
+            foreach (array_reverse($stat) as $row) {
+                if ($i > 11) {
+                    exit;
+                }
+                $num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
+                echo "{ x: '" . $row['year'] . '-' . sprintf("%02d", $row['month']) . "-$num', y: " . intval($row['income']) . ", z: " . intval($row['expense']) . "},";
+                $i++;
+            } ?>
 
         ],
         xkey: 'x',
@@ -158,12 +161,15 @@
     Morris.Line({
         element: 'invoices-products-chart',
         data: [
-            <?php $i = 0;foreach (array_reverse($stat) as $row) {
-            if ($i > 11) exit;
-            $num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
-            echo "{ x: '" . $row['year'] . '-' . sprintf("%02d", $row['month']) . "-$num', y: " . intval($row['items']) . ", z: " . intval($row['invoices']) . "},";
-            $i++;
-        } ?>
+            <?php $i = 0;
+            foreach (array_reverse($stat) as $row) {
+                if ($i > 11) {
+                    exit;
+                }
+                $num = cal_days_in_month(CAL_GREGORIAN, $row['month'], $row['year']);
+                echo "{ x: '" . $row['year'] . '-' . sprintf("%02d", $row['month']) . "-$num', y: " . intval($row['items']) . ", z: " . intval($row['invoices']) . "},";
+                $i++;
+            } ?>
 
         ],
         xkey: 'x',

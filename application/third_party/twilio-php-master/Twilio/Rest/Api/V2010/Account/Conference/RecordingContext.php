@@ -14,17 +14,19 @@ use Twilio\Options;
 use Twilio\Values;
 use Twilio\Version;
 
-class RecordingContext extends InstanceContext {
+class RecordingContext extends InstanceContext
+{
     /**
      * Initialize the RecordingContext
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param string $accountSid The account_sid
      * @param string $conferenceSid Fetch by unique conference Sid for the recording
      * @param string $sid Fetch by unique recording Sid
-     * @return \Twilio\Rest\Api\V2010\Account\Conference\RecordingContext 
+     * @return \Twilio\Rest\Api\V2010\Account\Conference\RecordingContext
      */
-    public function __construct(Version $version, $accountSid, $conferenceSid, $sid) {
+    public function __construct(Version $version, $accountSid, $conferenceSid, $sid)
+    {
         parent::__construct($version);
 
         // Path Solution
@@ -39,13 +41,14 @@ class RecordingContext extends InstanceContext {
 
     /**
      * Update the RecordingInstance
-     * 
+     *
      * @param string $status The status to change the recording to.
      * @param array|Options $options Optional Arguments
      * @return RecordingInstance Updated RecordingInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($status, $options = array()) {
+    public function update($status, $options = array())
+    {
         $options = new Values($options);
 
         $data = Values::of(array('Status' => $status, 'PauseBehavior' => $options['pauseBehavior'], ));
@@ -68,11 +71,12 @@ class RecordingContext extends InstanceContext {
 
     /**
      * Fetch a RecordingInstance
-     * 
+     *
      * @return RecordingInstance Fetched RecordingInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         $params = Values::of(array());
 
         $payload = $this->version->fetch(
@@ -92,20 +96,22 @@ class RecordingContext extends InstanceContext {
 
     /**
      * Deletes the RecordingInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->version->delete('delete', $this->uri);
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

@@ -33,7 +33,11 @@
                             <div class="col-sm-6">
                                 <select name="dual" class="form-control">
                                     <option value="<?= $discship['key1'] ?>">
-                                        *<?php if ($discship['key1']) echo $this->lang->line('Yes'); else  echo $this->lang->line('No') ?>
+                                        *<?php if ($discship['key1']) {
+                                            echo $this->lang->line('Yes');
+                                        } else {
+                                            echo $this->lang->line('No');
+                                        } ?>
                                         *
                                     </option>
                                     <option value="1"><?php echo $this->lang->line('Yes') ?> </option>
@@ -55,7 +59,7 @@
                                     <?php foreach ($acclist as $row) {
                                         echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
                                     }
-                                    ?>
+            ?>
                                 </select>
 
                             </div>
@@ -71,7 +75,7 @@
                                     <?php foreach ($acclist as $row) {
                                         echo '<option value="' . $row['id'] . '">' . $row['holder'] . ' / ' . $row['acn'] . '</option>';
                                     }
-                                    ?>
+            ?>
                                 </select>
 
                             </div>

@@ -4,11 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Reports_model extends CI_Model
 {
-
-
     public function viewstatement($pay_acc, $trans_type, $sdate, $edate, $ttype)
     {
-
         if ($trans_type == 'All') {
             $where = "acid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate') ";
         } else {
@@ -31,7 +28,6 @@ class Reports_model extends CI_Model
 
     public function get_statements($pay_acc, $trans_type, $sdate, $edate)
     {
-
         if ($trans_type == 'All') {
             $where = "acid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate') ";
         } else {
@@ -56,7 +52,6 @@ class Reports_model extends CI_Model
 
     public function get_statements_employee($pay_emp, $trans_type, $sdate, $edate)
     {
-
         if ($trans_type == 'All') {
             $where = "payerid	='$pay_emp'  AND ext='4' AND (DATE(date) BETWEEN '$sdate' AND '$edate') ";
         } else {
@@ -81,7 +76,6 @@ class Reports_model extends CI_Model
 
     public function get_statements_cat($pay_cat, $trans_type, $sdate, $edate)
     {
-
         if ($trans_type == 'All') {
             $where = "cat='$pay_cat' AND (DATE(date) BETWEEN '$sdate' AND '$edate') ";
         } else {
@@ -106,11 +100,11 @@ class Reports_model extends CI_Model
 
     //transaction account statement
 
-    var $table = 'gtg_transactions';
-    var $column_order = array(null, 'account', 'type', 'cat', 'amount', 'stat');
-    var $column_search = array('id', 'account');
-    var $order = array('id' => 'asc');
-    var $opt = '';
+    public $table = 'gtg_transactions';
+    public $column_order = array(null, 'account', 'type', 'cat', 'amount', 'stat');
+    public $column_search = array('id', 'account');
+    public $order = array('id' => 'asc');
+    public $opt = '';
 
 
     //income statement
@@ -153,8 +147,6 @@ class Reports_model extends CI_Model
 
     public function customincomestatement($acid, $sdate, $edate)
     {
-
-
         $this->db->select_sum('credit');
         $this->db->from('gtg_transactions');
         if ($acid > 0) {
@@ -180,8 +172,6 @@ class Reports_model extends CI_Model
 
     public function expensestatement()
     {
-
-
         $this->db->select_sum('debit');
         $this->db->from('gtg_transactions');
         if ($this->aauth->get_user()->loc) {
@@ -208,8 +198,6 @@ class Reports_model extends CI_Model
 
     public function customexpensestatement($acid, $sdate, $edate)
     {
-
-
         $this->db->select_sum('debit');
         $this->db->from('gtg_transactions');
         if ($acid > 0) {
@@ -241,7 +229,6 @@ class Reports_model extends CI_Model
 
     public function get_customer_statements($pay_acc, $trans_type, $sdate, $edate)
     {
-
         if ($trans_type == 'All') {
             $where = "payerid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate') AND ext=0";
         } else {
@@ -264,7 +251,6 @@ class Reports_model extends CI_Model
 
     public function get_supplier_statements($pay_acc, $trans_type, $sdate, $edate)
     {
-
         if ($trans_type == 'All') {
             $where = "payerid='$pay_acc' AND (DATE(date) BETWEEN '$sdate' AND '$edate') AND ext=1";
         } else {
@@ -295,8 +281,6 @@ class Reports_model extends CI_Model
 
     public function customprofitstatement($lid, $sdate, $edate)
     {
-
-
         $this->db->select_sum('gtg_metadata.col1');
         $this->db->from('gtg_metadata');
         $this->db->where('gtg_metadata.type', 9);
@@ -323,7 +307,6 @@ class Reports_model extends CI_Model
 
     public function customcommission($lid, $sdate, $edate)
     {
-
         $this->db->select('c_rate');
         $this->db->from('gtg_employees');
         $this->db->where('id', $lid);
@@ -409,7 +392,6 @@ class Reports_model extends CI_Model
 
     public function customproductsstatement($lid, $sdate, $edate)
     {
-
         $this->db->select_sum('gtg_invoice_items.qty');
         $this->db->select_sum('gtg_invoice_items.subtotal');
         $this->db->from('gtg_invoice_items');
@@ -435,7 +417,6 @@ class Reports_model extends CI_Model
 
     public function customproductsstatement_cat($lid, $sdate, $edate)
     {
-
         $this->db->select_sum('gtg_invoice_items.qty');
         $this->db->select_sum('gtg_invoice_items.subtotal');
         $this->db->from('gtg_invoice_items');

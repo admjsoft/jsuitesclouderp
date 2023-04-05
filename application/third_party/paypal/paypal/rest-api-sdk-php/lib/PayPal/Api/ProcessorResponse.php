@@ -158,5 +158,4 @@ class ProcessorResponse extends PayPalModel
     {
         return $this->vpas;
     }
-
 }

@@ -19,7 +19,6 @@
 </table>
 
 <?php if ($product_variations) {
-
     echo '<h6>' . $this->lang->line('Products') . ' ' . $this->lang->line('Variations') . '</h6>';
     ?>
 

@@ -2,12 +2,12 @@
 
 class Common
 {
-    function __construct()
+    public function __construct()
     {
         $this->PI = &get_instance();
     }
 
-    function taxlist($id = 0)
+    public function taxlist($id = 0)
     {
         $tax_list = '';
         switch ($id) {
@@ -51,7 +51,7 @@ class Common
         return $tax_list;
     }
 
-    function disclist()
+    public function disclist()
     {
         $this->PI->db->where('id', 61);
         $query = $this->PI->db->get('univarsal_api');
@@ -66,7 +66,7 @@ class Common
         return $disclist;
     }
 
-    function disc_status()
+    public function disc_status()
     {
         $this->PI->db->where('id', 61);
         $query = $this->PI->db->get('univarsal_api');
@@ -74,7 +74,7 @@ class Common
         return array('disc_format' => $row1['key1'], 'ship_tax' => $row1['url'], 'ship_rate' => $row1['key2']);
     }
 
-    function taxsettings($id = 0)
+    public function taxsettings($id = 0)
     {
         $tax_list = '';
         switch ($id) {
@@ -118,7 +118,7 @@ class Common
         return $tax_list;
     }
 
-    function taxlist_edit($id = 0)
+    public function taxlist_edit($id = 0)
     {
         $tax_list = '';
         switch ($id) {
@@ -154,7 +154,7 @@ class Common
         return $tax_list;
     }
 
-    function taxdetail()
+    public function taxdetail()
     {
         $tax_name = '';
         switch ($this->PI->config->item('tax')) {
@@ -169,12 +169,16 @@ class Common
             case -3:
                 $tax_f = 'cgst';
                 $tax_name = '%';
-                if (GST_INCL == 'inclusive') $tax_name = 'incl';
+                if (GST_INCL == 'inclusive') {
+                    $tax_name = 'incl';
+                }
                 break;
             case -4:
                 $tax_f = 'igst';
                 $tax_name = '%';
-                if (GST_INCL == 'inclusive') $tax_name = 'incl';
+                if (GST_INCL == 'inclusive') {
+                    $tax_name = 'incl';
+                }
                 break;
             case 0:
                 $tax_f = 'no';
@@ -201,7 +205,7 @@ class Common
         return array('format' => $tax_f, 'handle' => $tax_name);
     }
 
-    function taxhandle_edit($ty = '')
+    public function taxhandle_edit($ty = '')
     {
         switch ($ty) {
             case 'yes':
@@ -212,11 +216,15 @@ class Common
                 break;
             case 'cgst':
                 $tax_name = '%';
-                if (GST_INCL == 'inclusive') $tax_name = 'incl';
+                if (GST_INCL == 'inclusive') {
+                    $tax_name = 'incl';
+                }
                 break;
             case 'igst':
                 $tax_name = '%';
-                if (GST_INCL == 'inclusive') $tax_name = 'incl';
+                if (GST_INCL == 'inclusive') {
+                    $tax_name = 'incl';
+                }
                 break;
             case 'no':
                 $tax_name = 'off';
@@ -227,7 +235,7 @@ class Common
         }
         return $tax_name;
     }
-    function languages($id = 0)
+    public function languages($id = 0)
     {
         if ($id) {
             $this->PI->db->select('lang');
@@ -247,7 +255,7 @@ class Common
         return $lang;
     }
 
-    function current_language($lang = '')
+    public function current_language($lang = '')
     {
         $lang = '<option value="' . $lang . '">--' . $lang . '--</option><option value="english">English</option> <option value="arabic">Arabic</option><option value="bengali">Bengali</option>
                        <option value="czech">Czech</option><option value="chinese-simplified">Chinese-simplified</option> <option value="chinese-traditional">Chinese-traditional</option> <option value="dutch">Dutch</option><option value="filipino">Filipino</option><option value="french">French</option><option value="german">German</option><option value="greek">Greek</option><option value="hebrew">Hebrew</option><option value="hindi">Hindi</option><option value="indonesian">Indonesian</option>  <option value="italian">Italian</option><option value="japanese">Japanese</option><option value="javanese">Javanese</option><option value="khmer">Khmer</option><option value="korean">Korean</option> <option value="polish">Polish</option><option value="portuguese">Portuguese</option> <option value="russian">Russian</option> <option value="romanian">Romanian</option> <option value="swedish">Swedish</option><option value="spanish">Spanish</option><option value="thai">Thai</option><option value="turkish">Turkish</option><option value="vietnamese">Vietnamese</option><option value="urdu">Urdu</option>';
@@ -264,7 +272,9 @@ class Common
             $this->PI->db->where('gtg_locations.id', $this->PI->aauth->get_user()->loc);
             $query = $this->PI->db->get();
             $result = $query->row_array();
-            if ($result['ware']) $wr = '<option value="' . $result['ware'] . '">' . $result['title'] . '</option>';
+            if ($result['ware']) {
+                $wr = '<option value="' . $result['ware'] . '">' . $result['title'] . '</option>';
+            }
             return $wr;
         } else {
             $wr = '<option value="0">*' . $this->PI->lang->line('All') . '</option>';
@@ -274,11 +284,13 @@ class Common
             $this->PI->db->where('univarsal_api.id', 60);
             $query = $this->PI->db->get();
             $result = $query->row_array();
-            if ($result['title']) $wr = '<option value="' . $result['key1'] . '">' . $result['title'] . '</option>';
+            if ($result['title']) {
+                $wr = '<option value="' . $result['key1'] . '">' . $result['title'] . '</option>';
+            }
             return $wr;
         }
     }
-    function zero_stock()
+    public function zero_stock()
     {
         $this->PI->db->where('id', 63);
         $query = $this->PI->db->get('univarsal_api');

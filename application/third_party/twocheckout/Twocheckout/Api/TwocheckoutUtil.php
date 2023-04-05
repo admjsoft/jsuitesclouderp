@@ -2,8 +2,8 @@
 
 class Twocheckout_Util extends Twocheckout
 {
-
-    static function returnResponse($contents, $format=null) {
+    public static function returnResponse($contents, $format=null)
+    {
         $format = $format == null ? Twocheckout::$format : $format;
         switch ($format) {
             case "array":
@@ -26,8 +26,7 @@ class Twocheckout_Util extends Twocheckout
     {
         $object = json_decode($object, true);
         $array=array();
-        foreach($object as $member=>$data)
-        {
+        foreach ($object as $member=>$data) {
             $array[$member]=$data;
         }
         return $array;
@@ -38,7 +37,8 @@ class Twocheckout_Util extends Twocheckout
         return json_encode($object);
     }
 
-    public static function getRecurringLineitems($saleDetail) {
+    public static function getRecurringLineitems($saleDetail)
+    {
         $i = 0;
         $invoiceData = array();
 
@@ -59,7 +59,6 @@ class Twocheckout_Util extends Twocheckout
         };
 
         return $lineitemData;
-
     }
 
     public static function checkError($contents)
@@ -70,5 +69,4 @@ class Twocheckout_Util extends Twocheckout
             throw new Twocheckout_Error($contents['exception']['errorMsg'], $contents['exception']['errorCode']);
         }
     }
-
 }

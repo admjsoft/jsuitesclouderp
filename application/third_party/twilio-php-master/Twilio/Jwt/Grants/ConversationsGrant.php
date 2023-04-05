@@ -1,13 +1,13 @@
 <?php
 
-
 namespace Twilio\Jwt\Grants;
 
-
-class ConversationsGrant implements Grant {
+class ConversationsGrant implements Grant
+{
     private $configurationProfileSid;
 
-    public function __construct() {
+    public function __construct()
+    {
         trigger_error("ConversationsGrant is deprecated, please use VideoGrant", E_USER_NOTICE);
     }
 
@@ -16,7 +16,8 @@ class ConversationsGrant implements Grant {
      *
      * @return string the configuration profile sid
      */
-    public function getConfigurationProfileSid() {
+    public function getConfigurationProfileSid()
+    {
         return $this->configurationProfileSid;
     }
 
@@ -26,7 +27,8 @@ class ConversationsGrant implements Grant {
      *
      * @return $this updated grant
      */
-    public function setConfigurationProfileSid($configurationProfileSid) {
+    public function setConfigurationProfileSid($configurationProfileSid)
+    {
         $this->configurationProfileSid = $configurationProfileSid;
         return $this;
     }
@@ -36,7 +38,8 @@ class ConversationsGrant implements Grant {
      *
      * @return string type of the grant
      */
-    public function getGrantKey() {
+    public function getGrantKey()
+    {
         return "rtc";
     }
 
@@ -45,7 +48,8 @@ class ConversationsGrant implements Grant {
      *
      * @return array data of the grant
      */
-    public function getPayload() {
+    public function getPayload()
+    {
         $payload = array();
         if ($this->configurationProfileSid) {
             $payload['configuration_profile_sid'] = $this->configurationProfileSid;

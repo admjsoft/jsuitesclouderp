@@ -20,7 +20,6 @@ class Transactions extends CI_Controller
     public function index()
     {
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $head['title'] = "Transaction";
@@ -33,7 +32,6 @@ class Transactions extends CI_Controller
     public function add()
     {
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $data['dual'] = $this->custom->api_config(65);
@@ -50,7 +48,6 @@ class Transactions extends CI_Controller
     public function transfer()
     {
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
@@ -65,9 +62,7 @@ class Transactions extends CI_Controller
 
     public function payinvoice()
     {
-
         if (!$this->aauth->premission(1)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $amount2 = 0;
@@ -88,17 +83,14 @@ class Transactions extends CI_Controller
         $account = $query->row_array();
 
         if ($pmethod == 'Balance') {
-
             $customer = $this->transactions->check_balance($cid);
             if (rev_amountExchange_s($customer['balance'], 0, $this->aauth->get_user()->loc) >= $amount) {
-
-                $this->db->set('balance', "balance-$amount", FALSE);
+                $this->db->set('balance', "balance-$amount", false);
                 $this->db->where('id', $cid);
                 $this->db->update('gtg_customers');
             } else {
-
                 $amount = rev_amountExchange_s($customer['balance'], 0, $this->aauth->get_user()->loc);
-                $this->db->set('balance', 0, FALSE);
+                $this->db->set('balance', 0, false);
                 $this->db->where('id', $cid);
                 $this->db->update('gtg_customers');
             }
@@ -133,7 +125,7 @@ class Transactions extends CI_Controller
 
         if ($totalrm > $amount) {
             $this->db->set('pmethod', $pmethod);
-            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+            $this->db->set('pamnt', "pamnt+$amount", false);
 
             $this->db->set('status', 'partial');
             $this->db->where('id', $tid);
@@ -141,7 +133,7 @@ class Transactions extends CI_Controller
 
 
             //account update
-            $this->db->set('lastbal', "lastbal+$amount", FALSE);
+            $this->db->set('lastbal', "lastbal+$amount", false);
             $this->db->where('id', $acid);
             $this->db->update('gtg_accounts');
             $paid_amount = $invresult->pamnt + $amount;
@@ -153,20 +145,20 @@ class Transactions extends CI_Controller
                 $diff = abs($diff);
                 $amount2 = $amount;
                 $amount = $totalrm;
-                $this->db->set('balance', "balance+$diff", FALSE);
+                $this->db->set('balance', "balance+$diff", false);
                 $this->db->where('id', $cid);
                 $this->db->update('gtg_customers');
-                $this->db->set('credit', "credit-$diff", FALSE);
+                $this->db->set('credit', "credit-$diff", false);
                 $this->db->where('id', $tttid);
                 $this->db->update('gtg_transactions');
             }
             $this->db->set('pmethod', $pmethod);
-            $this->db->set('pamnt', "pamnt+$totalrm", FALSE);
+            $this->db->set('pamnt', "pamnt+$totalrm", false);
             $this->db->set('status', 'paid');
             $this->db->where('id', $tid);
             $this->db->update('gtg_invoices');
             //account update
-            $this->db->set('lastbal', "lastbal+$totalrm", FALSE);
+            $this->db->set('lastbal', "lastbal+$totalrm", false);
             $this->db->where('id', $acid);
             $this->db->update('gtg_accounts');
             $totalrm = 0;
@@ -177,7 +169,6 @@ class Transactions extends CI_Controller
         $activitym = "<tr><td>" . '<a href="' . base_url('invoices') . '/view_payslip?id=' . $tttid . '&inv=' . $tid . '" class="btn btn-blue btn-sm"><span class="fa fa-print" aria-hidden="true"></span></a> ' . substr($paydate, 0, 10) . "</td><td>$pmethod</td><td>" . amountExchange_s($amount, 0, $this->aauth->get_user()->loc) . "</td><td>$note</td></tr>";
         $dual = $this->custom->api_config(65);
         if ($dual['key1']) {
-
             $this->db->select('holder');
             $this->db->from('gtg_accounts');
             $this->db->where('id', $dual['key2']);
@@ -194,7 +185,7 @@ class Transactions extends CI_Controller
             $this->db->insert('gtg_transactions', $data);
 
             //account update
-            $this->db->set('lastbal', "lastbal-$amount", FALSE);
+            $this->db->set('lastbal', "lastbal-$amount", false);
             $this->db->where('id', $dual['key2']);
             $this->db->update('gtg_accounts');
         }
@@ -212,7 +203,6 @@ class Transactions extends CI_Controller
 
     public function paypurchase()
     {
-
         if (!$this->aauth->premission(2)) {
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
@@ -257,12 +247,12 @@ class Transactions extends CI_Controller
         $totalrm = $invresult->total - $invresult->pamnt;
         if ($totalrm > $amount) {
             $this->db->set('pmethod', $pmethod);
-            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+            $this->db->set('pamnt', "pamnt+$amount", false);
             $this->db->set('status', 'partial');
             $this->db->where('id', $tid);
             $this->db->update('gtg_purchase');
             //account update
-            $this->db->set('lastbal', "lastbal-$amount", FALSE);
+            $this->db->set('lastbal', "lastbal-$amount", false);
             $this->db->where('id', $acid);
             $this->db->update('gtg_accounts');
             $paid_amount = $invresult->pamnt + $amount;
@@ -270,12 +260,12 @@ class Transactions extends CI_Controller
             $totalrm = $totalrm - $amount;
         } else {
             $this->db->set('pmethod', $pmethod);
-            $this->db->set('pamnt', "pamnt+$amount", FALSE);
+            $this->db->set('pamnt', "pamnt+$amount", false);
             $this->db->set('status', 'paid');
             $this->db->where('id', $tid);
             $this->db->update('gtg_purchase');
             //acount update
-            $this->db->set('lastbal', "lastbal-$amount", FALSE);
+            $this->db->set('lastbal', "lastbal-$amount", false);
             $this->db->where('id', $acid);
             $this->db->update('gtg_accounts');
             $totalrm = 0;
@@ -285,7 +275,6 @@ class Transactions extends CI_Controller
 
         $dual = $this->custom->api_config(65);
         if ($dual['key1']) {
-
             $this->db->select('holder');
             $this->db->from('gtg_accounts');
             $this->db->where('id', $dual['url']);
@@ -302,7 +291,7 @@ class Transactions extends CI_Controller
             $this->db->insert('gtg_transactions', $data);
 
             //account update
-            $this->db->set('lastbal', "lastbal+$amount", FALSE);
+            $this->db->set('lastbal', "lastbal+$amount", false);
             $this->db->where('id', $dual['url']);
             $this->db->update('gtg_accounts');
         }
@@ -317,7 +306,6 @@ class Transactions extends CI_Controller
     public function cancelinvoice()
     {
         if (!$this->aauth->premission(1)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
@@ -325,8 +313,8 @@ class Transactions extends CI_Controller
         $tid = intval($this->input->post('tid'));
 
 
-        $this->db->set('pamnt', "0.00", FALSE);
-        $this->db->set('total', "0.00", FALSE);
+        $this->db->set('pamnt', "0.00", false);
+        $this->db->set('total', "0.00", false);
         $this->db->set('items', 0);
         $this->db->set('status', 'canceled');
         $this->db->where('id', $tid);
@@ -339,7 +327,7 @@ class Transactions extends CI_Controller
         $revresult = $query->result_array();
         foreach ($revresult as $trans) {
             $amt = $trans['credit'] - $trans['debit'];
-            $this->db->set('lastbal', "lastbal-$amt", FALSE);
+            $this->db->set('lastbal', "lastbal-$amt", false);
             $this->db->where('id', $trans['acid']);
             $this->db->update('gtg_accounts');
         }
@@ -350,7 +338,7 @@ class Transactions extends CI_Controller
         $prevresult = $query->result_array();
         foreach ($prevresult as $prd) {
             $amt = $prd['qty'];
-            $this->db->set('qty', "qty+$amt", FALSE);
+            $this->db->set('qty', "qty+$amt", false);
             $this->db->where('pid', $prd['pid']);
             $this->db->update('gtg_products');
         }
@@ -368,7 +356,7 @@ class Transactions extends CI_Controller
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $tid = intval($this->input->post('tid'));
-        $this->db->set('pamnt', "0.00", FALSE);
+        $this->db->set('pamnt', "0.00", false);
         $this->db->set('status', 'canceled');
         $this->db->where('id', $tid);
         $this->db->update('gtg_purchase');
@@ -381,7 +369,7 @@ class Transactions extends CI_Controller
         $revresult = $query->result_array();
         foreach ($revresult as $trans) {
             $amt = $trans['debit'] - $trans['credit'];
-            $this->db->set('lastbal', "lastbal+$amt", FALSE);
+            $this->db->set('lastbal', "lastbal+$amt", false);
             $this->db->where('id', $trans['acid']);
             $this->db->update('gtg_accounts');
         }
@@ -392,7 +380,7 @@ class Transactions extends CI_Controller
         $prevresult = $query->result_array();
         foreach ($prevresult as $prd) {
             $amt = $prd['qty'];
-            $this->db->set('qty', "qty-$amt", FALSE);
+            $this->db->set('qty', "qty-$amt", false);
             $this->db->where('pid', $prd['pid']);
             $this->db->update('gtg_products');
         }
@@ -440,7 +428,6 @@ class Transactions extends CI_Controller
     {
         $this->li_a = 'misc_settings';
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
@@ -455,7 +442,6 @@ class Transactions extends CI_Controller
     public function createcat()
     {
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
@@ -468,9 +454,7 @@ class Transactions extends CI_Controller
 
     public function editcat()
     {
-
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
@@ -488,9 +472,7 @@ class Transactions extends CI_Controller
 
     public function save_createcat()
     {
-
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
@@ -508,7 +490,6 @@ class Transactions extends CI_Controller
     public function editcatsave()
     {
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
@@ -516,11 +497,9 @@ class Transactions extends CI_Controller
         $name = $this->input->post('cat_name');
 
         if ($this->transactions->cat_update($id, $name)) {
-
             echo json_encode(array('status' => 'Success', 'message' =>
             $this->lang->line('UPDATED')));
         } else {
-
             echo json_encode(array('status' => 'Error', 'message' =>
             'Error!'));
         }
@@ -544,7 +523,6 @@ class Transactions extends CI_Controller
     public function save_trans()
     {
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $dual = $this->custom->api_config(65);
@@ -609,7 +587,6 @@ class Transactions extends CI_Controller
     public function save_transfer()
     {
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
@@ -632,14 +609,11 @@ class Transactions extends CI_Controller
     public function delete_i()
     {
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
 
         $id = $this->input->post('deleteid');
         if ($id) {
-
-
             echo json_encode($this->transactions->delt($id));
             $alert = $this->custom->api_config(66);
         } else {
@@ -650,7 +624,6 @@ class Transactions extends CI_Controller
     public function income()
     {
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $head['title'] = "Income Transaction";
@@ -663,7 +636,6 @@ class Transactions extends CI_Controller
     public function expense()
     {
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $head['title'] = "Expense Transaction";
@@ -676,7 +648,6 @@ class Transactions extends CI_Controller
     public function view()
     {
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $head['title'] = "View Transaction";
@@ -690,7 +661,9 @@ class Transactions extends CI_Controller
             $data['cdata'] = array('address' => 'Not Registered', 'city' => '', 'phone' => '', 'email' => '');
         }
         $this->load->view('fixed/header', $head);
-        if ($data['trans']['id']) $this->load->view('transactions/view', $data);
+        if ($data['trans']['id']) {
+            $this->load->view('transactions/view', $data);
+        }
         $this->load->view('fixed/footer');
     }
 
@@ -698,7 +671,6 @@ class Transactions extends CI_Controller
     public function print_t()
     {
         if (!$this->aauth->premission(5)) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
         }
         $head['title'] = "View Transaction";
@@ -723,10 +695,11 @@ class Transactions extends CI_Controller
 
         $pdf->SetHTMLFooter('<table width="100%" style="vertical-align: bottom; font-family: serif; font-size: 8pt; color: #5C5C5C; font-style: italic;"><tr><td width="33%"></td><td width="33%" align="center" style="font-weight: bold; font-style: italic;">{PAGENO}/{nbpg}</td><td width="33%" style="text-align: right; ">#' . $id . '</td></tr></table>');
 
-        if ($data['trans']['id']) $pdf->WriteHTML($html);
+        if ($data['trans']['id']) {
+            $pdf->WriteHTML($html);
+        }
 
         if ($this->input->get('d')) {
-
             $pdf->Output('Trans_#' . $id . '.pdf', 'D');
         } else {
             $pdf->Output('Trans_#' . $id . '.pdf', 'I');

@@ -5,10 +5,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Quote_model extends CI_Model
 {
-    var $table = 'gtg_quotes';
-    var $column_order = array(null, 'gtg_quotes.tid', 'gtg_customers.name', 'gtg_quotes.invoicedate', 'gtg_quotes.total', 'gtg_quotes.status', null);
-    var $column_search = array('gtg_quotes.tid', 'gtg_customers.name', 'gtg_quotes.invoicedate', 'gtg_quotes.total', 'gtg_quotes.status',);
-    var $order = array('gtg_quotes.tid' => 'desc');
+    public $table = 'gtg_quotes';
+    public $column_order = array(null, 'gtg_quotes.tid', 'gtg_customers.name', 'gtg_quotes.invoicedate', 'gtg_quotes.total', 'gtg_quotes.status', null);
+    public $column_search = array('gtg_quotes.tid', 'gtg_customers.name', 'gtg_quotes.invoicedate', 'gtg_quotes.total', 'gtg_quotes.status',);
+    public $order = array('gtg_quotes.tid' => 'desc');
 
     public function __construct()
     {
@@ -35,7 +35,9 @@ class Quote_model extends CI_Model
         $this->db->from('gtg_warehouse');
         if ($this->aauth->get_user()->loc) {
             $this->db->where('loc', $this->aauth->get_user()->loc);
-            if (BDATA)  $this->db->or_where('loc', 0);
+            if (BDATA) {
+                $this->db->or_where('loc', 0);
+            }
         } elseif (!BDATA) {
             $this->db->where('loc', 0);
         }
@@ -47,7 +49,6 @@ class Quote_model extends CI_Model
 
     public function quote_details($id)
     {
-
         $this->db->select('gtg_quotes.*,gtg_quotes.id AS iid,SUM(gtg_quotes.shipping + gtg_quotes.ship_tax) AS shipping,gtg_customers.*,gtg_quotes.loc as loc,gtg_customers.id AS cid,gtg_terms.id AS termid,gtg_terms.title AS termtit,gtg_terms.terms AS terms');
         $this->db->from($this->table);
         $this->db->where('gtg_quotes.id', $id);
@@ -64,7 +65,6 @@ class Quote_model extends CI_Model
 
     public function quote_products($id)
     {
-
         $this->db->select('*');
         $this->db->from('gtg_quotes_items');
         $this->db->where('tid', $id);
@@ -85,7 +85,9 @@ class Quote_model extends CI_Model
                 $res = $this->db->delete('gtg_quotes', array('id' => $id, 'loc' => 0));
             }
         }
-        if ($this->db->affected_rows()) $this->db->delete('gtg_quotes_items', array('tid' => $id));
+        if ($this->db->affected_rows()) {
+            $this->db->delete('gtg_quotes_items', array('tid' => $id));
+        }
         if ($this->db->trans_complete()) {
             return true;
         } else {
@@ -96,17 +98,17 @@ class Quote_model extends CI_Model
 
     private function _get_datatables_query($eid)
     {
-
         $this->db->select('gtg_quotes.id,gtg_quotes.tid,gtg_quotes.invoicedate,gtg_quotes.invoiceduedate,gtg_quotes.total,gtg_quotes.status,gtg_customers.name');
         $this->db->from($this->table);
-        if ($eid) $this->db->where('gtg_quotes.eid', $eid);
+        if ($eid) {
+            $this->db->where('gtg_quotes.eid', $eid);
+        }
         if ($this->aauth->get_user()->loc) {
             $this->db->where('gtg_quotes.loc', $this->aauth->get_user()->loc);
         } elseif (!BDATA) {
             $this->db->where('gtg_quotes.loc', 0);
         }
-        if ($this->input->post('start_date') && $this->input->post('end_date')) // if datatable send POST for search
-        {
+        if ($this->input->post('start_date') && $this->input->post('end_date')) { // if datatable send POST for search
             $this->db->where('DATE(gtg_quotes.invoicedate) >=', datefordatabase($this->input->post('start_date')));
             $this->db->where('DATE(gtg_quotes.invoicedate) <=', datefordatabase($this->input->post('end_date')));
         }
@@ -115,39 +117,37 @@ class Quote_model extends CI_Model
 
         $i = 0;
 
-        foreach ($this->column_search as $item) // loop column
-        {
-            if ($this->input->post('search')['value']) // if datatable send POST for search
-            {
-
-                if ($i === 0) // first loop
-                {
+        foreach ($this->column_search as $item) { // loop column
+            if ($this->input->post('search')['value']) { // if datatable send POST for search
+                
+                if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $this->input->post('search')['value']);
                 } else {
                     $this->db->or_like($item, $this->input->post('search')['value']);
                 }
 
-                if (count($this->column_search) - 1 == $i) //last loop
-                    $this->db->group_end(); //close bracket
+                if (count($this->column_search) - 1 == $i) { //last loop
+                    $this->db->group_end();
+                } //close bracket
             }
             $i++;
         }
 
-        if (isset($_POST['order'])) // here order processing
-        {
+        if (isset($_POST['order'])) { // here order processing
             $this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-        } else if (isset($this->order)) {
+        } elseif (isset($this->order)) {
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
 
-    function get_datatables($eid)
+    public function get_datatables($eid)
     {
         $this->_get_datatables_query($eid);
-        if ($_POST['length'] != -1)
+        if ($_POST['length'] != -1) {
             $this->db->limit($_POST['length'], $_POST['start']);
+        }
         if ($this->aauth->get_user()->loc) {
             $this->db->where('gtg_quotes.loc', $this->aauth->get_user()->loc);
         } elseif (!BDATA) {
@@ -157,7 +157,7 @@ class Quote_model extends CI_Model
         return $query->result();
     }
 
-    function count_filtered($eid)
+    public function count_filtered($eid)
     {
         $this->_get_datatables_query($eid);
         if ($this->aauth->get_user()->loc) {
@@ -178,7 +178,9 @@ class Quote_model extends CI_Model
         } elseif (!BDATA) {
             $this->db->where('gtg_quotes.loc', 0);
         }
-        if ($eid) $this->db->where('gtg_quotes.eid', $eid);
+        if ($eid) {
+            $this->db->where('gtg_quotes.eid', $eid);
+        }
         return $this->db->count_all_results();
     }
 
@@ -205,7 +207,6 @@ class Quote_model extends CI_Model
 
     public function convert($id)
     {
-
         $invoice = $this->quote_details($id);
         $products = $this->quote_products($id);
         $this->db->trans_start();
@@ -245,7 +246,7 @@ class Quote_model extends CI_Model
                 );
                 $productlist[$prodindex] = $data;
                 $prodindex++;
-                $this->db->set('qty', "qty-$amt", FALSE);
+                $this->db->set('qty', "qty-$amt", false);
                 $this->db->where('pid', $row['pid']);
                 $this->db->update('gtg_products');
             }
@@ -280,14 +281,12 @@ class Quote_model extends CI_Model
                 return false;
             }
         } else {
-
             return false;
         }
     }
 
     public function convert_po($id, $person)
     {
-
         $invoice = $this->quote_details($id);
         $products = $this->quote_products($id);
         $this->db->trans_start();
@@ -326,7 +325,7 @@ class Quote_model extends CI_Model
                 );
                 $productlist[$prodindex] = $data;
                 $prodindex++;
-                $this->db->set('qty', "qty+$amt", FALSE);
+                $this->db->set('qty', "qty+$amt", false);
                 $this->db->where('pid', $row['pid']);
                 $this->db->update('gtg_products');
             }
@@ -346,14 +345,12 @@ class Quote_model extends CI_Model
                 return false;
             }
         } else {
-
             return false;
         }
     }
 
     public function currencies()
     {
-
         $this->db->select('*');
         $this->db->from('gtg_currencies');
 
@@ -372,7 +369,6 @@ class Quote_model extends CI_Model
 
     public function meta_insert($id, $type, $meta_data)
     {
-
         $data = array('type' => $type, 'rid' => $id, 'col1' => $meta_data);
         if ($id) {
             return $this->db->insert('gtg_metadata', $data);

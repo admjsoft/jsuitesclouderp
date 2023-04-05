@@ -303,7 +303,7 @@
                                                     $title = $row['title'];
                                                     echo "<option value='$cid'>$title</option>";
                                                 }
-                                                ?>
+            ?>
                                             </select>
 
 
@@ -320,8 +320,8 @@
 
                                                 <?php
 
-                                                echo $langs;
-                                                ?>
+            echo $langs;
+            ?>
 
                                             </select>
                                         </div>
@@ -373,8 +373,8 @@
 
 
                                         <?php }
-                                    }
-                                    ?>
+                                        }
+            ?>
 
                                 </div>
                                 <div id="mybutton">

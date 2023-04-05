@@ -91,12 +91,12 @@
                         <select name="employee" class="form-control select-box">
                             <?php
                             echo '<option value="' . $task['eid'] . '">--' . $task['emp'] . '--</option>';
-                            foreach ($emp as $row) {
-                                $cid = $row['id'];
-                                $title = $row['name'];
-                                echo "<option value='$cid'>$title</option>";
-                            }
-                            ?>
+                foreach ($emp as $row) {
+                    $cid = $row['id'];
+                    $title = $row['name'];
+                    echo "<option value='$cid'>$title</option>";
+                }
+                ?>
 
                         </select>
 

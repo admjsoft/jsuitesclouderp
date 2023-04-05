@@ -30,22 +30,22 @@
                                         <h5><?php
 
                                             $rming = $invoice['total'] - $invoice['pamnt'];
-                                            if ($itype == 'rinv' && $invoice['status'] == 'due') {
-                                                $rming = $invoice['total'];
-                                            }
-                                            $surcharge_t = false;
-                                            $row = $gateway;
+                if ($itype == 'rinv' && $invoice['status'] == 'due') {
+                    $rming = $invoice['total'];
+                }
+                $surcharge_t = false;
+                $row = $gateway;
 
-                                            $cid = $row['id'];
-                                            $title = $row['name'];
-                                            if ($row['surcharge'] > 0) {
-                                                $surcharge_t = true;
-                                                $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
-                                            } else {
-                                                $fee = '';
-                                            }
+                $cid = $row['id'];
+                $title = $row['name'];
+                if ($row['surcharge'] > 0) {
+                    $surcharge_t = true;
+                    $fee = '( ' . amountExchange($rming, $invoice['multi'], $invoice['loc']) . '+' . amountFormat_s($row['surcharge']) . ' %)';
+                } else {
+                    $fee = '';
+                }
 
-                                            echo $title . ' ' . $fee ?></h5><img class="bg-white round mt-1"
+                echo $title . ' ' . $fee ?></h5><img class="bg-white round mt-1"
                                                                                  style="max-width:30rem;max-height:10rem"
                                                                                  src="<?= base_url('assets/gateway_logo/' . $gid . '.png') ?>">
                                         <input type="hidden" class="form-control" name="gateway" value="<?= $cid ?>">
@@ -68,7 +68,7 @@
                                         <label for="cardNumber"><?php echo $this->lang->line('Due Amount') ?></label>
                                         <input name="total_amount"
                                                value="<?php
-                                               echo amountExchange($rming, $invoice['multi'], $invoice['loc']); ?>"
+                   echo amountExchange($rming, $invoice['multi'], $invoice['loc']); ?>"
                                                type="text"
                                                class="form-control"
 
@@ -143,7 +143,11 @@
                                         <label for="amount"><?php echo $this->lang->line('Amount') ?>
                                         </label>
                                         <input type="number" class="form-control" name="amount"
-                                               value="<?php if ($rming > 0) echo numberClean(amountExchange_s($rming, $invoice['multi'], $invoice['loc'])); else echo '0.00'; ?>"
+                                               value="<?php if ($rming > 0) {
+                                                   echo numberClean(amountExchange_s($rming, $invoice['multi'], $invoice['loc']));
+                                               } else {
+                                                   echo '0.00';
+                                               } ?>"
                                                required/>
                                     </div>
                                 </div>
@@ -156,7 +160,9 @@
                             </div>
                             <div class="form-group">
 
-                                <?php if ($surcharge_t) echo '<br>' . $this->lang->line('Note: Payment Processing'); ?>
+                                <?php if ($surcharge_t) {
+                                    echo '<br>' . $this->lang->line('Note: Payment Processing');
+                                } ?>
 
                             </div>
                             <div class="row" style="display:none;">
@@ -201,7 +207,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-    ?>
+                ?>
     <!-- Vendor libraries -->
     <script type="text/javascript">
         var $form = $('#payment-form');

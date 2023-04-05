@@ -317,5 +317,4 @@ class FundingInstrument extends PayPalModel
     {
         return $this->alternate_payment;
     }
-
 }

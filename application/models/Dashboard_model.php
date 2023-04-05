@@ -20,7 +20,6 @@ class Dashboard_model extends CI_Model
 
     public function todaySales($today)
     {
-
         $where = "DATE(invoicedate) ='$today'";
         $this->db->select_sum('total');
         $this->db->from('gtg_invoices');
@@ -36,7 +35,7 @@ class Dashboard_model extends CI_Model
 
     public function todayInexp($today)
     {
-        $this->db->select('SUM(debit) as debit,SUM(credit) as credit', FALSE);
+        $this->db->select('SUM(debit) as debit,SUM(credit) as credit', false);
         $this->db->where("DATE(date) ='$today'");
         $this->db->where("type!='Transfer'");
         if ($this->aauth->get_user()->loc) {
@@ -205,7 +204,7 @@ FROM gtg_invoices AS i LEFT JOIN gtg_customers AS c ON i.csd=c.id $whr ORDER BY 
         $query = $this->db->query("SELECT MAX(i.id) AS iid,i.csd,SUM(i.total) AS total, c.cid,MAX(c.picture) as picture ,MAX(c.name) as name,MAX(i.status) as status FROM gtg_invoices AS i LEFT JOIN (SELECT gtg_customers.id AS cid, gtg_customers.picture AS picture, gtg_customers.name AS name FROM gtg_customers) AS c ON c.cid=i.csd $whr GROUP BY i.csd ORDER BY iid DESC LIMIT 10;");
         $result = $query->result_array();
         $this->db->trans_complete();
-        if ($this->db->trans_status() === FALSE) {
+        if ($this->db->trans_status() === false) {
             return 'sql';
         } else {
             return $result;
@@ -247,7 +246,6 @@ FROM gtg_invoices AS i LEFT JOIN gtg_customers AS c ON i.csd=c.id $whr ORDER BY 
 
     public function clockout($id)
     {
-
         $this->db->select('clock,clockin');
         $this->db->where('id', $id);
         $this->db->from('gtg_employees');
@@ -255,7 +253,6 @@ FROM gtg_invoices AS i LEFT JOIN gtg_customers AS c ON i.csd=c.id $whr ORDER BY 
         $emp = $query->row_array();
 
         if ($emp['clock']) {
-
             $data = array(
                 'clock' => 0,
                 'clockin' => 0,
@@ -280,9 +277,7 @@ FROM gtg_invoices AS i LEFT JOIN gtg_customers AS c ON i.csd=c.id $whr ORDER BY 
             $query = $this->db->get();
             $edate = $query->row_array();
             if ($edate['adate']) {
-
-
-                $this->db->set('actual_hours', "actual_hours+$total_time", FALSE);
+                $this->db->set('actual_hours', "actual_hours+$total_time", false);
                 $this->db->set('tto', date('H:i:s'));
                 $this->db->where('id', $edate['id']);
                 $this->db->update('gtg_attendance');

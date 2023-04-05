@@ -7,7 +7,6 @@ class Search extends CI_Controller
 {
     public function __construct()
     {
-
         parent::__construct();
         $this->load->model('search_model', 'search');
         $this->load->library("Aauth");
@@ -41,7 +40,9 @@ class Search extends CI_Controller
         $whr = '';
         if ($this->aauth->get_user()->loc) {
             $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
-            if (BDATA) $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
+            if (BDATA) {
+                $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $whr = ' ( loc=0) AND ';
@@ -55,8 +56,6 @@ class Search extends CI_Controller
             echo '<ul>';
             $i = 1;
             foreach ($result as $row) {
-
-
                 echo "<li ><a href='" . base_url('invoices/view?id=' . $row['tid']) . "'>" . $row['tid'] . "</a></li>";
                 $i++;
             }
@@ -66,12 +65,13 @@ class Search extends CI_Controller
 
     public function customer()
     {
-
         $name = $this->input->get('keyword', true);
         $whr = '';
         if ($this->aauth->get_user()->loc) {
             $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
-            if (BDATA) $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
+            if (BDATA) {
+                $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $whr = ' ( loc=0) AND ';
@@ -86,8 +86,6 @@ class Search extends CI_Controller
             $i = 1;
             echo '<span class="dropdown-item">';
             foreach ($result as $row) {
-
-
                 echo '
 
                     <a href="' . base_url('customers/view?id=' . $row['id']) . '" class="list-group-item">  <div class="media">
@@ -107,16 +105,17 @@ class Search extends CI_Controller
 
     public function user()
     {
-
         $name = $this->input->get('username', true);
         $whr = '';
         if ($this->aauth->get_user()->loc) {
             $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
-            if (BDATA) $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
+            if (BDATA) {
+                $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
+            }
         } elseif (!BDATA) {
             $whr = ' ( loc=0) AND ';
         }
-        if ($name != NULL) {
+        if ($name != null) {
             $query = $this->db->query("SELECT id,username FROM gtg_users WHERE $whr username  LIKE '%" . $name . "%' LIMIT 6");
 
             $result = $query->result_array();
@@ -125,8 +124,6 @@ class Search extends CI_Controller
             $i = 1;
             echo '<div>';
             foreach ($result as $row) {
-
-
                 echo '<kbd class="selectuser black" data-username="' . $row['username'] . '" data-userid="' . $row['id'] . '">' . $row['username'] . '</kbd> ';
             }
             echo '</div>';
@@ -135,12 +132,13 @@ class Search extends CI_Controller
 
     public function customer_select()
     {
-
         $name = $this->input->post('customer', true);
         $whr = '';
         if ($this->aauth->get_user()->loc) {
             $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
-            if (BDATA) $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
+            if (BDATA) {
+                $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $whr = ' ( loc=0) AND ';
@@ -158,12 +156,13 @@ class Search extends CI_Controller
 
     public function supplier_select()
     {
-
         $name = $this->input->post('supplier', true);
         $whr = '';
         if ($this->aauth->get_user()->loc) {
             $whr = ' (loc=' . $this->aauth->get_user()->loc . ' ) AND ';
-            if (BDATA) $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
+            if (BDATA) {
+                $whr = ' (loc=' . $this->aauth->get_user()->loc . ' OR loc=0) AND ';
+            }
             $this->db->group_end();
         } elseif (!BDATA) {
             $whr = ' ( loc=0) AND ';

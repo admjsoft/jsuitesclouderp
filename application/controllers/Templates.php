@@ -7,7 +7,7 @@ class Templates extends CI_Controller
 {
     public function __construct()
     {
-        parent:: __construct();
+        parent::__construct();
 
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
@@ -15,12 +15,9 @@ class Templates extends CI_Controller
         }
 
         if ($this->aauth->get_user()->roleid < 5) {
-
             exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
-
         }
         $this->load->model('templates_model', 'templates');
-
     }
 
 
@@ -42,9 +39,7 @@ class Templates extends CI_Controller
             $body = $this->input->post('body');
 
             $this->templates->edit($id, $subject, $body);
-
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $id = $this->input->get('id');
             $head['title'] = 'Edit Email Template';
@@ -74,9 +69,7 @@ class Templates extends CI_Controller
             $body = $this->input->post('body');
 
             $this->templates->edit($id, $subject, $body);
-
         } else {
-
             $head['usernm'] = $this->aauth->get_user()->username;
             $id = $this->input->get('id');
             $head['title'] = 'Edit SMS Template';
@@ -86,6 +79,4 @@ class Templates extends CI_Controller
             $this->load->view('fixed/footer');
         }
     }
-
-
 }

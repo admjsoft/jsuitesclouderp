@@ -12,7 +12,7 @@
 
                 </div>
                 <div class="card-block">
-                    <form method="get" action="<?php echo substr(base_url(),0,-4) ?>billing/recharge">
+                    <form method="get" action="<?php echo substr(base_url(), 0, -4) ?>billing/recharge">
                         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                         <input type="hidden" value="<?=base64_encode($this->session->userdata('user_details')[0]->cid) ?>" name="id">
 
@@ -31,18 +31,18 @@
                                         <select class="form-control" name="gid"><?php
 
                                             $surcharge_t = false;
-                                            foreach ($gateway as $row) {
-                                                $cid = $row['id'];
-                                                $title = $row['name'];
-                                                if ($row['surcharge'] > 0) {
-                                                    $surcharge_t = true;
-                                                    $fee = '(+' . amountFormat_s($row['surcharge']) . ' %)';
-                                                } else {
-                                                    $fee = '';
-                                                }
-                                                echo "<option value='$cid'>$title $fee</option>";
-                                            }
-                                            ?>
+foreach ($gateway as $row) {
+    $cid = $row['id'];
+    $title = $row['name'];
+    if ($row['surcharge'] > 0) {
+        $surcharge_t = true;
+        $fee = '(+' . amountFormat_s($row['surcharge']) . ' %)';
+    } else {
+        $fee = '';
+    }
+    echo "<option value='$cid'>$title $fee</option>";
+}
+?>
                                         </select>
 
                                     </div>   </div>
@@ -76,7 +76,6 @@
                     </thead>
                     <tbody id="activity">
                     <?php foreach ($activity as $row) {
-
                         echo '<tr>
                             <td>' . amountFormat($row['col1']) . '</td><td>' . $row['col2'] . '</td>
                            

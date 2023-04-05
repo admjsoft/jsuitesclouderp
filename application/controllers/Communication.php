@@ -5,7 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Communication extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -63,7 +62,9 @@ class Communication extends CI_Controller
         $data['title'] = "Invoice " . $data['invoice']['tid'];
         $data['products'] = $this->invocies->invoice_products($tid);
         $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
-        if (CUSTOM) $data['c_custom_fields'] = $this->custom->view_fields_data($data['invoice']['cid'], 1, 1);
+        if (CUSTOM) {
+            $data['c_custom_fields'] = $this->custom->view_fields_data($data['invoice']['cid'], 1, 1);
+        }
 
         $data['round_off'] = $this->custom->api_config(4);
         if ($data['invoice']['i_class'] == 1) {
@@ -95,9 +96,5 @@ class Communication extends CI_Controller
 
         return $pdf->Output(FCPATH . DIRECTORY_SEPARATOR . 'userfiles' . DIRECTORY_SEPARATOR . 'temp' . DIRECTORY_SEPARATOR . 'Invoice_' . $tid . '.pdf', 'F');
         //   return $pdf->Output('Invoice_' . $data['invoice']['tid'] . '.pdf', 'S');
-
-
     }
-
-
 }

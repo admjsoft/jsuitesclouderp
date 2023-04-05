@@ -1,4 +1,5 @@
 <?php
+
 $lang['Date'] = "Datum";
 $lang['Edit'] = "Bewerk";
 $lang['employee_login_panel'] = "Inlogvenster voor werknemers";

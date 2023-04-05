@@ -67,8 +67,12 @@
                                 <p><?= $lab['product_name'] ?></p>
                                 <barcode code="<?= $lab['barcode'] ?>" type="<?= $lab['code_type'] ?>"
                                          height="<?= $style['bar_height'] ?>"></barcode>
-                                <?php if ($style['product_code']) echo '<p>' . $lab['product_code'] . '</p>'; ?>
-                                <?php if ($style['product_price']) echo '<p>' . amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '</p>'; ?>
+                                <?php if ($style['product_code']) {
+                                    echo '<p>' . $lab['product_code'] . '</p>';
+                                } ?>
+                                <?php if ($style['product_price']) {
+                                    echo '<p>' . amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '</p>';
+                                } ?>
                             </div>
                         </td>
                         <td class='space_box'>
@@ -79,8 +83,12 @@
                             <p><?= $lab['product_name'] ?></p>
                             <barcode code="<?= $lab['barcode'] ?>" type="<?= $lab['code_type'] ?>"
                                      height="<?= $style['bar_height'] ?>"></barcode>
-                            <?php if ($style['product_code']) echo '<p>' . $lab['product_code'] . '</p>'; ?>
-                            <?php if ($style['product_price']) echo '<p>' . amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '</p>'; ?>
+                            <?php if ($style['product_code']) {
+                                echo '<p>' . $lab['product_code'] . '</p>';
+                            } ?>
+                            <?php if ($style['product_price']) {
+                                echo '<p>' . amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '</p>';
+                            } ?>
                         </td>
                         <td class='space_box'>
                             <p>&nbsp;</p>
@@ -90,8 +98,12 @@
                             <p><?= $lab['product_name'] ?></p>
                             <barcode code="<?= $lab['barcode'] ?>" type="<?= $lab['code_type'] ?>"
                                      height="<?= $style['bar_height'] ?>"></barcode>
-                            <?php if ($style['product_code']) echo '<p>' . $lab['product_code'] . '</p>'; ?>
-                            <?php if ($style['product_price']) echo '<p>' . amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '</p>'; ?>
+                            <?php if ($style['product_code']) {
+                                echo '<p>' . $lab['product_code'] . '</p>';
+                            } ?>
+                            <?php if ($style['product_price']) {
+                                echo '<p>' . amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '</p>';
+                            } ?>
                         </td>
                         <td class='space_box'>
                             <p>&nbsp;</p>
@@ -101,8 +113,12 @@
                             <p><?= $lab['product_name'] ?></p>
                             <barcode code="<?= $lab['barcode'] ?>" type="<?= $lab['code_type'] ?>"
                                      height="<?= $style['bar_height'] ?>"></barcode>
-                            <?php if ($style['product_code']) echo '<p>' . $lab['product_code'] . '</p>'; ?>
-                            <?php if ($style['product_price']) echo '<p>' . amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '</p>'; ?>
+                            <?php if ($style['product_code']) {
+                                echo '<p>' . $lab['product_code'] . '</p>';
+                            } ?>
+                            <?php if ($style['product_price']) {
+                                echo '<p>' . amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '</p>';
+                            } ?>
                         </td>
                         <td class='space_box'>
                             <p>&nbsp;</p>
@@ -112,12 +128,16 @@
                             <p><?= $lab['product_name'] ?></p>
                             <barcode code="<?= $lab['barcode'] ?>" type="<?= $lab['code_type'] ?>"
                                      height="<?= $style['bar_height'] ?>"></barcode>
-                            <?php if ($style['product_code']) echo '<p>' . $lab['product_code'] . '</p>'; ?>
-                            <?php if ($style['product_price']) echo '<p>' . amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '</p>'; ?>
+                            <?php if ($style['product_code']) {
+                                echo '<p>' . $lab['product_code'] . '</p>';
+                            } ?>
+                            <?php if ($style['product_price']) {
+                                echo '<p>' . amountExchange($lab['product_price'], 0, $this->aauth->get_user()->loc) . '</p>';
+                            } ?>
                         </td>
                     </tr>
                 <?php }
-            } ?>
+                } ?>
         </table>
 
     </div>

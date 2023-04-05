@@ -13,7 +13,7 @@
                 <small>Build:<?php echo $build ?></small>
             </h5>
             <hr>
-            <?php //if(($this->session->userdata('step'))){  ?>
+            <?php //if(($this->session->userdata('step'))){?>
             <span id="ldBar2" class="text-center"
                   style="width:100%;height:30px" ,
 
@@ -37,7 +37,7 @@
             <hr>
 
             </p>
-            <?php // }  if($this->session->userdata('step')){  ?>
+            <?php // }  if($this->session->userdata('step')){?>
             <span id="insldBar2" class="text-center"
                   style="width:100%;height:30px" ,
 
@@ -56,7 +56,7 @@
             <p>
             <hr>
             </p>
-            <?php // }  if($this->session->userdata('step')==2){  ?>
+            <?php // }  if($this->session->userdata('step')==2){?>
             <span id="dbldBar2" class="text-center"
                   style="width:100%;height:30px" ,
 
@@ -72,7 +72,7 @@
                         id="db_update"><i class="fa fa-stack"></i> &nbsp; 3. Update Database
                 </button>
             </p>
-            <?php // } ?>
+            <?php // }?>
         </div>
     </div>
 </article>

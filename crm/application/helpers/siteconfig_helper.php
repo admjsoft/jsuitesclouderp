@@ -1,4 +1,8 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 
 function sitezconfig($input)
@@ -13,7 +17,7 @@ function sitezconfig($input)
     if (@$row["$input"]) {
         return $row["$input"];
     } else {
-        return NULL;
+        return null;
     }
 }
 
@@ -168,7 +172,6 @@ function amountExchange($number, $id = 0, $loc = 0)
             return @number_format($totalamount, $decimal_after, $dec_point, $thosand) . ' ' . $currency;
         }
     } else {
-
         $query = $ci->db->query("SELECT currency FROM gtg_system WHERE id=1 LIMIT 1");
         $row = $query->row_array();
         $currency = $row['currency'];

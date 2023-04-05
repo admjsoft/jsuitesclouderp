@@ -152,7 +152,7 @@
                                     $title = $row['name'];
                                     echo "<option value='$cid'>$title</option>";
                                 }
-                                ?>
+      ?>
                             </select>
 
 

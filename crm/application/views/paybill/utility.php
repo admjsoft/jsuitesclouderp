@@ -6,8 +6,8 @@
             <?php if ($this->session->flashdata("messagePr")) { ?>
                 <div class="alert alert-info">
                     <?php echo $this->session->flashdata("messagePr");
-                    unset($_SESSION['messagePr']);
-                    ?>
+                unset($_SESSION['messagePr']);
+                ?>
                 </div>
             <?php } ?>
             <div class="card card-block">

@@ -7,7 +7,6 @@ class Settings_model extends CI_Model
 {
     public function company_details($id)
     {
-
         $this->db->select('*');
         $this->db->from('gtg_system');
         $this->db->where('id', $id);
@@ -483,7 +482,6 @@ class Settings_model extends CI_Model
 
     public function custom_fields($id = 0)
     {
-
         if ($id) {
             $this->db->select('*');
             $this->db->from('gtg_custom_fields');
@@ -491,8 +489,6 @@ class Settings_model extends CI_Model
             $query = $this->db->get();
             return $query->row_array();
         } else {
-
-
             $this->db->select('*');
             $this->db->from('gtg_custom_fields');
 
@@ -560,7 +556,6 @@ class Settings_model extends CI_Model
 
     public function debug($debug)
     {
-
         if ($debug != ENVIRONMENT) {
             $config_file_path = FCPATH . "index.php";
             $config_file = file_get_contents($config_file_path);

@@ -15,11 +15,10 @@ namespace chillerlan\QRCode\Output;
 /**
  * Converts the data matrix into readable output
  */
-interface QROutputInterface{
-
-	/**
-	 * @return mixed
-	 */
-	public function dump();
-
+interface QROutputInterface
+{
+    /**
+     * @return mixed
+     */
+    public function dump();
 }

@@ -154,7 +154,9 @@
     </style>
 </head>
 
-<body <?php if (LTR == 'rtl') echo 'dir="rtl"'; ?>>
+<body <?php if (LTR == 'rtl') {
+    echo 'dir="rtl"';
+} ?>>
 <div class="invoice-box">
     <table>
         <tr>
@@ -167,7 +169,7 @@
             </td>
             <td class="myw">
                 <?php echo $this->lang->line('Account Statement');
-                $balance = 0; ?>
+$balance = 0; ?>
             </td>
         </tr>
     </table>
@@ -208,17 +210,17 @@
 
         <?php
         $fill = false;
-        foreach ($list as $row) {
-            if ($fill == true) {
-                $flag = ' mfill';
-            } else {
-                $flag = '';
-            }
-            $balance += $row['credit'] - $row['debit'];
-            echo '<tr class="item' . $flag . '"><td>' . $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountExchange($row['debit'], 0, $this->aauth->get_user()->loc) . '</td><td>' . amountExchange($row['credit'], 0, $this->aauth->get_user()->loc) . '</td><td>' . amountExchange($balance, 0, $this->aauth->get_user()->loc) . '</td></tr>';
-            $fill = !$fill;
-        }
-        ?>
+foreach ($list as $row) {
+    if ($fill == true) {
+        $flag = ' mfill';
+    } else {
+        $flag = '';
+    }
+    $balance += $row['credit'] - $row['debit'];
+    echo '<tr class="item' . $flag . '"><td>' . $row['date'] . '</td><td>' . $row['note'] . '</td><td>' . amountExchange($row['debit'], 0, $this->aauth->get_user()->loc) . '</td><td>' . amountExchange($row['credit'], 0, $this->aauth->get_user()->loc) . '</td><td>' . amountExchange($balance, 0, $this->aauth->get_user()->loc) . '</td></tr>';
+    $fill = !$fill;
+}
+?>
     </table>
 
 

@@ -27,19 +27,21 @@ use Twilio\Version;
  * @property string createdBy
  * @property string url
  */
-class InviteInstance extends InstanceResource {
+class InviteInstance extends InstanceResource
+{
     /**
      * Initialize the InviteInstance
-     * 
+     *
      * @param \Twilio\Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $serviceSid The unique id of the Service this member belongs
      *                           to.
      * @param string $channelSid The unique id of the Channel for this member.
      * @param string $sid The sid
-     * @return \Twilio\Rest\IpMessaging\V1\Service\Channel\InviteInstance 
+     * @return \Twilio\Rest\IpMessaging\V1\Service\Channel\InviteInstance
      */
-    public function __construct(Version $version, array $payload, $serviceSid, $channelSid, $sid = null) {
+    public function __construct(Version $version, array $payload, $serviceSid, $channelSid, $sid = null)
+    {
         parent::__construct($version);
 
         // Marshaled Properties
@@ -66,12 +68,13 @@ class InviteInstance extends InstanceResource {
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
-     * 
+     *
      * @return \Twilio\Rest\IpMessaging\V1\Service\Channel\InviteContext Context
      *                                                                   for this
      *                                                                   InviteInstance
      */
-    protected function proxy() {
+    protected function proxy()
+    {
         if (!$this->context) {
             $this->context = new InviteContext(
                 $this->version,
@@ -86,32 +89,35 @@ class InviteInstance extends InstanceResource {
 
     /**
      * Fetch a InviteInstance
-     * 
+     *
      * @return InviteInstance Fetched InviteInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
+    public function fetch()
+    {
         return $this->proxy()->fetch();
     }
 
     /**
      * Deletes the InviteInstance
-     * 
+     *
      * @return boolean True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->proxy()->delete();
     }
 
     /**
      * Magic getter to access properties
-     * 
+     *
      * @param string $name Property to access
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -126,10 +132,11 @@ class InviteInstance extends InstanceResource {
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $context = array();
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";

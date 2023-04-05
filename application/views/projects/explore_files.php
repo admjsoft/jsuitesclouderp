@@ -240,14 +240,12 @@
 
                                     <ul class="timeline">
                                         <?php $flag = true;
-                                        $total = count($thread_list);
-                                        foreach ($thread_list as $row) {
-
-
-                                        ?>
+                            $total = count($thread_list);
+                            foreach ($thread_list as $row) {
+                                ?>
                                             <li class="<?php if (!$flag) {
-                                                            echo 'timeline-inverted';
-                                                        } ?>">
+                                                echo 'timeline-inverted';
+                                            } ?>">
                                                 <div class="timeline-badge info"><?php echo $total ?></div>
                                                 <div class="timeline-panel">
                                                     <div class="timeline-heading">
@@ -263,8 +261,8 @@
                                                 </div>
                                             </li>
                                         <?php $flag = !$flag;
-                                            $total--;
-                                        } ?>
+                                $total--;
+                            } ?>
 
 
                                     </ul>
@@ -280,14 +278,12 @@
 
                                     <ul class="timeline">
                                         <?php $flag = true;
-                                        $total = count($milestones);
-                                        foreach ($milestones as $row) {
-
-
-                                        ?>
+                            $total = count($milestones);
+                            foreach ($milestones as $row) {
+                                ?>
                                             <li class="<?php if (!$flag) {
-                                                            echo 'timeline-inverted';
-                                                        } ?>">
+                                                echo 'timeline-inverted';
+                                            } ?>">
                                                 <div class="timeline-badge" style="background-color: <?php echo $row['color'] ?>;"><?php echo $total ?></div>
                                                 <div class="timeline-panel">
                                                     <div class="timeline-heading">
@@ -299,14 +295,16 @@
                                                     </div>
                                                     <div class="timeline-body">
                                                         <p><?php echo $row['exp'];
-                                                            if ($row['task']) echo '</p><p><strong>[Task]</strong> ' . $row['task']; ?></p>
+                                if ($row['task']) {
+                                    echo '</p><p><strong>[Task]</strong> ' . $row['task'];
+                                } ?></p>
 
                                                     </div>
                                                 </div>
                                             </li>
                                         <?php $flag = !$flag;
-                                            $total--;
-                                        } ?>
+                                $total--;
+                            } ?>
 
 
                                     </ul>
@@ -327,10 +325,10 @@
                                             <div class="col-sm-10">
                                                 <?php
 
-                                                echo '- ' . $row['value'] . '<br><br>';
+                                    echo '- ' . $row['value'] . '<br><br>';
 
 
-                                                ?>
+                                        ?>
                                             </div>
                                         </div>
                                     <?php }
@@ -354,8 +352,8 @@
 
                                                                             echo '<a href="' . base_url('userfiles/project/' . $row['value']) . '">' . $row['value'] . '</a>';
 
-                                                                            echo '<br><br>';
-                                                                            ?></div>
+                                            echo '<br><br>';
+                                            ?></div>
                                         </div>
                                     </div>
                                 <?php } ?>

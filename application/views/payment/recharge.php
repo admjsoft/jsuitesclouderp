@@ -30,18 +30,18 @@
                                         <select class="form-control" name="gateway"><?php
 
                                             $surcharge_t = false;
-                                            foreach ($gateway as $row) {
-                                                $cid = $row['id'];
-                                                $title = $row['name'];
-                                                if ($row['surcharge'] > 0) {
-                                                    $surcharge_t = true;
-                                                    $fee = '( ' . amountExchange($amount, 0) . '+' . amountFormat_s($row['surcharge']) . ' %)';
-                                                } else {
-                                                    $fee = '';
-                                                }
-                                                echo "<option value='$cid'>$title $fee</option>";
-                                            }
-                                            ?>
+                foreach ($gateway as $row) {
+                    $cid = $row['id'];
+                    $title = $row['name'];
+                    if ($row['surcharge'] > 0) {
+                        $surcharge_t = true;
+                        $fee = '( ' . amountExchange($amount, 0) . '+' . amountFormat_s($row['surcharge']) . ' %)';
+                    } else {
+                        $fee = '';
+                    }
+                    echo "<option value='$cid'>$title $fee</option>";
+                }
+                ?>
                                         </select>
 
                                     </div>
@@ -51,7 +51,7 @@
                                         <label for="cardNumber"><?php echo $this->lang->line('Amount') ?></label>
                                         <input name="total_amount"
                                                value="<?php
-                                               echo amountExchange($amount, 0); ?>"
+                   echo amountExchange($amount, 0); ?>"
                                                type="text"
                                                class="form-control"
 
@@ -139,7 +139,9 @@
                             </div>
                             <div class="form-group">
 
-                                <?php if ($surcharge_t) echo '<br>' . $this->lang->line('Note: Payment Processing'); ?>
+                                <?php if ($surcharge_t) {
+                                    echo '<br>' . $this->lang->line('Note: Payment Processing');
+                                } ?>
 
                             </div>
                             <div class="row" style="display:none;">
@@ -184,7 +186,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-    ?>
+                ?>
     <!-- Vendor libraries -->
     <script type="text/javascript">
         var $form = $('#payment-form');

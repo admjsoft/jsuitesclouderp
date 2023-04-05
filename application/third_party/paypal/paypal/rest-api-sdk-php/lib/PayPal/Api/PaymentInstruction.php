@@ -186,5 +186,4 @@ class PaymentInstruction extends PayPalResourceModel
         $ret->fromJson($json);
         return $ret;
     }
-
 }

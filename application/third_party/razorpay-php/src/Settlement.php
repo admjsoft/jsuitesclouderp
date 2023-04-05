@@ -39,4 +39,3 @@ class Settlement extends Entity
         return $this->request('GET', $relativeUrl, $options);
     }
 }
-

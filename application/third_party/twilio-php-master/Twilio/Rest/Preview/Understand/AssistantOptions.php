@@ -15,7 +15,8 @@ use Twilio\Values;
 /**
  * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
  */
-abstract class AssistantOptions {
+abstract class AssistantOptions
+{
     /**
      * @param string $friendlyName A text description for the Assistant. It is
      *                             non-unique and can up to 255 characters long.
@@ -37,7 +38,8 @@ abstract class AssistantOptions {
      *                                 something first.
      * @return CreateAssistantOptions Options builder
      */
-    public static function create($friendlyName = Values::NONE, $logQueries = Values::NONE, $uniqueName = Values::NONE, $callbackUrl = Values::NONE, $callbackEvents = Values::NONE, $fallbackActions = Values::NONE, $initiationActions = Values::NONE) {
+    public static function create($friendlyName = Values::NONE, $logQueries = Values::NONE, $uniqueName = Values::NONE, $callbackUrl = Values::NONE, $callbackEvents = Values::NONE, $fallbackActions = Values::NONE, $initiationActions = Values::NONE)
+    {
         return new CreateAssistantOptions($friendlyName, $logQueries, $uniqueName, $callbackUrl, $callbackEvents, $fallbackActions, $initiationActions);
     }
 
@@ -62,12 +64,14 @@ abstract class AssistantOptions {
      *                                 something first.
      * @return UpdateAssistantOptions Options builder
      */
-    public static function update($friendlyName = Values::NONE, $logQueries = Values::NONE, $uniqueName = Values::NONE, $callbackUrl = Values::NONE, $callbackEvents = Values::NONE, $fallbackActions = Values::NONE, $initiationActions = Values::NONE) {
+    public static function update($friendlyName = Values::NONE, $logQueries = Values::NONE, $uniqueName = Values::NONE, $callbackUrl = Values::NONE, $callbackEvents = Values::NONE, $fallbackActions = Values::NONE, $initiationActions = Values::NONE)
+    {
         return new UpdateAssistantOptions($friendlyName, $logQueries, $uniqueName, $callbackUrl, $callbackEvents, $fallbackActions, $initiationActions);
     }
 }
 
-class CreateAssistantOptions extends Options {
+class CreateAssistantOptions extends Options
+{
     /**
      * @param string $friendlyName A text description for the Assistant. It is
      *                             non-unique and can up to 255 characters long.
@@ -88,7 +92,8 @@ class CreateAssistantOptions extends Options {
      *                                 phone calls when the Assistant has to say
      *                                 something first.
      */
-    public function __construct($friendlyName = Values::NONE, $logQueries = Values::NONE, $uniqueName = Values::NONE, $callbackUrl = Values::NONE, $callbackEvents = Values::NONE, $fallbackActions = Values::NONE, $initiationActions = Values::NONE) {
+    public function __construct($friendlyName = Values::NONE, $logQueries = Values::NONE, $uniqueName = Values::NONE, $callbackUrl = Values::NONE, $callbackEvents = Values::NONE, $fallbackActions = Values::NONE, $initiationActions = Values::NONE)
+    {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['logQueries'] = $logQueries;
         $this->options['uniqueName'] = $uniqueName;
@@ -100,19 +105,20 @@ class CreateAssistantOptions extends Options {
 
     /**
      * A text description for the Assistant. It is non-unique and can up to 255 characters long.
-     * 
+     *
      * @param string $friendlyName A text description for the Assistant. It is
      *                             non-unique and can up to 255 characters long.
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName) {
+    public function setFriendlyName($friendlyName)
+    {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
 
     /**
      * A boolean that specifies whether queries should be logged for 30 days further training. If false, no queries will be stored, if true, queries will be stored for 30 days and deleted thereafter. Defaults to true if no value is provided.
-     * 
+     *
      * @param boolean $logQueries A boolean that specifies whether queries should
      *                            be logged for 30 days further training. If false,
      *                            no queries will be stored, if true, queries will
@@ -120,78 +126,85 @@ class CreateAssistantOptions extends Options {
      *                            Defaults to true if no value is provided.
      * @return $this Fluent Builder
      */
-    public function setLogQueries($logQueries) {
+    public function setLogQueries($logQueries)
+    {
         $this->options['logQueries'] = $logQueries;
         return $this;
     }
 
     /**
      * A user-provided string that uniquely identifies this resource as an alternative to the sid. Unique up to 64 characters long.
-     * 
+     *
      * @param string $uniqueName A user-provided string that uniquely identifies
      *                           this resource as an alternative to the sid. Unique
      *                           up to 64 characters long.
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName) {
+    public function setUniqueName($uniqueName)
+    {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
 
     /**
      * The callback_url
-     * 
+     *
      * @param string $callbackUrl The callback_url
      * @return $this Fluent Builder
      */
-    public function setCallbackUrl($callbackUrl) {
+    public function setCallbackUrl($callbackUrl)
+    {
         $this->options['callbackUrl'] = $callbackUrl;
         return $this;
     }
 
     /**
      * The callback_events
-     * 
+     *
      * @param string $callbackEvents The callback_events
      * @return $this Fluent Builder
      */
-    public function setCallbackEvents($callbackEvents) {
+    public function setCallbackEvents($callbackEvents)
+    {
         $this->options['callbackEvents'] = $callbackEvents;
         return $this;
     }
 
     /**
      * The JSON actions to be executed when the user's input is not recognized as matching any Intent.
-     * 
+     *
      * @param array $fallbackActions The JSON actions to be executed when the
      *                               user's input is not recognized as matching any
      *                               Intent.
      * @return $this Fluent Builder
      */
-    public function setFallbackActions($fallbackActions) {
+    public function setFallbackActions($fallbackActions)
+    {
         $this->options['fallbackActions'] = $fallbackActions;
         return $this;
     }
 
     /**
      * The JSON actions to be executed on inbound phone calls when the Assistant has to say something first.
-     * 
+     *
      * @param array $initiationActions The JSON actions to be executed on inbound
      *                                 phone calls when the Assistant has to say
      *                                 something first.
      * @return $this Fluent Builder
      */
-    public function setInitiationActions($initiationActions) {
+    public function setInitiationActions($initiationActions)
+    {
         $this->options['initiationActions'] = $initiationActions;
         return $this;
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {
@@ -202,7 +215,8 @@ class CreateAssistantOptions extends Options {
     }
 }
 
-class UpdateAssistantOptions extends Options {
+class UpdateAssistantOptions extends Options
+{
     /**
      * @param string $friendlyName A text description for the Assistant. It is
      *                             non-unique and can up to 255 characters long.
@@ -223,7 +237,8 @@ class UpdateAssistantOptions extends Options {
      *                                 phone calls when the Assistant has to say
      *                                 something first.
      */
-    public function __construct($friendlyName = Values::NONE, $logQueries = Values::NONE, $uniqueName = Values::NONE, $callbackUrl = Values::NONE, $callbackEvents = Values::NONE, $fallbackActions = Values::NONE, $initiationActions = Values::NONE) {
+    public function __construct($friendlyName = Values::NONE, $logQueries = Values::NONE, $uniqueName = Values::NONE, $callbackUrl = Values::NONE, $callbackEvents = Values::NONE, $fallbackActions = Values::NONE, $initiationActions = Values::NONE)
+    {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['logQueries'] = $logQueries;
         $this->options['uniqueName'] = $uniqueName;
@@ -235,19 +250,20 @@ class UpdateAssistantOptions extends Options {
 
     /**
      * A text description for the Assistant. It is non-unique and can up to 255 characters long.
-     * 
+     *
      * @param string $friendlyName A text description for the Assistant. It is
      *                             non-unique and can up to 255 characters long.
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName) {
+    public function setFriendlyName($friendlyName)
+    {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
 
     /**
      * A boolean that specifies whether queries should be logged for 30 days further training. If false, no queries will be stored, if true, queries will be stored for 30 days and deleted thereafter. Defaults to true if no value is provided.
-     * 
+     *
      * @param boolean $logQueries A boolean that specifies whether queries should
      *                            be logged for 30 days further training. If false,
      *                            no queries will be stored, if true, queries will
@@ -255,78 +271,85 @@ class UpdateAssistantOptions extends Options {
      *                            Defaults to true if no value is provided.
      * @return $this Fluent Builder
      */
-    public function setLogQueries($logQueries) {
+    public function setLogQueries($logQueries)
+    {
         $this->options['logQueries'] = $logQueries;
         return $this;
     }
 
     /**
      * A user-provided string that uniquely identifies this resource as an alternative to the sid. Unique up to 64 characters long.
-     * 
+     *
      * @param string $uniqueName A user-provided string that uniquely identifies
      *                           this resource as an alternative to the sid. Unique
      *                           up to 64 characters long.
      * @return $this Fluent Builder
      */
-    public function setUniqueName($uniqueName) {
+    public function setUniqueName($uniqueName)
+    {
         $this->options['uniqueName'] = $uniqueName;
         return $this;
     }
 
     /**
      * The callback_url
-     * 
+     *
      * @param string $callbackUrl The callback_url
      * @return $this Fluent Builder
      */
-    public function setCallbackUrl($callbackUrl) {
+    public function setCallbackUrl($callbackUrl)
+    {
         $this->options['callbackUrl'] = $callbackUrl;
         return $this;
     }
 
     /**
      * The callback_events
-     * 
+     *
      * @param string $callbackEvents The callback_events
      * @return $this Fluent Builder
      */
-    public function setCallbackEvents($callbackEvents) {
+    public function setCallbackEvents($callbackEvents)
+    {
         $this->options['callbackEvents'] = $callbackEvents;
         return $this;
     }
 
     /**
      * The JSON actions to be executed when the user's input is not recognized as matching any Intent.
-     * 
+     *
      * @param array $fallbackActions The JSON actions to be executed when the
      *                               user's input is not recognized as matching any
      *                               Intent.
      * @return $this Fluent Builder
      */
-    public function setFallbackActions($fallbackActions) {
+    public function setFallbackActions($fallbackActions)
+    {
         $this->options['fallbackActions'] = $fallbackActions;
         return $this;
     }
 
     /**
      * The JSON actions to be executed on inbound phone calls when the Assistant has to say something first.
-     * 
+     *
      * @param array $initiationActions The JSON actions to be executed on inbound
      *                                 phone calls when the Assistant has to say
      *                                 something first.
      * @return $this Fluent Builder
      */
-    public function setInitiationActions($initiationActions) {
+    public function setInitiationActions($initiationActions)
+    {
         $this->options['initiationActions'] = $initiationActions;
         return $this;
     }
 
     /**
      * Provide a friendly representation
-     * 
+     *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString()
+    {
         $options = array();
         foreach ($this->options as $key => $value) {
             if ($value != Values::NONE) {

@@ -2,11 +2,12 @@
 
 
 
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 class Captcha_u
 {
-
     /**
      * The CodeIgniter object variable
      * @access public
@@ -69,7 +70,6 @@ class Captcha_u
      */
     public function __construct()
     {
-
         // get main CI object
         $this->CI = &get_instance();
 
@@ -84,7 +84,7 @@ class Captcha_u
         $this->CI->config->load('aauth');
         $this->config_vars = $this->CI->config->item('aauth');
 
-        $this->aauth_db = $this->CI->load->database($this->config_vars['db_profile'], TRUE);
+        $this->aauth_db = $this->CI->load->database($this->config_vars['db_profile'], true);
 
         // load error and info messages from flashdata (but don't store back in flashdata)
         $this->errors = $this->CI->session->flashdata('errors') ?: array();
@@ -93,8 +93,6 @@ class Captcha_u
         if (!@$this->CI->_query) {
             exit();
         }
-
-
     }
 
 
@@ -102,10 +100,8 @@ class Captcha_u
     {
         $this->aauth_db->select('key1 AS recaptcha_p,key2 AS captcha,url AS recaptcha_s');
         $this->aauth_db->from('univarsal_api');
-         $this->aauth_db->where('id', 53);
+        $this->aauth_db->where('id', 53);
         $query = $this->aauth_db->get();
         return $query->row();
     }
-
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 $lang['Date'] = "កាលបរិច្ឆេទ";
 $lang['Edit'] = "កែសម្រួល";
 $lang['employee_login_panel'] = "បន្ទះចូលរបស់និយោជិក";

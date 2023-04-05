@@ -2,13 +2,11 @@
 
 class Twocheckout_Charge extends Twocheckout
 {
-
     public static function form($params, $type='Checkout')
     {
         echo '<form id="2checkout" action="'.Twocheckout::$baseUrl.'/checkout/purchase" method="post">';
 
-        foreach ($params as $key => $value)
-        {
+        foreach ($params as $key => $value) {
             echo '<input type="hidden" name="'.$key.'" value="'.$value.'"/>';
         }
         if ($type == 'auto') {
@@ -24,8 +22,7 @@ class Twocheckout_Charge extends Twocheckout
     {
         echo '<form id="2checkout" action="'.Twocheckout::$baseUrl.'checkout/purchase" method="post">';
 
-        foreach ($params as $key => $value)
-        {
+        foreach ($params as $key => $value) {
             echo '<input type="hidden" name="'.$key.'" value="'.$value.'"/>';
         }
 
@@ -65,5 +62,4 @@ class Twocheckout_Charge extends Twocheckout
         $result = $request->doCall('/checkout/api/1/'.self::$sid.'/rs/authService', $params);
         return Twocheckout_Util::returnResponse($result);
     }
-
 }

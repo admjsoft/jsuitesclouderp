@@ -89,14 +89,14 @@
         </tr>
         <?php
         $this->pheight = 0;
-        foreach ($products as $row) {
-            $this->pheight = $this->pheight + 8;
-            echo '<tr>
+    foreach ($products as $row) {
+        $this->pheight = $this->pheight + 8;
+        echo '<tr>
             <td >' . $row['product'] . '</td>
              <td>' . +$row['qty'] . ' ' . $row['unit'] . '</td>
             <td>' . amountExchange($row['subtotal'], $invoice['multi'], $invoice['loc']) . '</td>
         </tr><tr><td colspan="3">&nbsp;</td></tr>';
-        } ?>
+    } ?>
     </table>
     <hr>
     <table class="inv_info">
@@ -112,7 +112,7 @@
                 <td><b><?php echo $this->lang->line('SGST') ?></b></td>
                 <td><b><?php echo amountExchange($gst, $invoice['multi'], $invoice['loc']) ?></b> (<?= $rate ?>%)</td>
             </tr>
-        <?php } else if ($invoice['taxstatus'] == 'igst') {
+        <?php } elseif ($invoice['taxstatus'] == 'igst') {
             ?>
             <tr>
                 <td><b><?php echo $this->lang->line('IGST') ?></b></td>
@@ -144,12 +144,11 @@
             </tr>
             <?php
         }
-        ?>
+    ?>
     </table>
     <hr>
     <div class="text-center">  <?php echo $this->lang->line('Thank you') ?></div>
-    <?php if (@$qrc AND $invoice['status'] != 'paid') {
-
+    <?php if (@$qrc and $invoice['status'] != 'paid') {
         $this->pheight = $this->pheight + 40;
         ?>
         <div class="text-center">
