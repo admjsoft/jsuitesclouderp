@@ -223,7 +223,6 @@ class Employee_model extends CI_Model
             $search = $this->input->post('search');
             $value = $search['value'];
             if ($value) { // if datatable send POST for search
-                
                 if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $value);
@@ -295,7 +294,6 @@ class Employee_model extends CI_Model
 
         foreach ($this->tcolumn_search as $item) { // loop column
             if ($this->input->post('search')['value']) { // if datatable send POST for search
-                
                 if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $this->input->post('search')['value']);
@@ -619,7 +617,6 @@ class Employee_model extends CI_Model
 
         foreach ($this->tcolumn_search as $item) { // loop column
             if ($this->input->post('search')['value']) { // if datatable send POST for search
-                
                 if ($i === 0) { // first loop
                     $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $this->input->post('search')['value']);

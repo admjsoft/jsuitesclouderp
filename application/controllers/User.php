@@ -44,13 +44,13 @@ class User extends CI_Controller
             $rem = true;
         }
         if ($this->aauth->login($user, $password, $rem, $this->captcha)) {
-            $this->load->model('employee_model', 'employee');
-            $emp = [$this->aauth->get_user()->id];
-            $adate = datefordatabase(null);
-            $from = timefordatabase(null);
-            $note = 1;
-
-            $this->employee->addattendance($emp, $adate, $from, null, $note);
+//            $this->load->model('employee_model', 'employee');
+//            $emp = [$this->aauth->get_user()->id];
+//            $adate = datefordatabase(null);
+//            $from = timefordatabase(null);
+//            $note = 1;
+//
+//            $this->employee->addattendance($emp, $adate, $from, null, $note);
             $this->aauth->applog("[Logged In] $user");
             redirect('/dashboard/', 'refresh');
         } else {
@@ -342,12 +342,12 @@ class User extends CI_Controller
 
     public function logout()
     {
-        $this->load->model('employee_model', 'employee');
-        $emp = [$this->aauth->get_user()->id];
-        $to = timefordatabase(null);
-        $note = 1;
-
-        $this->employee->clockout($emp, $to, $note);
+//        $this->load->model('employee_model', 'employee');
+//        $emp = [$this->aauth->get_user()->id];
+//        $to = timefordatabase(null);
+//        $note = 1;
+//
+//        $this->employee->clockout($emp, $to, $note);
         $this->aauth->applog('[Logged Out] ' . $this->aauth->get_user()->username);
         $this->aauth->logout();
 

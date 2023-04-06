@@ -36,27 +36,99 @@ class Payroll extends CI_Controller
                 exit('<h3>Sorry! Employee not found</h3>');
             }
 
-            return match ($data['employee']['salary_type']) {
-                0 => $this->calculate_monthly_payslip(),
-                1 => $this->calculate_daily_payslip(),
-                2 => $this->calculate_hourly_payslip(),
-                default => 0,
-            };
+            switch ($data['employee']['salary_type']) {
+                case 0:
+                    $data['salary'] = $this->calculate_monthly_payslip($data['employee'], $this->input->post('year'), $this->input->post('month'));
+                    break;
+                case 1:
+                    $data['salary'] = $this->calculate_daily_payslip($data['employee'], $this->input->post('year'), $this->input->post('month'));
+                    break;
+                case 2:
+                    $data['salary'] = $this->calculate_hourly_payslip($data['employee'], $this->input->post('year'), $this->input->post('month'));
+                    break;
+                default:
+                    $data['salary'] = null;
+            }
+
+            echo "<pre>";
+            print_r($data);
+            exit;
+
+            return $data;
         }
     }
 
-    protected function calculate_monthly_payslip(): float
+    protected function calculate_monthly_payslip($employee, $year, $month): array
     {
-        return 0;
+        $date = new DateTime($employee['joindate']);
+        $diff = $date->diff(new DateTime());
+        $nextMonth = $date->modify('+ 1 month');
+
+        $salary = $employee['salary'];
+        if ($nextMonth > new DateTime()) {
+            $salary = $salary * $diff->format('%a') / 25;
+        }
+
+        $data['gross'] = $salary;
+        if ($employee['epf_enabled']) {
+            $salary = $this->calculcate_epf($salary);
+        }
+
+        if ($employee['hrdf_enabled']) {
+            $salary = $this->calculcate_hrdf($salary);
+        }
+
+        $data['nett'] = $salary;
+        return $data;
     }
 
-    protected function calculate_daily_payslip(): float
+    protected function calculate_daily_payslip($employee): array
     {
-        return 0;
+        $date = new DateTime($employee['joindate']);
+        $diff = $date->diff(new DateTime());
+
+        $salary = $employee['salary'] * $diff->format('%a');
+
+        $data['gross'] = $salary;
+        if ($employee['epf_enabled']) {
+            $salary = $this->calculcate_epf($salary);
+        }
+
+        if ($employee['hrdf_enabled']) {
+            $salary = $this->calculcate_hrdf($salary);
+        }
+
+        $data['nett'] = $salary;
+        return $data;
     }
 
-    protected function calculate_hourly_payslip(): float
+    protected function calculate_hourly_payslip($employee): array
     {
-        return 0;
+        $date = new DateTime($employee['joindate']);
+        $diff = $date->diff(new DateTime());
+
+        $salary = $employee['salary'] * $diff->format('%a');
+
+        $data['gross'] = $salary;
+        if ($employee['epf_enabled']) {
+            $salary = $this->calculcate_epf($salary);
+        }
+
+        if ($employee['hrdf_enabled']) {
+            $salary = $this->calculcate_hrdf($salary);
+        }
+
+        $data['nett'] = $salary;
+        return $data;
+    }
+
+    protected function calculcate_epf($salary): float
+    {
+        return $salary * 10 / 100;
+    }
+
+    protected function calculcate_hrdf($salary): float
+    {
+        return $salary * 10 / 100;
     }
 }
