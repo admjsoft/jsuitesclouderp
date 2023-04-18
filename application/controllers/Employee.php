@@ -109,7 +109,9 @@ class Employee extends CI_Controller
         $salary = numberClean($this->input->post('salary', true));
         $commission = $this->input->post('commission', true);
         $department = $this->input->post('department', true);
-        $epf_enabled = $this->input->post('epf_enabled', true);
+        $epf = $this->input->post('epf', true);
+        $socso_enabled = $this->input->post('socso_enabled', true);
+        $eis_enabled = $this->input->post('eis_enabled', true);
         $hrdf_enabled = $this->input->post('hrdf_enabled', true);
 
 
@@ -135,7 +137,9 @@ class Employee extends CI_Controller
                     $commission,
                     $department,
                     $salary_type,
-                    $epf_enabled,
+                    $epf,
+                    $socso_enabled,
+                    $eis_enabled,
                     $hrdf_enabled
                 );
             }
@@ -384,7 +388,9 @@ class Employee extends CI_Controller
             $department = $this->input->post('department', true);
             $commission = $this->input->post('commission', true);
             $roleid = $this->input->post('roleid', true);
-            $epf_enabled = $this->input->post('epf_enabled', true);
+            $epf = $this->input->post('epf', true);
+            $socso_enabled = $this->input->post('socso_enabled', true);
+            $eis_enabled = $this->input->post('eis_enabled', true);
             $hrdf_enabled = $this->input->post('hrdf_enabled', true);
             $this->employee->update_employee(
                 $eid,
@@ -402,7 +408,9 @@ class Employee extends CI_Controller
                 $commission,
                 $roleid,
                 $salary_type,
-                $epf_enabled,
+                $epf,
+                $socso_enabled,
+                $eis_enabled,
                 $hrdf_enabled
             );
         } else {

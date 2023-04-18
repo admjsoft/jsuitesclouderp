@@ -69,7 +69,7 @@ class Employee_model extends CI_Model
         return $query->result_array();
     }
 
-    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary = 0, $department = -1, $commission = 0, $roleid = false, $salary_type = 0, $epf_enabled = 0, $hrdf_enabled = 0)
+    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary = 0, $department = -1, $commission = 0, $roleid = false, $salary_type = 0, $epf = 0, $socso_enabled = 0, $eis_enabled = 0, $hrdf_enabled = 0)
     {
         $this->db->select('salary');
         $this->db->from('gtg_employees');
@@ -95,7 +95,9 @@ class Employee_model extends CI_Model
             'salary_type' => $salary_type,
             'salary' => $salary,
             'c_rate' => $commission,
-            'epf_enabled' => $epf_enabled,
+            'epf' => $epf,
+            'socso_enabled' => $socso_enabled,
+            'eis_enabled' => $eis_enabled,
             'hrdf_enabled' => $hrdf_enabled,
         );
         if ($department > -1) {
@@ -112,7 +114,9 @@ class Employee_model extends CI_Model
                 'salary' => $salary,
                 'dept' => $department,
                 'c_rate' => $commission,
-                'epf_enabled' => $epf_enabled,
+                'epf' => $epf,
+                'socso_enabled' => $socso_enabled,
+                'eis_enabled' => $eis_enabled,
                 'hrdf_enabled' => $hrdf_enabled,
             );
         }
@@ -342,7 +346,7 @@ class Employee_model extends CI_Model
     }
 
 
-    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary = 0, $commission = 0, $department = 0, $salary_type = 0, $epf_enabled = 0, $hrdf_enabled = 0)
+    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary = 0, $commission = 0, $department = 0, $salary_type = 0, $epf = 0, $socso_enabled = 0, $eis_enabled = 0, $hrdf_enabled = 0)
     {
         $data = array(
             'id' => $id,
@@ -358,7 +362,9 @@ class Employee_model extends CI_Model
             'salary_type' => $salary_type,
             'salary' => $salary,
             'c_rate' => $commission,
-            'epf_enabled' => $epf_enabled,
+            'epf' => $epf,
+            'socso_enabled' => $socso_enabled,
+            'eis_enabled' => $eis_enabled,
             'hrdf_enabled' => $hrdf_enabled,
         );
 

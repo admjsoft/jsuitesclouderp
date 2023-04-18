@@ -8,6 +8,7 @@ class Payroll extends CI_Controller
     {
         parent::__construct();
         $this->load->model('employee_model', 'employee');
+        $this->load->model('general_settings_model', 'general_settings');
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
@@ -36,19 +37,12 @@ class Payroll extends CI_Controller
                 exit('<h3>Sorry! Employee not found</h3>');
             }
 
-            switch ($data['employee']['salary_type']) {
-                case 0:
-                    $data['salary'] = $this->calculate_monthly_payslip($data['employee'], $this->input->post('year'), $this->input->post('month'));
-                    break;
-                case 1:
-                    $data['salary'] = $this->calculate_daily_payslip($data['employee'], $this->input->post('year'), $this->input->post('month'));
-                    break;
-                case 2:
-                    $data['salary'] = $this->calculate_hourly_payslip($data['employee'], $this->input->post('year'), $this->input->post('month'));
-                    break;
-                default:
-                    $data['salary'] = null;
-            }
+            $data['salary'] = match ($data['employee']['salary_type']) {
+                0 => $this->calculate_monthly_payslip($data['employee'], $this->input->post('year'), $this->input->post('month')),
+                1 => $this->calculate_daily_payslip($data['employee'], $this->input->post('year'), $this->input->post('month')),
+                2 => $this->calculate_hourly_payslip($data['employee'], $this->input->post('year'), $this->input->post('month')),
+                default => null,
+            };
 
             echo "<pre>";
             print_r($data);
@@ -58,77 +52,90 @@ class Payroll extends CI_Controller
         }
     }
 
+    protected function calculate_salary($salary, $employee): array
+    {
+        $data['gross'] = $salary;
+        if ($employee['epf']) {
+            $salary = $salary - $this->calculate_epf($salary, $employee['epf']);
+        }
+
+        if ($employee['socso_enabled']) {
+            $salary = $salary - $this->calculate_socso($salary);
+        }
+
+        if ($employee['eis_enabled']) {
+            $salary = $salary - $this->calculate_eis($salary);
+        }
+
+        if ($employee['hrdf_enabled']) {
+            $salary = $salary - $this->calculate_hrdf($salary);
+        }
+
+        $data['nett'] = $salary;
+        return $data;
+    }
+
     protected function calculate_monthly_payslip($employee, $year, $month): array
     {
+        $payrollSettings = $this->general_settings->get_settings('general-payroll');
         $date = new DateTime($employee['joindate']);
-        $diff = $date->diff(new DateTime());
+        if ($date > new DateTime($year.'-'.$month.'-'.date('d'))) {
+            return [];
+        }
+        $diff = $date->diff(new DateTime($year.'-'.$month.'-'.date('d')));
         $nextMonth = $date->modify('+ 1 month');
 
         $salary = $employee['salary'];
-        if ($nextMonth > new DateTime()) {
-            $salary = $salary * $diff->format('%a') / 25;
+        if ($nextMonth < new DateTime($year.'-'.$month.'-'.date('d'))) {
+            $workingDays = 26;
+            if ($payrollSettings) {
+                $workingDays = json_decode($payrollSettings[0]['data_json'], true)['working_days'];
+            }
+            $salary = $salary * $diff->format('%a') / $workingDays;
         }
 
-        $data['gross'] = $salary;
-        if ($employee['epf_enabled']) {
-            $salary = $this->calculcate_epf($salary);
-        }
-
-        if ($employee['hrdf_enabled']) {
-            $salary = $this->calculcate_hrdf($salary);
-        }
-
-        $data['nett'] = $salary;
-        return $data;
+        return $this->calculate_salary($salary, $employee);
     }
 
-    protected function calculate_daily_payslip($employee): array
+    protected function calculate_daily_payslip($employee, $year, $month): array
     {
-        $date = new DateTime($employee['joindate']);
-        $diff = $date->diff(new DateTime());
-
-        $salary = $employee['salary'] * $diff->format('%a');
-
-        $data['gross'] = $salary;
-        if ($employee['epf_enabled']) {
-            $salary = $this->calculcate_epf($salary);
-        }
-
-        if ($employee['hrdf_enabled']) {
-            $salary = $this->calculcate_hrdf($salary);
-        }
-
-        $data['nett'] = $salary;
-        return $data;
+        $salary = $employee['salary'];
+        return $this->calculate_salary($salary, $employee);
     }
 
-    protected function calculate_hourly_payslip($employee): array
+    protected function calculate_hourly_payslip($employee, $year, $month): array
     {
-        $date = new DateTime($employee['joindate']);
-        $diff = $date->diff(new DateTime());
-
-        $salary = $employee['salary'] * $diff->format('%a');
-
-        $data['gross'] = $salary;
-        if ($employee['epf_enabled']) {
-            $salary = $this->calculcate_epf($salary);
-        }
-
-        if ($employee['hrdf_enabled']) {
-            $salary = $this->calculcate_hrdf($salary);
-        }
-
-        $data['nett'] = $salary;
-        return $data;
+        $salary = $employee['salary'];
+        return $this->calculate_salary($salary, $employee);
     }
 
-    protected function calculcate_epf($salary): float
+    protected function calculate_epf($salary, $percentage): float
     {
-        return $salary * 10 / 100;
+//        $epfSettings = $this->general_settings->get_settings('epf-settings');
+//        $percentage = 13;
+//        if ($epfSettings) {
+//            $percentage = json_decode($epfSettings[0]['data_json'], true)['employer_addon_percentage'];
+//        }
+        return $salary * $percentage / 100;
     }
 
-    protected function calculcate_hrdf($salary): float
+    protected function calculate_socso($salary): float
     {
-        return $salary * 10 / 100;
+        return $salary * $percentage / 100;
+    }
+
+    protected function calculate_eis($salary): float
+    {
+        return $salary * 0.2 / 100;
+    }
+
+    protected function calculate_hrdf($salary): float
+    {
+        $epfSettings = $this->general_settings->get_settings('-settings');
+        $percentage = 13;
+        if ($epfSettings) {
+            $percentage = json_decode($epfSettings[0]['data_json'], true)['employer_addon_percentage'];
+        }
+        return $salary * $percentage / 100;
     }
 }

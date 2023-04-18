@@ -241,12 +241,37 @@
                         <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
-                                   for="epf_enabled">Enable EPF?</label>
+                                   for="epf_enabled">EPF</label>
+
+                            <div class="col-sm-5">
+                                <select name="epf" class="form-control margin-bottom">
+                                    <option value="0" <?= $user['epf'] === 0 ? 'selected' : '' ?>>No</option>
+                                    <option value="1" <?= $user['epf'] === 11 ? 'selected' : '' ?>>11%</option>
+                                    <option value="1" <?= $user['epf'] === 17 ? 'selected' : '' ?>>7%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label"
+                                   for="socso_enabled">SOCSO</label>
 
                             <div class="col-sm-5">
                                 <select name="epf_enabled" class="form-control margin-bottom">
-                                    <option value="0" <?= $user['epf_enabled'] === 0 ? 'selected' : '' ?>>No</option>
-                                    <option value="1" <?= $user['epf_enabled'] === 1 ? 'selected' : '' ?>>Yes</option>
+                                    <option value="0" <?= $user['socso_enabled'] === 0 ? 'selected' : '' ?>>No</option>
+                                    <option value="1" <?= $user['socso_enabled'] === 1 ? 'selected' : '' ?>>Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label"
+                                   for="eis_enabled">EIS</label>
+
+                            <div class="col-sm-5">
+                                <select name="epf_enabled" class="form-control margin-bottom">
+                                    <option value="0" <?= $user['eis_enabled'] === 0 ? 'selected' : '' ?>>No</option>
+                                    <option value="1" <?= $user['eis_enabled'] === 1 ? 'selected' : '' ?>>Yes</option>
                                 </select>
                             </div>
                         </div>
